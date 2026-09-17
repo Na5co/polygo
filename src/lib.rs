@@ -12,6 +12,7 @@ pub mod core;
 pub mod coverage;
 pub mod doctor;
 pub mod engine;
+pub mod extract;
 pub mod formats;
 pub mod glossary;
 pub mod init;

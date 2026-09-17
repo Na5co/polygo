@@ -26,7 +26,17 @@ polygo check         # placeholders, plurals, lengths; exit 1 on errors
 git diff             # look it over, commit
 ```
 
-`init` recognises `.xcstrings` catalogs, Android `values-*` folders, Flutter `l10n.yaml` and ARB files, i18next `locales/`, gettext `.po` trees and .NET `.resx`/`.resw`.
+`init` recognises `.xcstrings` catalogs, Android `values-*` folders, Flutter `l10n.yaml` and ARB files, i18next `locales/`, gettext `.po` trees and .NET `.resx`/`.resw`. `polygo add fr ja` adds languages later.
+
+### Web app with no string files yet
+
+```sh
+polygo extract --dry-run   # lists every piece of UI text it found, with file:line
+polygo extract             # writes locales/en.json (keys are the English text)
+polygo init && polygo add de fr && polygo translate
+```
+
+`extract` reads the markup in JSX, HTML inside template literals, and `.html`/`.vue`/`.svelte` files: text between tags plus `placeholder`, `title`, `alt` and `aria-label` attributes. It skips `<script>`, `<style>`, `<svg>`, `<code>`, tests and `node_modules`, and turns `${expr}` / `{expr}` into `{{0}}` placeholders. Wiring the strings back through your i18n library's `t("key")` is still your job; on a real 160-file server-rendered app it found 580 unique strings in under a second. iOS, Android, Flutter and gettext already have their own extractors, so `extract` is for the web.
 
 ## What it catches
 
@@ -164,6 +174,8 @@ do_not_translate = ["Polygo", "GitHub"]
 | | |
 |---|---|
 | `polygo init` | detect project type and locales, write `polygo.toml` |
+| `polygo add <locale>...` / `polygo remove` | edit `target_locales` |
+| `polygo extract [--dry-run] [--out locales/en.json] [--json]` | pull UI text out of web markup into an i18next catalog |
 | `polygo models` | local models with sizes and notes, marks pulled (`+`) and active (`*`), API options |
 | `polygo use <model> [--base-url] [--api-key] [--global] [--no-pull]` | pull an Ollama model or set an API provider, writes `[provider]` |
 | `polygo doctor [--json]` | config parses, files load, provider reachable, model pulled; each failure names its fix |

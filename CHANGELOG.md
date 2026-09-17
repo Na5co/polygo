@@ -7,7 +7,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 First release.
 
 - Formats: Xcode `.xcstrings`, Android `strings.xml`, i18next JSON, Flutter ARB, gettext `.po`, .NET `.resx`/`.resw`. Every writer is byte-stable (35 real-world files in `tests/corpus` round-trip exactly).
-- `polygo init` detects the project layout and locales for all six formats.
+- `polygo init` detects the project layout and locales for all six formats; `polygo add` / `polygo remove` edit target locales.
+- `polygo extract`: UI text out of JSX, HTML in template literals and .html/.vue/.svelte into `locales/en.json`, with file:line for every string.
 - `polygo translate`: lockfile-driven incremental translation, batches, parallel jobs, crash-safe resume, `--dry-run`, `--retry-review`, `--no-context`. Human-edited translations are never overwritten.
 - Context retrieval: code-usage snippets (Aho-Corasick over the source tree) and similar already-translated strings, within a token budget.
 - Validation and repair of every model answer: placeholders, glossary, key echo, runaway length, identical-to-source; one repair round, then quarantine as `needs-review`.

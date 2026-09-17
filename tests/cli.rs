@@ -51,3 +51,39 @@ fn unknown_subcommand_is_an_error() {
         .expect("run unknown subcommand");
     assert!(!out.status.success());
 }
+
+#[test]
+fn add_and_remove_locales() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    std::fs::create_dir_all(root.join("locales")).unwrap();
+    std::fs::write(root.join("locales/en.json"), "{\n  \"a\": \"A\"\n}\n").unwrap();
+    std::fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n",
+    )
+    .unwrap();
+    let run = |args: &[&str]| {
+        std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+            .current_dir(root)
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    let out = run(&["add", "bg", "pt-BR"]);
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    assert!(String::from_utf8_lossy(&out.stdout).contains("target_locales = [de, bg, pt-BR]"));
+    assert!(!run(&["add", "cli"]).status.success());
+    assert!(!run(&["add", "en"]).status.success());
+    let out = run(&["remove", "de"]);
+    assert!(out.status.success());
+    let toml = std::fs::read_to_string(root.join("polygo.toml")).unwrap();
+    assert!(
+        toml.contains("\"bg\"") && toml.contains("\"pt-BR\"") && !toml.contains("\"de\""),
+        "{toml}"
+    );
+}

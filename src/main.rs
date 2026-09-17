@@ -81,6 +81,30 @@ enum Commands {
         #[arg(long)]
         open: bool,
     },
+    /// Add target locales to polygo.toml (e.g. `polygo add bg fr`).
+    Add {
+        /// BCP-47 tags: de, pt-BR, zh-Hans
+        #[arg(required = true)]
+        locales: Vec<String>,
+    },
+    /// Remove target locales from polygo.toml (files are left alone).
+    Remove {
+        #[arg(required = true)]
+        locales: Vec<String>,
+    },
+    /// Pull user-facing text out of web source (JSX, HTML in template literals, .html/.vue/.svelte) into locales/en.json.
+    #[command(after_help = EXTRACT_EXAMPLES)]
+    Extract {
+        /// Catalog to write (i18next JSON). Existing keys are kept.
+        #[arg(long, default_value = "locales/en.json")]
+        out: PathBuf,
+        /// List what would be extracted, write nothing.
+        #[arg(long)]
+        dry_run: bool,
+        /// Machine-readable list of hits.
+        #[arg(long)]
+        json: bool,
+    },
     /// Write a pseudo-locale ([Šéţţíñĝš ~~~]) to catch hardcoded strings and truncation.
     #[command(after_help = PSEUDO_EXAMPLES)]
     Pseudo {
@@ -161,6 +185,7 @@ struct TranslateArgs {
 const EXAMPLES: &str = "\
 Examples:
   polygo init                     detect the project and write polygo.toml
+  polygo add bg fr                add target languages
   polygo use gemma4               pick a model: pulls it through Ollama, or set an API key
   polygo doctor                   is the model reachable? what's missing?
   polygo translate                translate what changed since the last run
@@ -228,6 +253,17 @@ Examples:
 Stored at ~/.config/polygo/memory.toml (or $POLYGO_CONFIG_DIR). Disable per project with
 `memory = false` in polygo.toml.";
 
+const EXTRACT_EXAMPLES: &str = "\
+Examples:
+  polygo extract --dry-run        list every string it would pull out, with file:line
+  polygo extract                  write locales/en.json (keys are the English text)
+  polygo extract --json | jq      the same list as JSON
+
+Looks at markup only: text between tags and placeholder/title/alt/aria-label attributes, in
+JSX, HTML inside template literals, and .html/.vue/.svelte files. Skips <script>, <style>,
+<svg>, <code>, tests, node_modules, dist. Interpolations become {{0}}, {{1}} placeholders.
+It does not rewrite your code; the catalog plus the list is the starting point.";
+
 const PSEUDO_EXAMPLES: &str = "\
 Examples:
   polygo pseudo                  write en-XA: [Šáṽé çĥáñĝéš ~~~~] for every string, placeholders untouched
@@ -292,6 +328,9 @@ fn main() {
         } => check(&cli.root, locale, json, strict, fix),
         Commands::Status { json, markdown } => status(&cli.root, json, markdown),
         Commands::Review { port, open } => polygo::review::serve(&cli.root, port, open),
+        Commands::Add { locales } => edit_locales(&cli.root, &locales, true),
+        Commands::Remove { locales } => edit_locales(&cli.root, &locales, false),
+        Commands::Extract { out, dry_run, json } => extract(&cli.root, &out, dry_run, json),
         Commands::Pseudo { locale } => pseudo(&cli.root, &locale),
         Commands::Memory { forget, locale } => memory(forget, locale.as_deref()),
         Commands::Models => polygo::models::list(&cli.root, &mut std::io::stdout()),
@@ -595,6 +634,72 @@ fn memory(forget: bool, locale: Option<&str>) -> Result<()> {
     }
     println!(
         "human entries are reused verbatim for identical strings; model entries only as examples"
+    );
+    Ok(())
+}
+
+fn edit_locales(root: &Path, locales: &[String], add: bool) -> Result<()> {
+    let mut cfg = Config::load(root)?;
+    for l in locales {
+        if add {
+            if l == &cfg.source_locale {
+                anyhow::bail!("{l} is the source locale");
+            }
+            if !polygo::init::is_locale(l) {
+                anyhow::bail!("{l} does not look like a locale tag (de, pt-BR, zh-Hans)");
+            }
+            if !cfg.target_locales.contains(l) {
+                cfg.target_locales.push(l.clone());
+            }
+        } else {
+            cfg.target_locales.retain(|x| x != l);
+        }
+    }
+    std::fs::write(root.join(polygo::config::FILE_NAME), cfg.to_toml())?;
+    println!("target_locales = [{}]", cfg.target_locales.join(", "));
+    if add {
+        println!("next: `polygo translate`");
+    }
+    Ok(())
+}
+
+fn extract(root: &Path, out: &Path, dry_run: bool, json: bool) -> Result<()> {
+    let hits = polygo::extract::scan(root)?;
+    if json {
+        println!("{}", serde_json::to_string_pretty(&hits)?);
+        return Ok(());
+    }
+    let mut seen = std::collections::BTreeSet::new();
+    for h in &hits {
+        let first = seen.insert(&h.key);
+        println!(
+            "{}:{}  {}{}",
+            h.file,
+            h.line,
+            h.text.chars().take(90).collect::<String>(),
+            if first { "" } else { "  (dup)" }
+        );
+    }
+    if hits.is_empty() {
+        println!(
+            "no user-facing text found in JSX/HTML markup under {}",
+            root.display()
+        );
+        return Ok(());
+    }
+    println!("\n{} string(s), {} unique", hits.len(), seen.len());
+    if dry_run {
+        println!(
+            "dry run: nothing written (drop --dry-run to write {})",
+            out.display()
+        );
+        return Ok(());
+    }
+    let (added, total) = polygo::extract::write_catalog(&root.join(out), &hits)?;
+    println!("wrote {} ({added} new, {total} total)", out.display());
+    println!(
+        "next: replace each string in the code with your i18n library's lookup (t(\"key\")), \
+then `polygo init` and `polygo translate`"
     );
     Ok(())
 }
