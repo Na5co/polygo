@@ -28,6 +28,12 @@ impl Ollama {
     }
 }
 
+impl Ollama {
+    pub fn base_url(&self) -> String {
+        self.base_url.clone()
+    }
+}
+
 impl Provider for Ollama {
     fn name(&self) -> &str {
         "ollama"

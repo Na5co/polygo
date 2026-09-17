@@ -8,6 +8,7 @@ pub mod check;
 pub mod config;
 pub mod context;
 pub mod core;
+pub mod doctor;
 pub mod engine;
 pub mod formats;
 pub mod glossary;

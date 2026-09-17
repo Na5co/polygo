@@ -53,6 +53,13 @@ enum Commands {
         #[arg(long)]
         open: bool,
     },
+    /// Check config, files, provider and model; say exactly what to fix.
+    #[command(after_help = DOCTOR_EXAMPLES)]
+    Doctor {
+        /// Machine-readable output.
+        #[arg(long)]
+        json: bool,
+    },
     /// Create polygo.toml by detecting the project type.
     #[command(after_help = INIT_EXAMPLES)]
     Init {
@@ -90,6 +97,7 @@ struct TranslateArgs {
 const EXAMPLES: &str = "\
 Examples:
   polygo init                     detect the project and write polygo.toml
+  polygo doctor                   is the model reachable? what's missing?
   polygo translate                translate what changed since the last run
   polygo check --strict           fail CI on any placeholder, plural or length problem
   polygo status --json            machine-readable per-locale counts
@@ -134,6 +142,11 @@ Approve writes the translation into your files and records it as human-made;
 reject leaves the key untranslated for the next `polygo translate --retry-review`.
 The server binds to 127.0.0.1 only and rejects non-localhost Host headers.";
 
+const DOCTOR_EXAMPLES: &str = "\
+Examples:
+  polygo doctor            config parses, files load, Ollama reachable, model pulled
+  polygo doctor --json     the same as JSON (exit 1 when anything fails)";
+
 const INIT_EXAMPLES: &str = "\
 Examples:
   polygo init              detect .xcstrings / Android / i18next / ARB / .po / .resx layouts
@@ -154,6 +167,14 @@ fn main() {
         } => check(&cli.root, locale, json, strict, fix),
         Commands::Status { json } => status(&cli.root, json),
         Commands::Review { port, open } => polygo::review::serve(&cli.root, port, open),
+        Commands::Doctor { json } => {
+            let checks = polygo::doctor::run(&cli.root);
+            match polygo::doctor::print(&checks, json) {
+                Ok(true) => Ok(()),
+                Ok(false) => std::process::exit(1),
+                Err(e) => Err(e),
+            }
+        }
         Commands::Init { force } => init(&cli.root, force),
     };
     if let Err(e) = result {
@@ -301,6 +322,11 @@ fn init(root: &Path, force: bool) -> Result<()> {
             f.path.display()
         );
     }
+    println!(
+        "next: `polygo doctor` (checks {} {} is ready), then `polygo translate`",
+        cfg.provider.kind,
+        cfg.model_name()
+    );
     Ok(())
 }
 
