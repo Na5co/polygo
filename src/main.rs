@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 
 /// Lokalise for one person: local-first, git-native localization.
 #[derive(Parser)]
-#[command(name = "polygo", version, about, long_about = None)]
+#[command(name = "polygo", version, about, long_about = None, after_help = EXAMPLES)]
 struct Cli {
     /// Project root (directory containing polygo.toml). Defaults to the current directory.
     #[arg(short = 'C', long, global = true, default_value = ".")]
@@ -18,8 +18,10 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Translate new or changed strings into every target locale.
+    #[command(after_help = TRANSLATE_EXAMPLES)]
     Translate(TranslateArgs),
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
+    #[command(after_help = CHECK_EXAMPLES)]
     Check {
         /// Only these locales (comma-separated).
         #[arg(long, value_delimiter = ',')]
@@ -35,12 +37,14 @@ enum Commands {
         fix: bool,
     },
     /// Show new / changed / stale / untranslated counts per locale.
+    #[command(after_help = STATUS_EXAMPLES)]
     Status {
         /// Machine-readable output.
         #[arg(long)]
         json: bool,
     },
     /// Open a local review page for pending translations.
+    #[command(after_help = REVIEW_EXAMPLES)]
     Review {
         /// Port on 127.0.0.1 (0 = pick a free one).
         #[arg(long, default_value_t = 4133)]
@@ -50,6 +54,7 @@ enum Commands {
         open: bool,
     },
     /// Create polygo.toml by detecting the project type.
+    #[command(after_help = INIT_EXAMPLES)]
     Init {
         /// Overwrite an existing polygo.toml.
         #[arg(long)]
@@ -81,6 +86,61 @@ struct TranslateArgs {
     #[arg(long)]
     no_context: bool,
 }
+
+const EXAMPLES: &str = "\
+Examples:
+  polygo init                     detect the project and write polygo.toml
+  polygo translate                translate what changed since the last run
+  polygo check --strict           fail CI on any placeholder, plural or length problem
+  polygo status --json            machine-readable per-locale counts
+  polygo review --open            approve or reject quarantined translations
+
+Exit codes: 0 ok · 1 error (or check found problems) · 3 some strings need review
+Docs: https://github.com/atanasa/polygo/tree/main/docs";
+
+const TRANSLATE_EXAMPLES: &str = "\
+Examples:
+  polygo translate                     every target locale, new/changed strings only
+  polygo translate --locale de,fr -v   two locales, print each translation as it lands
+  polygo translate --dry-run           list the strings that would be sent, send nothing
+  polygo translate --retry-review      retry strings quarantined as needs-review
+  polygo translate --jobs 4            four provider calls in parallel (API providers)
+  polygo translate --no-context        plain prompts without code usage / similar strings
+
+Human-edited translations are never overwritten (state `edited` in polygo.lock).
+Exit code 3 means some strings were quarantined; run `polygo review` to decide.";
+
+const CHECK_EXAMPLES: &str = "\
+Examples:
+  polygo check                      placeholders, plural categories, empty/identical/length
+  polygo check --strict             warnings (length, identical) also fail → exit 1
+  polygo check --json | jq .findings
+  polygo check --fix                re-translate the failing keys, then check again
+  polygo check --locale pl,ru       only these locales
+
+Codes: placeholders · plural · empty · identical · length";
+
+const STATUS_EXAMPLES: &str = "\
+Examples:
+  polygo status            counts per locale: new, stale, untranslated, edited, needs-review, up-to-date
+  polygo status --json     same as JSON, e.g. for a dashboard or a pre-push hook";
+
+const REVIEW_EXAMPLES: &str = "\
+Examples:
+  polygo review --open          serve http://127.0.0.1:4133 and open the browser
+  polygo review --port 0        pick a free port
+
+Approve writes the translation into your files and records it as human-made;
+reject leaves the key untranslated for the next `polygo translate --retry-review`.
+The server binds to 127.0.0.1 only and rejects non-localhost Host headers.";
+
+const INIT_EXAMPLES: &str = "\
+Examples:
+  polygo init              detect .xcstrings / Android / i18next / ARB / .po / .resx layouts
+  polygo init --force      overwrite an existing polygo.toml
+  polygo -C ios/App init   another project root
+
+Then edit polygo.toml to set target_locales and the provider (default: Ollama, qwen3:8b).";
 
 fn main() {
     let cli = Cli::parse();
