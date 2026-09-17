@@ -1,0 +1,31 @@
+id,source,A,B,better (A/B/tie)
+1,"Loop after Loop, your dedication carves the key to success.","Schleife nach Schleife, deine Ausdauer schneidet den Schlüssel zum Erfolg.","Loop nach Loop, deine Hingabe schneidet den Schlüssel zum Erfolg.",B
+2,Fourth Fourth,Viertes Viertel,Viertel Viertel,A
+3,Our app is on a digital diet. No new bytes allowed.,Unsere App ist auf einer digitalen Diät. Neue Bytes sind nicht erlaubt.,Unsere App ist auf einer digitalen Diät. Keine neuen Bytes erlaubt.,B
+4,This will reset all keybinds to their original defaults.,Dies setzt alle Tastenbelegungen zurück zu ihren ursprünglichen Standardwerten.,Dies wird alle Keybinds zu ihren ursprünglichen Standardwerten zurücksetzen.,A
+5,Bottom Screen,Unten Screen,Unterseite,B
+6,Color,Farbe,Farbe,TIE
+7,Right Cycle,Rechtsdrehung,Rechts durchschalten,B
+8,Customize what this action cycles through.,"Anpassen, was diese Aktion durchlaufen soll.","Customisiere, was diese Aktion durchläuft.",B
+9,Move to Applications Folder?,Möge in den Anwendungsordner?,Verschieben Sie in den Anwendungsordner?,B
+10,Shift focus when stashed,"Verschiebe den Fokus, wenn gespeichert","Verschiebe den Fokus, wenn gestapelt",B
+11,Cancel,Abbrechen,Abbrechen,A
+12,Radial menu,Radialmenü,Radial-Menü,B
+13,Rosé Pine,"Sie haben bereits 25 Mal geschleift! Als Belohnung gibt es ein neues Symbol: \(.init(localized: .init(""Icon Name: Holo"", defaultValue: ""Holo""))). Schleife weiter, um weitere Symbole zu entsperren!",Rosé Pine /no_think,TIE
+14,Bottom,Unten,Unten,A
+15,Cursor,Cursor,Cursor,TIE
+16,A penny for your… lack of updates.,Ein Cent für Ihre… Mangel an Updates.,Ein Penny für deine… Mangel an Updates.,A
+17,The Force is strong with this version!,Die Kraft ist in dieser Version stark!,Die Macht ist stark in dieser Version!,B
+18,Clear Keybind,Clear Keybind → Tastenkombination löschen,Clear Keybind,A
+19,Initial Frame,Startframe,Initiale Größe,A
+20,Customize this action's custom frame.,Dieses Aktionseinstellung anpassen.,Aktion dieses benutzerdefinierten Rahmens anpassen.,TIE
+21,Second Fourth,Zweites Viertel,Zweiter Viertel,A
+22,Sweet dreams are made of… no updates,Schöne Träume sind aus… kein Updates,Schöne Träume werden aus… keinem Update gemacht,B
+23,Cancel Update,Abbrechen,Abbrechen,TIE
+24,Accent Color,Akzentfarbe,Akzentfarbe,A
+25,Export,Exportieren,Exportieren,A
+26,You've unlocked a new icon: %@!,Du hast ein neues Symbol freigeschaltet: %@!,"Du hast bereits 25 Mal gelooped! Als Belohnung gibt es ein neues Icon: %@. Loop weiter, um neue Symbole freizuschalten!",B
+27,Suppress Mission Control,Deaktiviere Mission Control,Deaktiviere Mission Control,TIE
+28,Supports macOS Tahoe’s Liquid Glass effects,Unterstützt macOS Tahoe’s Liquid Glass Effekte,Unterstützt macOS Tahoe’s Liquid Glass Effekte,TIE
+29,Center,Mitte,Zentriert,A
+30,Preview,Vorschau,Vorschau,A

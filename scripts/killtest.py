@@ -197,6 +197,34 @@ def main():
           f"Rate each row (A / B / tie) in the last column, then run: scripts/killtest.py --score {csv_path}")
 
 
+JUDGE_SYSTEM = (
+    "You are a senior {dst} localization reviewer for consumer apps. You will see an English UI string and two candidate "
+    "{dst} translations, A and B. Judge which one a native speaker would prefer to ship: natural, idiomatic, correct meaning, "
+    "consistent app tone, placeholders intact, not over-literal. Answer with exactly one token: A, B, or TIE."
+)
+
+
+def judge(csv_path, judge_model, timeout=120):
+    """Blind second-model judging: fills the 'better' column without reading the key file."""
+    locale = os.path.basename(csv_path).split(".")[0]
+    rows = list(csv.DictReader(open(csv_path, encoding="utf-8")))
+    system = JUDGE_SYSTEM.format(dst=locale)
+    for r in rows:
+        user = f"English: {r['source']}\n\nA: {r['A']}\nB: {r['B']}\n\nAnswer A, B, or TIE."
+        try:
+            out = chat(judge_model, system, user, timeout=timeout).upper()
+        except Exception as e:  # noqa: BLE001
+            out = f"ERR {e}"
+        m = re.search(r"\b(A|B|TIE)\b", out)
+        r["better (A/B/tie)"] = m.group(1) if m else "tie"
+        print(f"[{r['id']:>2}] {r['source'][:40]!r:44} -> {r['better (A/B/tie)']}")
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["id", "source", "A", "B", "better (A/B/tie)"])
+        w.writeheader()
+        w.writerows(rows)
+    print(f"judged {len(rows)} rows with {judge_model} -> {csv_path}")
+
+
 def score(csv_path):
     key = json.load(open(csv_path.replace(".csv", ".key.json")))["rows"]
     wins = ties = losses = unrated = 0
@@ -213,11 +241,18 @@ def score(csv_path):
             losses += 1
     n = wins + ties + losses
     print(f"context wins={wins} losses={losses} ties={ties} unrated={unrated}  (kill rule: need >= 18/30 wins)")
-    print("PASS" if wins >= 18 else "FAIL")
+    ok = wins >= 18
+    print("PASS" if ok else "FAIL")
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3 and sys.argv[1] == "--score":
         score(sys.argv[2])
+    elif len(sys.argv) >= 3 and sys.argv[1] == "--judge":
+        jm = "gemma4"
+        if "--judge-model" in sys.argv:
+            jm = sys.argv[sys.argv.index("--judge-model") + 1]
+        judge(sys.argv[2], jm)
     else:
         main()
