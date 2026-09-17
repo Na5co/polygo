@@ -23,6 +23,8 @@ pub struct Options {
     pub verbose: bool,
     /// Also retry keys that were quarantined on a previous run.
     pub retry_review: bool,
+    /// Translate exactly these keys per locale regardless of lockfile state (used by `check --fix`).
+    pub force_keys: Option<BTreeMap<String, Vec<String>>>,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -62,7 +64,16 @@ pub fn translate(
 
     let mut report = Report::default();
     for locale in &locales {
-        let work = status.work_with(locale, opts.retry_review);
+        let work = match &opts.force_keys {
+            Some(forced) => forced
+                .get(locale)
+                .cloned()
+                .unwrap_or_default()
+                .into_iter()
+                .filter(|k| by_key.contains_key(k.as_str()))
+                .collect(),
+            None => status.work_with(locale, opts.retry_review),
+        };
         report.planned.insert(locale.clone(), work.clone());
     }
     if opts.dry_run {

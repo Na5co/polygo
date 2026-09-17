@@ -61,6 +61,10 @@ fn check_length_identity() {
         [("identical".to_string(), Severity::Warning)]
     );
     assert!(kinds("Settings", "Settings", "en-GB", 2.5).is_empty());
+    // Acronyms and tiny tokens are the same everywhere.
+    assert!(kinds("OK", "OK", "de", 2.5).is_empty());
+    assert!(kinds("URL", "URL", "ja", 2.5).is_empty());
+    assert!(kinds("PDF export", "PDF export", "de", 2.5).len() == 1);
     assert!(kinds("%d", "%d", "de", 2.5).is_empty());
     assert!(kinds("2024", "2024", "ja", 2.5).is_empty());
     // Untranslated markup-only strings are fine.

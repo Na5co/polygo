@@ -243,6 +243,7 @@ pub fn detect(root: &Path) -> Result<Config> {
         glossary: None,
         batch_size: 20,
         jobs: 1,
+        length_ratio: 2.5,
     })
 }
 

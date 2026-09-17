@@ -352,7 +352,7 @@ impl std::fmt::Display for Mismatch {
         if !self.extra.is_empty() {
             parts.push(format!("unexpected {}", self.extra.join(" ")));
         }
-        write!(f, "placeholders: {}", parts.join("; "))
+        write!(f, "{}", parts.join("; "))
     }
 }
 

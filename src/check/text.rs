@@ -40,7 +40,10 @@ pub fn check_text(
     let prose = strip_placeholders(src);
     let has_letters = prose.chars().any(|c| c.is_alphabetic());
     let is_markup_only = !prose.chars().any(|c| c.is_alphanumeric());
-    if !same_language && has_letters && !is_markup_only && src == tr {
+    // Acronyms and very short tokens ("OK", "URL", "ID") are the same everywhere.
+    let letters: Vec<char> = prose.chars().filter(|c| c.is_alphabetic()).collect();
+    let acronym_like = letters.len() <= 3 || letters.iter().all(|c| c.is_uppercase());
+    if !same_language && has_letters && !is_markup_only && !acronym_like && src == tr {
         out.push(Finding {
             code: "identical",
             severity: Severity::Warning,

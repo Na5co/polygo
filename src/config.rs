@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 
 pub const FILE_NAME: &str = "polygo.toml";
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Config {
     pub source_locale: String,
     pub target_locales: Vec<String>,
@@ -22,6 +22,13 @@ pub struct Config {
     /// Parallel provider calls.
     #[serde(default = "default_jobs")]
     pub jobs: usize,
+    /// `check` warns when a translation is longer than this multiple of the source.
+    #[serde(default = "default_length_ratio")]
+    pub length_ratio: f64,
+}
+
+fn default_length_ratio() -> f64 {
+    2.5
 }
 
 fn default_batch_size() -> usize {

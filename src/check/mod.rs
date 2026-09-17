@@ -2,4 +2,5 @@
 
 pub mod placeholders;
 pub mod plurals;
+pub mod run;
 pub mod text;
