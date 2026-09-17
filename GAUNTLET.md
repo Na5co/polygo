@@ -46,7 +46,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
   - Acceptance: `cargo test roundtrip_android`.
 - [x] G1.4 i18next JSON (nested/flat, key sorting preserved).
   - Acceptance: `cargo test roundtrip_json`.
-- [ ] G1.5 Lockfile `polygo.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
+- [x] G1.5 Lockfile `polygo.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
   - Acceptance: `cargo test lockfile_*` — changing one source string marks exactly one key stale in every locale.
 - [ ] G1.6 `polygo init` writes `polygo.toml` (source locale, targets, file globs, provider, glossary path) by detecting the project type from the file tree.
   - Acceptance: `cargo test init_detects_*` for an iOS, Android, Flutter, and Next.js fixture tree.
@@ -108,6 +108,9 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - clap 4 (derive) → CLI parsing; industry standard, tiny cold-start cost (2 ms measured)
 - serde_json (preserve_order) → JSON tree with insertion-order maps; Xcode key order is not code-point sorted, so order must be preserved, not recomputed
 - anyhow → error plumbing in a binary crate
+- blake3 → content hashes for source/translation change detection (fast, 32-hex truncated)
+- serde + toml 0.8 → polygo.toml config and polygo.lock parsing; lock is emitted by hand so key/locale order is deterministic
+- tempfile (dev) → CLI integration tests in throwaway project dirs
 - quick-xml 0.37 → tolerant XML tokenizer with byte positions; we never re-emit XML, we splice edited value spans into the original text
 
 ## Blocked
@@ -121,3 +124,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G1.2 · xcstrings parse/serialize, byte-stable on 11/11 corpus files (Loop, Whisky, IceCubes, boring.notch, damus, 6× DuckDuckGo; 2.5 KB–3.8 MB) + synthetic edge cases (escapes, empty objects, bool/int, trailing newline, CRLF). Corpus fixtures + licenses in tests/corpus/SOURCES.md (dropped Cork/Pearcleaner: restrictive licenses). Release binary 551 KB (lib not yet linked into main).
 - 2026-09-17 · G1.3 · Android strings.xml: span-based model (original text + value spans), byte-stable on 5/5 corpus files (AntennaPod, NewPipe, F-Droid, K-9/Thunderbird, DuckDuckGo; 44–82 KB, plurals, CDATA+HTML, `\'`, translatable=false, preceding-comment capture); minimal-diff edits incl. empty-element rewrite and CDATA preservation; decode/encode for entities + Android escapes. 10 tests green.
 - 2026-09-17 · G1.4 · i18next JSON: own position-tracking parser (no deps), span-splice serializer; byte-stable on 6/6 corpus files (excalidraw, hoppscotch — mixes raw Unicode with \u2026 escapes, jellyfin-web 4-space, immich, grafana 780 KB depth 8, formbricks); nested + flat dotted keys, arrays as index paths, BOM/CRLF preserved, minimal-diff edits; cross-checked every entry against serde_json. 14 tests green.
+- 2026-09-17 · G1.5 · core::Unit model, config (polygo.toml), lockfile (sorted TOML, blake3 hashes, provider/model/at), project loader for xcstrings/android/json incl. per-locale files, `polygo status [--json]`. States: new / stale / untranslated / edited / up-to-date; pre-existing human translations are `edited` and never overwritten (caught by smoke test on Loop: 399 de translations protected). 20 tests green; binary 999 KB; --help 1.5 ms.

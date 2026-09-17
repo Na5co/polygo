@@ -129,3 +129,59 @@ fn write_string(out: &mut String, s: &str) {
     }
     out.push('"');
 }
+
+use crate::core::Unit;
+use std::collections::BTreeMap;
+
+/// Extract translatable units. Keys with plural/device `variations` in the source
+/// language are skipped for now (handled by a later gate); everything with a plain
+/// `stringUnit` — or no source localization at all, where the key is the text — is a unit.
+pub fn units(doc: &Document, source_locale: &str) -> Vec<Unit> {
+    let mut out = Vec::new();
+    let Some(strings) = doc.root.get("strings").and_then(Value::as_object) else {
+        return out;
+    };
+    for (key, entry) in strings {
+        let locs = entry.get("localizations").and_then(Value::as_object);
+        let src_loc = locs.and_then(|l| l.get(source_locale));
+        if src_loc.is_some_and(|l| l.get("variations").is_some()) {
+            continue;
+        }
+        if entry.get("shouldTranslate").and_then(Value::as_bool) == Some(false) {
+            continue;
+        }
+        let source = src_loc
+            .and_then(|l| l.get("stringUnit"))
+            .and_then(|u| u.get("value"))
+            .and_then(Value::as_str)
+            .unwrap_or(key)
+            .to_string();
+        let mut translations = BTreeMap::new();
+        if let Some(locs) = locs {
+            for (locale, l) in locs {
+                if locale == source_locale {
+                    continue;
+                }
+                let value = l
+                    .get("stringUnit")
+                    .and_then(|u| u.get("value"))
+                    .and_then(Value::as_str);
+                if let Some(v) = value
+                    && !v.is_empty()
+                {
+                    translations.insert(locale.clone(), v.to_string());
+                }
+            }
+        }
+        out.push(Unit {
+            key: key.clone(),
+            source,
+            comment: entry
+                .get("comment")
+                .and_then(Value::as_str)
+                .map(str::to_string),
+            translations,
+        });
+    }
+    out
+}

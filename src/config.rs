@@ -1,0 +1,79 @@
+//! `polygo.toml` — project configuration.
+
+use anyhow::{Context, Result};
+use serde::{Deserialize, Serialize};
+use std::path::{Path, PathBuf};
+
+pub const FILE_NAME: &str = "polygo.toml";
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Config {
+    pub source_locale: String,
+    pub target_locales: Vec<String>,
+    #[serde(default)]
+    pub files: Vec<FileSpec>,
+    #[serde(default)]
+    pub provider: Provider,
+    #[serde(default)]
+    pub glossary: Option<PathBuf>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum Format {
+    Xcstrings,
+    Android,
+    Json,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct FileSpec {
+    pub format: Format,
+    /// Source-language file (for `xcstrings` this holds every locale).
+    pub path: PathBuf,
+    /// For per-locale formats: path template with `{locale}`, e.g.
+    /// `res/values-{locale}/strings.xml` or `locales/{locale}.json`.
+    #[serde(default)]
+    pub locale_path: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Provider {
+    /// `mock`, `ollama`, `openai`, `anthropic`.
+    pub kind: String,
+    #[serde(default)]
+    pub model: Option<String>,
+    #[serde(default)]
+    pub base_url: Option<String>,
+}
+
+impl Default for Provider {
+    fn default() -> Self {
+        Provider {
+            kind: "ollama".into(),
+            model: Some("qwen3:8b".into()),
+            base_url: None,
+        }
+    }
+}
+
+impl Config {
+    pub fn load(root: &Path) -> Result<Config> {
+        let path = root.join(FILE_NAME);
+        let text = std::fs::read_to_string(&path).with_context(|| {
+            format!("no {} in {} (run `polygo init`)", FILE_NAME, root.display())
+        })?;
+        toml::from_str(&text).context("invalid polygo.toml")
+    }
+
+    pub fn to_toml(&self) -> String {
+        toml::to_string_pretty(self).expect("config is serializable")
+    }
+
+    pub fn model_name(&self) -> String {
+        self.provider
+            .model
+            .clone()
+            .unwrap_or_else(|| "default".into())
+    }
+}
