@@ -38,7 +38,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Phase 1 — Formats + lockfile
 
-- [ ] G1.1 `polygo` crate skeleton: `clap` CLI with `translate`, `check`, `status`, `review`, `init`. `--help` under 50 ms.
+- [x] G1.1 `polygo` crate skeleton: `clap` CLI with `translate`, `check`, `status`, `review`, `init`. `--help` under 50 ms.
   - Acceptance: `hyperfine --warmup 3 'target/release/polygo --help'` mean < 50 ms.
 - [ ] G1.2 `.xcstrings` parser + serializer, byte-stable roundtrip (key order, indentation, `extractionState`, plural variations, device variations preserved).
   - Acceptance: `cargo test roundtrip_xcstrings` passes on all 10 corpus files (diff is empty).
@@ -105,6 +105,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Deps
 (record crate → reason)
+- clap 4 (derive) → CLI parsing; industry standard, tiny cold-start cost (2 ms measured)
 
 ## Blocked
 (gate → failure → what was tried)
@@ -113,3 +114,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 (date · gate · note)
 - 2026-09-17 · G0.1 · killtest/bg.csv generated (30 rows, MrKai77/Loop Localizable.xcstrings, qwen3:8b, code context on 30/30, no existing bg translations so 0 few-shots). Judged blind by gemma4: context wins 8 / losses 13 / ties 9 → FAIL.
 - 2026-09-17 · G0.1 · killtest/de.csv (30 rows, same file, code context + 3 few-shot existing de translations). Judged blind by gemma4: wins 18 / losses 5 / ties 7 → PASS. Gate passed on de. Finding: code context alone does not win; code context + similar existing translations does. Phase 4 must ship both together; the few-shot half is not optional.
+- 2026-09-17 · G1.1 · clap skeleton with translate/check/status/review/init; tests/cli.rs (4 tests); hyperfine --help mean 2.0 ms; release binary 551 KB (lto, strip, panic=abort).
