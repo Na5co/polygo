@@ -309,6 +309,37 @@ pub fn scan_text(file: &str, text: &str, out: &mut Vec<Hit>) {
         }
         line += tag.matches('\n').count();
         i = end + 1;
+        // A block element whose content is one sentence with inline markup inside
+        // (`<p>writes a <code>.form</code> file.</p>`) is extracted whole, tags and all,
+        // so the translator sees the full sentence.
+        if skip_depth.is_empty()
+            && !closing
+            && !tag.ends_with('/')
+            && !INLINE.contains(&name.as_str())
+            && let Some((inner_end, close_end)) = find_close(text, i, &name)
+        {
+            let inner = &text[i..inner_end];
+            if is_mixed_sentence(inner) {
+                let lead = inner.len() - inner.trim_start().len();
+                let trimmed = inner.trim();
+                let cleaned = clean(trimmed);
+                let start = i + lead;
+                out.push(make_hit(
+                    file,
+                    line,
+                    &cleaned,
+                    "text",
+                    start,
+                    start + trimmed.len(),
+                    context_at(start),
+                    false,
+                ));
+                line +=
+                    inner.matches('\n').count() + text[inner_end..close_end].matches('\n').count();
+                i = close_end;
+                continue;
+            }
+        }
         if skip_depth.is_empty() {
             let run_end = text[i..].find('<').map(|k| i + k).unwrap_or(text.len());
             let run = &text[i..run_end];
@@ -343,7 +374,6 @@ pub fn scan_text(file: &str, text: &str, out: &mut Vec<Hit>) {
                     .unwrap_or(false);
                 let first = cleaned.chars().next().unwrap();
                 let fragment = (closing && INLINE.contains(&name.as_str()))
-                    || first.is_lowercase()
                     || matches!(first, '.' | ',' | ';' | ':' | ')')
                     || next_opens_inline;
                 out.push(make_hit(
@@ -361,6 +391,68 @@ pub fn scan_text(file: &str, text: &str, out: &mut Vec<Hit>) {
             i = run_end;
         }
     }
+}
+
+/// `(inner_end, close_end)` of the element `name` opened just before `from`, honouring
+/// nesting of the same name. `None` when unclosed or when a block tag appears inside.
+fn find_close(text: &str, from: usize, name: &str) -> Option<(usize, usize)> {
+    let mut depth = 0usize;
+    let mut i = from;
+    while let Some(k) = text[i..].find('<') {
+        let at = i + k;
+        let Some(end) = tag_end(text, at) else {
+            i = at + 1;
+            continue;
+        };
+        let tag = &text[at + 1..end];
+        let n: String = tag
+            .trim_start_matches('/')
+            .chars()
+            .take_while(|c| c.is_ascii_alphanumeric() || *c == '-')
+            .collect::<String>()
+            .to_ascii_lowercase();
+        if tag.starts_with('/') {
+            if n == name {
+                if depth == 0 {
+                    return Some((at, end + 1));
+                }
+                depth -= 1;
+            }
+        } else if !tag.ends_with('/') && is_tag(tag) {
+            if n == name {
+                depth += 1;
+            } else if !INLINE.contains(&n.as_str()) && !n.is_empty() {
+                return None; // a block inside: not one sentence
+            }
+        }
+        i = end + 1;
+    }
+    None
+}
+
+/// Text with at least one inline tag and letters outside the tags, short enough to be
+/// a sentence or a heading rather than a whole section.
+fn is_mixed_sentence(inner: &str) -> bool {
+    if inner.chars().count() > 400 || !inner.contains('<') {
+        return false;
+    }
+    let mut outside = String::new();
+    let mut inside = false;
+    for c in inner.chars() {
+        match c {
+            '<' => inside = true,
+            '>' => inside = false,
+            _ if !inside => outside.push(c),
+            _ => {}
+        }
+    }
+    let outside_ok = looks_like_copy(&clean(&outside));
+    outside_ok
+        && strip_interpolations(&outside)
+            .chars()
+            .filter(|c| c.is_alphabetic())
+            .count()
+            >= 3
 }
 
 const HTML_ELEMENTS: &[&str] = &[
@@ -516,7 +608,7 @@ fn make_hit(
         file: file.to_string(),
         line,
         text: text.to_string(),
-        key: key_for(text),
+        key: key_for(text, context == "jsx" || context == "markup"),
         kind: kind.to_string(),
         start,
         end,
@@ -766,16 +858,12 @@ fn strip_interpolations(s: &str) -> String {
 /// i18next-style natural key: the English text itself, with `${expr}` / `{expr}` turned
 /// into `{{0}}` placeholders. Key == English means `t()` needs no catalog for the source
 /// language: a missing translation falls back to the key.
-pub fn key_for(text: &str) -> String {
-    split_interpolations(text).0
-}
-
-pub fn value_for(text: &str) -> String {
-    split_interpolations(text).0
+pub fn key_for(text: &str, jsx: bool) -> String {
+    split_interpolations(text, jsx).0
 }
 
 /// `("Signed in as {{0}}.", ["email"])` for `Signed in as ${email}.`
-pub fn split_interpolations(text: &str) -> (String, Vec<String>) {
+pub fn split_interpolations(text: &str, jsx: bool) -> (String, Vec<String>) {
     let mut out = String::new();
     let mut exprs = Vec::new();
     let mut expr = String::new();
@@ -783,7 +871,9 @@ pub fn split_interpolations(text: &str) -> (String, Vec<String>) {
     let b = text.as_bytes();
     let mut i = 0;
     while i < b.len() {
-        if depth == 0 && ((b[i] == b'$' && b.get(i + 1) == Some(&b'{')) || b[i] == b'{') {
+        // `${expr}` everywhere; a bare `{expr}` only in JSX (in a template literal it is
+        // literal text, e.g. a JSON snippet inside <code>).
+        if depth == 0 && ((b[i] == b'$' && b.get(i + 1) == Some(&b'{')) || (jsx && b[i] == b'{')) {
             depth = 1;
             out.push_str(&format!("{{{{{}}}}}", exprs.len()));
             i += if b[i] == b'$' { 2 } else { 1 };
@@ -824,8 +914,7 @@ pub fn write_catalog(path: &Path, hits: &[Hit]) -> Result<(usize, usize)> {
         .iter()
         .filter(|h| h.skip.as_deref() != Some("fragment"))
     {
-        map.entry(h.key.clone())
-            .or_insert_with(|| value_for(&h.text));
+        map.entry(h.key.clone()).or_insert_with(|| h.key.clone());
     }
     if let Some(dir) = path.parent() {
         std::fs::create_dir_all(dir)?;
@@ -867,9 +956,7 @@ pub fn rewrite(root: &Path, hits: &[Hit], catalog: &Path, i18n: &Path) -> Result
         let mut edits: Vec<(usize, usize, String)> = Vec::new();
         for h in hs {
             let raw = &text[h.start..h.end];
-            let (key_text, exprs) = split_interpolations(&clean(raw));
-            let key = key_for(&clean(raw));
-            let _ = key_text;
+            let (key, exprs) = split_interpolations(&clean(raw), h.context == "jsx");
             let args = if exprs.is_empty() {
                 String::new()
             } else {

@@ -150,7 +150,6 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
         !text.contains("Leafslip") && !text.contains("Admin only"),
         "{text}"
     );
-    assert!(text.contains("fragment"), "{text}");
 
     let page = fs::read_to_string(root.join("src/site/page.ts")).unwrap();
     assert!(
@@ -169,8 +168,8 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
         "ignored word must stay:\n{page}"
     );
     assert!(
-        page.contains("<p>You have ${n} <em>new</em> answers.</p>"),
-        "fragment must stay:\n{page}"
+        page.contains("<p>${t(\"You have {{0}} <em>new</em> answers.\", { 0: n })}</p>"),
+        "sentence with inline markup is one string:\n{page}"
     );
     assert!(
         page.contains("placeholder=\"${t(\"Search forms\")}\""),
