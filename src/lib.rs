@@ -6,7 +6,9 @@
 
 pub mod config;
 pub mod core;
+pub mod engine;
 pub mod formats;
+pub mod glossary;
 pub mod init;
 pub mod lockfile;
 pub mod project;

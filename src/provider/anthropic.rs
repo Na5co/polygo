@@ -46,7 +46,7 @@ impl Provider for Anthropic {
             "max_tokens": 4096,
             "temperature": 0.2,
             "system": system_prompt(ctx),
-            "messages": [ { "role": "user", "content": user_prompt(batch) } ]
+            "messages": [ { "role": "user", "content": user_prompt(batch, ctx) } ]
         });
         let resp = post_json(
             &format!("{}/v1/messages", self.base_url),

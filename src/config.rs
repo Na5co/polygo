@@ -16,6 +16,20 @@ pub struct Config {
     pub provider: Provider,
     #[serde(default)]
     pub glossary: Option<PathBuf>,
+    /// Strings per provider call.
+    #[serde(default = "default_batch_size")]
+    pub batch_size: usize,
+    /// Parallel provider calls.
+    #[serde(default = "default_jobs")]
+    pub jobs: usize,
+}
+
+fn default_batch_size() -> usize {
+    20
+}
+
+fn default_jobs() -> usize {
+    1
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

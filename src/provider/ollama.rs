@@ -52,9 +52,17 @@ impl Provider for Ollama {
             "options": { "temperature": 0.2 },
             "messages": [
                 { "role": "system", "content": system_prompt(ctx) },
-                { "role": "user", "content": user_prompt(batch) }
+                { "role": "user", "content": user_prompt(batch, ctx) }
             ]
         });
+        let debug = std::env::var("POLYGO_DEBUG_PROMPT").is_ok();
+        if debug {
+            eprintln!(
+                "--- system ---\n{}\n--- user ---\n{}",
+                system_prompt(ctx),
+                user_prompt(batch, ctx)
+            );
+        }
         let resp =
             post_json(&format!("{}/api/chat", self.base_url), &[], &body).with_context(|| {
                 format!(
@@ -63,6 +71,9 @@ impl Provider for Ollama {
                 )
             })?;
         let content = resp["message"]["content"].as_str().unwrap_or("");
+        if debug {
+            eprintln!("--- response ---\n{content}");
+        }
         let wanted: Vec<&str> = batch.iter().map(|r| r.key.as_str()).collect();
         parse_translations_json(content, &wanted)
     }

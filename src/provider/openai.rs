@@ -45,7 +45,7 @@ impl Provider for OpenAiCompatible {
             "response_format": { "type": "json_schema", "json_schema": { "name": "translations", "schema": response_schema() } },
             "messages": [
                 { "role": "system", "content": system_prompt(ctx) },
-                { "role": "user", "content": user_prompt(batch) }
+                { "role": "user", "content": user_prompt(batch, ctx) }
             ]
         });
         let auth = self.api_key.as_ref().map(|k| format!("Bearer {k}"));

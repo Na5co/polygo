@@ -116,6 +116,19 @@ fn attach_locale_files(
 /// Expand a locale path template. `{locale}` is the BCP-47 tag as configured;
 /// `{android_locale}` is the Android resource-qualifier form (`pt-BR` → `pt-rBR`,
 /// `sr-Latn` → `b+sr+Latn`).
+/// Inverse of the key namespacing in `load_units`: `(file index, key within that file)`.
+pub fn split_key<'a>(cfg: &Config, key: &'a str) -> (usize, &'a str) {
+    if cfg.files.len() > 1 {
+        for (i, spec) in cfg.files.iter().enumerate() {
+            let prefix = format!("{}:", spec.path.display());
+            if let Some(rest) = key.strip_prefix(&prefix) {
+                return (i, rest);
+            }
+        }
+    }
+    (0, key)
+}
+
 pub fn locale_file(template: &str, locale: &str) -> String {
     template
         .replace("{locale}", locale)

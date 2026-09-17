@@ -29,7 +29,7 @@ pub struct KeyRecord {
     pub locales: BTreeMap<String, LocaleRecord>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Lock {
     #[serde(default = "default_version")]
     pub version: u32,
@@ -39,6 +39,15 @@ pub struct Lock {
 
 fn default_version() -> u32 {
     1
+}
+
+impl Default for Lock {
+    fn default() -> Self {
+        Lock {
+            version: default_version(),
+            keys: BTreeMap::new(),
+        }
+    }
 }
 
 /// State of one key in one locale.

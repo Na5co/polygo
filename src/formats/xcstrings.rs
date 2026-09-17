@@ -185,3 +185,60 @@ pub fn units(doc: &Document, source_locale: &str) -> Vec<Unit> {
     }
     out
 }
+
+/// Set (or add) the translation of `key` in `locale`. Locale keys are kept in
+/// Xcode's sorted order; `stringUnit` is written as `state` then `value`.
+pub fn set_translation(doc: &mut Document, key: &str, locale: &str, text: &str) -> bool {
+    let Some(entry) = doc
+        .root
+        .get_mut("strings")
+        .and_then(Value::as_object_mut)
+        .and_then(|s| s.get_mut(key))
+        .and_then(Value::as_object_mut)
+    else {
+        return false;
+    };
+    if !entry.contains_key("localizations") {
+        // Xcode orders entry fields alphabetically: comment, extractionState, localizations, ...
+        let mut rebuilt = serde_json::Map::new();
+        let mut inserted = false;
+        for (k, v) in std::mem::take(entry) {
+            if !inserted && k.as_str() > "localizations" {
+                rebuilt.insert("localizations".into(), Value::Object(Default::default()));
+                inserted = true;
+            }
+            rebuilt.insert(k, v);
+        }
+        if !inserted {
+            rebuilt.insert("localizations".into(), Value::Object(Default::default()));
+        }
+        *entry = rebuilt;
+    }
+    let locs = entry
+        .get_mut("localizations")
+        .and_then(Value::as_object_mut)
+        .expect("just ensured");
+    let mut unit = serde_json::Map::new();
+    unit.insert("state".into(), Value::String("translated".into()));
+    unit.insert("value".into(), Value::String(text.to_string()));
+    let mut loc_obj = serde_json::Map::new();
+    loc_obj.insert("stringUnit".into(), Value::Object(unit));
+    if let Some(existing) = locs.get_mut(locale) {
+        *existing = Value::Object(loc_obj);
+        return true;
+    }
+    let mut rebuilt = serde_json::Map::new();
+    let mut inserted = false;
+    for (k, v) in std::mem::take(locs) {
+        if !inserted && k.as_str() > locale {
+            rebuilt.insert(locale.to_string(), Value::Object(loc_obj.clone()));
+            inserted = true;
+        }
+        rebuilt.insert(k, v);
+    }
+    if !inserted {
+        rebuilt.insert(locale.to_string(), Value::Object(loc_obj));
+    }
+    *locs = rebuilt;
+    true
+}

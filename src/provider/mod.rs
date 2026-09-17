@@ -47,7 +47,7 @@ pub trait Provider {
 
 /// Build a provider from config. API keys come from the environment:
 /// `POLYGO_API_KEY` first, then `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`.
-pub fn from_config(cfg: &crate::config::Provider) -> Result<Box<dyn Provider>> {
+pub fn from_config(cfg: &crate::config::Provider) -> Result<Box<dyn Provider + Sync>> {
     let model = cfg.model.clone();
     Ok(match cfg.kind.as_str() {
         "mock" => Box::new(mock::Mock::default()),
@@ -78,16 +78,94 @@ fn api_key(names: &[&str]) -> Option<String> {
 
 // ---- shared prompt + parsing -------------------------------------------------------
 
-pub const SYSTEM_PROMPT: &str = "You are a professional software localizer. Translate user-interface strings \
-from {src} to {dst}. Rules: keep every placeholder exactly as written ({hint}); keep inline markup and HTML tags; \
-match the tone and terminology of the examples when given; be as short and natural as a native app would; \
-never add explanations. Respond with JSON only: {\"translations\":[{\"key\":\"...\",\"text\":\"...\"}]} \
-with one item per input key, in the same order.";
+pub const SYSTEM_PROMPT: &str = "You are a professional software localizer translating user-interface strings \
+from {src} into {dst}. Every \"translation\" value MUST be written in {dst}; copying the source text is a failure. \
+Rules: keep every placeholder exactly as written ({hint}); keep inline markup and HTML tags; match the tone and \
+terminology of the examples when given; be as short and natural as a native {dst} app would; never add explanations.\n\
+Respond with JSON only, one item per input key, in the same order:\n\
+{\"translations\":[{\"key\":\"<key>\",\"translation\":\"<{dst} text>\"}]}";
+
+pub fn locale_name(tag: &str) -> String {
+    let lower = tag.to_lowercase();
+    let mut parts = lower.split(['-', '_']);
+    let lang = parts.next().unwrap_or("");
+    let region = parts.next_back().filter(|r| r.len() == 2 || r.len() == 4);
+    let name = match lang {
+        "en" => "English",
+        "de" => "German",
+        "fr" => "French",
+        "es" => "Spanish",
+        "it" => "Italian",
+        "pt" => "Portuguese",
+        "nl" => "Dutch",
+        "sv" => "Swedish",
+        "da" => "Danish",
+        "nb" | "no" => "Norwegian",
+        "fi" => "Finnish",
+        "pl" => "Polish",
+        "cs" => "Czech",
+        "sk" => "Slovak",
+        "hu" => "Hungarian",
+        "ro" => "Romanian",
+        "bg" => "Bulgarian",
+        "el" => "Greek",
+        "tr" => "Turkish",
+        "ru" => "Russian",
+        "uk" => "Ukrainian",
+        "he" | "iw" => "Hebrew",
+        "ar" => "Arabic",
+        "fa" => "Persian",
+        "hi" => "Hindi",
+        "bn" => "Bengali",
+        "th" => "Thai",
+        "vi" => "Vietnamese",
+        "id" | "in" => "Indonesian",
+        "ms" => "Malay",
+        "ja" => "Japanese",
+        "ko" => "Korean",
+        "zh" => "Chinese",
+        "ca" => "Catalan",
+        "hr" => "Croatian",
+        "sr" => "Serbian",
+        "sl" => "Slovenian",
+        "lt" => "Lithuanian",
+        "lv" => "Latvian",
+        "et" => "Estonian",
+        "ta" => "Tamil",
+        "te" => "Telugu",
+        "ur" => "Urdu",
+        "sw" => "Swahili",
+        "af" => "Afrikaans",
+        "fil" | "tl" => "Filipino",
+        "ga" => "Irish",
+        "eu" => "Basque",
+        "gl" => "Galician",
+        "is" => "Icelandic",
+        _ => return tag.to_string(),
+    };
+    let qualifier = match (lang, region) {
+        ("zh", Some("hans")) | ("zh", Some("cn")) => Some("Simplified"),
+        ("zh", Some("hant")) | ("zh", Some("tw")) | ("zh", Some("hk")) => Some("Traditional"),
+        ("pt", Some("br")) => Some("Brazil"),
+        ("pt", Some("pt")) => Some("Portugal"),
+        ("en", Some("gb")) => Some("UK"),
+        ("en", Some("us")) => Some("US"),
+        ("es", Some("mx")) => Some("Mexico"),
+        ("es", Some("419")) => Some("Latin America"),
+        ("fr", Some("ca")) => Some("Canada"),
+        ("nl", Some("be")) => Some("Belgium"),
+        _ => None,
+    };
+    match qualifier {
+        Some(q) => format!("{name} ({q}) ({tag})"),
+        None => format!("{name} ({tag})"),
+    }
+}
 
 pub fn system_prompt(ctx: &Ctx) -> String {
     let mut s = SYSTEM_PROMPT
-        .replace("{src}", &ctx.source_locale)
-        .replace("{dst}", &ctx.target_locale)
+        .replace("{src}", &locale_name(&ctx.source_locale))
+        .replace("{dst}", &locale_name(&ctx.target_locale))
         .replace(
             "{hint}",
             ctx.format_hint
@@ -107,8 +185,13 @@ pub fn system_prompt(ctx: &Ctx) -> String {
     s
 }
 
-pub fn user_prompt(batch: &[Request]) -> String {
-    let mut s = String::new();
+pub fn user_prompt(batch: &[Request], ctx: &Ctx) -> String {
+    let src = locale_name(&ctx.source_locale);
+    let dst = locale_name(&ctx.target_locale);
+    let mut s = format!(
+        "Translate the following {} string(s) from {src} into {dst}.\n\n",
+        batch.len()
+    );
     for (i, r) in batch.iter().enumerate() {
         s.push_str(&format!(
             "### {} key: {}\nsource: {}\n",
@@ -130,7 +213,9 @@ pub fn user_prompt(batch: &[Request]) -> String {
         }
         s.push('\n');
     }
-    s.push_str("Return the JSON now.");
+    s.push_str(&format!(
+        "Now return the JSON with every \"translation\" written in {dst}."
+    ));
     s
 }
 
@@ -143,8 +228,8 @@ pub fn response_schema() -> serde_json::Value {
                 "type": "array",
                 "items": {
                     "type": "object",
-                    "properties": { "key": { "type": "string" }, "text": { "type": "string" } },
-                    "required": ["key", "text"]
+                    "properties": { "key": { "type": "string" }, "translation": { "type": "string" } },
+                    "required": ["key", "translation"]
                 }
             }
         },
@@ -155,7 +240,8 @@ pub fn response_schema() -> serde_json::Value {
 #[derive(Deserialize)]
 struct Item {
     key: String,
-    text: String,
+    #[serde(alias = "text", alias = "value", alias = "target")]
+    translation: String,
 }
 
 /// Parse a model response into translations for exactly `wanted` keys (in that order).
@@ -169,7 +255,7 @@ pub fn parse_translations_json(raw: &str, wanted: &[&str]) -> Result<Vec<Transla
     if let Some(items) = value.get("translations").and_then(|v| v.as_array()) {
         for it in items {
             if let Ok(item) = serde_json::from_value::<Item>(it.clone()) {
-                found.push((item.key, item.text));
+                found.push((item.key, item.translation));
             }
         }
     } else if let Some(obj) = value.as_object() {

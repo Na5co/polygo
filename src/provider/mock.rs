@@ -2,6 +2,9 @@
 
 use super::{Ctx, Provider, Request, Translation};
 use anyhow::{Result, bail};
+use std::sync::atomic::{AtomicUsize, Ordering};
+
+static CALLS: AtomicUsize = AtomicUsize::new(0);
 
 #[derive(Debug, Default, Clone)]
 pub struct Mock {
@@ -33,12 +36,32 @@ impl Provider for Mock {
         {
             bail!("mock provider: injected failure on key `{bad}`");
         }
-        Ok(batch
-            .iter()
-            .map(|r| Translation {
+        // Test hooks: POLYGO_MOCK_PANIC_AFTER=N aborts the process on the (N+1)th request
+        // (simulates a crash mid-run); POLYGO_MOCK_LOG=path appends every translated key.
+        let panic_after: Option<usize> = std::env::var("POLYGO_MOCK_PANIC_AFTER")
+            .ok()
+            .and_then(|v| v.parse().ok());
+        let log = std::env::var("POLYGO_MOCK_LOG").ok();
+        let mut out = Vec::with_capacity(batch.len());
+        for r in batch {
+            let n = CALLS.fetch_add(1, Ordering::SeqCst) + 1;
+            if panic_after.is_some_and(|limit| n > limit) {
+                eprintln!("mock provider: simulated crash after {} requests", n - 1);
+                std::process::exit(70);
+            }
+            if let Some(path) = &log {
+                use std::io::Write as _;
+                let mut f = std::fs::OpenOptions::new()
+                    .create(true)
+                    .append(true)
+                    .open(path)?;
+                writeln!(f, "{}", r.key)?;
+            }
+            out.push(Translation {
                 key: r.key.clone(),
                 text: format!("⟦{}⟧ {}", ctx.target_locale, r.source),
-            })
-            .collect())
+            });
+        }
+        Ok(out)
     }
 }

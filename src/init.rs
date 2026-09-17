@@ -193,7 +193,25 @@ pub fn detect(root: &Path) -> Result<Config> {
         source.get_or_insert(src_loc);
     }
     for (dir, locales) in flat_groups {
-        if locales.len() < 2 {
+        // A single `en.json` counts only inside a directory that is clearly for locales,
+        // so a stray `config/en.json` is not mistaken for a translation file.
+        let dir_name = dir
+            .file_name()
+            .map(|d| d.to_string_lossy().to_lowercase())
+            .unwrap_or_default();
+        let locale_dir = [
+            "locales",
+            "locale",
+            "i18n",
+            "lang",
+            "langs",
+            "languages",
+            "translations",
+            "messages",
+            "l10n",
+        ]
+        .contains(&dir_name.as_str());
+        if locales.len() < 2 && !locale_dir {
             continue;
         }
         let src_loc = pick_source(locales.iter(), source.as_deref());
@@ -223,6 +241,8 @@ pub fn detect(root: &Path) -> Result<Config> {
         files: specs,
         provider: Provider::default(),
         glossary: None,
+        batch_size: 20,
+        jobs: 1,
     })
 }
 

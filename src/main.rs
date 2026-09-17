@@ -18,7 +18,23 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Translate new or changed strings into every target locale.
-    Translate,
+    Translate {
+        /// Only these locales (comma-separated).
+        #[arg(long, value_delimiter = ',')]
+        locale: Option<Vec<String>>,
+        /// Strings per provider call (overrides polygo.toml).
+        #[arg(long)]
+        batch_size: Option<usize>,
+        /// Parallel provider calls (overrides polygo.toml).
+        #[arg(long)]
+        jobs: Option<usize>,
+        /// Show what would be translated and exit.
+        #[arg(long)]
+        dry_run: bool,
+        /// Print every translation as it is written.
+        #[arg(short, long)]
+        verbose: bool,
+    },
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
     Check,
     /// Show new / changed / stale / untranslated counts per locale.
@@ -40,7 +56,13 @@ enum Commands {
 fn main() {
     let cli = Cli::parse();
     let result = match cli.command {
-        Commands::Translate => todo_cmd("translate"),
+        Commands::Translate {
+            locale,
+            batch_size,
+            jobs,
+            dry_run,
+            verbose,
+        } => translate(&cli.root, locale, batch_size, jobs, dry_run, verbose),
         Commands::Check => todo_cmd("check"),
         Commands::Status { json } => status(&cli.root, json),
         Commands::Review => todo_cmd("review"),
@@ -55,6 +77,50 @@ fn main() {
 fn todo_cmd(name: &str) -> Result<()> {
     eprintln!("polygo {name}: not implemented yet");
     std::process::exit(2);
+}
+
+fn translate(
+    root: &Path,
+    locale: Option<Vec<String>>,
+    batch_size: Option<usize>,
+    jobs: Option<usize>,
+    dry_run: bool,
+    verbose: bool,
+) -> Result<()> {
+    let cfg = Config::load(root)?;
+    let provider = polygo::provider::from_config(&cfg.provider)?;
+    let opts = polygo::engine::Options {
+        locales: locale,
+        batch_size: batch_size.unwrap_or(cfg.batch_size),
+        jobs: jobs.unwrap_or(cfg.jobs),
+        dry_run,
+        verbose,
+    };
+    let report = polygo::engine::translate(root, &cfg, provider.as_ref(), &opts)?;
+    if dry_run {
+        for (l, keys) in &report.planned {
+            println!("{l:<8} {} to translate", keys.len());
+            for k in keys {
+                println!("  {k}");
+            }
+        }
+        return Ok(());
+    }
+    if report.translated == 0 {
+        println!("nothing to translate — everything is up to date");
+    } else {
+        println!(
+            "translated {} string(s) in {} batch(es) with {} ({})",
+            report.translated,
+            report.batches,
+            provider.name(),
+            provider.model()
+        );
+        for (l, n) in &report.per_locale {
+            println!("  {l:<8} {n}");
+        }
+    }
+    Ok(())
 }
 
 fn init(root: &Path, force: bool) -> Result<()> {

@@ -207,6 +207,18 @@ fn init_detects_flat_locale_files() {
 }
 
 #[test]
+fn init_detects_single_source_file_in_locales_dir() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    write(root, "locales/en.json", "{\"a\":\"A\"}\n");
+    write(root, "config/en.json", "{\"not\":\"a locale file\"}\n");
+    let cfg = detect(root).unwrap();
+    assert_eq!(cfg.files.len(), 1);
+    assert_eq!(cfg.files[0].path.to_string_lossy(), "locales/en.json");
+    assert!(cfg.target_locales.is_empty());
+}
+
+#[test]
 fn init_cli_writes_config_and_refuses_to_overwrite() {
     let dir = tempfile::tempdir().unwrap();
     let root = dir.path();

@@ -90,6 +90,16 @@ fn provider_response_parsing_is_forgiving() {
     assert!(parse_translations_json("no json here", &wanted).is_err());
 }
 
+#[test]
+fn provider_locale_names_are_spelled_out() {
+    use polygo::provider::locale_name;
+    assert_eq!(locale_name("ja"), "Japanese (ja)");
+    assert_eq!(locale_name("pt-BR"), "Portuguese (Brazil) (pt-BR)");
+    assert_eq!(locale_name("zh-Hans"), "Chinese (Simplified) (zh-Hans)");
+    assert_eq!(locale_name("nl-BE"), "Dutch (Belgium) (nl-BE)");
+    assert_eq!(locale_name("xx-YY"), "xx-YY");
+}
+
 #[cfg(feature = "live")]
 #[test]
 fn provider_ollama_smoke() {

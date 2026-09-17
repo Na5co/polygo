@@ -410,3 +410,80 @@ pub fn encode(text: &str) -> String {
     }
     out
 }
+
+impl Document {
+    /// Index of the entry named `name`, if any.
+    pub fn index_of(&self, name: &str) -> Option<usize> {
+        self.entries.iter().position(|e| e.name == name)
+    }
+
+    /// Append a new `<string>` before `</resources>`, matching the file's indentation.
+    pub fn insert_string(&mut self, name: &str, text: &str) {
+        let indent = self.detect_indent();
+        let close = self.text.rfind("</resources>").unwrap_or(self.text.len());
+        let element = format!(
+            "{indent}<string name=\"{}\">{}</string>\n",
+            escape_attr(name),
+            encode(text)
+        );
+        // Insert at the start of the line holding </resources>.
+        let line_start = self.text[..close].rfind('\n').map(|i| i + 1).unwrap_or(0);
+        let at = if self.text[line_start..close].trim().is_empty() {
+            line_start
+        } else {
+            close
+        };
+        self.text.insert_str(at, &element);
+        // Spans after `at` shift by the inserted length.
+        let shift = element.len();
+        for e in &mut self.entries {
+            for v in &mut e.values {
+                if let Some(s) = &mut v.span
+                    && s.start >= at
+                {
+                    s.start += shift;
+                    s.end += shift;
+                }
+                if v.element.start >= at {
+                    v.element.start += shift;
+                    v.element.end += shift;
+                }
+            }
+        }
+        self.entries.push(Entry {
+            kind: Kind::String,
+            name: name.to_string(),
+            translatable: true,
+            comment: None,
+            values: vec![Value {
+                raw: encode(text),
+                quantity: None,
+                span: None,
+                element: at..at + shift,
+                edited: None,
+            }],
+        });
+    }
+
+    fn detect_indent(&self) -> String {
+        for line in self.text.lines() {
+            if line.trim_start().starts_with("<string") || line.trim_start().starts_with("<plurals")
+            {
+                let ws: String = line.chars().take_while(|c| c.is_whitespace()).collect();
+                return ws;
+            }
+        }
+        "    ".to_string()
+    }
+}
+
+/// A fresh, empty resources file in the conventional Android style.
+pub fn empty_file() -> String {
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n</resources>\n".to_string()
+}
+
+fn escape_attr(s: &str) -> String {
+    s.replace('&', "&amp;")
+        .replace('"', "&quot;")
+        .replace('<', "&lt;")
+}

@@ -257,3 +257,157 @@ impl Parser<'_> {
         Ok(())
     }
 }
+
+/// Formatting facts detected from an existing file, used when a locale file has to be
+/// (re)built rather than spliced.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Style {
+    pub indent: String,
+    pub trailing_newline: bool,
+}
+
+impl Style {
+    pub fn detect(text: &str) -> Style {
+        let indent = text
+            .lines()
+            .skip(1)
+            .find(|l| !l.trim().is_empty())
+            .map(|l| {
+                l.chars()
+                    .take_while(|c| *c == ' ' || *c == '\t')
+                    .collect::<String>()
+            })
+            .filter(|s| !s.is_empty())
+            .unwrap_or_else(|| "  ".to_string());
+        Style {
+            indent,
+            trailing_newline: text.ends_with('\n'),
+        }
+    }
+}
+
+/// Pretty-print a tree in the common i18next/prettier style: `"key": value`,
+/// nested indentation, raw Unicode, no escaped slashes.
+pub fn render(tree: &serde_json::Value, style: &Style) -> String {
+    let mut out = String::new();
+    render_value(&mut out, tree, &style.indent, 0);
+    if style.trailing_newline {
+        out.push('\n');
+    }
+    out
+}
+
+fn render_value(out: &mut String, v: &serde_json::Value, indent: &str, depth: usize) {
+    use serde_json::Value;
+    let pad = |out: &mut String, d: usize| {
+        for _ in 0..d {
+            out.push_str(indent);
+        }
+    };
+    match v {
+        Value::Object(map) if !map.is_empty() => {
+            out.push_str("{\n");
+            let n = map.len();
+            for (i, (k, item)) in map.iter().enumerate() {
+                pad(out, depth + 1);
+                out.push_str(&encode_literal(k));
+                out.push_str(": ");
+                render_value(out, item, indent, depth + 1);
+                if i + 1 < n {
+                    out.push(',');
+                }
+                out.push('\n');
+            }
+            pad(out, depth);
+            out.push('}');
+        }
+        Value::Object(_) => out.push_str("{}"),
+        Value::Array(items) if !items.is_empty() => {
+            out.push_str("[\n");
+            let n = items.len();
+            for (i, item) in items.iter().enumerate() {
+                pad(out, depth + 1);
+                render_value(out, item, indent, depth + 1);
+                if i + 1 < n {
+                    out.push(',');
+                }
+                out.push('\n');
+            }
+            pad(out, depth);
+            out.push(']');
+        }
+        Value::Array(_) => out.push_str("[]"),
+        Value::String(s) => out.push_str(&encode_literal(s)),
+        other => out.push_str(&other.to_string()),
+    }
+}
+
+/// Build a locale tree shaped like `source`, taking string leaves from `values`
+/// (dotted-path → text) and falling back to `existing` for leaves not in `values`.
+/// Leaves with no value in either are omitted so i18next falls back to the source.
+pub fn build_locale_tree(
+    source: &serde_json::Value,
+    existing: Option<&serde_json::Value>,
+    values: &std::collections::BTreeMap<String, String>,
+) -> serde_json::Value {
+    fn go(
+        node: &serde_json::Value,
+        existing: Option<&serde_json::Value>,
+        path: &mut Vec<String>,
+        values: &std::collections::BTreeMap<String, String>,
+    ) -> Option<serde_json::Value> {
+        use serde_json::Value;
+        match node {
+            Value::Object(map) => {
+                let mut out = serde_json::Map::new();
+                for (k, v) in map {
+                    path.push(k.clone());
+                    let ex = existing.and_then(|e| e.get(k));
+                    if let Some(built) = go(v, ex, path, values) {
+                        out.insert(k.clone(), built);
+                    }
+                    path.pop();
+                }
+                // Keep keys that only exist in the target file (e.g. locale-specific extras).
+                if let Some(Value::Object(ex)) = existing {
+                    for (k, v) in ex {
+                        if !out.contains_key(k) && !map.contains_key(k) {
+                            out.insert(k.clone(), v.clone());
+                        }
+                    }
+                }
+                if out.is_empty() {
+                    None
+                } else {
+                    Some(Value::Object(out))
+                }
+            }
+            Value::Array(items) => {
+                let mut out = Vec::new();
+                for (i, v) in items.iter().enumerate() {
+                    path.push(i.to_string());
+                    let ex = existing.and_then(|e| e.get(i));
+                    if let Some(built) = go(v, ex, path, values) {
+                        out.push(built);
+                    }
+                    path.pop();
+                }
+                if out.is_empty() {
+                    None
+                } else {
+                    Some(Value::Array(out))
+                }
+            }
+            Value::String(_) => {
+                let key = path.join(".");
+                values
+                    .get(&key)
+                    .map(|t| Value::String(t.clone()))
+                    .or_else(|| existing.filter(|e| e.is_string()).cloned())
+            }
+            other => Some(other.clone()),
+        }
+    }
+    go(source, existing, &mut Vec::new(), values)
+        .unwrap_or(serde_json::Value::Object(Default::default()))
+}
