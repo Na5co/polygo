@@ -1,6 +1,6 @@
 [package]
 name = "polygo"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Lokalise for one person: a local-first, git-native localization CLI"
 license = "MIT"

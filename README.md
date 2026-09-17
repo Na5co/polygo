@@ -125,7 +125,7 @@ polygo use openai/llama-3.3-70b --base-url https://api.groq.com/openai/v1   # an
 
 ## Privacy
 
-- **No telemetry, no analytics, no update checks.** The only network request polygo makes is the translation call to the provider in your `polygo.toml`. With the default Ollama provider that is `127.0.0.1:11434`.
+- **No telemetry, no analytics, no update checks.** The only network request polygo makes is the translation call to the provider in your `polygo.toml`. With the default Ollama provider that is `127.0.0.1:11434`. The one opt-in exception: set `PHOENIX_COLLECTOR_ENDPOINT` and prompts and replies are also exported as traces to that address, for your own [Phoenix](docs/README.md#tracing-with-phoenix) instance.
 - `check`, `status`, `review` and `init` never touch the network. `translate --dry-run` lists what would be sent and sends nothing. The test suite makes no network calls.
 - `polygo review` binds to `127.0.0.1` only and rejects requests whose `Host` header is not localhost.
 - Nothing is written outside your repo (`polygo.toml`, `polygo.lock`, your string files) except `~/.config/polygo/` when you ask for it with `--global` or `--api-key`.

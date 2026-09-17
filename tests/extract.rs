@@ -117,7 +117,7 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
     fs::create_dir_all(root.join("src/admin")).unwrap();
     fs::write(
         root.join("src/site/page.ts"),
-        "import { escapeHtml } from \"../util\";\n\nexport const page = (email: string, n: number) => `<section>\n  <h2>Your forms</h2>\n  <p>Signed in as ${escapeHtml(email)}.</p>\n  <p>Welcome to Leafslip.</p>\n  <p>You have ${n} <em>new</em> answers.</p>\n  <input placeholder=\"Search forms\">\n</section>`;\n",
+        "import { escapeHtml } from \"../util\";\n\nexport const page = (email: string, n: number) => `<section>\n  <h2>Your forms</h2>\n  <p>Signed in as ${escapeHtml(email)}.</p>\n  <p>Welcome to Leafslip.</p>\n  <p>You have ${n} <em>new</em> answers.</p>\n  <a class=\"cta\" href=\"/new\">Write a form</a>\n  <input placeholder=\"Search forms\">\n</section>`;\n",
     )
     .unwrap();
     fs::write(
@@ -150,7 +150,6 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
         !text.contains("Leafslip") && !text.contains("Admin only"),
         "{text}"
     );
-    assert!(text.contains("fragment"), "{text}");
 
     let page = fs::read_to_string(root.join("src/site/page.ts")).unwrap();
     assert!(
@@ -169,12 +168,17 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
         "ignored word must stay:\n{page}"
     );
     assert!(
-        page.contains("<p>You have ${n} <em>new</em> answers.</p>"),
-        "fragment must stay:\n{page}"
+        page.contains("<p>${t(\"You have {{0}} <em>new</em> answers.\", { 0: n })}</p>"),
+        "sentence with inline markup is one string:\n{page}"
     );
     assert!(
         page.contains("placeholder=\"${t(\"Search forms\")}\""),
         "{page}"
+    );
+
+    assert!(
+        page.contains("<a class=\"cta\" href=\"/new\">${t(\"Write a form\")}</a>"),
+        "whole inline element is not a fragment:\n{page}"
     );
 
     let app = fs::read_to_string(root.join("src/App.tsx")).unwrap();

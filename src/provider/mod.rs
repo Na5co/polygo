@@ -6,6 +6,7 @@ pub mod mock;
 pub mod ollama;
 pub mod openai;
 
+use crate::trace::{Kind, Span};
 use anyhow::{Context as _, Result, bail};
 use serde::Deserialize;
 
@@ -54,12 +55,41 @@ pub struct Outcome {
     pub review: Vec<Review>,
 }
 
+/// Token counts as the backend reported them, when it did.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct Usage {
+    pub input_tokens: u64,
+    pub output_tokens: u64,
+}
+
+/// One raw model reply: the text, plus usage for the trace.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct Reply {
+    pub text: String,
+    pub usage: Option<Usage>,
+}
+
+impl From<String> for Reply {
+    fn from(text: String) -> Self {
+        Reply { text, usage: None }
+    }
+}
+
+impl From<&str> for Reply {
+    fn from(text: &str) -> Self {
+        Reply {
+            text: text.to_string(),
+            usage: None,
+        }
+    }
+}
+
 pub trait Provider: Sync {
     fn name(&self) -> &str;
     fn model(&self) -> &str;
     /// One raw model call. Backends only implement this; prompting, parsing, repair
     /// and quarantine live in [`run`] so every backend behaves identically.
-    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<String>;
+    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<Reply>;
 
     /// Like [`complete`](Self::complete) but asking for a different JSON shape (used by
     /// `polygo audit`). Backends that enforce a schema override this; the default just
@@ -70,8 +100,36 @@ pub trait Provider: Sync {
         user: &str,
         ctx: &Ctx,
         _schema: &serde_json::Value,
-    ) -> Result<String> {
+    ) -> Result<Reply> {
         self.complete(system, user, ctx)
+    }
+
+    /// [`complete`](Self::complete) recorded as an `LLM` span under `parent` (a no-op
+    /// span when tracing is off). Every call the engine makes goes through here.
+    fn complete_traced(
+        &self,
+        parent: &Span,
+        name: &str,
+        system: &str,
+        user: &str,
+        ctx: &Ctx,
+        schema: Option<&serde_json::Value>,
+    ) -> Result<String> {
+        let mut span = parent.child(name, Kind::Llm);
+        span.set("llm.provider", self.name())
+            .set("llm.system", self.name())
+            .set("llm.model_name", self.model())
+            .set_prompt(system, user);
+        let result = match schema {
+            Some(s) => self.complete_json(system, user, ctx, s),
+            None => self.complete(system, user, ctx),
+        };
+        match &result {
+            Ok(reply) => span.set_reply(reply),
+            Err(e) => span.set_error(e),
+        };
+        span.end();
+        result.map(|r| r.text)
     }
 
     fn translate(&self, batch: &[Request], ctx: &Ctx) -> Result<Outcome> {
@@ -80,12 +138,68 @@ pub trait Provider: Sync {
 }
 
 /// Prompt → parse → validate → one repair round → quarantine what is still wrong.
+/// One trace per batch when tracing is on (see [`crate::trace`]).
 pub fn run<P: Provider + ?Sized>(provider: &P, batch: &[Request], ctx: &Ctx) -> Result<Outcome> {
     if batch.is_empty() {
         return Ok(Outcome::default());
     }
+    let mut span = Span::root("translate batch", Kind::Chain);
+    span.set("polygo.source_locale", ctx.source_locale.as_str())
+        .set("polygo.target_locale", ctx.target_locale.as_str())
+        .set_int("polygo.batch_size", batch.len() as i64)
+        .set("input.mime_type", "application/json")
+        .set(
+            "input.value",
+            serde_json::json!(
+                batch
+                    .iter()
+                    .map(|r| serde_json::json!({ "key": r.key, "source": r.source }))
+                    .collect::<Vec<_>>()
+            )
+            .to_string(),
+        );
+    let result = run_traced(provider, batch, ctx, &span);
+    match &result {
+        Ok(outcome) => {
+            span.set_int("polygo.translated", outcome.translations.len() as i64)
+                .set_int("polygo.review", outcome.review.len() as i64)
+                .set("output.mime_type", "application/json")
+                .set(
+                    "output.value",
+                    serde_json::json!({
+                        "translations": outcome.translations.iter()
+                            .map(|t| serde_json::json!({ "key": t.key, "text": t.text }))
+                            .collect::<Vec<_>>(),
+                        "review": outcome.review.iter()
+                            .map(|r| serde_json::json!({ "key": r.key, "reason": r.reason, "suggestion": r.suggestion }))
+                            .collect::<Vec<_>>(),
+                    })
+                    .to_string(),
+                );
+        }
+        Err(e) => {
+            span.set_error(e);
+        }
+    }
+    span.end();
+    result
+}
+
+fn run_traced<P: Provider + ?Sized>(
+    provider: &P,
+    batch: &[Request],
+    ctx: &Ctx,
+    span: &Span,
+) -> Result<Outcome> {
     let system = system_prompt(ctx);
-    let raw = provider.complete(&system, &user_prompt(batch, ctx), ctx)?;
+    let raw = provider.complete_traced(
+        span,
+        "translate",
+        &system,
+        &user_prompt(batch, ctx),
+        ctx,
+        None,
+    )?;
     let wanted: Vec<&str> = batch.iter().map(|r| r.key.as_str()).collect();
     let mut found = parse_translations_lenient(&raw, &wanted);
     let mut problems = validate(batch, ctx, &found, &[]);
@@ -106,7 +220,7 @@ pub fn run<P: Provider + ?Sized>(provider: &P, batch: &[Request], ctx: &Ctx) -> 
 Otherwise fix the listed problems and reply with the JSON only.\n\n",
         );
         let user = format!("{note}{}", user_prompt(&retry, ctx));
-        let raw2 = provider.complete(&system, &user, ctx)?;
+        let raw2 = provider.complete_traced(span, "repair", &system, &user, ctx, None)?;
         let retry_wanted: Vec<&str> = retry.iter().map(|r| r.key.as_str()).collect();
         let repaired = parse_translations_lenient(&raw2, &retry_wanted);
         // Identical-to-source is accepted once the model confirms it on the second ask.
@@ -140,7 +254,14 @@ Otherwise fix the listed problems and reply with the JSON only.\n\n",
         })
         .collect();
     if !echoes.is_empty() {
-        let raw3 = provider.complete(&system, &user_prompt(&echoes, ctx), ctx)?;
+        let raw3 = provider.complete_traced(
+            span,
+            "echo retry",
+            &system,
+            &user_prompt(&echoes, ctx),
+            ctx,
+            None,
+        )?;
         let wanted3: Vec<&str> = echoes.iter().map(|r| r.key.as_str()).collect();
         for t in parse_translations_lenient(&raw3, &wanted3) {
             let src = &echoes.iter().find(|r| r.key == t.key).unwrap().source;

@@ -1,6 +1,6 @@
 //! Anthropic Messages API.
 
-use super::{Ctx, Provider, post_json};
+use super::{Ctx, Provider, Reply, Usage, post_json};
 use anyhow::{Context as _, Result, bail};
 
 pub struct Anthropic {
@@ -31,7 +31,7 @@ impl Provider for Anthropic {
         &self.model
     }
 
-    fn complete(&self, system: &str, user: &str, _ctx: &Ctx) -> Result<String> {
+    fn complete(&self, system: &str, user: &str, _ctx: &Ctx) -> Result<Reply> {
         let Some(key) = &self.api_key else {
             bail!("anthropic provider needs ANTHROPIC_API_KEY (or POLYGO_API_KEY)");
         };
@@ -51,7 +51,7 @@ impl Provider for Anthropic {
             &body,
         )
         .context("anthropic messages API")?;
-        Ok(resp["content"]
+        let text = resp["content"]
             .as_array()
             .map(|parts| {
                 parts
@@ -60,6 +60,13 @@ impl Provider for Anthropic {
                     .collect::<Vec<_>>()
                     .join("")
             })
-            .unwrap_or_default())
+            .unwrap_or_default();
+        let usage = resp["usage"]["input_tokens"]
+            .as_u64()
+            .map(|input_tokens| Usage {
+                input_tokens,
+                output_tokens: resp["usage"]["output_tokens"].as_u64().unwrap_or(0),
+            });
+        Ok(Reply { text, usage })
     }
 }

@@ -1,7 +1,7 @@
 //! Any OpenAI-compatible `/v1/chat/completions` endpoint (OpenAI, llama.cpp server,
 //! vLLM, LM Studio, OpenRouter, ...).
 
-use super::{Ctx, Provider, post_json, response_schema};
+use super::{Ctx, Provider, Reply, Usage, post_json, response_schema};
 use anyhow::{Context as _, Result};
 
 pub struct OpenAiCompatible {
@@ -32,7 +32,7 @@ impl Provider for OpenAiCompatible {
         &self.model
     }
 
-    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<String> {
+    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<Reply> {
         self.complete_json(system, user, ctx, &response_schema())
     }
 
@@ -42,7 +42,7 @@ impl Provider for OpenAiCompatible {
         user: &str,
         _ctx: &Ctx,
         schema: &serde_json::Value,
-    ) -> Result<String> {
+    ) -> Result<Reply> {
         let body = serde_json::json!({
             "model": self.model,
             "temperature": 0.2,
@@ -63,9 +63,16 @@ impl Provider for OpenAiCompatible {
             &body,
         )
         .with_context(|| format!("openai-compatible endpoint {}", self.base_url))?;
-        Ok(resp["choices"][0]["message"]["content"]
+        let text = resp["choices"][0]["message"]["content"]
             .as_str()
             .unwrap_or("")
-            .to_string())
+            .to_string();
+        let usage = resp["usage"]["prompt_tokens"]
+            .as_u64()
+            .map(|input_tokens| Usage {
+                input_tokens,
+                output_tokens: resp["usage"]["completion_tokens"].as_u64().unwrap_or(0),
+            });
+        Ok(Reply { text, usage })
     }
 }
