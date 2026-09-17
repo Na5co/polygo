@@ -131,3 +131,45 @@ fn check_text_reports_fragment_as_warning() {
         "{f:?}"
     );
 }
+
+#[test]
+fn fragment_ignores_entities_handles_paths_and_hyphenated_code() {
+    use polygo::check::text::untranslated_fragment;
+    let f = |s: &str, t: &str| untranslated_fragment(s, t, &[]);
+    assert_eq!(
+        f(
+            "Still open &mdash; {{0}}.",
+            "Все още отворено &mdash; {{0}}."
+        ),
+        None
+    );
+    assert_eq!(
+        f(
+            "Slack &middot; used by @slack",
+            "Slack &middot; използва се от @slack"
+        ),
+        None
+    );
+    assert_eq!(
+        f(
+            "Nothing, only {{0}}/form-name works",
+            "Нищо, само {{0}}/form-name работи"
+        ),
+        None
+    );
+    assert_eq!(
+        f(
+            "Mail user@example.com now",
+            "Пишете на user@example.com сега"
+        ),
+        None
+    );
+    // A real stray word still fires.
+    assert_eq!(
+        f(
+            "Still open &mdash; check later.",
+            "Все още отворено &mdash; check по-късно."
+        ),
+        Some(vec!["check".to_string()])
+    );
+}

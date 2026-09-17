@@ -17,7 +17,7 @@
 //! - `POLYGO_MOCK_BREAK_PLACEHOLDER=k`      drop the first `%` placeholder for key `k`
 //! - `POLYGO_MOCK_BREAK_PLACEHOLDER_ONCE`   like BREAK_PLACEHOLDER but only on the first call
 
-use super::{Ctx, Provider};
+use super::{Ctx, Provider, Reply};
 use anyhow::Result;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
@@ -55,7 +55,7 @@ impl Provider for Mock {
         user: &str,
         _ctx: &Ctx,
         _schema: &serde_json::Value,
-    ) -> Result<String> {
+    ) -> Result<Reply> {
         // Audit prompts use the same `### n key: <key>` / `source …: <text>` layout.
         let bad: Vec<String> = env("POLYGO_MOCK_AUDIT_BAD")
             .map(|v| v.split(',').map(str::to_string).collect())
@@ -71,10 +71,12 @@ impl Provider for Mock {
                 })
             })
             .collect();
-        Ok(serde_json::json!({ "verdicts": verdicts }).to_string())
+        Ok(serde_json::json!({ "verdicts": verdicts })
+            .to_string()
+            .into())
     }
 
-    fn complete(&self, _system: &str, user: &str, ctx: &Ctx) -> Result<String> {
+    fn complete(&self, _system: &str, user: &str, ctx: &Ctx) -> Result<Reply> {
         let call = CALLS.fetch_add(1, Ordering::SeqCst) + 1;
         if let Some(path) = env("POLYGO_MOCK_DUMP") {
             use std::io::Write as _;
@@ -152,7 +154,9 @@ impl Provider for Mock {
             };
             items.push(serde_json::json!({ "key": key, "translation": text }));
         }
-        Ok(serde_json::json!({ "translations": items }).to_string())
+        Ok(serde_json::json!({ "translations": items })
+            .to_string()
+            .into())
     }
 }
 

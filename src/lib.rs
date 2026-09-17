@@ -23,3 +23,4 @@ pub mod project;
 pub mod provider;
 pub mod pseudo;
 pub mod review;
+pub mod trace;

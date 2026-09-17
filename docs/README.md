@@ -107,6 +107,25 @@ Every provider gets the same prompt: the source string, its key, the developer c
 
 `POLYGO_DEBUG_PROMPT=1` prints every prompt and raw response to stderr.
 
+### Tracing with Phoenix
+
+Set `PHOENIX_COLLECTOR_ENDPOINT` and every batch is exported as a trace to
+[Arize Phoenix](https://github.com/Arize-ai/phoenix) (or any OTLP/HTTP collector):
+one span per batch with its input strings and outcome, and one `LLM` span per model
+call with the system and user prompt, the raw reply, token counts, latency and errors.
+Repair rounds and echo retries show up as their own spans, so you can see which strings
+cost a second call and why. All batches of one run share a session.
+
+```sh
+docker run -p 6006:6006 arizephoenix/phoenix:latest   # or: pip install arize-phoenix && phoenix serve
+PHOENIX_COLLECTOR_ENDPOINT=http://localhost:6006 polygo translate
+```
+
+`PHOENIX_PROJECT_NAME` picks the project (default `polygo`); `PHOENIX_API_KEY` is sent
+as a bearer token for a hosted or auth-enabled instance. Off when the endpoint is unset;
+an unreachable collector is reported once and never fails a run. Prompts are sent as-is,
+so point it only at a collector you trust with your strings.
+
 ## How it was built
 
 [`docs/dev/GAUNTLET.md`](dev/GAUNTLET.md) is the build log: every feature as a gate with an acceptance command, the A/B and kill-test results, and what broke along the way. `bench/` holds the A/B and kill-test data.

@@ -198,7 +198,32 @@ pub fn untranslated_fragment(
         prose.split(|c: char| !c.is_alphanumeric()).collect();
     let allowed_lower: Vec<String> = allowed.iter().map(|a| a.to_lowercase()).collect();
     let mut hits = Vec::new();
-    for word in stripped.split(|c: char| !c.is_alphanumeric() && c != '\'') {
+    // Whitespace-delimited tokens first: `form-name`, `@slack`, `a/b`, `&mdash;` and
+    // `user@x.com` are code, handles, paths and entities, not words to translate.
+    let tokens = stripped.split_whitespace().filter(|t| {
+        let core = t.trim_matches(|c: char| {
+            matches!(
+                c,
+                '.' | ','
+                    | '!'
+                    | '?'
+                    | ':'
+                    | ';'
+                    | ')'
+                    | '('
+                    | '"'
+                    | '\u{201c}'
+                    | '\u{201d}'
+                    | '\u{00ab}'
+                    | '\u{00bb}'
+            )
+        });
+        !core.is_empty()
+            && core
+                .chars()
+                .all(|c| c.is_alphanumeric() || c == '\'' || c == '\u{2019}')
+    });
+    for word in tokens.flat_map(|t| t.split(|c: char| !c.is_alphanumeric() && c != '\'')) {
         let w = word.trim_matches('\'');
         if w.chars().count() <= 2
             || !w.chars().all(|c| is_latin(c) && c.is_lowercase())

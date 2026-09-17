@@ -453,6 +453,9 @@ fn translate(root: &Path, args: TranslateArgs) -> Result<()> {
         for (l, n) in &report.per_locale {
             println!("  {l:<8} {n}");
         }
+        if let Some(url) = polygo::trace::ui_url() {
+            println!("traces: {url}");
+        }
     }
     if !report.review.is_empty() {
         eprintln!(

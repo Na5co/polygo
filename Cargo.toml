@@ -8,7 +8,7 @@ repository = "https://github.com/Na5co/polygo"
 readme = "README.md"
 keywords = ["i18n", "localization", "translation", "xcstrings", "cli"]
 categories = ["command-line-utilities", "internationalization", "development-tools"]
-exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "packaging/*", ".github/*"]
+exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "packaging/*"]
 
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/polygo-v{ version }-{ target-arch }-{ target-family }{ archive-suffix }"

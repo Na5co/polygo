@@ -5,6 +5,7 @@
 use crate::config::Config;
 use crate::core::Unit;
 use crate::provider::{Ctx, Provider, locale_name};
+use crate::trace::{Kind, Span};
 use anyhow::{Context, Result};
 use serde::Serialize;
 use std::collections::BTreeMap;
@@ -155,9 +156,24 @@ pub fn run(
         let total = items.len().div_ceil(opts.batch_size.max(1));
         for (i, batch) in items.chunks(opts.batch_size.max(1)).enumerate() {
             progress(locale, i + 1, total);
+            let mut span = Span::root("audit batch", Kind::Chain);
+            span.set("polygo.target_locale", locale.as_str())
+                .set_int("polygo.batch_size", batch.len() as i64);
             let raw = judge
-                .complete_json(&system, &user_prompt(batch, &ctx, &usages), &ctx, &schema())
+                .complete_traced(
+                    &span,
+                    "audit",
+                    &system,
+                    &user_prompt(batch, &ctx, &usages),
+                    &ctx,
+                    Some(&schema()),
+                )
+                .inspect_err(|e| {
+                    span.set_error(e);
+                })
                 .with_context(|| format!("{locale}: audit batch {}/{total}", i + 1))?;
+            span.set("output.value", raw.as_str());
+            span.end();
             let verdicts = parse(&raw);
             for (n, (u, t)) in batch.iter().enumerate() {
                 let (score, issue) = lookup(&verdicts, &u.key, &u.source, n + 1)
