@@ -1,0 +1,422 @@
+[
+ {
+  "key": "#%@",
+  "locale": "nl",
+  "source": "#%@",
+  "translation": "#",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ add-tag-groups.edit.tags.field.warning.search-results.already-selected",
+  "locale": "fr",
+  "source": "%@ is already selected",
+  "translation": "%@ %@ est déjà sélectionné",
+  "kind": "dup"
+ },
+ {
+  "key": "%@© 2024 Thomas Ricouard",
+  "locale": "en-GB",
+  "source": "%@© 2024 Thomas Ricouard",
+  "translation": "%d© 2024 Thomas Ricouard",
+  "kind": "retype"
+ },
+ {
+  "key": "%@© 2024 Thomas Ricouard",
+  "locale": "it",
+  "source": "%@© 2024 Thomas Ricouard",
+  "translation": "%@ %@© 2024 Thomas Ricouard",
+  "kind": "dup"
+ },
+ {
+  "key": "Posted %lld image(s) on Mastodon",
+  "locale": "it",
+  "source": "Posted %lld image(s) on Mastodon",
+  "translation": "%lld %lld immagine(i) pubblicate su Mastodon",
+  "kind": "dup"
+ },
+ {
+  "key": "accessibility.image.alt-text-%@",
+  "locale": "it",
+  "source": "Image alt text: %@",
+  "translation": "Testo alternativo immagine: %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "accessibility.image.alt-text-%@",
+  "locale": "ja",
+  "source": "Image alt text: %@",
+  "translation": "画像の代替テキスト: %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "accessibility.status.a-replied-to-%@",
+  "locale": "en-GB",
+  "source": "%@ replied to",
+  "translation": "%@ %@ replied to",
+  "kind": "dup"
+ },
+ {
+  "key": "accessibility.status.a-replied-to-%@",
+  "locale": "ko",
+  "source": "%@ replied to",
+  "translation": "%d님이 다음 사용자의 글에 답글을 남김: ",
+  "kind": "retype"
+ },
+ {
+  "key": "accessibility.status.a-replied-to-%@",
+  "locale": "nl",
+  "source": "%@ replied to",
+  "translation": "%d heeft geantwoord op",
+  "kind": "retype"
+ },
+ {
+  "key": "accessibility.status.contains-media.label-%@",
+  "locale": "eu",
+  "source": "Contains %@",
+  "translation": "%d dauka",
+  "kind": "retype"
+ },
+ {
+  "key": "accessibility.status.contains-media.label-%@",
+  "locale": "ko",
+  "source": "Contains %@",
+  "translation": "%@ %@ 첨부됨",
+  "kind": "dup"
+ },
+ {
+  "key": "accessibility.status.contains-media.label-%@",
+  "locale": "pl",
+  "source": "Contains %@",
+  "translation": "Zawiera ",
+  "kind": "drop"
+ },
+ {
+  "key": "accessibility.status.poll.option-prefix-%lld-of-%lld",
+  "locale": "it",
+  "source": "Option %lld of %lld",
+  "translation": "Opzione  di %lld",
+  "kind": "drop"
+ },
+ {
+  "key": "accessibility.tabs.timeline.content-hashtag-%@",
+  "locale": "nb",
+  "source": "Hashtag %@",
+  "translation": "Emneknagg ",
+  "kind": "drop"
+ },
+ {
+  "key": "account.action.block-user-%@",
+  "locale": "pl",
+  "source": "Block %@",
+  "translation": "Zablokuj %d",
+  "kind": "retype"
+ },
+ {
+  "key": "design.tag.n-posts-from-n-participants %lld %lld",
+  "locale": "it",
+  "source": "%#@count_posts@ posts from %#@count_participants@ participants",
+  "translation": " post da %#@count_participants@ partecipanti",
+  "kind": "drop"
+ },
+ {
+  "key": "design.tag.n-posts-from-n-participants %lld %lld",
+  "locale": "tr",
+  "source": "%#@count_posts@ posts from %#@count_participants@ participants",
+  "translation": " %#@count_participants@",
+  "kind": "drop"
+ },
+ {
+  "key": "explore.search.message-%@",
+  "locale": "de",
+  "source": "From this screen you can search anything on %@",
+  "translation": "Hier kannst du alles auf %d suchen",
+  "kind": "retype"
+ },
+ {
+  "key": "explore.search.message-%@",
+  "locale": "es",
+  "source": "From this screen you can search anything on %@",
+  "translation": "Desde esta pantalla puedes buscar cualquier cosa en %d",
+  "kind": "retype"
+ },
+ {
+  "key": "explore.search.message-%@",
+  "locale": "eu",
+  "source": "From this screen you can search anything on %@",
+  "translation": "Pantaila honetan (e)ko edozer bila dezakezu",
+  "kind": "drop"
+ },
+ {
+  "key": "explore.search.message-%@",
+  "locale": "zh-Hans",
+  "source": "From this screen you can search anything on %@",
+  "translation": "在此界面上，你可以搜索 %@ %@ 上的任何信息",
+  "kind": "dup"
+ },
+ {
+  "key": "instance.list.users-%@",
+  "locale": "nb",
+  "source": "%@ users",
+  "translation": " brukere",
+  "kind": "drop"
+ },
+ {
+  "key": "instance.list.users-%@",
+  "locale": "nb",
+  "source": "%@ users",
+  "translation": "%d brukere",
+  "kind": "retype"
+ },
+ {
+  "key": "lists.add-remove-%@",
+  "locale": "nb",
+  "source": "Add/Remove %@",
+  "translation": "Legg til/Fjern %d",
+  "kind": "retype"
+ },
+ {
+  "key": "settings.account.cached-posts-%@",
+  "locale": "en-GB",
+  "source": "Cached Posts: %@",
+  "translation": "Cached Posts: ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.account.cached-posts-%@",
+  "locale": "pl",
+  "source": "Cached Posts: %@",
+  "translation": "Liczba postów w buforze: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "settings.account.cached-posts-%@",
+  "locale": "zh-Hant",
+  "source": "Cached Posts: %@",
+  "translation": "快取嘟文：%@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "settings.display.font.scaling-%@",
+  "locale": "en-GB",
+  "source": "Font Scaling: %@",
+  "translation": "Font Scaling: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "settings.display.font.scaling-%@",
+  "locale": "pt-BR",
+  "source": "Font Scaling: %@",
+  "translation": "Escala de fonte: ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.display.font.scaling-%@",
+  "locale": "tr",
+  "source": "Font Scaling: %@",
+  "translation": "Font ölçeklendirme: %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "settings.display.font.scaling-%@",
+  "locale": "uk",
+  "source": "Font Scaling: %@",
+  "translation": "Масштабування шкрифта: ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.display.max-reply-indentation-%@",
+  "locale": "es",
+  "source": "Max reply indentation: %@",
+  "translation": "Sangría máxima de respuesta: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "settings.display.max-reply-indentation-%@",
+  "locale": "ko",
+  "source": "Max reply indentation: %@",
+  "translation": "최대 %d번까지 들여쓰기",
+  "kind": "retype"
+ },
+ {
+  "key": "settings.section.app.footer %@",
+  "locale": "es",
+  "source": "App Version: %@",
+  "translation": "Versión: ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.section.app.footer %@",
+  "locale": "zh-Hans",
+  "source": "App Version: %@",
+  "translation": "版本：",
+  "kind": "drop"
+ },
+ {
+  "key": "status.action.translated-label-%@",
+  "locale": "zh-Hans",
+  "source": "Translated using %@",
+  "translation": "由 %@ %@ 翻译",
+  "kind": "dup"
+ },
+ {
+  "key": "status.action.translated-label-from-%@-%@",
+  "locale": "eu",
+  "source": "Translated from %@ using %@",
+  "translation": "%@ %@(e)tik %@ erabiliz itzulia",
+  "kind": "dup"
+ },
+ {
+  "key": "status.action.translated-label-from-%@-%@",
+  "locale": "eu",
+  "source": "Translated from %@ using %@",
+  "translation": "%d(e)tik %@ erabiliz itzulia",
+  "kind": "retype"
+ },
+ {
+  "key": "status.action.translated-label-from-%@-%@",
+  "locale": "pt-BR",
+  "source": "Translated from %@ using %@",
+  "translation": "Traduzido de  usando %@",
+  "kind": "drop"
+ },
+ {
+  "key": "status.editor.language-select.confirmation.detected-%@",
+  "locale": "be",
+  "source": "Post in %@ (Detected language)",
+  "translation": "Апублікаваць на %@ %@ (выяўленая мова)",
+  "kind": "dup"
+ },
+ {
+  "key": "status.editor.language-select.confirmation.selected-%@",
+  "locale": "en-GB",
+  "source": "Post in %@ (Selected language)",
+  "translation": "Post in  (Selected language)",
+  "kind": "drop"
+ },
+ {
+  "key": "status.editor.language-select.confirmation.selected-%@",
+  "locale": "tr",
+  "source": "Post in %@ (Selected language)",
+  "translation": "%d dilinde gönderi (Seçili dil)",
+  "kind": "retype"
+ },
+ {
+  "key": "status.editor.mode.quote-%@",
+  "locale": "en-GB",
+  "source": "Quote of %@",
+  "translation": "Quote of %d",
+  "kind": "retype"
+ },
+ {
+  "key": "status.editor.mode.quote-%@",
+  "locale": "uk",
+  "source": "Quote of %@",
+  "translation": "Цитування ",
+  "kind": "drop"
+ },
+ {
+  "key": "status.editor.mode.reply-%@",
+  "locale": "ca",
+  "source": "Replying to %@",
+  "translation": "En resposta a %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "status.poll.closes-in %@",
+  "locale": "ko",
+  "source": "Closes in %@",
+  "translation": "%d 후 종료",
+  "kind": "retype"
+ },
+ {
+  "key": "status.poll.closes-in %@",
+  "locale": "nl",
+  "source": "Closes in %@",
+  "translation": "Eindigt over %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "status.poll.option-n %lld",
+  "locale": "nb",
+  "source": "Option %lld",
+  "translation": "Valg %lls",
+  "kind": "retype"
+ },
+ {
+  "key": "status.poll.option-n %lld",
+  "locale": "nl",
+  "source": "Option %lld",
+  "translation": "Optie %lld %lld",
+  "kind": "dup"
+ },
+ {
+  "key": "status.post-from-%@",
+  "locale": "es",
+  "source": "Post from %@",
+  "translation": "Publicado por %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "status.post-from-%@",
+  "locale": "ja",
+  "source": "Post from %@",
+  "translation": "%@ %@ の投稿",
+  "kind": "dup"
+ },
+ {
+  "key": "status.row.was-reply %@",
+  "locale": "ja",
+  "source": "Replied to %@",
+  "translation": "返信 ",
+  "kind": "drop"
+ },
+ {
+  "key": "status.row.was-reply %@",
+  "locale": "nl",
+  "source": "Replied to %@",
+  "translation": "Geantwoord op %d",
+  "kind": "retype"
+ },
+ {
+  "key": "timeline.%@-is-valid",
+  "locale": "pl",
+  "source": "%@ is a valid instance",
+  "translation": "%d jest poprawnym serwerem",
+  "kind": "retype"
+ },
+ {
+  "key": "timeline.%@-not-valid",
+  "locale": "be",
+  "source": "%@ is not a valid instance",
+  "translation": " не з'яўляецца сапраўдным прыкладам",
+  "kind": "drop"
+ },
+ {
+  "key": "timeline.%@-not-valid",
+  "locale": "be",
+  "source": "%@ is not a valid instance",
+  "translation": "%d не з'яўляецца сапраўдным прыкладам",
+  "kind": "retype"
+ },
+ {
+  "key": "timeline.%@-not-valid",
+  "locale": "es",
+  "source": "%@ is not a valid instance",
+  "translation": " no es una instancia válida",
+  "kind": "drop"
+ },
+ {
+  "key": "timeline.n-recent-from-n-participants %lld %lld",
+  "locale": "eu",
+  "source": "%#@arg1@ from %#@arg2@",
+  "translation": " %#@count_posts@",
+  "kind": "drop"
+ },
+ {
+  "key": "timeline.n-recent-from-n-participants %lld %lld",
+  "locale": "ko",
+  "source": "%#@arg1@ from %#@arg2@",
+  "translation": " (%#@arg2@이 이야기 중)",
+  "kind": "drop"
+ }
+]

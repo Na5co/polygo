@@ -1,0 +1,422 @@
+[
+ {
+  "key": "AgeValue",
+  "locale": "en",
+  "source": "({0} years old)",
+  "translation": "({{0}} years old)",
+  "kind": "braces"
+ },
+ {
+  "key": "AgeValue",
+  "locale": "en",
+  "source": "({0} years old)",
+  "translation": "( years old)",
+  "kind": "drop"
+ },
+ {
+  "key": "AroundTime",
+  "locale": "en",
+  "source": "Around {0}",
+  "translation": "Around {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "BookLibraryHelp",
+  "locale": "en",
+  "source": "Audio and text books are supported. Review the {0} book naming guide {1}.",
+  "translation": "Audio and text books are supported. Review the  book naming guide {1}.",
+  "kind": "drop"
+ },
+ {
+  "key": "ChannelNameOnly",
+  "locale": "en",
+  "source": "Channel {0} only",
+  "translation": "Channel  only",
+  "kind": "drop"
+ },
+ {
+  "key": "ConfirmDeleteSeries",
+  "locale": "en",
+  "source": "Deleting this series will delete ALL {0} episodes from both the file system and your media library. Are you sure you wish to continue?",
+  "translation": "Deleting this series will delete ALL  episodes from both the file system and your media library. Are you sure you wish to continue?",
+  "kind": "drop"
+ },
+ {
+  "key": "DailyAt",
+  "locale": "en",
+  "source": "Daily at {0}",
+  "translation": "Daily at {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "DeathDateValue",
+  "locale": "en",
+  "source": "Died: {0}",
+  "translation": "Died: ",
+  "kind": "drop"
+ },
+ {
+  "key": "DeleteEntireSeries",
+  "locale": "en",
+  "source": "Delete {0} Episodes",
+  "translation": "Delete {{0}} Episodes",
+  "kind": "braces"
+ },
+ {
+  "key": "DeleteName",
+  "locale": "en",
+  "source": "Delete {0}",
+  "translation": "Delete {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "DeleteName",
+  "locale": "en",
+  "source": "Delete {0}",
+  "translation": "Delete ",
+  "kind": "drop"
+ },
+ {
+  "key": "EndsAtValue",
+  "locale": "en",
+  "source": "Ends at {0}",
+  "translation": "Ends at {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "EndsAtValue",
+  "locale": "en",
+  "source": "Ends at {0}",
+  "translation": "Ends at ",
+  "kind": "drop"
+ },
+ {
+  "key": "EveryXMinutes",
+  "locale": "en",
+  "source": "Every {0} minutes",
+  "translation": "Every {{0}} minutes",
+  "kind": "braces"
+ },
+ {
+  "key": "HeaderNextVideoPlayingInValue",
+  "locale": "en",
+  "source": "Next Video Playing in {0}",
+  "translation": "Next Video Playing in {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "HeaderTypeImageFetchers",
+  "locale": "en",
+  "source": "Image fetchers ({0})",
+  "translation": "Image fetchers ()",
+  "kind": "drop"
+ },
+ {
+  "key": "HeaderTypeSimilarItemProviders",
+  "locale": "en",
+  "source": "Similar item providers ({0})",
+  "translation": "Similar item providers ()",
+  "kind": "drop"
+ },
+ {
+  "key": "InstallingPackage",
+  "locale": "en",
+  "source": "Installing {0} (version {1})",
+  "translation": "Installing {{0}} (version {1})",
+  "kind": "braces"
+ },
+ {
+  "key": "InstallingPackage",
+  "locale": "en",
+  "source": "Installing {0} (version {1})",
+  "translation": "Installing  (version {1})",
+  "kind": "drop"
+ },
+ {
+  "key": "ItemCount",
+  "locale": "en",
+  "source": "{0} items",
+  "translation": " items",
+  "kind": "drop"
+ },
+ {
+  "key": "LabelDynamicExternalId",
+  "locale": "en",
+  "source": "{0} Id",
+  "translation": " Id",
+  "kind": "drop"
+ },
+ {
+  "key": "LabelPostProcessorArgumentsHelp",
+  "locale": "en",
+  "source": "Use {path} as the path to the recording file.",
+  "translation": "Use {{path}} as the path to the recording file.",
+  "kind": "braces"
+ },
+ {
+  "key": "LabelPostProcessorArgumentsHelp",
+  "locale": "en",
+  "source": "Use {path} as the path to the recording file.",
+  "translation": "Use  as the path to the recording file.",
+  "kind": "drop"
+ },
+ {
+  "key": "LabelScheduledTaskLastRan",
+  "locale": "en",
+  "source": "Last ran {0}, taking {1}.",
+  "translation": "Last ran {{0}}, taking {1}.",
+  "kind": "braces"
+ },
+ {
+  "key": "LabelScheduledTaskLastRan",
+  "locale": "en",
+  "source": "Last ran {0}, taking {1}.",
+  "translation": "Last ran , taking {1}.",
+  "kind": "drop"
+ },
+ {
+  "key": "LabelTypeMetadataDownloaders",
+  "locale": "en",
+  "source": "Metadata downloaders ({0})",
+  "translation": "Metadata downloaders ({{0}})",
+  "kind": "braces"
+ },
+ {
+  "key": "LabelTypeMetadataDownloaders",
+  "locale": "en",
+  "source": "Metadata downloaders ({0})",
+  "translation": "Metadata downloaders ()",
+  "kind": "drop"
+ },
+ {
+  "key": "LastSeen",
+  "locale": "en",
+  "source": "Last activity {0}",
+  "translation": "Last activity ",
+  "kind": "drop"
+ },
+ {
+  "key": "LatestFromLibrary",
+  "locale": "en",
+  "source": "Recently Added in {0}",
+  "translation": "Recently Added in {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "ListPaging",
+  "locale": "en",
+  "source": "{0}-{1} of {2}",
+  "translation": "-{1} of {2}",
+  "kind": "drop"
+ },
+ {
+  "key": "MediaSegmentSkipPrompt",
+  "locale": "en",
+  "source": "Skip {0}",
+  "translation": "Skip ",
+  "kind": "drop"
+ },
+ {
+  "key": "MessageSyncPlayUserLeft",
+  "locale": "en",
+  "source": "{0} has left the group.",
+  "translation": "{{0}} has left the group.",
+  "kind": "braces"
+ },
+ {
+  "key": "MessageSyncPlayUserLeft",
+  "locale": "en",
+  "source": "{0} has left the group.",
+  "translation": " has left the group.",
+  "kind": "drop"
+ },
+ {
+  "key": "MoreFromValue",
+  "locale": "en",
+  "source": "More from {0}",
+  "translation": "More from ",
+  "kind": "drop"
+ },
+ {
+  "key": "MovieLibraryHelp",
+  "locale": "en",
+  "source": "Review the {0}movie naming guide{1}.",
+  "translation": "Review the {{0}}movie naming guide{1}.",
+  "kind": "braces"
+ },
+ {
+  "key": "MusicLibraryHelp",
+  "locale": "en",
+  "source": "Review the {0}music naming guide{1}.",
+  "translation": "Review the {{0}}music naming guide{1}.",
+  "kind": "braces"
+ },
+ {
+  "key": "NoCreatedLibraries",
+  "locale": "en",
+  "source": "Seems like you haven't created any libraries yet. {0}Would you like to create one now?{1}",
+  "translation": "Seems like you haven't created any libraries yet. Would you like to create one now?{1}",
+  "kind": "drop"
+ },
+ {
+  "key": "OptionAllowLinkSharingHelp",
+  "locale": "en",
+  "source": "Only web pages containing media information are shared. Media files are never shared publicly. Shares are time-limited and will expire after {0} days.",
+  "translation": "Only web pages containing media information are shared. Media files are never shared publicly. Shares are time-limited and will expire after  days.",
+  "kind": "drop"
+ },
+ {
+  "key": "OriginalAirDateValue",
+  "locale": "en",
+  "source": "Original air date: {0}",
+  "translation": "Original air date: ",
+  "kind": "drop"
+ },
+ {
+  "key": "PackageInstallCompleted",
+  "locale": "en",
+  "source": "{0} (version {1}) installation completed.",
+  "translation": "{{0}} (version {1}) installation completed.",
+  "kind": "braces"
+ },
+ {
+  "key": "QuickConnectAuthorizeCode",
+  "locale": "en",
+  "source": "Enter code {0} to login",
+  "translation": "Enter code {{0}} to login",
+  "kind": "braces"
+ },
+ {
+  "key": "QuickConnectAuthorizeCode",
+  "locale": "en",
+  "source": "Enter code {0} to login",
+  "translation": "Enter code  to login",
+  "kind": "drop"
+ },
+ {
+  "key": "RecommendationStarring",
+  "locale": "en",
+  "source": "Starring {0}",
+  "translation": "Starring {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "SearchResultsEmpty",
+  "locale": "en",
+  "source": "Sorry! No results found for \"{0}\"",
+  "translation": "Sorry! No results found for \"{{0}}\"",
+  "kind": "braces"
+ },
+ {
+  "key": "ServerUpdateNeeded",
+  "locale": "en",
+  "source": "This server needs to be updated. To download the latest version, please visit {0}",
+  "translation": "This server needs to be updated. To download the latest version, please visit ",
+  "kind": "drop"
+ },
+ {
+  "key": "SortByValue",
+  "locale": "en",
+  "source": "Sort by {0}",
+  "translation": "Sort by {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "SyncPlayGroupDefaultTitle",
+  "locale": "en",
+  "source": "{0}'s group",
+  "translation": "{{0}}'s group",
+  "kind": "braces"
+ },
+ {
+  "key": "SyncPlayGroupDefaultTitle",
+  "locale": "en",
+  "source": "{0}'s group",
+  "translation": "'s group",
+  "kind": "drop"
+ },
+ {
+  "key": "TrackCount",
+  "locale": "en",
+  "source": "{0} tracks",
+  "translation": "{{0}} tracks",
+  "kind": "braces"
+ },
+ {
+  "key": "TrackCount",
+  "locale": "en",
+  "source": "{0} tracks",
+  "translation": " tracks",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueAlbumCount",
+  "locale": "en",
+  "source": "{0} albums",
+  "translation": "{{0}} albums",
+  "kind": "braces"
+ },
+ {
+  "key": "ValueAlbumCount",
+  "locale": "en",
+  "source": "{0} albums",
+  "translation": " albums",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueDiscNumber",
+  "locale": "en",
+  "source": "Disc {0}",
+  "translation": "Disc {{0}}",
+  "kind": "braces"
+ },
+ {
+  "key": "ValueDiscNumber",
+  "locale": "en",
+  "source": "Disc {0}",
+  "translation": "Disc ",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueMovieCount",
+  "locale": "en",
+  "source": "{0} movies",
+  "translation": " movies",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueMusicVideoCount",
+  "locale": "en",
+  "source": "{0} music videos",
+  "translation": "{{0}} music videos",
+  "kind": "braces"
+ },
+ {
+  "key": "ValueSeconds",
+  "locale": "en",
+  "source": "{0} seconds",
+  "translation": " seconds",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueSeriesCount",
+  "locale": "en",
+  "source": "{0} series",
+  "translation": " series",
+  "kind": "drop"
+ },
+ {
+  "key": "ValueSongCount",
+  "locale": "en",
+  "source": "{0} songs",
+  "translation": "{{0}} songs",
+  "kind": "braces"
+ },
+ {
+  "key": "ValueSpecialEpisodeName",
+  "locale": "en",
+  "source": "Special - {0}",
+  "translation": "Special - ",
+  "kind": "drop"
+ }
+]

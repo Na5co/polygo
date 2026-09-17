@@ -1,0 +1,422 @@
+[
+ {
+  "key": "app_action_not_found",
+  "locale": "en",
+  "source": "\\\"%1$s\\\" not found",
+  "translation": "\\\"\\\" not found",
+  "kind": "drop"
+ },
+ {
+  "key": "app_action_not_found",
+  "locale": "en",
+  "source": "\\\"%1$s\\\" not found",
+  "translation": "\\\"%1$d\\\" not found",
+  "kind": "retype"
+ },
+ {
+  "key": "archiving_podcast_progress",
+  "locale": "en",
+  "source": "Archiving podcast %1$d of %2$d…",
+  "translation": "Archiving podcast %1$s of %2$d…",
+  "kind": "retype"
+ },
+ {
+  "key": "choose_data_directory_available_space",
+  "locale": "en",
+  "source": "%1$s of %2$s free",
+  "translation": " of %2$s free",
+  "kind": "drop"
+ },
+ {
+  "key": "choose_data_directory_available_space",
+  "locale": "en",
+  "source": "%1$s of %2$s free",
+  "translation": "%1$d of %2$s free",
+  "kind": "retype"
+ },
+ {
+  "key": "delete_tag_confirmation",
+  "locale": "en",
+  "source": "Please confirm that you want to delete the tag \\\"%1$s\\\".",
+  "translation": "Please confirm that you want to delete the tag \\\"\\\".",
+  "kind": "drop"
+ },
+ {
+  "key": "deleting_podcast_progress",
+  "locale": "en",
+  "source": "Unsubscribing from podcast %1$d of %2$d…",
+  "translation": "Unsubscribing from podcast  of %2$d…",
+  "kind": "drop"
+ },
+ {
+  "key": "deleting_podcast_progress",
+  "locale": "en",
+  "source": "Unsubscribing from podcast %1$d of %2$d…",
+  "translation": "Unsubscribing from podcast %1$s of %2$d…",
+  "kind": "retype"
+ },
+ {
+  "key": "download_completed_talkback",
+  "locale": "en",
+  "source": "Download completed for %1$s",
+  "translation": "Download completed for ",
+  "kind": "drop"
+ },
+ {
+  "key": "download_completed_talkback",
+  "locale": "en",
+  "source": "Download completed for %1$s",
+  "translation": "Download completed for %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "download_error_not_retrying",
+  "locale": "en",
+  "source": "Download of \\\"%1$s\\\" failed.",
+  "translation": "Download of \\\"%1$d\\\" failed.",
+  "kind": "retype"
+ },
+ {
+  "key": "download_error_retrying",
+  "locale": "en",
+  "source": "Download of \\\"%1$s\\\" failed. Will be retried later.",
+  "translation": "Download of \\\"%1$d\\\" failed. Will be retried later.",
+  "kind": "retype"
+ },
+ {
+  "key": "download_started_talkback",
+  "locale": "en",
+  "source": "Download started for %1$s",
+  "translation": "Download started for ",
+  "kind": "drop"
+ },
+ {
+  "key": "download_started_talkback",
+  "locale": "en",
+  "source": "Download started for %1$s",
+  "translation": "Download started for %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_hoarder_comment_clean",
+  "locale": "en",
+  "source": "You\\'ve played episodes from %1$d%% of your %2$d active subscriptions this year. We bet you keep your desk clean, too!",
+  "translation": "You\\'ve played episodes from %1$s%% of your %2$d active subscriptions this year. We bet you keep your desk clean, too!",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_hoarder_comment_hoarder",
+  "locale": "en",
+  "source": "Numbers don\\'t lie, they say. And with only %1$d%% of your %2$d active subscriptions having been played this year, we\\'re probably right.",
+  "translation": "Numbers don\\'t lie, they say. And with only %% of your %2$d active subscriptions having been played this year, we\\'re probably right.",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_hoarder_comment_hoarder",
+  "locale": "en",
+  "source": "Numbers don\\'t lie, they say. And with only %1$d%% of your %2$d active subscriptions having been played this year, we\\'re probably right.",
+  "translation": "Numbers don\\'t lie, they say. And with only %1$s%% of your %2$d active subscriptions having been played this year, we\\'re probably right.",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_hoarder_comment_medium",
+  "locale": "en",
+  "source": "You\\'ve played episodes from %1$d%% of your %2$d active subscriptions this year. How about checking out \\\"%3$s\\\" again?",
+  "translation": "You\\'ve played episodes from %% of your %2$d active subscriptions this year. How about checking out \\\"%3$s\\\" again?",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_hoarder_comment_medium",
+  "locale": "en",
+  "source": "You\\'ve played episodes from %1$d%% of your %2$d active subscriptions this year. How about checking out \\\"%3$s\\\" again?",
+  "translation": "You\\'ve played episodes from %1$s%% of your %2$d active subscriptions this year. How about checking out \\\"%3$s\\\" again?",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_listened_after_time",
+  "locale": "en",
+  "source": "Typically, you completed an episode %1$s after it was released.",
+  "translation": "Typically, you completed an episode  after it was released.",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_listened_after_time",
+  "locale": "en",
+  "source": "Typically, you completed an episode %1$s after it was released.",
+  "translation": "Typically, you completed an episode %1$d after it was released.",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_queue_hours_clean",
+  "locale": "en",
+  "source": "That\\'s about %1$s each day until %2$d starts.",
+  "translation": "That\\'s about  each day until %2$d starts.",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_queue_hours_clean",
+  "locale": "en",
+  "source": "That\\'s about %1$s each day until %2$d starts.",
+  "translation": "That\\'s about %1$d each day until %2$d starts.",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_queue_hours_normal",
+  "locale": "en",
+  "source": "That\\'s about %1$s each day until %2$d starts. You can start the year clean if you skip a few episodes.",
+  "translation": "That\\'s about  each day until %2$d starts. You can start the year clean if you skip a few episodes.",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_share",
+  "locale": "en",
+  "source": "My year %d in podcasts. #AntennaPodEcho",
+  "translation": "My year  in podcasts. #AntennaPodEcho",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_share",
+  "locale": "en",
+  "source": "My year %d in podcasts. #AntennaPodEcho",
+  "translation": "My year %d %d in podcasts. #AntennaPodEcho",
+  "kind": "dup"
+ },
+ {
+  "key": "echo_share",
+  "locale": "en",
+  "source": "My year %d in podcasts. #AntennaPodEcho",
+  "translation": "My year %s in podcasts. #AntennaPodEcho",
+  "kind": "retype"
+ },
+ {
+  "key": "echo_thanks_we_are_glad_old",
+  "locale": "en",
+  "source": "for sticking with us this year!\\n\\nYou played your first episode with us in %1$s. It\\'s been our honor to serve you since.",
+  "translation": "for sticking with us this year!\\n\\nYou played your first episode with us in . It\\'s been our honor to serve you since.",
+  "kind": "drop"
+ },
+ {
+  "key": "echo_thanks_we_are_glad_old",
+  "locale": "en",
+  "source": "for sticking with us this year!\\n\\nYou played your first episode with us in %1$s. It\\'s been our honor to serve you since.",
+  "translation": "for sticking with us this year!\\n\\nYou played your first episode with us in %1$d. It\\'s been our honor to serve you since.",
+  "kind": "retype"
+ },
+ {
+  "key": "extend_sleep_timer_label",
+  "locale": "en",
+  "source": "+%d min",
+  "translation": "+ min",
+  "kind": "drop"
+ },
+ {
+  "key": "extend_sleep_timer_label",
+  "locale": "en",
+  "source": "+%d min",
+  "translation": "+%s min",
+  "kind": "retype"
+ },
+ {
+  "key": "feed_volume_adaptation_summary",
+  "locale": "en",
+  "source": "Turn volume for episodes of this podcast up or down: %1$s",
+  "translation": "Turn volume for episodes of this podcast up or down: ",
+  "kind": "drop"
+ },
+ {
+  "key": "feed_volume_adaptation_summary",
+  "locale": "en",
+  "source": "Turn volume for episodes of this podcast up or down: %1$s",
+  "translation": "Turn volume for episodes of this podcast up or down: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "global_default_with_value",
+  "locale": "en",
+  "source": "Global default (%1$s)",
+  "translation": "Global default ()",
+  "kind": "drop"
+ },
+ {
+  "key": "global_default_with_value",
+  "locale": "en",
+  "source": "Global default (%1$s)",
+  "translation": "Global default (%1$d)",
+  "kind": "retype"
+ },
+ {
+  "key": "gpodnetauth_device_name_default",
+  "locale": "en",
+  "source": "AntennaPod on %1$s",
+  "translation": "AntennaPod on ",
+  "kind": "drop"
+ },
+ {
+  "key": "gpodnetauth_device_name_default",
+  "locale": "en",
+  "source": "AntennaPod on %1$s",
+  "translation": "AntennaPod on %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "position",
+  "locale": "en",
+  "source": "Position: %1$s",
+  "translation": "Position: ",
+  "kind": "drop"
+ },
+ {
+  "key": "position",
+  "locale": "en",
+  "source": "Position: %1$s",
+  "translation": "Position: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "pref_enqueue_location_sum",
+  "locale": "en",
+  "source": "Add episodes to: %1$s",
+  "translation": "Add episodes to: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "preset_already_exists",
+  "locale": "en",
+  "source": "%1$.2fx is already saved as a preset.",
+  "translation": "x is already saved as a preset.",
+  "kind": "drop"
+ },
+ {
+  "key": "preset_already_exists",
+  "locale": "en",
+  "source": "%1$.2fx is already saved as a preset.",
+  "translation": "%1$.2dx is already saved as a preset.",
+  "kind": "retype"
+ },
+ {
+  "key": "queue_time_left_label",
+  "locale": "en",
+  "source": "%1$s • %2$s left",
+  "translation": " • %2$s left",
+  "kind": "drop"
+ },
+ {
+  "key": "rating_tagline",
+  "locale": "en",
+  "source": "Since %1$s, you played %2$s%3$d%4$s hours of podcasts.",
+  "translation": "Since %1$d, you played %2$s%3$d%4$s hours of podcasts.",
+  "kind": "retype"
+ },
+ {
+  "key": "remaining_time",
+  "locale": "en",
+  "source": "Remaining time: %1$s",
+  "translation": "Remaining time: ",
+  "kind": "drop"
+ },
+ {
+  "key": "remaining_time",
+  "locale": "en",
+  "source": "Remaining time: %1$s",
+  "translation": "Remaining time: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "report_bug_crash_log_message",
+  "locale": "en",
+  "source": "Created: %1$s.",
+  "translation": "Created: .",
+  "kind": "drop"
+ },
+ {
+  "key": "report_bug_crash_log_message",
+  "locale": "en",
+  "source": "Created: %1$s.",
+  "translation": "Created: %1$d.",
+  "kind": "retype"
+ },
+ {
+  "key": "restoring_podcast_progress",
+  "locale": "en",
+  "source": "Restoring podcast %1$d of %2$d…",
+  "translation": "Restoring podcast  of %2$d…",
+  "kind": "drop"
+ },
+ {
+  "key": "search_powered_by",
+  "locale": "en",
+  "source": "Results by %1$s",
+  "translation": "Results by %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "statistics_counting_range",
+  "locale": "en",
+  "source": "Played between %1$s and %2$s",
+  "translation": "Played between  and %2$s",
+  "kind": "drop"
+ },
+ {
+  "key": "statistics_counting_range",
+  "locale": "en",
+  "source": "Played between %1$s and %2$s",
+  "translation": "Played between %1$d and %2$s",
+  "kind": "retype"
+ },
+ {
+  "key": "synchronization_login_status",
+  "locale": "en",
+  "source": "Logged in as %1$s on %2$s.\\n\\nYou can choose your synchronization provider again once you have logged out.",
+  "translation": "Logged in as  on %2$s.\\n\\nYou can choose your synchronization provider again once you have logged out.",
+  "kind": "drop"
+ },
+ {
+  "key": "synchronization_login_status",
+  "locale": "en",
+  "source": "Logged in as %1$s on %2$s.\\n\\nYou can choose your synchronization provider again once you have logged out.",
+  "translation": "Logged in as %1$d on %2$s.\\n\\nYou can choose your synchronization provider again once you have logged out.",
+  "kind": "retype"
+ },
+ {
+  "key": "unknown_media_key",
+  "locale": "en",
+  "source": "AntennaPod - Unknown media key: %1$d",
+  "translation": "AntennaPod - Unknown media key: ",
+  "kind": "drop"
+ },
+ {
+  "key": "visit_social_interact_confirm_dialog_message",
+  "locale": "en",
+  "source": "Please make sure that you trust the website \\\"%1$s\\\".",
+  "translation": "Please make sure that you trust the website \\\"\\\".",
+  "kind": "drop"
+ },
+ {
+  "key": "visit_social_interact_confirm_dialog_message",
+  "locale": "en",
+  "source": "Please make sure that you trust the website \\\"%1$s\\\".",
+  "translation": "Please make sure that you trust the website \\\"%1$d\\\".",
+  "kind": "retype"
+ },
+ {
+  "key": "wearos_connected_to",
+  "locale": "en",
+  "source": "Connected to %s",
+  "translation": "Connected to %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "wearos_version",
+  "locale": "en",
+  "source": "Version %s",
+  "translation": "Version ",
+  "kind": "drop"
+ },
+ {
+  "key": "wearos_version",
+  "locale": "en",
+  "source": "Version %s",
+  "translation": "Version %s %s",
+  "kind": "dup"
+ }
+]

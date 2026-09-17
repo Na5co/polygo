@@ -1,0 +1,422 @@
+[
+ {
+  "key": "app_details_more_apps_by_author",
+  "locale": "en",
+  "source": "More apps by %1$s",
+  "translation": "More apps by ",
+  "kind": "drop"
+ },
+ {
+  "key": "app_inst_known_source",
+  "locale": "en",
+  "source": "Installed (from %s)",
+  "translation": "Installed (from %s %s)",
+  "kind": "dup"
+ },
+ {
+  "key": "app_inst_known_source",
+  "locale": "en",
+  "source": "Installed (from %s)",
+  "translation": "Installed (from %d)",
+  "kind": "retype"
+ },
+ {
+  "key": "app_list_author",
+  "locale": "en",
+  "source": "Apps by %s",
+  "translation": "Apps by ",
+  "kind": "drop"
+ },
+ {
+  "key": "architectures_colon",
+  "locale": "en",
+  "source": "Architectures: %1$s",
+  "translation": "Architectures: ",
+  "kind": "drop"
+ },
+ {
+  "key": "auto_update_time",
+  "locale": "en",
+  "source": "Earliest next update: %s",
+  "translation": "Earliest next update: ",
+  "kind": "drop"
+ },
+ {
+  "key": "by_author_format",
+  "locale": "en",
+  "source": "by %s",
+  "translation": "by %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "dialog_metered_text",
+  "locale": "en",
+  "source": "Downloading %1$s may incur charges depending on your data plan",
+  "translation": "Downloading  may incur charges depending on your data plan",
+  "kind": "drop"
+ },
+ {
+  "key": "install_error_notify_title",
+  "locale": "en",
+  "source": "Error installing %s",
+  "translation": "Error installing ",
+  "kind": "drop"
+ },
+ {
+  "key": "install_error_notify_title",
+  "locale": "en",
+  "source": "Error installing %s",
+  "translation": "Error installing %d",
+  "kind": "retype"
+ },
+ {
+  "key": "last_updated",
+  "locale": "en",
+  "source": "Last updated: %1$s",
+  "translation": "Last updated: ",
+  "kind": "drop"
+ },
+ {
+  "key": "last_updated",
+  "locale": "en",
+  "source": "Last updated: %1$s",
+  "translation": "Last updated: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "malformed_repo_uri",
+  "locale": "en",
+  "source": "Ignoring malformed repo URI: %s",
+  "translation": "Ignoring malformed repo URI: ",
+  "kind": "drop"
+ },
+ {
+  "key": "malformed_repo_uri",
+  "locale": "en",
+  "source": "Ignoring malformed repo URI: %s",
+  "translation": "Ignoring malformed repo URI: %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "malformed_repo_uri",
+  "locale": "en",
+  "source": "Ignoring malformed repo URI: %s",
+  "translation": "Ignoring malformed repo URI: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "menu_license",
+  "locale": "en",
+  "source": "License: %s",
+  "translation": "License: ",
+  "kind": "drop"
+ },
+ {
+  "key": "menu_license",
+  "locale": "en",
+  "source": "License: %s",
+  "translation": "License: %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "my_apps_empty",
+  "locale": "en",
+  "source": "Only apps available in %1$s\\'s repositories are shown here",
+  "translation": "Only apps available in %1$d\\'s repositories are shown here",
+  "kind": "retype"
+ },
+ {
+  "key": "nearby_splash__both_parties_need_fdroid",
+  "locale": "en",
+  "source": "Both parties need %1$s to use nearby.",
+  "translation": "Both parties need  to use nearby.",
+  "kind": "drop"
+ },
+ {
+  "key": "nearby_splash__both_parties_need_fdroid",
+  "locale": "en",
+  "source": "Both parties need %1$s to use nearby.",
+  "translation": "Both parties need %1$d to use nearby.",
+  "kind": "retype"
+ },
+ {
+  "key": "not_on_same_wifi",
+  "locale": "en",
+  "source": "Your device is not on the same Wi-Fi as the Local Repo you just added! Try joining\n        this network: %s\n    ",
+  "translation": "Your device is not on the same Wi-Fi as the Local Repo you just added! Try joining\n        this network: \n    ",
+  "kind": "drop"
+ },
+ {
+  "key": "not_on_same_wifi",
+  "locale": "en",
+  "source": "Your device is not on the same Wi-Fi as the Local Repo you just added! Try joining\n        this network: %s\n    ",
+  "translation": "Your device is not on the same Wi-Fi as the Local Repo you just added! Try joining\n        this network: %d\n    ",
+  "kind": "retype"
+ },
+ {
+  "key": "notification_repo_update_default",
+  "locale": "en",
+  "source": "Connecting to %1$s…",
+  "translation": "Connecting to %1$d…",
+  "kind": "retype"
+ },
+ {
+  "key": "notification_repo_update_downloading",
+  "locale": "en",
+  "source": "Downloaded %1$s from %2$s",
+  "translation": "Downloaded  from %2$s",
+  "kind": "drop"
+ },
+ {
+  "key": "notification_self_update_title",
+  "locale": "en",
+  "source": "%s was updated. Tap to open",
+  "translation": " was updated. Tap to open",
+  "kind": "drop"
+ },
+ {
+  "key": "notification_self_update_title",
+  "locale": "en",
+  "source": "%s was updated. Tap to open",
+  "translation": "%s %s was updated. Tap to open",
+  "kind": "dup"
+ },
+ {
+  "key": "panic_app_dialog_message",
+  "locale": "en",
+  "source": "Are you sure that you want to allow %1$s to trigger destructive panic button actions?",
+  "translation": "Are you sure that you want to allow %1$d to trigger destructive panic button actions?",
+  "kind": "retype"
+ },
+ {
+  "key": "panic_hide_title",
+  "locale": "en",
+  "source": "Hide %s",
+  "translation": "Hide %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "panic_hide_title",
+  "locale": "en",
+  "source": "Hide %s",
+  "translation": "Hide %d",
+  "kind": "retype"
+ },
+ {
+  "key": "pref_proxy_enabled",
+  "locale": "en",
+  "source": "Uses %s to connect",
+  "translation": "Uses %s %s to connect",
+  "kind": "dup"
+ },
+ {
+  "key": "pref_proxy_enabled",
+  "locale": "en",
+  "source": "Uses %s to connect",
+  "translation": "Uses %d to connect",
+  "kind": "retype"
+ },
+ {
+  "key": "repo_and_mirror_add_both_info",
+  "locale": "en",
+  "source": "The URL you are trying to add (%s) is a mirror of a new repository. Both the original repository and the mirror will be added.",
+  "translation": "The URL you are trying to add (%s %s) is a mirror of a new repository. Both the original repository and the mirror will be added.",
+  "kind": "dup"
+ },
+ {
+  "key": "repo_and_mirror_add_both_info",
+  "locale": "en",
+  "source": "The URL you are trying to add (%s) is a mirror of a new repository. Both the original repository and the mirror will be added.",
+  "translation": "The URL you are trying to add (%d) is a mirror of a new repository. Both the original repository and the mirror will be added.",
+  "kind": "retype"
+ },
+ {
+  "key": "repo_last_downloaded",
+  "locale": "en",
+  "source": "Downloaded %s",
+  "translation": "Downloaded ",
+  "kind": "drop"
+ },
+ {
+  "key": "repo_last_downloaded",
+  "locale": "en",
+  "source": "Downloaded %s",
+  "translation": "Downloaded %d",
+  "kind": "retype"
+ },
+ {
+  "key": "repo_last_update_check",
+  "locale": "en",
+  "source": "Last check for repo update: %s",
+  "translation": "Last check for repo update: ",
+  "kind": "drop"
+ },
+ {
+  "key": "repo_last_update_upstream",
+  "locale": "en",
+  "source": "Published %s",
+  "translation": "Published ",
+  "kind": "drop"
+ },
+ {
+  "key": "repo_last_update_upstream",
+  "locale": "en",
+  "source": "Published %s",
+  "translation": "Published %d",
+  "kind": "retype"
+ },
+ {
+  "key": "repo_mirror_add_info",
+  "locale": "en",
+  "source": "The URL you are trying to add (%s) is a mirror of an existing repository.",
+  "translation": "The URL you are trying to add () is a mirror of an existing repository.",
+  "kind": "drop"
+ },
+ {
+  "key": "repo_mirror_add_info",
+  "locale": "en",
+  "source": "The URL you are trying to add (%s) is a mirror of an existing repository.",
+  "translation": "The URL you are trying to add (%s %s) is a mirror of an existing repository.",
+  "kind": "dup"
+ },
+ {
+  "key": "repo_mirror_add_info",
+  "locale": "en",
+  "source": "The URL you are trying to add (%s) is a mirror of an existing repository.",
+  "translation": "The URL you are trying to add (%d) is a mirror of an existing repository.",
+  "kind": "retype"
+ },
+ {
+  "key": "scan_removable_storage_toast",
+  "locale": "en",
+  "source": "Scanning %s…",
+  "translation": "Scanning …",
+  "kind": "drop"
+ },
+ {
+  "key": "scan_removable_storage_toast",
+  "locale": "en",
+  "source": "Scanning %s…",
+  "translation": "Scanning %s %s…",
+  "kind": "dup"
+ },
+ {
+  "key": "sdk_max_version",
+  "locale": "en",
+  "source": "%1$s (max)",
+  "translation": " (max)",
+  "kind": "drop"
+ },
+ {
+  "key": "sdk_min_version",
+  "locale": "en",
+  "source": "%1$s (min)",
+  "translation": " (min)",
+  "kind": "drop"
+ },
+ {
+  "key": "sdk_target_version",
+  "locale": "en",
+  "source": "%1$s (target)",
+  "translation": " (target)",
+  "kind": "drop"
+ },
+ {
+  "key": "sdk_versions_colon",
+  "locale": "en",
+  "source": "SDK versions: %1$s",
+  "translation": "SDK versions: ",
+  "kind": "drop"
+ },
+ {
+  "key": "signer_colon",
+  "locale": "en",
+  "source": "Signer: %1$s",
+  "translation": "Signer: ",
+  "kind": "drop"
+ },
+ {
+  "key": "size_colon",
+  "locale": "en",
+  "source": "Size: %1$s",
+  "translation": "Size: ",
+  "kind": "drop"
+ },
+ {
+  "key": "status_downloading",
+  "locale": "en",
+  "source": "Downloading at %s/s",
+  "translation": "Downloading at /s",
+  "kind": "drop"
+ },
+ {
+  "key": "status_downloading",
+  "locale": "en",
+  "source": "Downloading at %s/s",
+  "translation": "Downloading at %s %s/s",
+  "kind": "dup"
+ },
+ {
+  "key": "status_downloading_remaining",
+  "locale": "en",
+  "source": "%1$s remaining",
+  "translation": " remaining",
+  "kind": "drop"
+ },
+ {
+  "key": "status_downloading_remaining",
+  "locale": "en",
+  "source": "%1$s remaining",
+  "translation": "%1$d remaining",
+  "kind": "retype"
+ },
+ {
+  "key": "swap_active_hotspot",
+  "locale": "en",
+  "source": "%1$s (your hotspot)",
+  "translation": " (your hotspot)",
+  "kind": "drop"
+ },
+ {
+  "key": "swap_confirm_connect",
+  "locale": "en",
+  "source": "Do you want to get apps from %1$s now?",
+  "translation": "Do you want to get apps from %1$d now?",
+  "kind": "retype"
+ },
+ {
+  "key": "swap_toast_invalid_url",
+  "locale": "en",
+  "source": "Invalid URL for swapping: %1$s",
+  "translation": "Invalid URL for swapping: ",
+  "kind": "drop"
+ },
+ {
+  "key": "swap_toast_invalid_url",
+  "locale": "en",
+  "source": "Invalid URL for swapping: %1$s",
+  "translation": "Invalid URL for swapping: %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "swap_toast_using_path",
+  "locale": "en",
+  "source": "Using %1$s",
+  "translation": "Using ",
+  "kind": "drop"
+ },
+ {
+  "key": "version_code_colon",
+  "locale": "en",
+  "source": "Version code: %1$s",
+  "translation": "Version code: ",
+  "kind": "drop"
+ },
+ {
+  "key": "version_code_colon",
+  "locale": "en",
+  "source": "Version code: %1$s",
+  "translation": "Version code: %1$d",
+  "kind": "retype"
+ }
+]

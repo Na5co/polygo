@@ -1,0 +1,422 @@
+[
+ {
+  "key": "activity_logs.COLLECTION_CREATE",
+  "locale": "en",
+  "source": "Created new collection {title}",
+  "translation": "Created new collection ",
+  "kind": "drop"
+ },
+ {
+  "key": "activity_logs.COLLECTION_DUPLICATE",
+  "locale": "en",
+  "source": "Duplicated collection {parentTitle}",
+  "translation": "Duplicated collection {{parentTitle}}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.COLLECTION_RENAME",
+  "locale": "en",
+  "source": "Renamed collection from {old_title} to {new_title}",
+  "translation": "Renamed collection from {{old_title}} to {new_title}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.REQUEST_RENAME",
+  "locale": "en",
+  "source": "Renamed request from {old_title} to {new_title}",
+  "translation": "Renamed request from {{old_title}} to {new_title}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_CREATE",
+  "locale": "en",
+  "source": "Created new workspace {name}",
+  "translation": "Created new workspace ",
+  "kind": "drop"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_RENAME",
+  "locale": "en",
+  "source": "Renamed workspace from {old_name} to {new_name}",
+  "translation": "Renamed workspace from {{old_name}} to {new_name}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_ADD",
+  "locale": "en",
+  "source": "{user} was added to the workspace as {role}",
+  "translation": "{{user}} was added to the workspace as {role}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_ADD",
+  "locale": "en",
+  "source": "{user} was added to the workspace as {role}",
+  "translation": " was added to the workspace as {role}",
+  "kind": "drop"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_INVITE",
+  "locale": "en",
+  "source": "{user} was invited by {inviteeEmail} as {role}",
+  "translation": " was invited by {inviteeEmail} as {role}",
+  "kind": "drop"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_INVITE_ACCEPT",
+  "locale": "en",
+  "source": "{inviteeEmail} accepted the invitation as {inviteeRole}",
+  "translation": " accepted the invitation as {inviteeRole}",
+  "kind": "drop"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_ROLE_UPDATE",
+  "locale": "en",
+  "source": "{user}'s role was updated from {old_role} to {new_role}",
+  "translation": "{{user}}'s role was updated from {old_role} to {new_role}",
+  "kind": "braces"
+ },
+ {
+  "key": "activity_logs.WORKSPACE_USER_ROLE_UPDATE",
+  "locale": "en",
+  "source": "{user}'s role was updated from {old_role} to {new_role}",
+  "translation": "'s role was updated from {old_role} to {new_role}",
+  "kind": "drop"
+ },
+ {
+  "key": "auth.continue_with_auth_provider",
+  "locale": "en",
+  "source": "Continue with {provider}",
+  "translation": "Continue with ",
+  "kind": "drop"
+ },
+ {
+  "key": "authorization.inherited_from",
+  "locale": "en",
+  "source": "Inherited {auth} from parent collection {collection} ",
+  "translation": "Inherited {{auth}} from parent collection {collection} ",
+  "kind": "braces"
+ },
+ {
+  "key": "billing.confirm.update_billing_cycle",
+  "locale": "en",
+  "source": "Are you sure you want to update the billing cycle to {newBillingCycle}?",
+  "translation": "Are you sure you want to update the billing cycle to ?",
+  "kind": "drop"
+ },
+ {
+  "key": "collection_runner.dataset_iterations_info",
+  "locale": "en",
+  "source": "Dataset contains {rows} rows, running {total} iterations as per your configuration.",
+  "translation": "Dataset contains  rows, running {total} iterations as per your configuration.",
+  "kind": "drop"
+ },
+ {
+  "key": "collection_runner.dataset_preview_truncated",
+  "locale": "en",
+  "source": "Showing the first {count} rows of the dataset.",
+  "translation": "Showing the first {{count}} rows of the dataset.",
+  "kind": "braces"
+ },
+ {
+  "key": "configs.restart.description",
+  "locale": "en",
+  "source": "{duration} seconds remaining before this page reloads automatically",
+  "translation": "{{duration}} seconds remaining before this page reloads automatically",
+  "kind": "braces"
+ },
+ {
+  "key": "confirm.close_unsaved_tabs",
+  "locale": "en",
+  "source": "Are you sure you want to close all tabs? {count} unsaved tabs will be lost.",
+  "translation": "Are you sure you want to close all tabs? {{count}} unsaved tabs will be lost.",
+  "kind": "braces"
+ },
+ {
+  "key": "count.currentValue",
+  "locale": "en",
+  "source": "Current value {count}",
+  "translation": "Current value ",
+  "kind": "drop"
+ },
+ {
+  "key": "count.header",
+  "locale": "en",
+  "source": "Header {count}",
+  "translation": "Header {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "count.header",
+  "locale": "en",
+  "source": "Header {count}",
+  "translation": "Header ",
+  "kind": "drop"
+ },
+ {
+  "key": "count.initialValue",
+  "locale": "en",
+  "source": "Initial value {count}",
+  "translation": "Initial value {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "count.message",
+  "locale": "en",
+  "source": "Message {count}",
+  "translation": "Message {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "count.message",
+  "locale": "en",
+  "source": "Message {count}",
+  "translation": "Message ",
+  "kind": "drop"
+ },
+ {
+  "key": "count.parameter",
+  "locale": "en",
+  "source": "Parameter {count}",
+  "translation": "Parameter {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "count.variable",
+  "locale": "en",
+  "source": "Variable {count}",
+  "translation": "Variable {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "count.variable",
+  "locale": "en",
+  "source": "Variable {count}",
+  "translation": "Variable ",
+  "kind": "drop"
+ },
+ {
+  "key": "documentation.inherited_from",
+  "locale": "en",
+  "source": "Inherited from {name}",
+  "translation": "Inherited from ",
+  "kind": "drop"
+ },
+ {
+  "key": "documentation.inherited_with_type",
+  "locale": "en",
+  "source": "Inherited {type} from {name}",
+  "translation": "Inherited  from {name}",
+  "kind": "drop"
+ },
+ {
+  "key": "documentation.publish.snapshot_item_count",
+  "locale": "en",
+  "source": "{count} items",
+  "translation": "{{count}} items",
+  "kind": "braces"
+ },
+ {
+  "key": "documentation.publish.snapshot_item_count",
+  "locale": "en",
+  "source": "{count} items",
+  "translation": " items",
+  "kind": "drop"
+ },
+ {
+  "key": "documentation.unsaved_changes",
+  "locale": "en",
+  "source": "You have {count} unsaved changes. Please save before closing.",
+  "translation": "You have {{count}} unsaved changes. Please save before closing.",
+  "kind": "braces"
+ },
+ {
+  "key": "documentation.unsaved_changes",
+  "locale": "en",
+  "source": "You have {count} unsaved changes. Please save before closing.",
+  "translation": "You have  unsaved changes. Please save before closing.",
+  "kind": "drop"
+ },
+ {
+  "key": "error.abort.description",
+  "locale": "en",
+  "source": "Operation cancelled. {message}: {cause}",
+  "translation": "Operation cancelled. {{message}}: {cause}",
+  "kind": "braces"
+ },
+ {
+  "key": "error.auth.description",
+  "locale": "en",
+  "source": "Access denied. {message}: {cause}",
+  "translation": "Access denied. : {cause}",
+  "kind": "drop"
+ },
+ {
+  "key": "error.network.description",
+  "locale": "en",
+  "source": "Network connection failed. {message}: {cause}",
+  "translation": "Network connection failed. : {cause}",
+  "kind": "drop"
+ },
+ {
+  "key": "error.subscription_error",
+  "locale": "en",
+  "source": "Failed to subscribe to the topic: {error}",
+  "translation": "Failed to subscribe to the topic: ",
+  "kind": "drop"
+ },
+ {
+  "key": "filename.codegen",
+  "locale": "en",
+  "source": "{request_name} - code",
+  "translation": "{{request_name}} - code",
+  "kind": "braces"
+ },
+ {
+  "key": "filename.lens",
+  "locale": "en",
+  "source": "{request_name} - response",
+  "translation": " - response",
+  "kind": "drop"
+ },
+ {
+  "key": "import.import_summary_not_supported_by_hoppscotch_import",
+  "locale": "en",
+  "source": "We do not support importing {featureLabel} from this source right now.",
+  "translation": "We do not support importing {{featureLabel}} from this source right now.",
+  "kind": "braces"
+ },
+ {
+  "key": "inspections.environment.empty_value",
+  "locale": "en",
+  "source": "Environment value is empty for the variable '{variable}' ",
+  "translation": "Environment value is empty for the variable '{{variable}}' ",
+  "kind": "braces"
+ },
+ {
+  "key": "inspections.scripting_interceptor.same_origin_csrf_warning",
+  "locale": "en",
+  "source": "Security Warning: Your {scriptType} makes same-origin requests using {apiUsed}. Since this platform uses cookie-based authentication, these requests automatically include your session cookies, potentially allowing malicious scripts to perform unauthorized actions. Use Agent interceptor for same-origin requests, or only run scripts you trust.",
+  "translation": "Security Warning: Your {{scriptType}} makes same-origin requests using {apiUsed}. Since this platform uses cookie-based authentication, these requests automatically include your session cookies, potentially allowing malicious scripts to perform unauthorized actions. Use Agent interceptor for same-origin requests, or only run scripts you trust.",
+  "kind": "braces"
+ },
+ {
+  "key": "organization_sidebar.organizations_for",
+  "locale": "en",
+  "source": "Organizations for {email}",
+  "translation": "Organizations for ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.connection_timeout_seconds",
+  "locale": "en",
+  "source": "{seconds} seconds",
+  "translation": "{{seconds}} seconds",
+  "kind": "braces"
+ },
+ {
+  "key": "settings.connection_timeout_seconds_default",
+  "locale": "en",
+  "source": "{seconds} seconds (default)",
+  "translation": "{{seconds}} seconds (default)",
+  "kind": "braces"
+ },
+ {
+  "key": "settings.update_download_version",
+  "locale": "en",
+  "source": "Download v{version}",
+  "translation": "Download v",
+  "kind": "drop"
+ },
+ {
+  "key": "state.connecting_to",
+  "locale": "en",
+  "source": "Connecting to {name}...",
+  "translation": "Connecting to {{name}}...",
+  "kind": "braces"
+ },
+ {
+  "key": "state.delete_some_users_failure",
+  "locale": "en",
+  "source": "Number of Users Not Deleted: {count}",
+  "translation": "Number of Users Not Deleted: {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "state.finished_in",
+  "locale": "en",
+  "source": "Finished in {duration} ms",
+  "translation": "Finished in  ms",
+  "kind": "drop"
+ },
+ {
+  "key": "state.message_received",
+  "locale": "en",
+  "source": "Message: {message} arrived on topic: {topic}",
+  "translation": "Message:  arrived on topic: {topic}",
+  "kind": "drop"
+ },
+ {
+  "key": "state.mqtt_subscription_failed",
+  "locale": "en",
+  "source": "Something went wrong while subscribing to topic: {topic}",
+  "translation": "Something went wrong while subscribing to topic: {{topic}}",
+  "kind": "braces"
+ },
+ {
+  "key": "state.mqtt_subscription_failed",
+  "locale": "en",
+  "source": "Something went wrong while subscribing to topic: {topic}",
+  "translation": "Something went wrong while subscribing to topic: ",
+  "kind": "drop"
+ },
+ {
+  "key": "state.subscribed_failed",
+  "locale": "en",
+  "source": "Failed to subscribe to topic: {topic}",
+  "translation": "Failed to subscribe to topic: ",
+  "kind": "drop"
+ },
+ {
+  "key": "state.subscribed_success",
+  "locale": "en",
+  "source": "Successfully subscribed to topic: {topic}",
+  "translation": "Successfully subscribed to topic: ",
+  "kind": "drop"
+ },
+ {
+  "key": "state.unsubscribed_failed",
+  "locale": "en",
+  "source": "Failed to unsubscribe from topic: {topic}",
+  "translation": "Failed to unsubscribe from topic: {{topic}}",
+  "kind": "braces"
+ },
+ {
+  "key": "team.invited_to_team",
+  "locale": "en",
+  "source": "{owner} invited you to join {workspace}",
+  "translation": "{{owner}} invited you to join {workspace}",
+  "kind": "braces"
+ },
+ {
+  "key": "team.joined_team",
+  "locale": "en",
+  "source": "You have joined {workspace}",
+  "translation": "You have joined {{workspace}}",
+  "kind": "braces"
+ },
+ {
+  "key": "team.joined_team",
+  "locale": "en",
+  "source": "You have joined {workspace}",
+  "translation": "You have joined ",
+  "kind": "drop"
+ },
+ {
+  "key": "team.more_members",
+  "locale": "en",
+  "source": "+{count} more",
+  "translation": "+ more",
+  "kind": "drop"
+ }
+]

@@ -1,0 +1,596 @@
+{
+ "locale": "de",
+ "model": "qwen3:8b",
+ "judge": "gemma4",
+ "n": 60,
+ "context_wins": 9,
+ "nocontext_wins": 5,
+ "ties": 45,
+ "identical": 33,
+ "results": [
+  {
+   "key": "Locked icon alert title",
+   "source": "Icon Locked",
+   "human": "App Icon noch nicht freigeschaltet",
+   "context": "Icon gesperrt",
+   "nocontext": "Symbol gesperrt",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Contributors on GitHub",
+   "source": "Contributors on GitHub",
+   "human": "Mitwirkende auf GitHub",
+   "context": "Mitwirkende auf GitHub",
+   "nocontext": "Mitwirkende auf GitHub",
+   "verdict": "same"
+  },
+  {
+   "key": "Add",
+   "source": "Add",
+   "human": "Hinzufügen",
+   "context": "Hinzufügen",
+   "nocontext": "Hinzufügen",
+   "verdict": "same"
+  },
+  {
+   "key": "Settings tab: Keybindings",
+   "source": "Keybinds",
+   "human": "Tastenbelegungen",
+   "context": "Tastenbelegung",
+   "nocontext": "Tastenkombinationen",
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
+  },
+  {
+   "key": "Locked icon message 9",
+   "source": "Unlocking this icon is just a matter of time and Loops.",
+   "human": "Es ist nur noch eine Frage der Zeit und Loops, dieses Icon freizuschalten.",
+   "context": "Das Entsperren dieses Icons ist nur eine Frage der Zeit und Loops.",
+   "nocontext": "Das Entsperren dieses Symbols ist nur eine Frage von Zeit und Schleifen.",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "No updates available message 15",
+   "source": "An apple a day keeps the… updates away.",
+   "human": "Ein Apfel am Tag hält die... Fehler in Schach.",
+   "context": "Ein Apfel am Tag hält die… Updates fern.",
+   "nocontext": "Ein Apfel am Tag hält die… Updates fern.",
+   "verdict": "same"
+  },
+  {
+   "key": "Move Up",
+   "source": "Move Up",
+   "human": "Hochbewegen",
+   "context": "Nach Oben bewegen",
+   "nocontext": "Oben verschieben",
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
+  },
+  {
+   "key": "Relaxed",
+   "source": "Relaxed",
+   "human": "Entspannt",
+   "context": "Entspannt",
+   "nocontext": "Entspannt",
+   "verdict": "same"
+  },
+  {
+   "key": "Minimize Others",
+   "source": "Minimize Others",
+   "human": "Andere minimieren",
+   "context": "Andere minimieren",
+   "nocontext": "Andere verkleinern",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Export",
+   "source": "Export",
+   "human": "Exportieren",
+   "context": "Exportieren",
+   "nocontext": "Exportieren",
+   "verdict": "same"
+  },
+  {
+   "key": "Vertical Center Third",
+   "source": "Vertical Center Third",
+   "human": "Vertikales Mittel-Drittel",
+   "context": "Vertikales Mitteldrittel",
+   "nocontext": "Vertikale Mittel Drittel",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Horizontal Center Half",
+   "source": "Horizontal Center Half",
+   "human": "Horizontale Mittelhälfte",
+   "context": "Horizontale Mittelhälfte",
+   "nocontext": "Horizontal halb zentriert",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Larger",
+   "source": "Larger",
+   "human": "Grösser",
+   "context": "Größer",
+   "nocontext": "Größer",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 26",
+   "source": "You've already got the best Loop!",
+   "human": "Du hast bereits das beste Loop!",
+   "context": "Du hast bereits das beste Loop!",
+   "nocontext": "Du hast bereits das beste Loop!",
+   "verdict": "same"
+  },
+  {
+   "key": "Actions",
+   "source": "Actions",
+   "human": "Actions",
+   "context": "Aktionen",
+   "nocontext": "Aktionen",
+   "verdict": "same"
+  },
+  {
+   "key": "Icon Name: Summer",
+   "source": "Summer",
+   "human": "Sommer",
+   "context": "Sommer",
+   "nocontext": "Sommer",
+   "verdict": "same"
+  },
+  {
+   "key": "Simple",
+   "source": "Simple",
+   "human": "Simpel",
+   "context": "Einfach",
+   "nocontext": "Einfach",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 31",
+   "source": "I… uhh… one sec I lost it",
+   "human": "Ich… Hm… Eine Sekunde, ich hab's gleich",
+   "context": "Ich… äh… ein Moment, ich hab es verloren",
+   "nocontext": "I… uhh… ein Moment, ich habe es verloren",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Always start cycles from first item",
+   "source": "Always start cycles from first item",
+   "human": "Zyklus immer beim ersten Element starten",
+   "context": "Zyklen immer vom ersten Element starten",
+   "nocontext": "Zyklen immer vom ersten Element starten",
+   "verdict": "same"
+  },
+  {
+   "key": "Cycles",
+   "source": "Cycles",
+   "human": "Zyklen",
+   "context": "Zyklen",
+   "nocontext": "Zyklen",
+   "verdict": "same"
+  },
+  {
+   "key": "Copied!",
+   "source": "Copied!",
+   "human": "Erfolgreich kopiert!",
+   "context": "Kopiert!",
+   "nocontext": "Kopiert!",
+   "verdict": "same"
+  },
+  {
+   "key": "Updates will only be installed when %@ is in the background.",
+   "source": "Updates will only be installed when %@ is in the background.",
+   "human": "Updates will only be installed when %@ is in the background.",
+   "context": "Updates werden nur installiert, wenn %@ im Hintergrund ist.",
+   "nocontext": "Updates werden nur installiert, wenn %@ im Hintergrund ist.",
+   "verdict": "same"
+  },
+  {
+   "key": "Permissions",
+   "source": "Permissions",
+   "human": "Erlaubnis",
+   "context": "Berechtigungen",
+   "nocontext": "Berechtigungen",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 14",
+   "source": "I swear it was here somewhere… one sec",
+   "human": "Wir schwören, dass es hier irgendwo war… Eine Sekunde...",
+   "context": "Ich schwöre, es war irgendwo hier… ein Moment",
+   "nocontext": "Ich schwöre, es war irgendwo hier… ein Moment",
+   "verdict": "same"
+  },
+  {
+   "key": "Allow radial menu customization",
+   "source": "Allow radial menu customization",
+   "human": "Allow radial menu customization",
+   "context": "Radialmenü anpassen erlauben",
+   "nocontext": "Radialmenü anpassen erlauben",
+   "verdict": "same"
+  },
+  {
+   "key": "Press \"Add\" to add an application",
+   "source": "Press \"Add\" to add an application",
+   "human": "Drücke \"Hinzufügen\" um eine Applikation hinzuzufügen",
+   "context": "Drücke \"Hinzufügen\", um eine Anwendung hinzuzufügen",
+   "nocontext": "Drücke „Hinzufügen“, um eine Anwendung hinzuzufügen",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Smaller",
+   "source": "Smaller",
+   "human": "Kleiner",
+   "context": "Kleiner",
+   "nocontext": "Kleiner",
+   "verdict": "same"
+  },
+  {
+   "key": "Window",
+   "source": "Window",
+   "human": "Fenster",
+   "context": "Fenster",
+   "nocontext": "Fenster",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 19",
+   "source": "Winter is coming. Updates aren't yet.",
+   "human": "Der Winter kommt, aber noch keine Updates.",
+   "context": "Winter kommt. Updates sind noch nicht da.",
+   "nocontext": "Winter kommt. Updates sind noch nicht da.",
+   "verdict": "same"
+  },
+  {
+   "key": "Bottom Two Thirds",
+   "source": "Bottom Two Thirds",
+   "human": "Untere Zwei-Drittel",
+   "context": "Untere Zwei-Drittel",
+   "nocontext": "Untere zwei Drittel",
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
+  },
+  {
+   "key": "Icon Name: Daylight",
+   "source": "Daylight",
+   "human": "Tageslicht",
+   "context": "Taglicht",
+   "nocontext": "Taglicht",
+   "verdict": "same"
+  },
+  {
+   "key": "Apply trigger delay on middle-click",
+   "source": "Apply trigger delay on middle-click",
+   "human": "Verzögerung bei mittlerem Klick",
+   "context": "Aktivierungsverzögerung bei mittlerem Klick anwenden",
+   "nocontext": "Triggerverzögerung bei mittlerem Klick anwenden",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Settings tab: Excluded Apps",
+   "source": "Excluded Apps",
+   "human": "Ausgeschlossene Apps",
+   "context": "Ausgeschlossene Apps",
+   "nocontext": "Ausgeschlossene Apps",
+   "verdict": "same"
+  },
+  {
+   "key": "Move Left",
+   "source": "Move Left",
+   "human": "Nach Links bewegen",
+   "context": "Nach Links bewegen",
+   "nocontext": "Links verschieben",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "That keybind is already being used by another stash keybind.",
+   "source": "That keybind is already being used by another stash keybind.",
+   "human": "Diese Tastenkombination wird bereits verwendet.",
+   "context": "Diese Tastenbelegung wird bereits von einem anderen Stash-Tastenbelegung verwendet.",
+   "nocontext": "Diese Tastenkombination wird bereits von einer anderen Stash-Tastenkombination verwendet.",
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
+  },
+  {
+   "key": "Grow Left",
+   "source": "Grow Left",
+   "human": "Links vergrössern",
+   "context": "Links vergrößern",
+   "nocontext": "Links ausdehnen",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Icon Name: Meta Loop",
+   "source": "Meta Loop",
+   "human": "Meta Loop",
+   "context": null,
+   "nocontext": "Meta-Schleife",
+   "verdict": "missing"
+  },
+  {
+   "key": "Window gaps",
+   "source": "Window gaps",
+   "human": "Fenster Lücken",
+   "context": "Fensterlücken",
+   "nocontext": "Fensterlücken",
+   "verdict": "same"
+  },
+  {
+   "key": "Move",
+   "source": "Move",
+   "human": "Bewegen",
+   "context": "Verschieben",
+   "nocontext": "Verschieben",
+   "verdict": "same"
+  },
+  {
+   "key": "Screen Switching",
+   "source": "Screen Switching",
+   "human": "Bildschirm wechsel",
+   "context": "Bildschirmwechsel",
+   "nocontext": "Bildschirmwechsel",
+   "verdict": "same"
+  },
+  {
+   "key": "Select a keybinds file",
+   "source": "Select a keybinds file",
+   "human": "Wähle eine Keybind-Datei aus",
+   "context": "Wähle eine Tastenbelegungsdatei aus",
+   "nocontext": "Wähle eine Keybinds-Datei",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Left Three Fourths",
+   "source": "Left Three Fourths",
+   "human": "Linkes drei Viertel",
+   "context": "Linkes drei Viertel",
+   "nocontext": "Links drei Viertel",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "There are other keybinds that conflict with this key combination.",
+   "source": "There are other keybinds that conflict with this key combination.",
+   "human": "Es gibt andere Tastenkombinationen, die mit dieser in Konflikt stehen.",
+   "context": "Es gibt andere Tastenbelegungen, die mit dieser Tastenkombination in Konflikt stehen.",
+   "nocontext": "Es gibt andere Tastenkombinationen, die mit dieser Tastenkombination in Konflikt stehen.",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Locked icon message 12",
+   "source": "Keep up the good work, and this icon will be your reward.",
+   "human": "Mach weiter so, und dieses Symbol wird deine Belohnung sein.",
+   "context": "Bleib fleißig, und dieses Icon wird deine Belohnung sein.",
+   "nocontext": "Behalte das gute Werkzeug bei und dieses Symbol wird deine Belohnung sein.",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Send Feedback",
+   "source": "Send Feedback",
+   "human": "Feedback senden",
+   "context": "Feedback senden",
+   "nocontext": "Feedback senden",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 41",
+   "source": "Loop is in its prime!",
+   "human": "Loop in seiner prime time!",
+   "context": "Loop ist in seiner besten Form!",
+   "nocontext": "Loop ist in seiner Blütezeit!",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Grow Top",
+   "source": "Grow Top",
+   "human": "Oben vergrössern",
+   "context": "Oben vergrößern",
+   "nocontext": "Oben ausdehnen",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Use pixels",
+   "source": "Use pixels",
+   "human": "Pixel benutzen",
+   "context": "Pixelformat verwenden",
+   "nocontext": "Pixel verwenden",
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
+  },
+  {
+   "key": "Nothing to cycle through",
+   "source": "Nothing to cycle through",
+   "human": "Nichts zum durchwechseln",
+   "context": "Nichts zum Durchschalten",
+   "nocontext": "Nichts zum Durchlaufen",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Settings tab: Icon",
+   "source": "Icon",
+   "human": "Icon",
+   "context": "Symbol",
+   "nocontext": "Symbol",
+   "verdict": "same"
+  },
+  {
+   "key": "No updates available message 28",
+   "source": "All work and no… no updates…",
+   "human": "All die Arbeit und keine Updates…",
+   "context": "Alles Arbeit und kein… kein Update…",
+   "nocontext": "Alles Arbeit und… keine Updates…",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Top",
+   "source": "Top",
+   "human": "Oben",
+   "context": "Oben",
+   "nocontext": "Oben",
+   "verdict": "same"
+  },
+  {
+   "key": "Start hidden",
+   "source": "Start hidden",
+   "human": "Start hidden",
+   "context": "Start versteckt",
+   "nocontext": "Start versteckt",
+   "verdict": "same"
+  },
+  {
+   "key": "Go Back",
+   "source": "Go Back",
+   "human": "Zurück",
+   "context": "Zurück",
+   "nocontext": "Zurück",
+   "verdict": "same"
+  },
+  {
+   "key": "Haptic feedback",
+   "source": "Haptic feedback",
+   "human": "Haptisches Feedback",
+   "context": "Haptisches Feedback",
+   "nocontext": "Haptisches Feedback",
+   "verdict": "same"
+  },
+  {
+   "key": "Grow Vertically",
+   "source": "Grow Vertically",
+   "human": "Vertikal größer werden",
+   "context": "Vertikal vergrößern",
+   "nocontext": "Vertikal ausdehnen",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
+  },
+  {
+   "key": "Remove",
+   "source": "Remove",
+   "human": "Entfernen",
+   "context": "Entfernen",
+   "nocontext": "Entfernen",
+   "verdict": "same"
+  },
+  {
+   "key": "Locked icon message 17",
+   "source": "The journey of a thousand Loops begins with a single step.",
+   "human": "Der Weg zu tausend Loops beginnt mit einem einzelnen Schritt.",
+   "context": "Die Reise von tausend Loops beginnt mit einem einzigen Schritt.",
+   "nocontext": "Die Reise tausend Schleifen beginnt mit einem einzigen Schritt.",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "This will reset all radial menu actions to their default configuration.",
+   "source": "This will reset all radial menu actions to their default configuration.",
+   "human": "This will reset all radial menu actions to their default configuration.",
+   "context": "Dies setzt alle radialen Menüaktionen auf ihre Standardkonfiguration zurück.",
+   "nocontext": "Dies wird alle radialen Menüaktionen in ihre Standardkonfiguration zurücksetzen.",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "key": "Quarters",
+   "source": "Quarters",
+   "human": "Viertel",
+   "context": "Viertel",
+   "nocontext": "Viertel",
+   "verdict": "same"
+  }
+ ]
+}

@@ -1,0 +1,4094 @@
+{
+  "mobileAccount": "Account",
+  "mobileAccountPreferences": "Account preferences",
+  "mobileAccountPreferencesHelp": "These preferences are applied to your Lichess account and will be used across all devices.",
+  "mobileAllGames": "All games",
+  "mobileAreYouSure": "Are you sure?",
+  "mobileBoardSettings": "Board settings",
+  "mobileCancelTakebackOffer": "Cancel takeback offer",
+  "mobileChessEngine": "Chess engine",
+  "mobileClearButton": "Clear",
+  "mobileCorrespondenceClearSavedMove": "Clear saved move",
+  "mobileCustomGameJoinAGame": "Join a game",
+  "mobileFeedbackButton": "Feedback",
+  "mobileGoodEvening": "Good evening, {param}",
+  "@mobileGoodEvening": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileGoodEveningWithoutName": "Good evening",
+  "mobileGoodDay": "Good day, {param}",
+  "@mobileGoodDay": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileGoodDayWithoutName": "Good day",
+  "mobileHideVariation": "Hide variation",
+  "mobileHomeTab": "Home",
+  "mobileLiveStreamers": "Live streamers",
+  "mobileMustBeLoggedIn": "You must be logged in to view this page.",
+  "mobileNbOfflinePuzzles": "Offline puzzles",
+  "mobileNewGame": "New game",
+  "mobileNoSearchResults": "No results",
+  "mobileNotAllFeaturesAreAvailable": "Please note that not all features from the old app or the website are currently available, but we are adding features all the time.",
+  "mobileNotFollowingAnyUser": "You are not following any users.",
+  "mobileOkButton": "OK",
+  "mobileOverTheBoard": "Over the board",
+  "mobilePlayersMatchingSearchTerm": "Players with \"{param}\"",
+  "@mobilePlayersMatchingSearchTerm": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobilePositionLeft": "Left",
+  "mobilePositionRight": "Right",
+  "mobilePrefMagnifyDraggedPiece": "Magnify dragged piece",
+  "mobilePuzzleStormConfirmEndRun": "Do you want to end this run?",
+  "mobilePuzzleStormFilterNothingToShow": "Nothing to show, please change the filters",
+  "mobilePuzzleStormNothingToShow": "Nothing to show. Play some runs of Puzzle Storm.",
+  "mobilePuzzleStormSubtitle": "Solve as many puzzles as possible in 3 minutes.",
+  "mobilePuzzleStreakAbortWarning": "You will lose your current streak and your score will be saved.",
+  "mobilePuzzleThemesSubtitle": "Play puzzles from your favorite openings, or choose a theme.",
+  "mobilePuzzlesTab": "Puzzles",
+  "mobileRecentSearches": "Recent searches",
+  "mobileRemoveBookmark": "Remove bookmark",
+  "mobileServerAnalysis": "Server analysis",
+  "mobileSettingsClockPosition": "Clock position",
+  "mobileSettingsCustomBackgroundPresets": "Presets",
+  "mobileSettingsDraggedPieceTarget": "Dragged piece target",
+  "mobileSettingsDraggedTargetCircle": "Circle",
+  "mobileSettingsDraggedTargetSquare": "Square",
+  "mobileSettingsDrawnShapeColor": "Drawn shape color",
+  "mobileSettingsDrawnShapeColorHelp": "This color is used for shapes drawn by hand using two fingers.",
+  "mobileSettingsHomeWidgets": "Home widgets",
+  "mobileSettingsImmersiveMode": "Immersive mode",
+  "mobileSettingsImmersiveModeSubtitle": "Hide system UI while playing. Use this if you are bothered by the system's navigation gestures at the edges of the screen. Applies to game and puzzle screens.",
+  "mobileSettingsMaterialDifferenceCapturedPieces": "Captured pieces",
+  "mobileSettingsPickAnImage": "Pick an image",
+  "mobileSettingsPickAnImageHelp": "Custom background works only in dark mode. A dark image is recommended.",
+  "mobileSettingsPickAnImageBlur": "Blur the image",
+  "mobileSettingsPickAnImageHideBoard": "Hide board",
+  "mobileSettingsPickAnImageShowBoard": "Show board",
+  "mobileSettingsPickAnImageSwipeToDisplay": "Swipe to display other backgrounds",
+  "mobileSettingsPieceShiftMethodEither": "Either tap or drag",
+  "mobileSettingsPieceShiftMethodTapTwoSquares": "Tap two squares",
+  "mobileSettingsShapeDrawing": "Shape drawing",
+  "mobileSettingsShapeDrawingSubtitle": "Draw shapes using two fingers: maintain one finger on an empty square and drag another finger to draw a shape.",
+  "mobileSettingsShowBorder": "Show border",
+  "mobileSettingsTouchFeedback": "Touch feedback",
+  "mobileSettingsTouchFeedbackSubtitle": "When enabled, the device will vibrate shortly when you move or capture a piece.",
+  "mobileSettingsTab": "Settings",
+  "mobileShareGamePGN": "Share PGN",
+  "mobileShareGameURL": "Share game URL",
+  "mobileSharePositionAsFEN": "Share position as FEN",
+  "mobileSharePuzzle": "Share this puzzle",
+  "mobileShowComments": "Show comments",
+  "mobileShowResult": "Show result",
+  "mobileShowVariations": "Show variations",
+  "mobileSomethingWentWrong": "Something went wrong.",
+  "mobileSystemColors": "System colors",
+  "mobileTheme": "Theme",
+  "mobileToolsTab": "Tools",
+  "mobileUnsupportedVariant": "Variant {param} is not supported in this version.",
+  "@mobileUnsupportedVariant": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileWaitingForOpponentToJoin": "Waiting for opponent to join...",
+  "mobileWatchTab": "Watch",
+  "mobileWelcomeToLichessApp": "Welcome to Lichess app!",
+  "mobileViewGame": "View Game",
+  "mobileCustomizeHomeTip": "Tip: You can add more widgets to the Home Screen or remove those you don't need!",
+  "mobileCustomizeHomeTipDismiss": "Dismiss",
+  "mobileCustomizeButton": "Customize",
+  "mobileStopShowingThreat": "Stop showing threat",
+  "mobileTournamentCompleted": "Completed",
+  "mobileTournamentJumpToMyPage": "Jump to my page",
+  "mobileDisplayModeCompact": "Compact",
+  "mobileDisplayModeDetailed": "Detailed",
+  "mobileOpeningExplorerNotAvailableOffline": "Opening Explorer is not available offline.",
+  "mobileChallengeCreated": "Challenge created: You will be notified when the game starts.\nYou can access it from the home tab.",
+  "mobilePreviousPage": "Previous",
+  "mobileOrImportPgnFile": "Or import a PGN file",
+  "mobileGoodMoveButThereIsBetter": "Good move, but there's better",
+  "mobilePerfShortUltraBullet": "Ultra",
+  "mobilePerfShortBullet": "Bullet",
+  "mobilePerfShortBlitz": "Blitz",
+  "mobilePerfShortRapid": "Rapid",
+  "mobilePerfShortClassical": "Classical",
+  "mobilePerfShortCorrespondence": "Corresp.",
+  "mobilePerfShortFromPosition": "From Pos.",
+  "mobilePerfShortChess960": "960",
+  "mobilePerfShortAntichess": "Antichess",
+  "mobilePerfShortKingOfTheHill": "KotH",
+  "mobilePerfShortThreeCheck": "3check",
+  "mobilePerfShortAtomic": "Atomic",
+  "mobilePerfShortHorde": "Horde",
+  "mobilePerfShortRacingKings": "Racing",
+  "mobilePerfShortCrazyhouse": "Crazy",
+  "mobilePerfShortPuzzle": "Puzzle",
+  "variantStandard": "Standard",
+  "variantStandardTitle": "Standard rules of chess (FIDE)",
+  "variantChess960": "Chess960",
+  "variantChess960Title": "The starting position of the home rank pieces is randomised.",
+  "variantKingOfTheHill": "King of the Hill",
+  "variantKingOfTheHillTitle": "Bring your King to the centre to win the game.",
+  "variantThreeCheck": "Three-Check",
+  "variantThreeCheckTitle": "Check your opponent 3 times to win the game.",
+  "variantAntichess": "Antichess",
+  "variantAntichessTitle": "Lose all your pieces (or get stalemated) to win the game.",
+  "variantAtomic": "Atomic",
+  "variantAtomicTitle": "Nuke your opponent's king to win.",
+  "variantHorde": "Horde",
+  "variantHordeTitle": "One side has a large number of pawns, the other has a normal army.",
+  "variantRacingKings": "Racing Kings",
+  "variantRacingKingsTitle": "Get your king to the other side of the board to win.",
+  "variantCrazyhouse": "Crazyhouse",
+  "variantCrazyhouseTitle": "Captured pieces can be dropped back on the board instead of moving a piece.",
+  "variantFromPosition": "From Position",
+  "variantFromPositionTitle": "Standard chess from a custom position",
+  "activityActivity": "Activity",
+  "activityHostedALiveStream": "Hosted a live stream",
+  "activityRankedInSwissTournament": "Ranked #{param1} in {param2}",
+  "@activityRankedInSwissTournament": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activitySignedUp": "Signed up to lichess.org",
+  "activitySupportedNbMonths": "{count, plural, =1{Supported lichess.org for {count} month as a {param2}} other{Supported lichess.org for {count} months as a {param2}}}",
+  "@activitySupportedNbMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activityPracticedNbPositions": "{count, plural, =1{Practised {count} position on {param2}} other{Practised {count} positions on {param2}}}",
+  "@activityPracticedNbPositions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activitySolvedNbPuzzles": "{count, plural, =1{Solved {count} training puzzle} other{Solved {count} training puzzles}}",
+  "@activitySolvedNbPuzzles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityPlayedNbGames": "{count, plural, =1{Played {count} {param2} game} other{Played {count} {param2} games}}",
+  "@activityPlayedNbGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activityPostedNbMessages": "{count, plural, =1{Posted {count} message in {param2}} other{Posted {count} messages in {param2}}}",
+  "@activityPostedNbMessages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activityPlayedNbMoves": "{count, plural, =1{Played {count} move} other{Played {count} moves}}",
+  "@activityPlayedNbMoves": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityInNbCorrespondenceGames": "{count, plural, =1{in {count} correspondence game} other{in {count} correspondence games}}",
+  "@activityInNbCorrespondenceGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityCompletedNbGames": "{count, plural, =1{Completed {count} correspondence game} other{Completed {count} correspondence games}}",
+  "@activityCompletedNbGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityCompletedNbVariantGames": "{count, plural, =1{Completed {count} {param2} correspondence game} other{Completed {count} {param2} correspondence games}}",
+  "@activityCompletedNbVariantGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "activityFollowedNbPlayers": "{count, plural, =1{Started following {count} player} other{Started following {count} players}}",
+  "@activityFollowedNbPlayers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityGainedNbFollowers": "{count, plural, =1{Gained {count} new follower} other{Gained {count} new followers}}",
+  "@activityGainedNbFollowers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityHostedNbSimuls": "{count, plural, =1{Hosted {count} simultaneous exhibition} other{Hosted {count} simultaneous exhibitions}}",
+  "@activityHostedNbSimuls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityJoinedNbSimuls": "{count, plural, =1{Participated in {count} simultaneous exhibition} other{Participated in {count} simultaneous exhibitions}}",
+  "@activityJoinedNbSimuls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityCreatedNbStudies": "{count, plural, =1{Created {count} new study} other{Created {count} new studies}}",
+  "@activityCreatedNbStudies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityCompetedInNbTournaments": "{count, plural, =1{Competed in {count} Arena tournament} other{Competed in {count} Arena tournaments}}",
+  "@activityCompetedInNbTournaments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityRankedInTournament": "{count, plural, =1{Ranked #{count} (top {param2}%) with {param3} game in {param4}} other{Ranked #{count} (top {param2}%) with {param3} games in {param4}}}",
+  "@activityRankedInTournament": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      },
+      "param4": {
+        "type": "String"
+      }
+    }
+  },
+  "activityCompetedInNbSwissTournaments": "{count, plural, =1{Competed in {count} Swiss tournament} other{Competed in {count} Swiss tournaments}}",
+  "@activityCompetedInNbSwissTournaments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "activityJoinedNbTeams": "{count, plural, =1{Joined {count} team} other{Joined {count} teams}}",
+  "@activityJoinedNbTeams": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "arenaArena": "Arena",
+  "arenaArenaTournaments": "Arena tournaments",
+  "arenaIsItRated": "Is it rated?",
+  "arenaWillBeNotified": "You will be notified when the tournament starts, so feel free to leave this tab idle.",
+  "arenaIsRated": "This tournament is rated and will affect your rating.",
+  "arenaIsNotRated": "This tournament is *not* rated and will *not* affect your rating.",
+  "arenaSomeRated": "Some tournaments are rated and will affect your rating.",
+  "arenaHowAreScoresCalculated": "How are scores calculated?",
+  "arenaHowAreScoresCalculatedAnswer": "A win has a base score of 2 points, a draw 1 point, and a loss is worth no points.\nIf you win two games consecutively you will start a double-point streak, represented by a flame icon.\nThe following games will continue to be worth double points until you fail to win a game.\nThat is, a win will be worth 4 points, a draw 2 points and a loss will still not award any points.\n\nFor example, two wins followed by a draw will be worth 6 points: 2 + 2 + (2 x 1)",
+  "arenaBerserk": "Berserk",
+  "arenaBerserkAnswer": "When a player clicks the Berserk button at the beginning of the game, they lose half of their clock time, but the win is worth one extra tournament point.\n\nGoing Berserk in time controls with an increment also cancels the increment (1+2 is an exception, it gives 1+0).\n\nBerserk is not available for games with zero initial time (0+1, 0+2).\n\nBerserk only grants an extra point if you play at least 7 moves in the game.",
+  "arenaHowIsTheWinnerDecided": "How is the winner decided?",
+  "arenaHowIsTheWinnerDecidedAnswer": "When the tournament time limit expires, the player with the most points is declared the winner.\n\nIf two or more players are tied for points, tournament performance is the tie-break.",
+  "arenaHowDoesPairingWork": "How does the pairing work?",
+  "arenaHowArePlayersPaired": "How are players paired?",
+  "arenaHowDoesPairingWorkAnswer": "At the start of the tournament, players are paired based on their rating.\nAs soon as you finish a game and return to the tournament lobby, you will be paired with a new opponent close to your rank in the tournament. This keeps waiting times short. Note that you may not face every other player in the tournament.\nPlay quickly to play more games and score more points.",
+  "arenaHowDoesItEnd": "How does it end?",
+  "arenaHowDoesItEndAnswer": "The tournament has a countdown clock. When it reaches zero, the tournament rankings are frozen, and the winner is announced. Games in progress must be finished, however, they don't count for the tournament.",
+  "arenaOtherRules": "Other important rules",
+  "arenaThereIsACountdown": "There is a countdown for your first move. Failing to make a move within this time will forfeit the game to your opponent.",
+  "arenaThisIsPrivate": "This is a private tournament",
+  "arenaShareUrl": "Share this URL to let people join: {param}",
+  "@arenaShareUrl": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "arenaDrawStreakStandard": "Draw streaks: When a player has consecutive draws in an arena, only the first draw will result in a point or draws lasting more than {param} moves in standard games. The draw streak can only be broken by a win, not a loss or a draw.",
+  "@arenaDrawStreakStandard": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "arenaDrawStreakVariants": "The minimum game length for drawn games to award points differs by variant. The table below lists the threshold for each variant.",
+  "arenaVariant": "Variant",
+  "arenaMinimumGameLength": "Minimum game length",
+  "arenaHistory": "Arena History",
+  "arenaNewTeamBattle": "New Team Battle",
+  "arenaCustomStartDate": "Custom start date",
+  "arenaCustomStartDateHelp": "In your own local timezone. This overrides the \"Time before tournament starts\" setting",
+  "arenaAllowBerserk": "Allow Berserk",
+  "arenaAllowBerserkHelp": "Let players halve their clock time to gain an extra point",
+  "arenaAllowChatHelp": "Let players discuss in a chat room",
+  "arenaArenaStreaks": "Arena streaks",
+  "arenaArenaStreaksHelp": "After 2 wins, consecutive wins grant 4 points instead of 2.",
+  "arenaNoBerserkAllowed": "No Berserk allowed",
+  "arenaNoArenaStreaks": "No Arena streaks",
+  "arenaAveragePerformance": "Average performance",
+  "arenaAverageScore": "Average score",
+  "arenaMyTournaments": "My tournaments",
+  "arenaEditTournament": "Edit tournament",
+  "arenaEditTeamBattle": "Edit team battle",
+  "arenaDefender": "Defender",
+  "arenaDefenderLabel": "Defender:",
+  "arenaPickYourTeam": "Pick your team",
+  "arenaWhichTeamWillYouRepresentInThisBattle": "Which team will you represent in this battle?",
+  "arenaYouMustJoinOneOfTheseTeamsToParticipate": "You must join one of these teams to participate!",
+  "arenaCreated": "Created",
+  "arenaRecentlyPlayed": "Last played",
+  "arenaBestResults": "Best results",
+  "arenaTournamentStats": "Tournament stats",
+  "arenaRankAvgHelp": "The rank average is a percentage of your ranking. Lower is better.\n\nFor instance, being ranked 3 in a tournament of 100 players = 3%. Being ranked 10 in a tournament of 1000 players = 1%.",
+  "arenaRankAverageHelp": "Your rank average represents your typical finishing position, relative to the total number of players in each tournament.\nThis is a measure of your tournament placement, not your general rating.\n\nFor example, a rank average of 3% means you typically finish in the top 3% (such as 30th place out of 1,000 players).",
+  "arenaMedians": "medians",
+  "arenaAllAveragesAreX": "All averages on this page are {param}.",
+  "@arenaAllAveragesAreX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "arenaTotal": "Total",
+  "arenaPointsAvg": "Points average",
+  "arenaPointsSum": "Points sum",
+  "arenaRankAvg": "Rank average",
+  "arenaTournamentWinners": "Tournament winners",
+  "arenaTournamentShields": "Tournament shields",
+  "arenaOnlyTitled": "Only titled players",
+  "arenaOnlyTitledHelp": "Require an official title to join the tournament",
+  "arenaTournamentPairingsAreNowClosed": "The tournament pairings are now closed.",
+  "arenaBerserkRate": "Berserk rate",
+  "arenaLeaguesAndStreamerBattles": "Leagues & Streamer Battles",
+  "arenaDrawingWithinNbMoves": "{count, plural, =1{Drawing the game within the first {count} move will earn neither player any points.} other{Drawing the game within the first {count} moves will earn neither player any points.}}",
+  "@arenaDrawingWithinNbMoves": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "arenaViewAllXTeams": "{count, plural, =1{View the team} other{View all {count} teams}}",
+  "@arenaViewAllXTeams": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "broadcastBroadcasts": "Broadcasts",
+  "broadcastMyBroadcasts": "My broadcasts",
+  "broadcastLiveBroadcasts": "Live tournament broadcasts",
+  "broadcastBroadcastCalendar": "Broadcast calendar",
+  "broadcastNewBroadcast": "New live broadcast",
+  "broadcastSubscribedBroadcasts": "Subscribed broadcasts",
+  "broadcastAboutBroadcasts": "About broadcasts",
+  "broadcastHowToUseLichessBroadcasts": "How to use Lichess Broadcasts.",
+  "broadcastTheNewRoundHelp": "The new round will have the same members and contributors as the previous one.",
+  "broadcastAddRound": "Add a round",
+  "broadcastOngoing": "Ongoing",
+  "broadcastUpcoming": "Upcoming",
+  "broadcastRoundName": "Round name",
+  "broadcastTournamentName": "Event name",
+  "broadcastTournamentDescription": "Short tournament description",
+  "broadcastFullDescription": "Full event description",
+  "broadcastFullDescriptionHelp": "Optional long description of the event. You can use {param1} for additional formatting options. Length must be less than {param2} characters.",
+  "@broadcastFullDescriptionHelp": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastSourceSingleUrl": "PGN Source URL",
+  "broadcastSourceUrlHelp": "URL that Lichess will check to get PGN updates. It must be publicly accessible from the Internet.",
+  "broadcastSourceGameIds": "Up to 64 Lichess game IDs, separated by spaces.",
+  "broadcastStartDateTimeZone": "Start date in the tournament local timezone: {param}",
+  "@broadcastStartDateTimeZone": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastStartDateHelp": "Optional, if you know when the event starts",
+  "broadcastCurrentGameUrl": "Current game URL",
+  "broadcastDownloadAllRounds": "Download all rounds",
+  "broadcastResetRound": "Reset this round",
+  "broadcastDeleteRound": "Delete this round",
+  "broadcastDefinitivelyDeleteRound": "Definitively delete the round and all its games.",
+  "broadcastPermanentlyDeleteRound": "Permanently delete this round and all its games?",
+  "broadcastDeleteAllGamesOfThisRound": "Delete all games of this round. The source will need to be active in order to re-create them.",
+  "broadcastEditRoundStudy": "Edit round study",
+  "broadcastDeleteTournament": "Delete this tournament",
+  "broadcastDefinitivelyDeleteTournament": "Definitively delete the entire tournament, all its rounds and all its games.",
+  "broadcastPermanentlyDeleteTournament": "Permanently delete this tournament, including all rounds and games?",
+  "broadcastShowScores": "Show player scores based on game results",
+  "broadcastReplacePlayerTags": "Optional: replace player names, ratings and titles",
+  "broadcastFideFederations": "FIDE federations",
+  "broadcastTop10Rating": "Top 10 rating",
+  "broadcastFidePlayers": "FIDE players",
+  "broadcastFidePlayerNotFound": "FIDE player not found",
+  "broadcastFideProfile": "FIDE profile",
+  "broadcastFederation": "Federation",
+  "broadcastAge": "Age",
+  "broadcastUnrated": "Unrated",
+  "broadcastRecentTournaments": "Recent tournaments",
+  "broadcastOpenLichess": "Open in Lichess",
+  "broadcastTeams": "Teams",
+  "broadcastBoards": "Boards",
+  "broadcastOverview": "Overview",
+  "broadcastSubscribeTitle": "Subscribe to be notified when each round starts. You can toggle bell or push notifications for broadcasts in your account preferences.",
+  "broadcastUploadImage": "Upload tournament image",
+  "broadcastNoBoardsYet": "No boards yet. These will appear once games are uploaded.",
+  "broadcastNoPlayersYet": "No players yet. They will appear once games are uploaded.",
+  "broadcastBoardsCanBeLoaded": "Boards can be loaded with a source or via the {param}",
+  "@broadcastBoardsCanBeLoaded": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastStartsAfter": "Starts after {param}",
+  "@broadcastStartsAfter": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastStartVerySoon": "The broadcast will start very soon.",
+  "broadcastNotYetStarted": "The broadcast has not yet started.",
+  "broadcastOfficialWebsite": "Official website",
+  "broadcastOfficialStandings": "Official standings",
+  "broadcastRegulations": "Regulations",
+  "broadcastIframeHelp": "Find more options on the {param}.",
+  "@broadcastIframeHelp": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastWebmastersPage": "Webmasters page",
+  "broadcastEmbedThisBroadcast": "Embed this broadcast in your website",
+  "broadcastRatingDiff": "Rating diff",
+  "broadcastGamesThisTournament": "Games in this tournament",
+  "broadcastScore": "Score",
+  "broadcastStandingsDisclaimer": "Standings are calculated using broadcasted games and may differ from official results.",
+  "broadcastAllTeams": "All teams",
+  "broadcastTournamentFormat": "Tournament format",
+  "broadcastTournamentLocation": "Event location",
+  "broadcastTopPlayers": "Top players",
+  "broadcastTimezone": "Time zone",
+  "broadcastFideRatingCategory": "FIDE rating category",
+  "broadcastOptionalDetails": "Optional details",
+  "broadcastPastBroadcasts": "Past broadcasts",
+  "broadcastAllBroadcastsByMonth": "View all broadcasts by month",
+  "broadcastBackToLiveMove": "Back to live move",
+  "broadcastSinceHideResults": "Since you chose to hide the results, all the preview boards are empty to avoid spoilers.",
+  "broadcastLiveboard": "Live board",
+  "broadcastCommunityBroadcast": "Community broadcast",
+  "broadcastCreatedAndManagedBy": "Created and managed by {param}.",
+  "@broadcastCreatedAndManagedBy": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastMatchPoints": "Match Points",
+  "broadcastGamePoints": "Game Points",
+  "broadcastMatches": "Matches",
+  "broadcastMatchHistory": "Match History",
+  "broadcastTeamResults": "Team Results",
+  "broadcastTermsAutomaticallyTranslated": "The following term(s) will be automatically translated: {param}.",
+  "@broadcastTermsAutomaticallyTranslated": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastRoundX": "Round {param}",
+  "@broadcastRoundX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastDefaultRoundNameHelp": "Keeping the default name will automatically translate it to all other languages.",
+  "broadcastOpenTournament": "Open",
+  "broadcastWomenTournament": "Women",
+  "broadcastMenTournament": "Men",
+  "broadcastGirlsTournament": "Girls",
+  "broadcastBoysTournament": "Boys",
+  "broadcastOpenUnderXAgeTournament": "Open U{param}",
+  "@broadcastOpenUnderXAgeTournament": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastGirlsUnderXAgeTournament": "Girls U{param}",
+  "@broadcastGirlsUnderXAgeTournament": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastBoysUnderXAgeTournament": "Boys U{param}",
+  "@broadcastBoysUnderXAgeTournament": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastQuarterfinals": "Quarterfinals",
+  "broadcastSemifinals": "Semifinals",
+  "broadcastFinals": "Finals",
+  "broadcastTiebreaks": "Tiebreaks",
+  "broadcastGameX": "Game {param}",
+  "@broadcastGameX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastKnockouts": "Knockouts",
+  "broadcastUnderXAgeTournament": "U{param}",
+  "@broadcastUnderXAgeTournament": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastUnderXEloTournament": "U{param}",
+  "@broadcastUnderXEloTournament": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "broadcastNbBroadcasts": "{count, plural, =1{{count} broadcast} other{{count} broadcasts}}",
+  "@broadcastNbBroadcasts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "broadcastNbViewers": "{count, plural, =1{{count} viewer} other{{count} viewers}}",
+  "@broadcastNbViewers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeChallengesX": "Challenges: {param1}",
+  "@challengeChallengesX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeChallengeToPlay": "Challenge",
+  "challengeChallengeDeclined": "Challenge declined.",
+  "challengeChallengeAccepted": "Challenge accepted!",
+  "challengeChallengeCanceled": "Challenge cancelled.",
+  "challengeRegisterToSendChallenges": "Please register to send challenges to this user.",
+  "challengeYouCannotChallengeX": "You cannot challenge {param}.",
+  "@challengeYouCannotChallengeX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeXDoesNotAcceptChallenges": "{param} does not accept challenges.",
+  "@challengeXDoesNotAcceptChallenges": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeYourXRatingIsTooFarFromY": "Your {param1} rating is too far from {param2}.",
+  "@challengeYourXRatingIsTooFarFromY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeCannotChallengeDueToProvisionalXRating": "Cannot challenge due to provisional {param} rating.",
+  "@challengeCannotChallengeDueToProvisionalXRating": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeXOnlyAcceptsChallengesFromFriends": "{param} only accepts challenges from friends.",
+  "@challengeXOnlyAcceptsChallengesFromFriends": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeDeclineGeneric": "I'm not accepting challenges at the moment.",
+  "challengeDeclineLater": "This is not the right time for me, please ask again later.",
+  "challengeDeclineTooFast": "This time control is too fast for me, please challenge again with a slower game.",
+  "challengeDeclineTooSlow": "This time control is too slow for me, please challenge again with a faster game.",
+  "challengeDeclineTimeControl": "I'm not accepting challenges with this time control.",
+  "challengeDeclineRated": "Please send me a rated challenge instead.",
+  "challengeDeclineCasual": "Please send me a casual challenge instead.",
+  "challengeDeclineStandard": "I'm not accepting variant challenges right now.",
+  "challengeDeclineVariant": "I'm not willing to play this variant right now.",
+  "challengeDeclineNoBot": "I'm not accepting challenges from bots.",
+  "challengeDeclineOnlyBot": "I'm only accepting challenges from bots.",
+  "challengeInviteLichessUser": "Or invite a Lichess user:",
+  "contactContact": "Contact",
+  "contactContactLichess": "Contact Lichess",
+  "coordinatesCoordinates": "Coordinates",
+  "coordinatesCoordinateTraining": "Coordinate training",
+  "coordinatesAverageScoreAsWhiteX": "Average score as white: {param}",
+  "@coordinatesAverageScoreAsWhiteX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "coordinatesAverageScoreAsBlackX": "Average score as black: {param}",
+  "@coordinatesAverageScoreAsBlackX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "coordinatesKnowingTheChessBoard": "Knowing the chessboard coordinates is a very important skill for several reasons:",
+  "coordinatesMostChessCourses": "Most chess courses and exercises use the algebraic notation extensively.",
+  "coordinatesTalkToYourChessFriends": "It makes it easier to talk to your chess friends, since you both understand the 'language of chess'.",
+  "coordinatesYouCanAnalyseAGameMoreEffectively": "You can analyse a game more effectively if you can quickly recognise coordinates.",
+  "coordinatesACoordinateAppears": "A coordinate appears on the board and you must click on the corresponding square.",
+  "coordinatesASquareIsHighlightedExplanation": "A square is highlighted on the board and you must enter its coordinate (e.g. \"e4\").",
+  "coordinatesYouHaveThirtySeconds": "You have 30 seconds to correctly map as many squares as possible!",
+  "coordinatesGoAsLongAsYouWant": "Go as long as you want, there is no time limit!",
+  "coordinatesShowCoordinates": "Show coordinates",
+  "coordinatesShowCoordsOnAllSquares": "Coordinates on every square",
+  "coordinatesShowPieces": "Show pieces",
+  "coordinatesStartTraining": "Start training",
+  "coordinatesFindSquare": "Find square",
+  "coordinatesNameSquare": "Name square",
+  "coordinatesPracticeOnlySomeFilesAndRanks": "Practice only some files & ranks",
+  "learnLearnChess": "Learn chess",
+  "learnByPlaying": "by playing!",
+  "learnProgressX": "Progress: {param}",
+  "@learnProgressX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "learnResetMyProgress": "Reset my progress",
+  "learnYouWillLoseAllYourProgress": "You will lose all your progress!",
+  "learnPlay": "play!",
+  "learnChessPieces": "Chess pieces",
+  "learnTheRook": "The rook",
+  "learnItMovesInStraightLines": "It moves in straight lines",
+  "learnRookIntro": "The rook is a powerful piece. Are you ready to command it?",
+  "learnRookGoal": "Click on the rook\nto bring it to the star!",
+  "learnGrabAllTheStars": "Grab all the stars!",
+  "learnTheFewerMoves": "The fewer moves you make,\nthe more points you win!",
+  "learnUseTwoRooks": "Use two rooks\nto speed things up!",
+  "learnRookComplete": "Congratulations! You have successfully mastered the rook.",
+  "learnTheBishop": "The bishop",
+  "learnItMovesDiagonally": "It moves diagonally",
+  "learnBishopIntro": "Next we will learn how to manoeuvre a bishop!",
+  "learnYouNeedBothBishops": "One light-squared bishop,\none dark-squared bishop.\nYou need both!",
+  "learnBishopComplete": "Congratulations! You can command a bishop.",
+  "learnTheQueen": "The queen",
+  "learnQueenCombinesRookAndBishop": "Queen = rook + bishop",
+  "learnQueenIntro": "The most powerful chess piece enters. Her majesty the queen!",
+  "learnQueenComplete": "Congratulations! Queens have no secrets for you.",
+  "learnTheKing": "The king",
+  "learnTheMostImportantPiece": "The most important piece",
+  "learnKingIntro": "You are the king. If you fall in battle, the game is lost.",
+  "learnTheKingIsSlow": "The king is slow.",
+  "learnLastOne": "Last one!",
+  "learnKingComplete": "You can now command the commander!",
+  "learnTheKnight": "The knight",
+  "learnItMovesInAnLShape": "It moves in an L shape",
+  "learnKnightIntro": "Here's a challenge for you. The knight is... a tricky piece.",
+  "learnKnightsHaveAFancyWay": "Knights have a fancy way\nof jumping around!",
+  "learnKnightsCanJumpOverObstacles": "Knights can jump over obstacles!\nEscape and vanquish the stars!",
+  "learnKnightComplete": "Congratulations! You have mastered the knight.",
+  "learnThePawn": "The pawn",
+  "learnItMovesForwardOnly": "It moves forward only",
+  "learnPawnIntro": "Pawns are weak, but they pack a lot of potential.",
+  "learnPawnsMoveOneSquareOnly": "Pawns move one square only.\nBut when they reach the other side of the board, they become a stronger piece!",
+  "learnMostOfTheTimePromotingToAQueenIsBest": "Most of the time promoting to a queen is the best.\nBut sometimes a knight can come in handy!",
+  "learnPawnsMoveForward": "Pawns move forward,\nbut capture diagonally!",
+  "learnCaptureThenPromote": "Capture, then promote!",
+  "learnUseAllThePawns": "Use all the pawns!\nNo need to promote.",
+  "learnAPawnOnTheSecondRank": "A pawn on the second rank can move 2 squares at once!",
+  "learnGrabAllTheStarsNoNeedToPromote": "Grab all the stars!\nNo need to promote.",
+  "learnPawnComplete": "Congratulations! Pawns have no secrets for you.",
+  "learnPawnPromotion": "Pawn promotion",
+  "learnYourPawnReachedTheEndOfTheBoard": "Your pawn reached the end of the board!",
+  "learnItNowPromotesToAStrongerPiece": "It now promotes to a stronger piece.",
+  "learnSelectThePieceYouWant": "Select the piece you want!",
+  "learnFundamentals": "Fundamentals",
+  "learnCapture": "Capture",
+  "learnTakeTheEnemyPieces": "Take the enemy pieces",
+  "learnCaptureIntro": "Identify the opponent's undefended pieces, and capture them!",
+  "learnTakeTheBlackPieces": "Take the black pieces!",
+  "learnTakeTheBlackPiecesAndDontLoseYours": "Take the black pieces!\nAnd don't lose yours.",
+  "learnCaptureComplete": "Congratulations! You know how to fight with chess pieces!",
+  "learnProtection": "Protection",
+  "learnKeepYourPiecesSafe": "Keep your pieces safe",
+  "learnProtectionIntro": "Identify the pieces your opponent attacks, and defend them!",
+  "learnProtectionComplete": "Congratulations! A piece you don't lose is a piece you win!",
+  "learnEscape": "You're under attack!\nEscape the threat!",
+  "learnNoEscape": "There is no escape,\nbut you can defend!",
+  "learnDontLetThemTakeAnyUndefendedPiece": "Don't let them take\nany undefended piece!",
+  "learnCombat": "Combat",
+  "learnCaptureAndDefendPieces": "Capture and defend pieces",
+  "learnCombatIntro": "A good warrior knows both attack and defence!",
+  "learnCombatComplete": "Congratulations! You know how to fight with chess pieces!",
+  "learnCheckInOne": "Check in one",
+  "learnAttackTheOpponentsKing": "Attack the opponent's king",
+  "learnCheckInOneIntro": "To check your opponent, attack their king. They must defend it!",
+  "learnCheckInOneGoal": "Aim at the opponent's king\nin one move!",
+  "learnCheckInOneComplete": "Congratulations! You checked your opponent, forcing them to defend their king!",
+  "learnOutOfCheck": "Out of check",
+  "learnDefendYourKing": "Defend your king",
+  "learnOutOfCheckIntro": "You are in check! You must escape or block the attack.",
+  "learnEscapeWithTheKing": "Escape with the king!",
+  "learnTheKingCannotEscapeButBlock": "The king cannot escape,\nbut you can block the attack!",
+  "learnYouCanGetOutOfCheckByTaking": "You can get out of check\nby taking the attacking piece.",
+  "learnThisKnightIsCheckingThroughYourDefenses": "This knight is checking\nthrough your defences!",
+  "learnEscapeOrBlock": "Escape with the king\nor block the attack!",
+  "learnOutOfCheckComplete": "Congratulations! Your king must never be taken, so make sure you can defend against a check!",
+  "learnMateInOne": "Mate in one",
+  "learnDefeatTheOpponentsKing": "Defeat the opponent's king",
+  "learnMateInOneIntro": "You win when your opponent cannot defend against a check.",
+  "learnAttackYourOpponentsKing": "Attack your opponent's king\nin a way that cannot be defended!",
+  "learnMateInOneComplete": "Congratulations! That is how you win chess games!",
+  "learnIntermediate": "Intermediate",
+  "learnBoardSetup": "Board setup",
+  "learnHowTheGameStarts": "How the game starts",
+  "learnBoardSetupIntro": "The two armies face each other, ready for the battle.",
+  "learnThisIsTheInitialPosition": "This is the initial position\nof every game of chess!\nMake any move to continue.",
+  "learnFirstPlaceTheRooks": "First place the rooks!\nThey go in the corners.",
+  "learnThenPlaceTheKnights": "Then place the knights!\nThey go next to the rooks.",
+  "learnPlaceTheBishops": "Place the bishops!\nThey go next to the knights.",
+  "learnPlaceTheQueen": "Place the queen!\nShe goes on her own colour.",
+  "learnPlaceTheKing": "Place the king!\nRight next to his queen.",
+  "learnPawnsFormTheFrontLine": "Pawns form the front line.\nMake any move to continue.",
+  "learnBoardSetupComplete": "Congratulations! You know how to set up the chess board.",
+  "learnCastling": "Castling",
+  "learnTheSpecialKingMove": "The special king move",
+  "learnCastlingIntro": "Bring your king to safety, and deploy your rook for attack!",
+  "learnCastleKingSide": "Move your king two squares\nto castle king-side!",
+  "learnCastleQueenSide": "Move your king two squares\nto castle queen-side!",
+  "learnTheKnightIsInTheWay": "The knight is in the way!\nMove it, then castle king-side.",
+  "learnCastleKingSideMovePiecesFirst": "Castle king-side!\nYou need to move out pieces first.",
+  "learnCastleQueenSideMovePiecesFirst": "Castle queen-side!\nYou need to move out pieces first.",
+  "learnYouCannotCastleIfMoved": "You cannot castle if\nthe king has already moved\nor the rook has already moved.",
+  "learnYouCannotCastleIfAttacked": "You cannot castle if\nthe king is attacked on the way.\nBlock the check then castle!",
+  "learnFindAWayToCastleKingSide": "Find a way to\ncastle king-side!",
+  "learnFindAWayToCastleQueenSide": "Find a way to\ncastle queen-side!",
+  "learnCastlingComplete": "Congratulations! You should almost always castle in a game.",
+  "learnTheSpecialPawnMove": "The special pawn move",
+  "learnEnPassantIntro": "When the opponent's pawn moves two squares, you can still take it as if it had only moved one square.",
+  "learnBlackJustMovedThePawnByTwoSquares": "Black just moved the pawn\nby two squares!\nTake it en passant.",
+  "learnEnPassantOnlyWorksImmediately": "En passant only works\nimmediately after the opponent\nmoved the pawn.",
+  "learnEnPassantOnlyWorksOnFifthRank": "En passant only works\nif your pawn is on the 5th rank.",
+  "learnTakeAllThePawnsEnPassant": "Take all the pawns en passant!",
+  "learnEnPassantComplete": "Congratulations! You can now take en passant.",
+  "learnStalemate": "Stalemate",
+  "learnTheGameIsADraw": "The game is a draw",
+  "learnStalemateIntro": "When a player is not in check and does not have a legal move, it's a stalemate. The game is drawn: no one wins, no one loses.",
+  "learnStalemateGoal": "To stalemate black:\n- Black cannot move anywhere\n- There is no check.",
+  "learnStalemateComplete": "Congratulations! Better be stalemated than checkmated!",
+  "learnAdvanced": "Advanced",
+  "learnPieceValue": "Piece value",
+  "learnEvaluatePieceStrength": "Evaluate piece strength",
+  "learnPieceValueIntro": "Pieces with high mobility have a higher value!\nQueen = 9\nRook = 5\nBishop = 3\nKnight = 3\nPawn = 1\nThe king is priceless! Losing it means losing the game.",
+  "learnQueenOverBishop": "Take the piece\nwith the highest value!\nQueen > Bishop",
+  "learnPieceValueExchange": "Take the piece with the highest value!\nDo not exchange\na higher valued piece for a less valuable one.",
+  "learnPieceValueLegal": "Take the piece\nwith the highest value!\nMake sure your move is legal!",
+  "learnTakeThePieceWithTheHighestValue": "Take the piece\nwith the highest value!",
+  "learnPieceValueComplete": "Congratulations! You know the value of material!\nQueen = 9\nRook = 5\nBishop = 3\nKnight = 3\nPawn = 1",
+  "learnCheckInTwo": "Check in two",
+  "learnTwoMovesToGiveCheck": "Two moves to give a check",
+  "learnCheckInTwoIntro": "Find the right combination of two moves that checks the opponent's king!",
+  "learnCheckInTwoGoal": "Threaten the opponent's king\nin two moves!",
+  "learnCheckInTwoComplete": "Congratulations! You checked your opponent, forcing them to defend their king!",
+  "learnWhatNext": "What next?",
+  "learnYouKnowHowToPlayChess": "You know how to play chess, congratulations! Do you want to become a stronger player?",
+  "learnRegister": "Register",
+  "learnGetAFreeLichessAccount": "Get a free Lichess account",
+  "learnPractice": "Practise",
+  "learnLearnCommonChessPositions": "Learn common chess positions",
+  "learnPuzzles": "Puzzles",
+  "learnExerciseYourTacticalSkills": "Exercise your tactical skills",
+  "learnVideos": "Videos",
+  "learnWatchInstructiveChessVideos": "Watch instructive chess videos",
+  "learnPlayPeople": "Play people",
+  "learnOpponentsFromAroundTheWorld": "Opponents from around the world",
+  "learnPlayMachine": "Play machine",
+  "learnTestYourSkillsWithTheComputer": "Test your skills with the computer",
+  "learnLetsGo": "Let's go!",
+  "learnStageX": "Stage {param}",
+  "@learnStageX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "learnAwesome": "Awesome!",
+  "learnExcellent": "Excellent!",
+  "learnGreatJob": "Great job!",
+  "learnPerfect": "Perfect!",
+  "learnOutstanding": "Outstanding!",
+  "learnWayToGo": "Way to go!",
+  "learnYesYesYes": "Yes, yes, yes!",
+  "learnYoureGoodAtThis": "You're good at this!",
+  "learnNailedIt": "Nailed it.",
+  "learnRightOn": "Right on!",
+  "learnStageXComplete": "Stage {param} complete",
+  "@learnStageXComplete": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "learnNext": "Next",
+  "learnNextX": "Next: {param}",
+  "@learnNextX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "learnBackToMenu": "Back to menu",
+  "learnPuzzleFailed": "Puzzle failed!",
+  "learnRetry": "Retry",
+  "patronDonate": "Donate",
+  "patronLichessPatron": "Lichess Patron",
+  "patronBecomePatron": "Become a Lichess Patron",
+  "perfStatPerfStats": "{param} stats",
+  "@perfStatPerfStats": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatViewTheGames": "View the games",
+  "perfStatProvisional": "provisional",
+  "perfStatNotEnoughRatedGames": "Not enough rated games have been played to establish a reliable rating.",
+  "perfStatProgressOverLastXGames": "Progression over the last {param} games:",
+  "@perfStatProgressOverLastXGames": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatRatingDeviation": "Rating deviation: {param}.",
+  "@perfStatRatingDeviation": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatRatingDeviationTooltip": "Lower value means the rating is more stable. Above {param1}, the rating is considered provisional. To be included in the rankings, this value should be below {param2} (standard chess) or {param3} (variants).",
+  "@perfStatRatingDeviationTooltip": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatTotalGames": "Total games",
+  "perfStatRatedGames": "Rated games",
+  "perfStatTournamentGames": "Tournament games",
+  "perfStatBerserkedGames": "Berserked games",
+  "perfStatTimeSpentPlaying": "Time spent playing",
+  "perfStatAverageOpponent": "Average opponent",
+  "perfStatVictories": "Victories",
+  "perfStatDefeats": "Defeats",
+  "perfStatDisconnections": "Disconnections",
+  "perfStatNotEnoughGames": "Not enough games played",
+  "perfStatHighestRating": "Highest rating: {param}",
+  "@perfStatHighestRating": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatLowestRating": "Lowest rating: {param}",
+  "@perfStatLowestRating": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatFromXToY": "from {param1} to {param2}",
+  "@perfStatFromXToY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatWinningStreak": "Winning streak",
+  "perfStatLosingStreak": "Losing streak",
+  "perfStatLongestStreak": "Longest streak: {param}",
+  "@perfStatLongestStreak": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatCurrentStreak": "Current streak: {param}",
+  "@perfStatCurrentStreak": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfStatBestRated": "Best rated victories",
+  "perfStatGamesInARow": "Games played in a row",
+  "perfStatLessThanOneHour": "Less than one hour between games",
+  "perfStatMaxTimePlaying": "Max time spent playing",
+  "perfStatNow": "now",
+  "preferencesPreferences": "Preferences",
+  "preferencesDisplay": "Display",
+  "preferencesPrivacy": "Privacy",
+  "preferencesNotifications": "Notifications",
+  "preferencesPieceAnimation": "Piece animation",
+  "preferencesMaterialDifference": "Material difference",
+  "preferencesBoardHighlights": "Board highlights (last move and check)",
+  "preferencesPieceDestinations": "Piece destinations (valid moves and premoves)",
+  "preferencesBoardCoordinates": "Board coordinates (A-H, 1-8)",
+  "preferencesMoveListWhilePlaying": "Move list while playing",
+  "preferencesPgnPieceNotation": "Move notation",
+  "preferencesChessPieceSymbol": "Chess piece symbol",
+  "preferencesPgnLetter": "Letter (K, Q, R, B, N)",
+  "preferencesZenMode": "Zen mode",
+  "preferencesShowPlayerRatings": "Show player ratings",
+  "preferencesShowFlairs": "Show player flairs",
+  "preferencesExplainShowPlayerRatings": "Hides all ratings from Lichess, to help you focus on the game.\nThis setting only affects what you see. Rated games will still impact your rating.",
+  "preferencesDisplayBoardResizeHandle": "Show board resize handle",
+  "preferencesOnlyOnInitialPosition": "Only on initial position",
+  "preferencesInGameOnly": "In-game only",
+  "preferencesExceptInGame": "Except in-game",
+  "preferencesChessClock": "Chess clock",
+  "preferencesTenthsOfSeconds": "Tenths of seconds",
+  "preferencesWhenTimeRemainingLessThanTenSeconds": "When time remaining < 10 seconds",
+  "preferencesHorizontalGreenProgressBars": "Horizontal green progress bars",
+  "preferencesSoundWhenTimeGetsCritical": "Sound when time gets critical",
+  "preferencesGiveMoreTime": "Give more time",
+  "preferencesGameBehavior": "Game behaviour",
+  "preferencesHowDoYouMovePieces": "How do you move pieces?",
+  "preferencesClickTwoSquares": "Click two squares",
+  "preferencesDragPiece": "Drag a piece",
+  "preferencesBothClicksAndDrag": "Either",
+  "preferencesPremovesPlayingDuringOpponentTurn": "Premoves (playing during opponent turn)",
+  "preferencesTakebacksWithOpponentApproval": "Takebacks (with opponent approval)",
+  "preferencesInCasualGamesOnly": "In casual games only",
+  "preferencesPromoteToQueenAutomatically": "Promote to Queen automatically",
+  "preferencesExplainPromoteToQueenAutomatically": "Hold the <ctrl> key while promoting to temporarily disable auto-promotion",
+  "preferencesWhenPremoving": "When premoving",
+  "preferencesClaimDrawOnThreefoldRepetitionAutomatically": "Claim draw on threefold repetition automatically",
+  "preferencesWhenTimeRemainingLessThanThirtySeconds": "When time remaining < 30 seconds",
+  "preferencesMoveConfirmation": "Move confirmation",
+  "preferencesExplainCanThenBeTemporarilyDisabled": "Can be disabled during a game with the board menu",
+  "preferencesInCorrespondenceGames": "Correspondence games",
+  "preferencesCorrespondenceAndUnlimited": "Correspondence and unlimited",
+  "preferencesConfirmResignationAndDrawOffers": "Confirm resignation and draw offers",
+  "preferencesCastleByMovingTheKingTwoSquaresOrOntoTheRook": "Castling method",
+  "preferencesCastleByMovingTwoSquares": "Move king two squares",
+  "preferencesCastleByMovingOntoTheRook": "Move king onto rook",
+  "preferencesInputMovesWithTheKeyboard": "Input moves with the keyboard",
+  "preferencesInputMovesWithVoice": "Input moves with your voice",
+  "preferencesSnapArrowsToValidMoves": "Snap arrows to valid moves",
+  "preferencesSayGgWpAfterLosingOrDrawing": "Say \"Good game, well played\" upon defeat or draw",
+  "preferencesYourPreferencesHaveBeenSaved": "Your preferences have been saved.",
+  "preferencesScrollOnTheBoardToReplayMoves": "Scroll on the board to replay moves",
+  "preferencesCorrespondenceEmailNotification": "Daily email listing your correspondence games",
+  "preferencesNotifyStreamStart": "Streamer goes live",
+  "preferencesNotifyInboxMsg": "New inbox message",
+  "preferencesNotifyDirectMessage": "New direct message",
+  "preferencesNotifyForumMention": "Forum comment mentions you",
+  "preferencesNotifyForumMentions": "Forum mentions",
+  "preferencesNotifyInvitedStudy": "Study invite",
+  "preferencesNotifyStudyInvites": "Study invites",
+  "preferencesNotifyGameEvent": "Correspondence game updates",
+  "preferencesNotifyChallenge": "Challenges",
+  "preferencesNotifyTournamentSoon": "Tournament starting soon",
+  "preferencesNotifyTournamentStartReminders": "Tournaments start reminders",
+  "preferencesNotifyBroadcasts": "Broadcasts",
+  "preferencesNotifyTimeAlarm": "Correspondence time running out",
+  "preferencesNotifyBell": "Notification within Lichess",
+  "preferencesNotifyPush": "Device notification when you're not on Lichess",
+  "preferencesNotifyWeb": "Browser",
+  "preferencesNotifyDevice": "Device",
+  "preferencesBellNotificationSound": "Bell notification sound",
+  "preferencesBlindfold": "Blindfold",
+  "preferencesShowClockOnTheLeft": "Show on the left on mobile devices",
+  "preferencesInlineNotation": "Inline notation",
+  "preferencesShowServerAnalysis": "Show server analysis",
+  "preferencesShowBestMoveArrows": "Show best move arrows",
+  "preferencesShowManeuverArrows": "Show maneuver arrows",
+  "preferencesShowGauge": "Show evaluation gauge",
+  "preferencesShowMoveAnnotationsOnBoard": "Show move annotations",
+  "preferencesShowVariationArrows": "Show variation arrows",
+  "preferencesShowLiveGlyphs": "Live engine annotations",
+  "preferencesShowUndefendedPieces": "Show undefended pieces",
+  "preferencesShowPinnedPieces": "Show pinned pieces",
+  "preferencesShowCheckableKing": "Show checkable king",
+  "preferencesDisclosureMode": "Enable variation hiding",
+  "preferencesGeneralSettings": "General",
+  "preferencesMoveListSettings": "Move list",
+  "preferencesBoardSettings": "Board",
+  "preferencesAnalysisSettings": "Analysis settings",
+  "preferencesManeuverArrowsHelp": "Sequence of engine moves for one piece",
+  "preferencesHoverOverSettingLabelsForHelp": "Hover over setting labels for help",
+  "puzzlePuzzles": "Puzzles",
+  "puzzlePuzzleThemes": "Puzzle Themes",
+  "puzzleRecommended": "Recommended",
+  "puzzlePhases": "Phases",
+  "puzzleMotifs": "Motifs",
+  "puzzleAdvanced": "Advanced",
+  "puzzleLengths": "Lengths",
+  "puzzleMates": "Mates",
+  "puzzleMateThemes": "Mate themes",
+  "puzzleGoals": "Goals",
+  "puzzleOrigin": "Origin",
+  "puzzleSpecialMoves": "Special moves",
+  "puzzleDidYouLikeThisPuzzle": "Did you like this puzzle?",
+  "puzzleUpVote": "Great puzzle!",
+  "puzzleDownVote": "Bad puzzle!",
+  "puzzleYourPuzzleRatingWillNotChange": "Your puzzle rating will not change. Note that puzzles are not a competition. Your rating helps select the most appropriate puzzles for your skill level.",
+  "puzzleFindTheBestMoveForWhite": "Find the best move for white.",
+  "puzzleFindTheBestMoveForBlack": "Find the best move for black.",
+  "puzzleToGetPersonalizedPuzzles": "To get personalised puzzles:",
+  "puzzlePuzzleId": "Puzzle {param}",
+  "@puzzlePuzzleId": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzlePuzzleOfTheDay": "Puzzle of the day",
+  "puzzleDailyPuzzle": "Daily Puzzle",
+  "puzzleClickToSolve": "Click to solve",
+  "puzzleGoodMove": "Good move",
+  "puzzleBestMove": "Best move!",
+  "puzzleKeepGoing": "Keep going…",
+  "puzzlePuzzleSuccess": "Success!",
+  "puzzlePuzzleComplete": "Puzzle complete!",
+  "puzzleByOpenings": "By openings",
+  "puzzlePuzzlesByOpenings": "Puzzles by openings",
+  "puzzleOpeningsYouPlayedTheMost": "Openings you played the most in rated games",
+  "puzzleUseFindInPage": "Use \"Find in page\" in the browser menu to find your favourite opening!",
+  "puzzleUseCtrlF": "Use Ctrl+f to find your favourite opening!",
+  "puzzleNotTheMove": "That's not the move!",
+  "puzzleTrySomethingElse": "Try something else.",
+  "puzzleRatingX": "Rating: {param}",
+  "@puzzleRatingX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleHidden": "hidden",
+  "puzzleFromGameLink": "From game {param}",
+  "@puzzleFromGameLink": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleContinueTraining": "Continue training",
+  "puzzleDifficultyLevel": "Difficulty level",
+  "puzzleNormal": "Normal",
+  "puzzleEasier": "Easier",
+  "puzzleEasiest": "Easiest",
+  "puzzleHarder": "Harder",
+  "puzzleHardest": "Hardest",
+  "puzzleExample": "Example",
+  "puzzleAddAnotherTheme": "Add another theme",
+  "puzzleNextPuzzle": "Next puzzle",
+  "puzzleJumpToNextPuzzleImmediately": "Jump to next puzzle immediately",
+  "puzzlePuzzleDashboard": "Puzzle Dashboard",
+  "puzzleImprovementAreas": "Improvement areas",
+  "puzzleStrengths": "Strengths",
+  "puzzleHistory": "Puzzle history",
+  "puzzleSolved": "solved",
+  "puzzleFailed": "incorrect",
+  "puzzleStreakDescription": "Solve progressively harder puzzles and build a win streak. There is no clock, so take your time. One wrong move, and it's game over! But you can skip one move per session.",
+  "puzzleYourStreakX": "Your streak: {param}",
+  "@puzzleYourStreakX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleStreakSkipExplanation": "Skip this move to preserve your streak! Only works once per run.",
+  "puzzleContinueTheStreak": "Continue the streak",
+  "puzzleNewStreak": "New streak",
+  "puzzleFromMyGames": "From my games",
+  "puzzleLookupOfPlayer": "View puzzles from a player's games",
+  "puzzleSearchPuzzles": "Search puzzles",
+  "puzzleFromMyGamesNone": "You have no puzzles in the database, but Lichess still loves you very much.\n\nPlay rapid and classical games to increase your chances of having a puzzle added from your games!",
+  "puzzlePuzzleDashboardDescription": "Train, analyse, improve",
+  "puzzlePercentSolved": "{param} solved",
+  "@puzzlePercentSolved": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleNoPuzzlesToShow": "Nothing to show, go play some puzzles first!",
+  "puzzleImprovementAreasDescription": "Train these to optimise your progress!",
+  "puzzleStrengthDescription": "You perform the best in these themes",
+  "puzzlePlayedXTimes": "{count, plural, =1{Played {count} time} other{Played {count} times}}",
+  "@puzzlePlayedXTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzleNbPointsBelowYourPuzzleRating": "{count, plural, =1{One point below your puzzle rating} other{{count} points below your puzzle rating}}",
+  "@puzzleNbPointsBelowYourPuzzleRating": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzleNbPointsAboveYourPuzzleRating": "{count, plural, =1{One point above your puzzle rating} other{{count} points above your puzzle rating}}",
+  "@puzzleNbPointsAboveYourPuzzleRating": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzlePuzzlesFoundInUserGames": "{count, plural, =1{One puzzle found in games by {param2}} other{{count} puzzles found in games by {param2}}}",
+  "@puzzlePuzzlesFoundInUserGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleNbPlayed": "{count, plural, other{{count} played}}",
+  "@puzzleNbPlayed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzleNbToReplay": "{count, plural, other{{count} to replay}}",
+  "@puzzleNbToReplay": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzleThemeAdvancedPawn": "Advanced pawn",
+  "puzzleThemeAdvancedPawnDescription": "One of your pawns is deep into the opponent position, maybe threatening to promote.",
+  "puzzleThemeAdvantage": "Advantage",
+  "puzzleThemeAdvantageDescription": "Seize your chance to get a decisive advantage. (200cp ≤ eval ≤ 600cp)",
+  "puzzleThemeAnastasiaMate": "Anastasia's mate",
+  "puzzleThemeAnastasiaMateDescription": "A knight and rook or queen team up to trap the opposing king between the side of the board and a friendly piece.",
+  "puzzleThemeArabianMate": "Arabian mate",
+  "puzzleThemeArabianMateDescription": "A knight and a rook team up to trap the opposing king on a corner of the board.",
+  "puzzleThemeAttackingF2F7": "Attacking f2 or f7",
+  "puzzleThemeAttackingF2F7Description": "An attack focusing on the f2 or f7 pawn, such as in the fried liver opening.",
+  "puzzleThemeAttraction": "Attraction",
+  "puzzleThemeAttractionDescription": "An exchange or sacrifice encouraging or forcing an opponent piece to a square that allows a follow-up tactic.",
+  "puzzleThemeBackRankMate": "Back rank mate",
+  "puzzleThemeBackRankMateDescription": "Checkmate the king on the home rank, when it is trapped there by its own pieces.",
+  "puzzleThemeBalestraMate": "Balestra mate",
+  "puzzleThemeBalestraMateDescription": "A bishop delivers the checkmate, while a queen blocks the remaining escape squares",
+  "puzzleThemeBlindSwineMate": "Blind Swine mate",
+  "puzzleThemeBlindSwineMateDescription": "Two rooks team up to mate the king in an area of 2 by 2 squares.",
+  "puzzleThemeBishopEndgame": "Bishop endgame",
+  "puzzleThemeBishopEndgameDescription": "An endgame with only bishops and pawns.",
+  "puzzleThemeBodenMate": "Boden's mate",
+  "puzzleThemeBodenMateDescription": "Two attacking bishops on criss-crossing diagonals deliver mate to a king obstructed by friendly pieces.",
+  "puzzleThemeCastling": "Castling",
+  "puzzleThemeCastlingDescription": "Bring the king to safety, and deploy the rook for attack.",
+  "puzzleThemeCapturingDefender": "Capture the defender",
+  "puzzleThemeCapturingDefenderDescription": "Removing a piece that is critical to defence of another piece, allowing the now undefended piece to be captured on a following move.",
+  "puzzleThemeCollinearMove": "Collinear move",
+  "puzzleThemeCollinearMoveDescription": "Two opposing pieces face each other, and one slides along the line of attack without capturing the enemy piece.",
+  "puzzleThemeCornerMate": "Corner mate",
+  "puzzleThemeCornerMateDescription": "Confine the king to the corner using a rook or queen and a knight to engage the checkmate.",
+  "puzzleThemeCornerMateKnightDeliversDescription": "Confine the king to the corner using a rook or queen, and use a knight to deliver the checkmate.",
+  "puzzleThemeCrushing": "Crushing",
+  "puzzleThemeCrushingDescription": "Spot the opponent blunder to obtain a crushing advantage. (eval ≥ 600cp)",
+  "puzzleThemeDiscoveredCheck": "Discovered check",
+  "puzzleThemeDiscoveredCheckDescription": "Move a piece to reveal a check from a hidden attacking piece, which often leads to a decisive advantage.",
+  "puzzleThemeDoubleBishopMate": "Double bishop mate",
+  "puzzleThemeDoubleBishopMateDescription": "Two attacking bishops on adjacent diagonals deliver mate to a king obstructed by friendly pieces.",
+  "puzzleThemeDovetailMate": "Dovetail mate",
+  "puzzleThemeDovetailMateDescription": "A queen delivers mate to an adjacent king, whose only two escape squares are obstructed by friendly pieces.",
+  "puzzleThemeEquality": "Equality",
+  "puzzleThemeEqualityDescription": "Come back from a losing position, and secure a draw or a balanced position. (eval ≤ 200cp)",
+  "puzzleThemeKingsideAttack": "Kingside attack",
+  "puzzleThemeKingsideAttackDescription": "An attack of the opponent's king, after they castled on the king side.",
+  "puzzleThemeClearance": "Clearance",
+  "puzzleThemeClearanceDescription": "A move, often with tempo, that clears a square, file or diagonal for a follow-up tactical idea.",
+  "puzzleThemeDefensiveMove": "Defensive move",
+  "puzzleThemeDefensiveMoveDescription": "A precise move or sequence of moves that is needed to avoid losing material or another advantage.",
+  "puzzleThemeDeflection": "Deflection",
+  "puzzleThemeDeflectionDescription": "A move that distracts an opposing piece from another duty that it performs, such as guarding a key square. Sometimes also called \"overloading\".",
+  "puzzleThemeDiscoveredAttack": "Discovered attack",
+  "puzzleThemeDiscoveredAttackDescription": "Moving a piece (such as a knight), that previously blocked an attack by a long range piece (such as a rook), out of the way of that piece.",
+  "puzzleThemeDoubleCheck": "Double check",
+  "puzzleThemeDoubleCheckDescription": "Checking with two pieces at once, as a result of a discovered attack where both the moving piece and the unveiled piece attack the opponent's king.",
+  "puzzleThemeEndgame": "Endgame",
+  "puzzleThemeEndgameDescription": "A tactic during the last phase of the game.",
+  "puzzleThemeEnPassantDescription": "A tactic involving the en passant rule, where a pawn can capture an opponent pawn that has bypassed it using its initial two-square move.",
+  "puzzleThemeEnPassantAdjacentCaptureDescription": "A tactic involving the en passant rule, where a pawn can capture an opposing pawn that has just moved next to it with its initial two-square move.",
+  "puzzleThemeEpauletteMate": "Epaulette mate",
+  "puzzleThemeEpauletteMateDescription": "Two adjacent escape squares for a checked king are occupied by other pieces.",
+  "puzzleThemeExposedKing": "Exposed king",
+  "puzzleThemeExposedKingDescription": "A tactic involving a king with few defenders around it, often leading to checkmate.",
+  "puzzleThemeFork": "Fork",
+  "puzzleThemeForkDescription": "A move where the moved piece attacks two opponent pieces at once.",
+  "puzzleThemeForkOpposingPiecesDescription": "A move where a piece attacks two or more opposing pieces simultaneously.",
+  "puzzleThemeHangingPiece": "Hanging piece",
+  "puzzleThemeHangingPieceDescription": "A tactic involving an opponent piece being undefended or insufficiently defended and free to capture.",
+  "puzzleThemeHookMate": "Hook mate",
+  "puzzleThemeHookMateDescription": "Checkmate with a rook, knight, and pawn along with one enemy pawn to limit the enemy king's escape.",
+  "puzzleThemeHookMateOpposingPawnDescription": "Checkmate using a rook, knight, and pawn, where an opposing pawn blocks the king's escape.",
+  "puzzleThemeInterference": "Interference",
+  "puzzleThemeInterferenceDescription": "Moving a piece between two opponent pieces to leave one or both opponent pieces undefended, such as a knight on a defended square between two rooks.",
+  "puzzleThemeIntermezzo": "Intermezzo",
+  "puzzleThemeIntermezzoDescription": "Instead of playing the expected move, first interpose another move posing an immediate threat that the opponent must answer. Also known as \"Zwischenzug\" or \"In between\".",
+  "puzzleThemeKillBoxMate": "Kill box mate",
+  "puzzleThemeKillBoxMateDescription": "A rook is next to the enemy king and supported by a queen that also blocks the king's escape squares. The rook and the queen catch the enemy king in a 3 by 3 \"kill box\".",
+  "puzzleThemePillsburysMate": "Pillsbury's mate",
+  "puzzleThemePillsburysMateDescription": "The rook delivers checkmate, while the bishop helps to confine it.",
+  "puzzleThemePillsburyMateRookAndBishopDescription": "A rook delivers checkmate to the king, while a bishop helps confine it.",
+  "puzzleThemeMorphysMate": "Morphy's mate",
+  "puzzleThemeMorphysMateDescription": "Use the bishop to check the king, while your rook helps to confine it.",
+  "puzzleThemeMorphyMateBishopAndRookDescription": "A bishop delivers checkmate to the king, while a rook helps confine it.",
+  "puzzleThemeSwallowstailMate": "Swallow's tail mate",
+  "puzzleThemeSwallowstailMateDescription": "A checkmate pattern that visually resembles the appearance of a swallow’s tail, similar to a V shape.",
+  "puzzleThemeTriangleMate": "Triangle mate",
+  "puzzleThemeTriangleMateDescription": "The queen and rook, one square away from the enemy king, are on the same rank or file, separated by one square, forming a triangle.",
+  "puzzleThemeVukovicMate": "Vuković mate",
+  "puzzleThemeVukovicMateDescription": "A rook and knight team up to mate the king. The rook delivers mate while supported by a third piece, and the knight is used to block the king's escape squares.",
+  "puzzleThemeKnightEndgame": "Knight endgame",
+  "puzzleThemeKnightEndgameDescription": "An endgame with only knights and pawns.",
+  "puzzleThemeLong": "Long puzzle",
+  "puzzleThemeLongDescription": "Three moves to win.",
+  "puzzleThemeMaster": "Master games",
+  "puzzleThemeMasterDescription": "Puzzles from games played by titled players.",
+  "puzzleThemeMasterVsMaster": "Master vs Master games",
+  "puzzleThemeMasterVsMasterDescription": "Puzzles from games between two titled players.",
+  "puzzleThemeMate": "Checkmate",
+  "puzzleThemeMateDescription": "Win the game with style.",
+  "puzzleThemeMateIn1": "Mate in 1",
+  "puzzleThemeMateIn1Description": "Deliver checkmate in one move.",
+  "puzzleThemeMateIn2": "Mate in 2",
+  "puzzleThemeMateIn2Description": "Deliver checkmate in two moves.",
+  "puzzleThemeMateIn3": "Mate in 3",
+  "puzzleThemeMateIn3Description": "Deliver checkmate in three moves.",
+  "puzzleThemeMateIn4": "Mate in 4",
+  "puzzleThemeMateIn4Description": "Deliver checkmate in four moves.",
+  "puzzleThemeMateIn5": "Mate in 5 or more",
+  "puzzleThemeMateIn5Description": "Figure out a long mating sequence.",
+  "puzzleThemeMiddlegame": "Middlegame",
+  "puzzleThemeMiddlegameDescription": "A tactic during the second phase of the game.",
+  "puzzleThemeOneMove": "One-move puzzle",
+  "puzzleThemeOneMoveDescription": "A puzzle that is only one move long.",
+  "puzzleThemeOpening": "Opening",
+  "puzzleThemeOpeningDescription": "A tactic during the first phase of the game.",
+  "puzzleThemeOperaMate": "Opera mate",
+  "puzzleThemeOperaMateDescription": "Check the king with a rook and use a bishop to defend the rook.",
+  "puzzleThemePawnEndgame": "Pawn endgame",
+  "puzzleThemePawnEndgameDescription": "An endgame with only pawns.",
+  "puzzleThemePin": "Pin",
+  "puzzleThemePinDescription": "A tactic involving pins, where a piece is unable to move without revealing an attack on a higher value piece.",
+  "puzzleThemePromotion": "Promotion",
+  "puzzleThemePromotionDescription": "Promote one of your pawn to a queen or minor piece.",
+  "puzzleThemePromotePawnToQueenRookOrMinor": "Promote one of your pawns to a queen, rook or minor piece.",
+  "puzzleThemeQueenEndgame": "Queen endgame",
+  "puzzleThemeQueenEndgameDescription": "An endgame with only queens and pawns.",
+  "puzzleThemeQueenRookEndgame": "Queen and Rook",
+  "puzzleThemeQueenRookEndgameDescription": "An endgame with only queens, rooks and pawns.",
+  "puzzleThemeQueensideAttack": "Queenside attack",
+  "puzzleThemeQueensideAttackDescription": "An attack of the opponent's king, after they castled on the queen side.",
+  "puzzleThemeQuietMove": "Quiet move",
+  "puzzleThemeQuietMoveDescription": "A move that does not check, capture, or create an immediate threat to capture. Instead, it prepares a hidden and unavoidable threat for a later move.",
+  "puzzleThemeRookEndgame": "Rook endgame",
+  "puzzleThemeRookEndgameDescription": "An endgame with only rooks and pawns.",
+  "puzzleThemeSacrifice": "Sacrifice",
+  "puzzleThemeSacrificeDescription": "A tactic involving giving up material in the short-term, to gain an advantage again after a forced sequence of moves.",
+  "puzzleThemeShort": "Short puzzle",
+  "puzzleThemeShortDescription": "Two moves to win.",
+  "puzzleThemeSkewer": "Skewer",
+  "puzzleThemeSkewerDescription": "A motif involving a high value piece being attacked, moving out the way, and allowing a lower value piece behind it to be captured or attacked, the inverse of a pin.",
+  "puzzleThemeSmotheredMate": "Smothered mate",
+  "puzzleThemeSmotheredMateDescription": "A checkmate delivered by a knight in which the mated king is unable to move because it is surrounded (or smothered) by its own pieces.",
+  "puzzleThemeSuperGM": "Super GM games",
+  "puzzleThemeSuperGMDescription": "Puzzles from games played by the best players in the world.",
+  "puzzleThemeTrappedPiece": "Trapped piece",
+  "puzzleThemeTrappedPieceDescription": "A piece is unable to escape capture as it has limited moves.",
+  "puzzleThemeUnderPromotion": "Underpromotion",
+  "puzzleThemeUnderPromotionDescription": "Promotion to a knight, bishop, or rook.",
+  "puzzleThemeVeryLong": "Very long puzzle",
+  "puzzleThemeVeryLongDescription": "Four moves or more to win.",
+  "puzzleThemeXRayAttack": "X-Ray attack",
+  "puzzleThemeXRayAttackDescription": "A piece attacks or defends a square, through an enemy piece.",
+  "puzzleThemeZugzwang": "Zugzwang",
+  "puzzleThemeZugzwangDescription": "The opponent is limited in the moves they can make, and all moves worsen their position.",
+  "puzzleThemeMix": "Healthy mix",
+  "puzzleThemeMixDescription": "A bit of everything. You don't know what to expect, so be ready for anything! Just like in real games.",
+  "puzzleThemePlayerGames": "Player games",
+  "puzzleThemePlayerGamesDescription": "View puzzles generated from your games, or from another player's games",
+  "puzzleThemePuzzleDownloadInformation": "These puzzles are in the public domain, and can be downloaded from {param}.",
+  "@puzzleThemePuzzleDownloadInformation": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "recapAwaitQuestion": "What have you been up to this year?",
+  "recapRecapReady": "Your {param} recap is ready!",
+  "@recapRecapReady": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSearch": "Search",
+  "settingsSettings": "Settings",
+  "settingsCloseAccount": "Close account",
+  "settingsManagedAccountCannotBeClosed": "Your account is managed, and cannot be closed.",
+  "settingsCantOpenSimilarAccount": "The username will NOT be available for registration again.",
+  "settingsCancelKeepAccount": "Cancel and keep my account",
+  "settingsCloseAccountAreYouSure": "Are you sure you want to close your account?",
+  "settingsThisAccountIsClosed": "This account is closed.",
+  "gameSetup": "Game setup",
+  "challengeAFriend": "Challenge a friend",
+  "playAgainstComputer": "Play against computer",
+  "gameMode": "Game mode",
+  "createLobbyGame": "Create lobby game",
+  "toInviteSomeoneToPlayGiveThisUrl": "To invite someone to play, give this URL",
+  "gameOver": "Game Over",
+  "waitingForOpponent": "Waiting for opponent",
+  "orLetYourOpponentScanQrCode": "Or let your opponent scan this QR code",
+  "reusableChallengeUrl": "Reusable challenge URL",
+  "permanentLinkForAnyoneToChallengeYou": "A permanent link for anyone to challenge you with these exact settings.",
+  "waiting": "Waiting",
+  "yourTurn": "Your turn",
+  "aiNameLevelAiLevel": "{param1} level {param2}",
+  "@aiNameLevelAiLevel": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "level": "Level",
+  "strength": "Strength",
+  "toggleTheChat": "Toggle the chat",
+  "chat": "Chat",
+  "resign": "Resign",
+  "checkmate": "Checkmate",
+  "stalemate": "Stalemate",
+  "white": "White",
+  "black": "Black",
+  "asWhite": "as white",
+  "asBlack": "as black",
+  "randomColor": "Random side",
+  "createAGame": "Create a game",
+  "createTheGame": "Create the game",
+  "whiteIsVictorious": "White is victorious",
+  "blackIsVictorious": "Black is victorious",
+  "youPlayTheWhitePieces": "You play the white pieces",
+  "youPlayTheBlackPieces": "You play the black pieces",
+  "itsYourTurn": "It's your turn!",
+  "cheatDetected": "Cheat Detected",
+  "kingInTheCenter": "King in the centre",
+  "threeChecks": "Three checks",
+  "raceFinished": "Race finished",
+  "variantEnding": "Variant ending",
+  "newOpponent": "New opponent",
+  "yourOpponentWantsToPlayANewGameWithYou": "Your opponent wants to play a new game with you",
+  "joinTheGame": "Join the game",
+  "whitePlays": "White to play",
+  "blackPlays": "Black to play",
+  "opponentLeftChoices": "Your opponent left the game. You can claim victory, call the game a draw, or wait.",
+  "forceResignation": "Claim victory",
+  "forceDraw": "Call draw",
+  "talkInChat": "Please be nice in the chat!",
+  "theFirstPersonToComeOnThisUrlWillPlayWithYou": "The first person to come to this URL will play with you.",
+  "whiteResigned": "White resigned",
+  "blackResigned": "Black resigned",
+  "whiteLeftTheGame": "White left the game",
+  "blackLeftTheGame": "Black left the game",
+  "whiteDidntMove": "White didn't move",
+  "blackDidntMove": "Black didn't move",
+  "whiteAborted": "White aborted the game",
+  "blackAborted": "Black aborted the game",
+  "requestAComputerAnalysis": "Request a computer analysis",
+  "computerAnalysis": "Computer analysis",
+  "computerAnalysisAvailable": "Computer analysis available",
+  "computerAnalysisDisabled": "Computer analysis disabled",
+  "analysis": "Analysis board",
+  "depthX": "Depth {param}",
+  "@depthX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "usingServerAnalysis": "Using server analysis",
+  "loadingEngine": "Loading engine...",
+  "calculatingMoves": "Calculating moves...",
+  "engineFailed": "Error loading engine",
+  "cloudAnalysis": "Cloud analysis",
+  "goDeeper": "Go deeper",
+  "showThreat": "Show threat",
+  "inLocalBrowser": "in local browser",
+  "toggleLocalEvaluation": "Toggle local evaluation",
+  "promoteVariation": "Promote variation",
+  "makeMainLine": "Make main line",
+  "deleteFromHere": "Delete from here",
+  "collapseVariations": "Collapse variations",
+  "expandVariations": "Expand variations",
+  "forceVariation": "Convert to variation",
+  "copyVariationPgn": "Copy variation PGN",
+  "copyMainLinePgn": "Copy main line PGN",
+  "move": "Move",
+  "variantLoss": "Variant loss",
+  "variantWin": "Variant win",
+  "insufficientMaterial": "Insufficient material",
+  "pawnMove": "Pawn move",
+  "capture": "Capture",
+  "close": "Close",
+  "winning": "Winning",
+  "losing": "Losing",
+  "drawn": "Drawn",
+  "unknown": "Unknown",
+  "database": "Database",
+  "whiteDrawBlack": "White / Draw / Black",
+  "averageRatingX": "Average rating: {param}",
+  "@averageRatingX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "minRatingX": "Minimum rating of {param}",
+  "@minRatingX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "maxRatingX": "Maximum rating of {param}",
+  "@maxRatingX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "recentGames": "Recent games",
+  "topGames": "Top games",
+  "masterDbExplanation": "OTB games of {param1}+ FIDE-rated players from {param2} to {param3}",
+  "@masterDbExplanation": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "dtzWithRounding": "DTZ50′′ with rounding, based on number of half-moves until next capture or pawn move",
+  "noGameFound": "No games found",
+  "maxDepthReached": "Max depth reached!",
+  "maybeIncludeMoreGamesFromThePreferencesMenu": "Maybe include more games from the preferences menu?",
+  "openings": "Openings",
+  "openingExplorer": "Opening explorer",
+  "openingEndgameExplorer": "Opening/endgame explorer",
+  "xOpeningExplorer": "{param} opening explorer",
+  "@xOpeningExplorer": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "playFirstOpeningEndgameExplorerMove": "Play first opening/endgame-explorer move",
+  "winPreventedBy50MoveRule": "Win prevented by 50-move rule",
+  "lossSavedBy50MoveRule": "Loss prevented by 50-move rule",
+  "winOr50MovesByPriorMistake": "Win or 50 moves by prior mistake",
+  "lossOr50MovesByPriorMistake": "Loss or 50 moves by prior mistake",
+  "unknownDueToRounding": "Due to possible rounding of DTZ values in Syzygy tablebases, a win/loss is only guaranteed if the recommended tablebase line has been followed since the last capture or pawn move.",
+  "allSet": "All set!",
+  "importPgn": "Import PGN",
+  "delete": "Delete",
+  "deleteThisImportedGame": "Delete this imported game?",
+  "replayMode": "Replay mode",
+  "realtimeReplay": "Realtime",
+  "byCPL": "By CPL",
+  "enable": "Enable",
+  "bestMoveArrow": "Best move arrow",
+  "showVariationArrows": "Show variation arrows",
+  "visualMotifs": "Visual motifs",
+  "undefendedPieces": "Undefended pieces",
+  "pinnedPieces": "Pinned pieces",
+  "checkableKing": "Checkable king",
+  "multipleLines": "Multiple lines",
+  "multipleLinesDescription": "Set number of evaluation lines and move arrows on the board",
+  "searchTime": "Search time",
+  "searchTimeDescription": "Set time to evaluate fresh positions",
+  "threads": "Threads",
+  "threadsDescription": "Set this below your CPU's thread count, the ticks mark a good safe choice",
+  "threadsDescriptionMobile": "More threads will use more battery for better analysis",
+  "cpus": "CPUs",
+  "memory": "Memory",
+  "memoryDescription": "Higher values may improve performance",
+  "infiniteAnalysis": "Infinite analysis",
+  "removesTheDepthLimit": "Removes the depth limit, and keeps your computer warm",
+  "blunder": "Blunder",
+  "mistake": "Mistake",
+  "inaccuracy": "Inaccuracy",
+  "moveTimes": "Move times",
+  "flipBoard": "Flip board",
+  "toggleLocalEngine": "Toggle local engine",
+  "engineSettings": "Engine settings",
+  "enginesFromStrongestToWeakest": "Engines from strongest to weakest",
+  "illegalPosition": "Illegal position",
+  "threefoldRepetition": "Threefold repetition",
+  "claimADraw": "Claim a draw",
+  "drawClaimed": "Draw claimed",
+  "offerDraw": "Offer draw",
+  "draw": "Draw",
+  "drawByMutualAgreement": "Draw by agreement",
+  "fiftyMovesWithoutProgress": "Fifty moves without progress",
+  "currentGames": "Current games",
+  "joinedX": "Joined {param}",
+  "@joinedX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "viewInFullSize": "View in full size",
+  "logOut": "Sign out",
+  "signIn": "Sign in",
+  "rememberMe": "Keep me logged in",
+  "youNeedAnAccountToDoThat": "You need an account to do that",
+  "signUp": "Register",
+  "computersAreNotAllowedToPlay": "Computers and computer-assisted players are not allowed to play. Please do not get assistance from chess engines, databases, or from other players while playing. Also note that making multiple accounts is strongly discouraged and excessive multi-accounting will lead to being banned.",
+  "games": "Games",
+  "forum": "Forum",
+  "xPostedInForumY": "{param1} posted in topic {param2}",
+  "@xPostedInForumY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "latestForumPosts": "Latest forum posts",
+  "players": "Players",
+  "friends": "Friends",
+  "otherPlayers": "other players",
+  "discussions": "Conversations",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "minutesPerSide": "Minutes per side",
+  "variant": "Variant",
+  "variants": "Variants",
+  "variantsDescription": "More ways to play",
+  "timeControl": "Time control",
+  "realTime": "Real time",
+  "correspondence": "Correspondence",
+  "daysPerTurn": "Days per turn",
+  "oneDay": "One day",
+  "time": "Time",
+  "rating": "Rating",
+  "ratingStats": "Rating stats",
+  "username": "Username",
+  "usernameOrEmail": "Username or email",
+  "changeUsername": "Change username",
+  "changeUsernameNotSame": "Only the case of the letters can change. For example \"johndoe\" to \"JohnDoe\".",
+  "changeUsernameDescription": "Change your username. This can only be done once and you are only allowed to change the case of the letters in your username.",
+  "signupUsernameHint": "Be sure to choose a username appropriate for all ages. You cannot change it later, and accounts with inappropriate usernames will be closed!",
+  "signupEmailPromise": "We will only send you emails about your account and never share your email.",
+  "password": "Password",
+  "showPassword": "Show password",
+  "changePassword": "Change password",
+  "changeEmail": "Change email",
+  "email": "Email",
+  "passwordReset": "Password reset",
+  "forgotPassword": "Forgot password?",
+  "error_weakPassword": "This password is extremely common and too easy to guess.",
+  "error_namePassword": "Please don't use your username as your password.",
+  "blankedPassword": "You have used the same password on another site, and that site has been compromised. To ensure the safety of your Lichess account, we need you to set a new password. Thank you for your understanding.",
+  "youAreLeavingLichess": "You are leaving Lichess",
+  "neverTypeYourPassword": "Never type your Lichess password on another site!",
+  "proceedToX": "Proceed to {param}",
+  "@proceedToX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordSuggestion": "Do not set a password suggested by someone else. They can use it to steal your account.",
+  "emailSuggestion": "Do not set an email address suggested by someone else. They can use it to steal your account.",
+  "emailConfirmHelp": "Help with email confirmation",
+  "emailConfirmNotReceived": "Didn't receive your confirmation email after signing up?",
+  "whatSignupUsername": "What username did you register with?",
+  "usernameNotFound": "We couldn't find any user by this name: {param}.",
+  "@usernameNotFound": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "usernameCanBeUsedForNewAccount": "You can use this username to create a new account",
+  "emailSent": "We have sent an email to {param}.",
+  "@emailSent": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "emailCanTakeSomeTime": "It can take some time to arrive.",
+  "refreshInboxAfterFiveMinutes": "Wait 5 minutes and refresh your email inbox.",
+  "checkSpamFolder": "Also check your spam folder, it might end up there. If so, mark it as not spam.",
+  "checkSpamOrJunkFolder": "If you do not receive a confirmation email, check your Spam or Junk folder. Be sure to indicate messages from lichess.org as safe and \"not spam\", so you can stay informed of important communications.",
+  "sendEmailForAccountVerification": "If you can't find your confirmation email, send an email to {param} and we'll confirm your account for you.",
+  "@sendEmailForAccountVerification": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "accountConfirmed": "The user {param} is successfully confirmed.",
+  "@accountConfirmed": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "accountCanLogin": "You can login right now as {param}.",
+  "@accountCanLogin": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "accountConfirmationEmailNotNeeded": "You do not need a confirmation email.",
+  "accountClosed": "The account {param} is closed.",
+  "@accountClosed": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "accountRegisteredWithoutEmail": "The account {param} was registered without an email.",
+  "@accountRegisteredWithoutEmail": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "rank": "Rank",
+  "rankX": "Rank: {param}",
+  "@rankX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "gamesPlayed": "Games played",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "whiteTimeOut": "White time out",
+  "whiteRanOutOfTime": "White ran out of time",
+  "blackTimeOut": "Black time out",
+  "blackRanOutOfTime": "Black ran out of time",
+  "drawOfferSent": "Draw offer sent",
+  "drawOfferAccepted": "Draw offer accepted",
+  "whiteOffersDraw": "White offers draw",
+  "blackOffersDraw": "Black offers draw",
+  "whiteDeclinesDraw": "White declines draw",
+  "blackDeclinesDraw": "Black declines draw",
+  "yourOpponentOffersADraw": "Your opponent offers a draw",
+  "accept": "Accept",
+  "decline": "Decline",
+  "playingRightNow": "Playing right now",
+  "eventInProgress": "Playing now",
+  "finished": "Finished",
+  "abortGame": "Abort game",
+  "gameAborted": "Game aborted",
+  "standard": "Standard",
+  "customPosition": "Custom position",
+  "unlimited": "Unlimited",
+  "unlimitedDescription": "Take all the time you need",
+  "mode": "Mode",
+  "casual": "Casual",
+  "rated": "Rated",
+  "casualTournament": "Casual",
+  "ratedTournament": "Rated",
+  "thisGameIsRated": "This game is rated",
+  "rematch": "Rematch",
+  "rematchOfferSent": "Rematch offer sent",
+  "rematchOfferAccepted": "Rematch offer accepted",
+  "rematchOfferCanceled": "Rematch offer cancelled",
+  "rematchOfferDeclined": "Rematch offer declined",
+  "cancelRematchOffer": "Cancel rematch offer",
+  "viewRematch": "View rematch",
+  "confirmMove": "Confirm move",
+  "play": "Play",
+  "inbox": "Inbox",
+  "chatRoom": "Chat room",
+  "loginToChat": "Sign in to chat",
+  "youHaveBeenTimedOut": "You have been timed out.",
+  "spectatorRoom": "Spectator room",
+  "composeMessage": "Message",
+  "subject": "Subject",
+  "send": "Send",
+  "incrementInSeconds": "Increment in seconds",
+  "freeOnlineChess": "Free Online Chess",
+  "exportGames": "Export games",
+  "ratingFilter": "Rating filter",
+  "thisAccountViolatedTos": "The Lichess Terms of Service were violated on this account",
+  "openingExplorerAndTablebase": "Opening explorer & tablebase",
+  "takeback": "Takeback",
+  "proposeATakeback": "Propose a takeback",
+  "whiteProposesTakeback": "White proposes takeback",
+  "blackProposesTakeback": "Black proposes takeback",
+  "takebackPropositionSent": "Takeback sent",
+  "whiteDeclinesTakeback": "White declines takeback",
+  "blackDeclinesTakeback": "Black declines takeback",
+  "whiteAcceptsTakeback": "White accepts takeback",
+  "blackAcceptsTakeback": "Black accepts takeback",
+  "whiteCancelsTakeback": "White cancels takeback",
+  "blackCancelsTakeback": "Black cancels takeback",
+  "yourOpponentProposesATakeback": "Your opponent proposes a takeback",
+  "bookmarkThisGame": "Bookmark this game",
+  "tournament": "Tournament",
+  "tournaments": "Tournaments",
+  "tournamentPoints": "Tournament points",
+  "viewTournament": "View tournament",
+  "backToTournament": "Back to tournament",
+  "noDrawBeforeSwissLimit": "You cannot draw before 30 moves are played in a Swiss tournament.",
+  "thematic": "Thematic",
+  "yourPerfRatingIsProvisional": "Your {param} rating is provisional",
+  "@yourPerfRatingIsProvisional": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingRangeIsDisabledBecauseYourRatingIsProvisional": "Rating filters are locked because your rating is not stable. Playing rated games will increase stability.",
+  "cannotFilterByUnstableRating": "It is not possible to filter by rating because your rating is not stable.\nPlaying rated games will increase stability.",
+  "yourPerfRatingIsTooHigh": "Your {param1} rating ({param2}) is too high",
+  "@yourPerfRatingIsTooHigh": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "yourTopWeeklyPerfRatingIsTooHigh": "Your top weekly {param1} rating ({param2}) is too high",
+  "@yourTopWeeklyPerfRatingIsTooHigh": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "yourPerfRatingIsTooLow": "Your {param1} rating ({param2}) is too low",
+  "@yourPerfRatingIsTooLow": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "ratedMoreThanInPerf": "Rated ≥ {param1} in {param2}",
+  "@ratedMoreThanInPerf": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "ratedLessThanInPerf": "Rated ≤ {param1} in {param2} for the last week",
+  "@ratedLessThanInPerf": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "mustBeInTeam": "Must be in team {param}",
+  "@mustBeInTeam": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "youAreNotInTeam": "You are not in the team {param}",
+  "@youAreNotInTeam": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "backToGame": "Back to game",
+  "siteDescription": "Free online chess server. Play chess in a clean interface. No registration, no ads, no plugin required. Play chess with the computer, friends or random opponents.",
+  "xJoinedTeamY": "{param1} joined team {param2}",
+  "@xJoinedTeamY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "xCreatedTeamY": "{param1} created team {param2}",
+  "@xCreatedTeamY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "startedStreaming": "started streaming",
+  "xStartedStreaming": "{param} started streaming",
+  "@xStartedStreaming": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "averageElo": "Average rating",
+  "location": "Location",
+  "filterGames": "Filter games",
+  "reset": "Reset",
+  "apply": "Submit",
+  "save": "Save",
+  "leaderboard": "Leaderboard",
+  "positionAsImage": "Position as image",
+  "gameAsGIF": "Game as GIF",
+  "playerNames": "Player names",
+  "moveAnnotations": "Move annotations",
+  "pasteTheFenStringHere": "Paste the FEN text here",
+  "pasteThePgnStringHere": "Paste the PGN text here",
+  "orUploadPgnFile": "Or upload a PGN file",
+  "continueFromHere": "Continue from here",
+  "toStudy": "Study",
+  "importGame": "Import game",
+  "importGameExplanation": "Paste a game PGN to get a browsable replay, computer analysis, game chat, and a shareable link.",
+  "importGameDataPrivacyWarning": "This PGN can be accessed by the public. To import a game privately, use a study.",
+  "thisIsAChessCaptcha": "This is a chess CAPTCHA.",
+  "clickOnTheBoardToMakeYourMove": "Click on the board to make your move, and prove you are human.",
+  "captcha_fail": "Please solve the chess captcha.",
+  "notACheckmate": "Not a checkmate",
+  "whiteCheckmatesInOneMove": "White to checkmate in one move",
+  "blackCheckmatesInOneMove": "Black to checkmate in one move",
+  "retry": "Retry",
+  "reconnecting": "Reconnecting",
+  "noNetwork": "Offline",
+  "favoriteOpponents": "Favourite opponents",
+  "follow": "Follow",
+  "following": "Following",
+  "unfollow": "Unfollow",
+  "followX": "Follow {param}",
+  "@followX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "unfollowX": "Unfollow {param}",
+  "@unfollowX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "block": "Block",
+  "blocked": "Blocked",
+  "unblock": "Unblock",
+  "xStartedFollowingY": "{param1} started following {param2}",
+  "@xStartedFollowingY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "less": "Less",
+  "more": "More",
+  "memberSince": "Member since",
+  "lastSeenActive": "Active {param}",
+  "@lastSeenActive": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "player": "Player",
+  "list": "List",
+  "graph": "Graph",
+  "required": "Required.",
+  "openTournaments": "Open tournaments",
+  "duration": "Duration",
+  "winner": "Winner",
+  "standings": "Standings",
+  "createANewTournament": "Create a new tournament",
+  "tournamentCalendar": "Tournament calendar",
+  "conditionOfEntry": "Entry requirements:",
+  "advancedSettings": "Advanced settings",
+  "safeTournamentName": "Pick a very safe name for the tournament.",
+  "inappropriateNameWarning": "Anything even slightly inappropriate could get your account closed.",
+  "emptyTournamentName": "Leave empty to name the tournament after a notable chess player.",
+  "makePrivateTournament": "Make the tournament private, and restrict access with a password",
+  "join": "Join",
+  "withdraw": "Withdraw",
+  "points": "Points",
+  "wins": "Wins",
+  "losses": "Losses",
+  "startingIn": "Starting in",
+  "standByX": "Stand by {param}, pairing players, get ready!",
+  "@standByX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "pause": "Pause",
+  "resume": "Resume",
+  "youArePlaying": "You are playing!",
+  "winRate": "Win rate",
+  "performance": "Performance",
+  "tournamentComplete": "Tournament complete",
+  "movesPlayed": "Moves played",
+  "whiteWins": "White wins",
+  "blackWins": "Black wins",
+  "drawRate": "Draw rate",
+  "draws": "Draws",
+  "averageOpponent": "Average opponent",
+  "boardEditor": "Board editor",
+  "setTheBoard": "Set the board",
+  "popularOpenings": "Popular openings",
+  "endgamePositions": "Endgame positions",
+  "chess960StartPosition": "Chess960 start position: {param}",
+  "@chess960StartPosition": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "randomChess960Position": "Random Chess960 position",
+  "startPosition": "Starting position",
+  "clearBoard": "Clear board",
+  "loadPosition": "Load position",
+  "isPrivate": "Private",
+  "reportXToModerators": "Report {param} to moderators",
+  "@reportXToModerators": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "profileCompletion": "Profile completion: {param}",
+  "@profileCompletion": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "xRating": "{param} rating",
+  "@xRating": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "ifNoneLeaveEmpty": "If none, leave empty",
+  "profile": "Profile",
+  "editProfile": "Edit profile",
+  "realName": "Real name",
+  "setFlair": "Set your flair",
+  "flair": "Flair",
+  "youCanHideFlair": "There is a setting to hide all user flairs across the entire site.",
+  "biography": "Biography",
+  "countryRegion": "Country or region",
+  "thankYou": "Thank you!",
+  "socialMediaLinks": "Social media links",
+  "oneUrlPerLine": "One URL per line.",
+  "inlineNotation": "Inline notation",
+  "makeAStudy": "For safekeeping and sharing, consider making a study.",
+  "clearLocalData": "Clear local data",
+  "previouslyOnLichessTV": "Previously on Lichess TV",
+  "onlinePlayers": "Online players",
+  "activePlayers": "Active players",
+  "bewareTheGameIsRatedButHasNoClock": "Beware, the game is rated but has no clock!",
+  "success": "Success",
+  "automaticallyProceedToNextGameAfterMoving": "Automatically proceed to next game after moving",
+  "autoSwitch": "Auto switch",
+  "puzzles": "Puzzles",
+  "onlineBots": "Online bots",
+  "name": "Name",
+  "description": "Description",
+  "descPrivate": "Private description",
+  "descPrivateHelp": "Text that only the team members will see. If set, replaces the public description for team members.",
+  "no": "No",
+  "yes": "Yes",
+  "website": "Website",
+  "mobile": "Mobile",
+  "help": "Help:",
+  "createANewTopic": "Create a new topic",
+  "topics": "Topics",
+  "posts": "Posts",
+  "lastPost": "Last post",
+  "views": "Views",
+  "replies": "Replies",
+  "replyToThisTopic": "Reply to this topic",
+  "reply": "Reply",
+  "reopen": "Reopen",
+  "quote": "Quote",
+  "postEdited": "edited",
+  "message": "Message",
+  "createTheTopic": "Create the topic",
+  "reportAUser": "Report a user",
+  "user": "User",
+  "reason": "Reason",
+  "whatIsIheMatter": "What's the matter?",
+  "cheat": "Cheat",
+  "troll": "Troll",
+  "other": "Other",
+  "reportCheatBoostHelp": "Paste the link to the game(s) and explain what is wrong about this user's behaviour. Don't just say \"they cheat\", but tell us how you came to this conclusion.",
+  "reportUsernameHelp": "Explain why this username is offensive. Don't just say \"it's offensive/inappropriate,\" but tell us how you came to this conclusion, especially if the offense is obscure, not in English, in slang, or a historical/cultural reference.",
+  "reportProcessedFasterInEnglish": "Your report will be processed faster if written in English.",
+  "processReportFasterInEnglish": "We can process your report faster if you write in English.",
+  "error_provideOneCheatedGameLink": "Please provide at least one link to a game for review.",
+  "by": "by {param}",
+  "@by": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "importedByX": "Imported by {param}",
+  "@importedByX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "thisTopicIsNowClosed": "This topic is now closed.",
+  "blog": "Blog",
+  "notes": "Notes",
+  "typePrivateNotesHere": "Type private notes here",
+  "writeAPrivateNoteAboutThisUser": "Write a private note about this user",
+  "noNoteYet": "No note yet",
+  "invalidUsernameOrPassword": "Invalid username or password",
+  "incorrectPassword": "Incorrect password",
+  "invalidAuthenticationCode": "Invalid authentication code",
+  "clearField": "Clear field",
+  "orSeparator": "Or",
+  "logInByEmail": "Log in by email",
+  "emailMeALink": "Email me a link",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "newPasswordAgain": "New password (again)",
+  "newPasswordsDontMatch": "The new passwords don't match",
+  "newPasswordStrength": "Password strength",
+  "clockInitialTime": "Clock initial time",
+  "clockIncrement": "Clock increment",
+  "privacy": "Privacy",
+  "privacyPolicy": "Privacy policy",
+  "letOtherPlayersFollowYou": "Let other players follow you",
+  "letOtherPlayersChallengeYou": "Let other players challenge you",
+  "letOtherPlayersInviteYouToStudy": "Let other players invite you to study",
+  "sound": "Sound",
+  "none": "None",
+  "fast": "Fast",
+  "normal": "Normal",
+  "slow": "Slow",
+  "insideTheBoard": "Inside the board",
+  "outsideTheBoard": "Outside the board",
+  "allSquaresOfTheBoard": "All squares",
+  "onSlowGames": "On slow games",
+  "always": "Always",
+  "never": "Never",
+  "xCompetesInY": "{param1} competes in {param2}",
+  "@xCompetesInY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "victory": "Victory",
+  "defeat": "Defeat",
+  "victoryVsYInZ": "{param1} vs {param2} in {param3}",
+  "@victoryVsYInZ": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "defeatVsYInZ": "{param1} vs {param2} in {param3}",
+  "@defeatVsYInZ": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "drawVsYInZ": "{param1} vs {param2} in {param3}",
+  "@drawVsYInZ": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "timeline": "Timeline",
+  "starting": "Starting:",
+  "allInformationIsPublicAndOptional": "All information is public and optional.",
+  "biographyDescription": "Talk about yourself, your interests, what you like in chess, your favourite openings, players, ...",
+  "listBlockedPlayers": "List players you have blocked",
+  "human": "Human",
+  "computer": "Computer",
+  "side": "Side",
+  "clock": "Clock",
+  "opponent": "Opponent",
+  "learnMenu": "Learn",
+  "studyMenu": "Study",
+  "practice": "Practice",
+  "community": "Community",
+  "tools": "Tools",
+  "increment": "Increment",
+  "error_unknown": "Invalid value",
+  "error_required": "This field is required",
+  "error_email": "This email address is invalid",
+  "error_email_acceptable": "This email address is not acceptable. Please double-check it, and try again.",
+  "error_email_unique": "Email address invalid or already taken",
+  "error_email_different": "This is already your email address",
+  "error_minLength": "Must be at least {param} characters long",
+  "@error_minLength": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "error_maxLength": "Must be at most {param} characters long",
+  "@error_maxLength": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "error_min": "Must be at least {param}",
+  "@error_min": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "error_max": "Must be at most {param}",
+  "@error_max": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "ifRatingIsPlusMinusX": "If rating is ± {param}",
+  "@ifRatingIsPlusMinusX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "ifRegistered": "If registered",
+  "onlyExistingConversations": "Only existing conversations",
+  "onlyFriends": "Only friends",
+  "menu": "Menu",
+  "castling": "Castling rights",
+  "whiteCastlingKingside": "White O-O",
+  "blackCastlingKingside": "Black O-O",
+  "tpTimeSpentPlaying": "Time spent playing: {param}",
+  "@tpTimeSpentPlaying": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "watchGames": "Watch games",
+  "tpTimeSpentOnTV": "Time featured on TV: {param}",
+  "@tpTimeSpentOnTV": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "watch": "Watch",
+  "videoLibrary": "Video library",
+  "streamersMenu": "Streamers",
+  "mobileApp": "Mobile App",
+  "webmasters": "Webmasters",
+  "about": "About",
+  "aboutX": "About {param}",
+  "@aboutX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "xIsAFreeYLibreOpenSourceChessServer": "{param1} is a free ({param2}), libre, no-ads, open source chess server.",
+  "@xIsAFreeYLibreOpenSourceChessServer": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "really": "really",
+  "contribute": "Contribute",
+  "termsOfService": "Terms of Service",
+  "titleVerification": "Title verification",
+  "sourceCode": "Source Code",
+  "simultaneousExhibitions": "Simultaneous exhibitions",
+  "host": "Host",
+  "hostColorX": "Host colour: {param}",
+  "@hostColorX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "yourPendingSimuls": "Your pending simuls",
+  "createdSimuls": "Newly created simuls",
+  "hostANewSimul": "Host a new simul",
+  "signUpToHostOrJoinASimul": "Register to join or host a simul",
+  "noSimulFound": "Simul not found",
+  "noSimulExplanation": "This simultaneous exhibition does not exist.",
+  "returnToSimulHomepage": "Return to simul homepage",
+  "aboutSimul": "Simuls involve a single player facing several players at once.",
+  "aboutSimulImage": "Out of 50 opponents, Fischer won 47 games, drew 2 and lost 1.",
+  "aboutSimulRealLife": "The concept is taken from real world events. In real life, this involves the simul host moving from table to table to play a single move.",
+  "aboutSimulRules": "When the simul starts, every player starts a game with the host. The simul ends when all games are complete.",
+  "aboutSimulSettings": "Simuls are always casual. Rematches, takebacks and adding time are disabled.",
+  "create": "Create",
+  "whenCreateSimul": "When you create a simul, you get to play several players at once.",
+  "creatingASimul": "Creating a simul lets you play against multiple opponents at the same time.",
+  "simulVariantsHint": "If you select several variants, each player gets to choose which one to play.",
+  "simulClockHint": "The more players you take on, the more time you may need.",
+  "simulAddExtraTime": "You may add extra initial time to your clock to help you cope with the simul.",
+  "simulHostExtraTime": "Host extra initial clock time",
+  "extraClockTimeForHost": "Extra clock time for the host:",
+  "simulAddExtraTimePerPlayer": "Add initial time to your clock for each player joining the simul.",
+  "simulHostExtraTimePerPlayer": "Host extra clock time per player",
+  "lichessTournaments": "Lichess tournaments",
+  "tournamentFAQ": "Arena tournament FAQ",
+  "timeBeforeTournamentStarts": "Time before tournament starts",
+  "averageCentipawnLoss": "Average centipawn loss",
+  "accuracy": "Accuracy",
+  "keyboardShortcuts": "Keyboard shortcuts",
+  "keyMoveBackwardOrForward": "move backward/forward",
+  "keyGoToStartOrEnd": "go to start/end",
+  "keyGoToPreviousOrNextLine": "go to previous/next line",
+  "keyCycleSelectedVariation": "Cycle selected variation",
+  "keyShowOrHideComments": "show/hide comments",
+  "keyShowOrHideCurrentVariation": "show/hide current variation",
+  "keyEnterOrExitVariation": "enter/exit variation",
+  "keyPreviousBranch": "Previous branch",
+  "keyNextBranch": "Next branch",
+  "toggleVariationArrows": "Toggle variation arrows",
+  "cyclePreviousOrNextVariation": "Cycle previous/next variation",
+  "toggleGlyphAnnotations": "Toggle move annotations",
+  "togglePositionAnnotations": "Toggle position annotations",
+  "toggleObservationAnnotations": "Toggle observation annotations",
+  "variationArrowsInfo": "Variation arrows let you navigate without using the move list.",
+  "playSelectedMove": "play selected move",
+  "newTournament": "New tournament",
+  "tournamentHomeTitle": "Chess tournaments featuring various time controls and variants",
+  "tournamentHomeDescription": "Play fast-paced chess tournaments! Join an official scheduled tournament, or create your own. Bullet, Blitz, Classical, Chess960, King of the Hill, Threecheck, and more options available for endless chess fun.",
+  "tournamentNotFound": "Tournament not found",
+  "tournamentDoesNotExist": "This tournament does not exist.",
+  "tournamentMayHaveBeenCanceled": "The tournament may have been cancelled if all players left before it started.",
+  "returnToTournamentsHomepage": "Return to tournaments homepage",
+  "weeklyPerfTypeRatingDistribution": "Weekly {param} rating distribution",
+  "@weeklyPerfTypeRatingDistribution": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "yourPerfTypeRatingIsRating": "Your {param1} rating is {param2}.",
+  "@yourPerfTypeRatingIsRating": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "youAreBetterThanPercentOfPerfTypePlayers": "You are better than {param1} of {param2} players.",
+  "@youAreBetterThanPercentOfPerfTypePlayers": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "userIsBetterThanPercentOfPerfTypePlayers": "{param1} is better than {param2} of {param3} players.",
+  "@userIsBetterThanPercentOfPerfTypePlayers": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      },
+      "param3": {
+        "type": "String"
+      }
+    }
+  },
+  "betterThanPercentPlayers": "Better than {param1} of {param2} players",
+  "@betterThanPercentPlayers": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "youDoNotHaveAnEstablishedPerfTypeRating": "You do not have an established {param} rating.",
+  "@youDoNotHaveAnEstablishedPerfTypeRating": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "yourRating": "Your rating",
+  "cumulative": "Cumulative",
+  "glicko2Rating": "Glicko-2 rating",
+  "checkYourEmail": "Check your Email",
+  "weHaveSentYouAnEmailClickTheLink": "We've sent you an email. Click the link in the email to activate your account.",
+  "ifYouDoNotSeeTheEmailCheckOtherPlaces": "If you don't see the email, check other places it might be, like your junk, spam, social, or other folders.",
+  "ifYouDoNotGetTheEmail": "If you do not get the email within 5 minutes:",
+  "checkAllEmailFolders": "Check all junk, spam, and other folders",
+  "verifyYourAddress": "Verify that {param} is your email address",
+  "@verifyYourAddress": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "weHaveSentYouAnEmailTo": "We've sent an email to {param}. Click the link in the email to reset your password.",
+  "@weHaveSentYouAnEmailTo": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "byRegisteringYouAgreeToBeBoundByOur": "By registering, you agree to the {param}.",
+  "@byRegisteringYouAgreeToBeBoundByOur": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "readAboutOur": "Read about our {param}.",
+  "@readAboutOur": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "networkLagBetweenYouAndLichess": "Network lag between you and Lichess",
+  "timeToProcessAMoveOnLichessServer": "Time to process a move on Lichess's server",
+  "downloadAnnotated": "Download annotated",
+  "downloadRaw": "Download raw",
+  "downloadImported": "Download imported",
+  "downloadAllGames": "Download all games",
+  "crosstable": "Crosstable",
+  "youCanAlsoScrollOverTheBoardToMoveInTheGame": "Scroll over the board to move in the game.",
+  "scrollOverComputerVariationsToPreviewThem": "Scroll over computer variations to preview them.",
+  "analysisShapesHowTo": "Press right-click (or shift+click) to draw circles and arrows on the board. For other colours, combine the following with right-click:",
+  "primaryColorArrowsHowTo": "Ctrl or shift = red; command, alt, or meta = blue; a key from each = yellow.",
+  "letOtherPlayersMessageYou": "Let other players message you",
+  "receiveForumNotifications": "Receive notifications when mentioned in the forum",
+  "shareYourInsightsData": "Share your chess insights data",
+  "withNobody": "With nobody",
+  "withFriends": "With friends",
+  "withEverybody": "With everybody",
+  "kidMode": "Kid mode",
+  "kidModeIsEnabled": "Kid mode is enabled.",
+  "kidModeExplanation": "This is about safety. In kid mode, all site communications are disabled. Enable this for your children and school students, to protect them from other internet users.",
+  "inKidModeTheLichessLogoGetsIconX": "In kid mode, the Lichess logo gets a {param} icon, so you know your kids are safe.",
+  "@inKidModeTheLichessLogoGetsIconX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "askYourChessTeacherAboutLiftingKidMode": "Your account is managed. Ask your chess teacher about removing kid mode.",
+  "enableKidMode": "Enable Kid mode",
+  "disableKidMode": "Disable Kid mode",
+  "security": "Security",
+  "sessions": "Sessions",
+  "revokeAllSessions": "revoke all sessions",
+  "playChessEverywhere": "Play chess everywhere",
+  "everybodyGetsAllFeaturesForFree": "Everybody gets all features for free",
+  "viewTheSolution": "View the solution",
+  "noChallenges": "No challenges.",
+  "xHostsY": "{param1} hosts {param2}",
+  "@xHostsY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "xJoinsY": "{param1} joins {param2}",
+  "@xJoinsY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "xLikesY": "{param1} likes {param2}",
+  "@xLikesY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "like": "Like",
+  "liked": "Liked",
+  "quickPairing": "Quick pairing",
+  "lobby": "Lobby",
+  "anonymous": "Anonymous",
+  "yourScore": "Your score: {param}",
+  "@yourScore": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "language": "Language",
+  "allLanguages": "All languages",
+  "background": "Background",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "picture": "Picture",
+  "deviceTheme": "Device theme",
+  "roundness": "Roundness",
+  "backgroundImage": "Background image",
+  "backgroundImageUrl": "Background image URL:",
+  "imageOpacity": "Image opacity",
+  "board": "Board",
+  "size": "Size",
+  "opacity": "Opacity",
+  "brightness": "Brightness",
+  "contrast": "Contrast",
+  "hue": "Hue",
+  "boardReset": "Reset colours to default",
+  "pieceSet": "Piece set",
+  "embedInYourWebsite": "Embed in your website",
+  "usernameAlreadyUsed": "This username is already in use, please try another one.",
+  "usernamePrefixInvalid": "The username must start with a letter.",
+  "usernameSuffixInvalid": "The username must end with a letter or a number.",
+  "usernameCharsInvalid": "The username must only contain letters, numbers, underscores, and hyphens. Consecutive underscores and hyphens are not allowed.",
+  "usernameUnacceptable": "This username is not acceptable.",
+  "playChessInStyle": "Play chess in style",
+  "chessBasics": "Chess basics",
+  "coaches": "Coaches",
+  "invalidPgn": "Invalid PGN",
+  "invalidFen": "Invalid FEN",
+  "custom": "Custom",
+  "notifications": "Notifications",
+  "notificationsX": "Notifications: {param1}",
+  "@notificationsX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "perfRatingX": "Rating: {param}",
+  "@perfRatingX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "perfRatingLabel": "Rating: {param}.",
+  "@perfRatingLabel": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "yourRatingIsX": "Your rating is {param}",
+  "@yourRatingIsX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "practiceWithComputer": "Practice with computer",
+  "anotherWasX": "Another was {param}",
+  "@anotherWasX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "bestWasX": "Best was {param}",
+  "@bestWasX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "youBrowsedAway": "You browsed away",
+  "resumePractice": "Resume practice",
+  "drawByFiftyMoves": "The game has been drawn by the fifty-move rule.",
+  "theGameIsADraw": "The game is a draw.",
+  "computerThinking": "Computer thinking ...",
+  "seeBestMove": "See best move",
+  "hideBestMove": "Hide best move",
+  "getAHint": "Get a hint",
+  "evaluatingYourMove": "Evaluating your move ...",
+  "whiteWinsGame": "White wins",
+  "blackWinsGame": "Black wins",
+  "learnFromYourMistakes": "Learn from your mistakes",
+  "learnFromThisMistake": "Learn from this mistake",
+  "skipThisMove": "Skip this move",
+  "next": "Next",
+  "xWasPlayed": "{param} was played",
+  "@xWasPlayed": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "findBetterMoveForWhite": "Find a better move for white",
+  "findBetterMoveForBlack": "Find a better move for black",
+  "resumeLearning": "Resume learning",
+  "youCanDoBetter": "You can do better",
+  "tryAnotherMoveForWhite": "Try another move for white",
+  "tryAnotherMoveForBlack": "Try another move for black",
+  "solution": "Solution",
+  "waitingForAnalysis": "Waiting for analysis",
+  "noMistakesFoundForWhite": "No mistakes found for white",
+  "noMistakesFoundForBlack": "No mistakes found for black",
+  "doneReviewingWhiteMistakes": "Done reviewing white's mistakes",
+  "doneReviewingBlackMistakes": "Done reviewing black's mistakes",
+  "doItAgain": "Do it again",
+  "reviewWhiteMistakes": "Review white's mistakes",
+  "reviewBlackMistakes": "Review black's mistakes",
+  "advantage": "Advantage",
+  "opening": "Opening",
+  "middlegame": "Middlegame",
+  "endgame": "Endgame",
+  "conditionalPremoves": "Conditional premoves",
+  "addCurrentVariation": "Add current variation",
+  "playVariationToCreateConditionalPremoves": "Play a variation to create conditional premoves",
+  "noConditionalPremoves": "No conditional premoves",
+  "playX": "Play {param}",
+  "@playX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeX": "Challenge {param}",
+  "@challengeX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "showUnreadLichessMessage": "You have received a private message from Lichess.",
+  "clickHereToReadIt": "Click here to read it",
+  "readTheMessage": "Read the message",
+  "sorry": "Sorry :(",
+  "weHadToTimeYouOutForAWhile": "We had to time you out for a while.",
+  "why": "Why?",
+  "pleasantChessExperience": "We aim to provide a pleasant chess experience for everyone.",
+  "goodPractice": "To that effect, we must ensure that all players follow good practice.",
+  "potentialProblem": "When a potential problem is detected, we display this message.",
+  "howToAvoidThis": "How to avoid this?",
+  "playEveryGame": "Play every game you start.",
+  "tryToWin": "Try to win (or at least draw) every game you play.",
+  "resignLostGames": "Resign lost games (don't let the clock run down).",
+  "temporaryInconvenience": "We apologise for the temporary inconvenience,",
+  "wishYouGreatGames": "and wish you great games on lichess.org.",
+  "thankYouForReading": "Thank you for reading!",
+  "lifetimeScore": "Lifetime score",
+  "currentMatchScore": "Current match score",
+  "agreementAssistance": "I agree that I will at no time receive assistance during my games (from a chess computer, book, database or another person).",
+  "agreementNice": "I agree that I will always be respectful to other players.",
+  "agreementMultipleAccounts": "I agree that I will not create multiple accounts (except for the reasons stated in the {param}).",
+  "@agreementMultipleAccounts": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "searchOrStartNewDiscussion": "Search or start new conversation",
+  "edit": "Edit",
+  "ultraBullet": "UltraBullet",
+  "bullet": "Bullet",
+  "blitz": "Blitz",
+  "rapid": "Rapid",
+  "classical": "Classical",
+  "ultraBulletDesc": "Insanely fast games: less than 30 seconds",
+  "bulletDesc": "Very fast games: less than 3 minutes",
+  "blitzDesc": "Fast games: 3 to 8 minutes",
+  "rapidDesc": "Rapid games: 8 to 25 minutes",
+  "classicalDesc": "Classical games: 25 minutes and more",
+  "correspondenceDesc": "Correspondence games: one or several days per move",
+  "puzzleDesc": "Chess tactics trainer",
+  "important": "Important",
+  "yourQuestionMayHaveBeenAnswered": "Your question may already have an answer {param1}",
+  "@yourQuestionMayHaveBeenAnswered": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "inTheFAQ": "in the FAQ",
+  "toReportSomeoneForCheatingOrBadBehavior": "To report a user for cheating or bad behaviour, {param1}",
+  "@toReportSomeoneForCheatingOrBadBehavior": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "useTheReportForm": "use the report form",
+  "toRequestSupport": "To request support, {param1}",
+  "@toRequestSupport": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "tryTheContactPage": "try the contact page",
+  "makeSureToRead": "Make sure to read {param1}",
+  "@makeSureToRead": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "theForumEtiquette": "the forum etiquette",
+  "pleaseBeNiceInTheForum": "Please be nice in the forum.",
+  "thisTopicIsArchived": "This topic has been archived and can no longer be replied to.",
+  "joinTheTeamXToPost": "Join the {param1}, to post in this forum",
+  "@joinTheTeamXToPost": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "teamNamedX": "{param1} team",
+  "@teamNamedX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "youCannotPostYetPlaySomeGames": "You can't post in the forums yet. Play some games!",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "mentionedYouInX": "mentioned you in \"{param1}\".",
+  "@mentionedYouInX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "xMentionedYouInY": "{param1} mentioned you in \"{param2}\".",
+  "@xMentionedYouInY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "invitedYouToX": "invited you to \"{param1}\".",
+  "@invitedYouToX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "xInvitedYouToY": "{param1} invited you to \"{param2}\".",
+  "@xInvitedYouToY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "youAreNowPartOfTeam": "You are now part of the team.",
+  "youHaveJoinedTeamX": "You have joined \"{param1}\".",
+  "@youHaveJoinedTeamX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "congratsYouWon": "Congratulations, you won!",
+  "gameVsX": "Game vs {param1}",
+  "@gameVsX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      }
+    }
+  },
+  "resVsX": "{param1} vs {param2}",
+  "@resVsX": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "lostAgainstTOSViolator": "You lost rating points to someone who violated the Lichess TOS",
+  "refundXpointsTimeControlY": "Refund: {param1} {param2} rating points.",
+  "@refundXpointsTimeControlY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "timeAlmostUp": "Time is almost up!",
+  "clickToRevealEmailAddress": "[Click to reveal email address]",
+  "download": "Download",
+  "coachManager": "Coach manager",
+  "streamerManager": "Streamer manager",
+  "cancelTournament": "Cancel the tournament",
+  "tournDescription": "Tournament description",
+  "tournDescriptionHelp": "Anything special you want to tell the participants? Try to keep it short. Markdown links are available: [name](https://url)",
+  "ratedFormHelp": "Games are rated and impact players ratings",
+  "onlyMembersOfTeam": "Only members of team",
+  "noRestriction": "No restriction",
+  "minimumRatedGames": "Minimum rated games",
+  "minimumRating": "Minimum rating",
+  "maximumWeeklyRating": "Maximum weekly rating",
+  "positionInputHelp": "Paste a valid FEN to start every game from a given position.\nIt only works for standard games, not with variants.\nYou can use the {param} to generate a FEN position, then paste it here.\nLeave empty to start games from the normal initial position.",
+  "@positionInputHelp": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelSimul": "Cancel the simul",
+  "simulHostcolor": "Host colour for each game",
+  "estimatedStart": "Estimated start time",
+  "simulFeatured": "Feature on {param}",
+  "@simulFeatured": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "simulFeaturedHelp": "Show your simul to everyone on {param}. Disable for private simuls.",
+  "@simulFeaturedHelp": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "simulDescription": "Simul description",
+  "simulDescriptionHelp": "Anything you want to tell the participants?",
+  "markdownIsAvailable": "{param} is available for formatting.",
+  "@markdownIsAvailable": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "youCanFormatTextUsing": "You can format text using {param}.",
+  "@youCanFormatTextUsing": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "embedsAvailable": "Paste a game URL or a study chapter URL to embed it.",
+  "inYourLocalTimezone": "In your own local timezone",
+  "tournChat": "Tournament chat",
+  "noChat": "No chat",
+  "onlyTeamLeaders": "Only team leaders",
+  "onlyTeamMembers": "Only team members",
+  "navigateMoveTree": "Navigate the move tree",
+  "moveListNavigation": "Move list navigation",
+  "mouseTricks": "Mouse tricks",
+  "toggleLocalAnalysis": "Toggle local computer analysis",
+  "toggleAllAnalysis": "Toggle all computer analysis",
+  "playComputerMove": "Play best computer move",
+  "analysisOptions": "Analysis options",
+  "focusChat": "Focus chat",
+  "showHelpDialog": "View this help overlay",
+  "reopenYourAccount": "Reopen your account",
+  "reopenYourAccountDescription": "If you closed your account, but have since changed your mind, you get a chance of getting your account back.",
+  "emailAssociatedToaccount": "Email address associated to the account",
+  "sentEmailWithLink": "We've sent you an email with a link.",
+  "tournamentEntryCode": "Tournament entry code",
+  "hangOn": "Hang on!",
+  "gameInProgress": "You have a game in progress with {param}.",
+  "@gameInProgress": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "abortTheGame": "Abort the game",
+  "resignTheGame": "Resign the game",
+  "youCantStartNewGame": "You can't start a new game while it's your turn.",
+  "since": "Since",
+  "until": "Until",
+  "lichessDbExplanation": "Rated games played on Lichess",
+  "switchSides": "Switch sides",
+  "closingAccountWithdrawAppeal": "Closing your account will withdraw your appeal",
+  "ourEventTips": "Our tips for organising events",
+  "instructions": "Instructions",
+  "showMeEverything": "Show me everything",
+  "lichessPatronInfo": "Lichess is a charity and entirely free/libre open source software. We depend on user donations to support our operating costs, development, and content. Without our generous community, we would not be able to keep the site running. Thank you for joining us!\n  ",
+  "nothingToSeeHere": "Nothing to see here at the moment.",
+  "stats": "Stats",
+  "accessibility": "Accessibility",
+  "enableBlindMode": "Enable blind mode",
+  "disableBlindMode": "Disable blind mode",
+  "copyToClipboard": "Copy to clipboard",
+  "online": "online",
+  "offline": "offline",
+  "search": "Search",
+  "clearSearch": "Clear search",
+  "thereAreNoResultsForX": "No results for \"{param}\"",
+  "@thereAreNoResultsForX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "tags": "Tags",
+  "enPassant": "En passant rights",
+  "settings": "Settings",
+  "verifyingYourDevice": "Verifying your device...",
+  "chessOpenings": "Chess openings",
+  "boards": "Boards",
+  "opponentLeftCounter": "{count, plural, =1{Your opponent left the game. You can claim victory in {count} second.} other{Your opponent left the game. You can claim victory in {count} seconds.}}",
+  "@opponentLeftCounter": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mateInXHalfMoves": "{count, plural, =1{Mate in {count} half-move} other{Mate in {count} half-moves}}",
+  "@mateInXHalfMoves": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbBlunders": "{count, plural, =1{{count} blunder} other{{count} blunders}}",
+  "@nbBlunders": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "numberBlunders": "{count, plural, =1{{count} Blunder} other{{count} Blunders}}",
+  "@numberBlunders": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbMistakes": "{count, plural, =1{{count} mistake} other{{count} mistakes}}",
+  "@nbMistakes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "numberMistakes": "{count, plural, =1{{count} Mistake} other{{count} Mistakes}}",
+  "@numberMistakes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbInaccuracies": "{count, plural, =1{{count} inaccuracy} other{{count} inaccuracies}}",
+  "@nbInaccuracies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "numberInaccuracies": "{count, plural, =1{{count} Inaccuracy} other{{count} Inaccuracies}}",
+  "@numberInaccuracies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbPlayers": "{count, plural, =1{{count} player} other{{count} players}}",
+  "@nbPlayers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbGames": "{count, plural, =1{{count} game} other{{count} games}}",
+  "@nbGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ratingXOverYGames": "{count, plural, =1{{count} rating over {param2} game} other{{count} rating over {param2} games}}",
+  "@ratingXOverYGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "nbBookmarks": "{count, plural, =1{{count} bookmark} other{{count} bookmarks}}",
+  "@nbBookmarks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbDays": "{count, plural, =1{{count} day} other{{count} days}}",
+  "@nbDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbHours": "{count, plural, =1{{count} hour} other{{count} hours}}",
+  "@nbHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbMinutes": "{count, plural, =1{{count} minute} other{{count} minutes}}",
+  "@nbMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rankIsUpdatedEveryNbMinutes": "{count, plural, =1{Rank is updated every minute} other{Rank is updated every {count} minutes}}",
+  "@rankIsUpdatedEveryNbMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbPuzzles": "{count, plural, =1{{count} puzzle} other{{count} puzzles}}",
+  "@nbPuzzles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbGamesWithYou": "{count, plural, =1{{count} game with you} other{{count} games with you}}",
+  "@nbGamesWithYou": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbRated": "{count, plural, =1{{count} rated} other{{count} rated}}",
+  "@nbRated": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbWins": "{count, plural, =1{{count} win} other{{count} wins}}",
+  "@nbWins": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbLosses": "{count, plural, =1{{count} loss} other{{count} losses}}",
+  "@nbLosses": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbDraws": "{count, plural, =1{{count} draw} other{{count} draws}}",
+  "@nbDraws": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbPlaying": "{count, plural, =1{{count} playing} other{{count} playing}}",
+  "@nbPlaying": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "giveNbSeconds": "{count, plural, =1{Give {count} second} other{Give {count} seconds}}",
+  "@giveNbSeconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbTournamentPoints": "{count, plural, =1{{count} tournament point} other{{count} tournament points}}",
+  "@nbTournamentPoints": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbStudies": "{count, plural, =1{{count} study} other{{count} studies}}",
+  "@nbStudies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbSimuls": "{count, plural, =1{{count} simul} other{{count} simuls}}",
+  "@nbSimuls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moreThanNbRatedGames": "{count, plural, =1{≥ {count} rated game} other{≥ {count} rated games}}",
+  "@moreThanNbRatedGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moreThanNbPerfRatedGames": "{count, plural, =1{≥ {count} rated {param2} game} other{≥ {count} rated {param2} games}}",
+  "@moreThanNbPerfRatedGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "needNbMorePerfGames": "{count, plural, =1{You need to play {count} more {param2} rated game} other{You need to play {count} more {param2} rated games}}",
+  "@needNbMorePerfGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "needNbMoreGames": "{count, plural, =1{You need to play {count} more rated game} other{You need to play {count} more rated games}}",
+  "@needNbMoreGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbImportedGames": "{count, plural, =1{{count} imported game} other{{count} imported games}}",
+  "@nbImportedGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbFriendsOnline": "{count, plural, =1{{count} friend online} other{{count} friends online}}",
+  "@nbFriendsOnline": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbFollowers": "{count, plural, =1{{count} follower} other{{count} followers}}",
+  "@nbFollowers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbFollowing": "{count, plural, =1{{count} following} other{{count} following}}",
+  "@nbFollowing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbGamesInPlay": "{count, plural, =1{{count} game in play} other{{count} games in play}}",
+  "@nbGamesInPlay": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "maximumNbCharacters": "{count, plural, =1{Maximum: {count} character.} other{Maximum: {count} characters.}}",
+  "@maximumNbCharacters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "blocks": "{count, plural, =1{{count} block} other{{count} blocks}}",
+  "@blocks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbForumPosts": "{count, plural, =1{{count} forum post} other{{count} forum posts}}",
+  "@nbForumPosts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbPerfTypePlayersThisWeek": "{count, plural, =1{{count} {param2} player this week.} other{{count} {param2} players this week.}}",
+  "@nbPerfTypePlayersThisWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "availableInNbLanguages": "{count, plural, =1{Available in {count} language!} other{Available in {count} languages!}}",
+  "@availableInNbLanguages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbAnonymous": "{count, plural, =1{Anonymous} other{Anonymous ({count})}}",
+  "@nbAnonymous": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbSecondsToPlayTheFirstMove": "{count, plural, =1{{count} second to play the first move} other{{count} seconds to play the first move}}",
+  "@nbSecondsToPlayTheFirstMove": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nbSeconds": "{count, plural, =1{{count} second} other{{count} seconds}}",
+  "@nbSeconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "andSaveNbPremoveLines": "{count, plural, =1{and save {count} premove line} other{and save {count} premove lines}}",
+  "@andSaveNbPremoveLines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stormMoveToStart": "Move to start",
+  "stormYouPlayTheWhitePiecesInAllPuzzles": "You play the white pieces in all puzzles",
+  "stormYouPlayTheBlackPiecesInAllPuzzles": "You play the black pieces in all puzzles",
+  "stormPuzzlesSolved": "puzzles solved",
+  "stormNewDailyHighscore": "New daily highscore!",
+  "stormNewWeeklyHighscore": "New weekly highscore!",
+  "stormNewMonthlyHighscore": "New monthly highscore!",
+  "stormNewAllTimeHighscore": "New all-time highscore!",
+  "stormPreviousHighscoreWasX": "Previous highscore was {param}",
+  "@stormPreviousHighscoreWasX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "stormPlayAgain": "Play again",
+  "stormHighscoreX": "Highscore: {param}",
+  "@stormHighscoreX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "stormScore": "Score",
+  "stormMoves": "Moves",
+  "stormAccuracy": "Accuracy",
+  "stormCombo": "Combo",
+  "stormTime": "Time",
+  "stormTimePerMove": "Time per move",
+  "stormHighestSolved": "Highest solved",
+  "stormPuzzlesPlayed": "Puzzles played",
+  "stormNewRun": "New run (hotkey: Space)",
+  "stormEndRun": "End run (hotkey: Enter)",
+  "stormHighscores": "Highscores",
+  "stormViewBestRuns": "View best runs",
+  "stormBestRunOfDay": "Best run of day",
+  "stormRuns": "Runs",
+  "stormGetReady": "Get ready!",
+  "stormWaitingForMorePlayers": "Waiting for more players to join...",
+  "stormRaceComplete": "Race complete!",
+  "stormSpectating": "Spectating",
+  "stormJoinTheRace": "Join the race!",
+  "stormStartTheRace": "Start the race",
+  "stormYourRankX": "Your rank: {param}",
+  "@stormYourRankX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "stormWaitForRematch": "Wait for rematch",
+  "stormNextRace": "Next race",
+  "stormJoinRematch": "Join rematch",
+  "stormWaitingToStart": "Waiting to start",
+  "stormCreateNewGame": "Create a new game",
+  "stormJoinPublicRace": "Join a public race",
+  "stormRaceYourFriends": "Race your friends",
+  "stormSkip": "skip",
+  "stormSkipHelp": "You can skip one move per race:",
+  "stormSkipExplanation": "Skip this move to preserve your combo! Only works once per race.",
+  "stormFailedPuzzles": "Failed puzzles",
+  "stormSlowPuzzles": "Slow puzzles",
+  "stormSkippedPuzzle": "Skipped puzzle",
+  "stormThisWeek": "This week",
+  "stormThisMonth": "This month",
+  "stormAllTime": "All-time",
+  "stormClickToReload": "Click to reload",
+  "stormThisRunHasExpired": "This run has expired!",
+  "stormThisRunWasOpenedInAnotherTab": "This run was opened in another tab!",
+  "stormXRuns": "{count, plural, =1{1 run} other{{count} runs}}",
+  "@stormXRuns": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stormPlayedNbRunsOfPuzzleStorm": "{count, plural, =1{Played one run of {param2}} other{Played {count} runs of {param2}}}",
+  "@stormPlayedNbRunsOfPuzzleStorm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "streamerLichessStreamers": "Lichess streamers",
+  "studyPrivate": "Private",
+  "studyMyStudies": "My studies",
+  "studyStudiesIContributeTo": "Studies I contribute to",
+  "studyMyPublicStudies": "My public studies",
+  "studyMyPrivateStudies": "My private studies",
+  "studyMyFavoriteStudies": "My favourite studies",
+  "studyWhatAreStudies": "What are studies?",
+  "studyAllStudies": "All studies",
+  "studyStudiesCreatedByX": "Studies created by {param}",
+  "@studyStudiesCreatedByX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyNoneYet": "None yet.",
+  "studyHot": "Hot",
+  "studyDateAddedNewest": "Date added (newest)",
+  "studyDateAddedOldest": "Date added (oldest)",
+  "studyRecentlyUpdated": "Recently updated",
+  "studyMostPopular": "Most popular",
+  "studyAlphabetical": "Alphabetical",
+  "studyRelevant": "Relevant",
+  "studyAddNewChapter": "Add a new chapter",
+  "studyAddMembers": "Add members",
+  "studyInviteToTheStudy": "Invite to the study",
+  "studyPleaseOnlyInvitePeopleYouKnow": "Please only invite people who know you, and who actively want to join this study.",
+  "studySearchByUsername": "Search by username",
+  "studySpectator": "Spectator",
+  "studyContributor": "Contributor",
+  "studyKick": "Kick",
+  "studyLeaveTheStudy": "Leave the study",
+  "studyYouAreNowAContributor": "You are now a contributor",
+  "studyYouAreNowASpectator": "You are now a spectator",
+  "studyPgnTags": "PGN tags",
+  "studyLike": "Like",
+  "studyNewTag": "New tag",
+  "studyCommentThisPosition": "Comment on this position",
+  "studyCommentThisMove": "Comment on this move",
+  "studyAnnotateWithGlyphs": "Annotate with glyphs",
+  "studyTheChapterIsTooShortToBeAnalysed": "The chapter is too short to be analysed.",
+  "studyOnlyContributorsCanRequestAnalysis": "Only the study contributors can request a computer analysis.",
+  "studyGetAFullComputerAnalysis": "Get a full server-side computer analysis of the main line.",
+  "studyMakeSureTheChapterIsComplete": "Make sure the chapter is complete. You can only request analysis once.",
+  "studyAllSyncMembersRemainOnTheSamePosition": "All SYNC members remain on the same position",
+  "studyShareChanges": "Share changes with spectators and save them on the server",
+  "studyPlaying": "Playing",
+  "studyShowResults": "Results",
+  "studyShowEvalBar": "Evaluation bars",
+  "studyNext": "Next",
+  "studyShareAndExport": "Share & export",
+  "studyCloneStudy": "Clone",
+  "studyStudyPgn": "Study PGN",
+  "studyChapterPgn": "Chapter PGN",
+  "studyCopyChapterPgn": "Copy PGN",
+  "studyCopyRawChapterPgn": "Copy Raw PGN",
+  "studyDownloadGame": "Download game",
+  "studyStudyUrl": "Study URL",
+  "studyCurrentChapterUrl": "Current chapter URL",
+  "studyYouCanPasteThisInTheForumToEmbed": "You can paste this in the forum or your Lichess blog to embed",
+  "studyPasteToEmbedChapterInForumOrBlog": "You can paste this in the forum or your Lichess blog to embed the chapter.",
+  "studyStartAtInitialPosition": "Start at initial position",
+  "studyStartAtX": "Start at {param}",
+  "@studyStartAtX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyEmbedInYourWebsite": "Embed in your website",
+  "studyReadMoreAboutEmbedding": "Read more about embedding",
+  "studyOnlyPublicStudiesCanBeEmbedded": "Only public studies can be embedded!",
+  "studyOpen": "Open",
+  "studyXBroughtToYouByY": "{param1}, brought to you by {param2}",
+  "@studyXBroughtToYouByY": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "studyStudyNotFound": "Study not found",
+  "studyEditChapter": "Edit chapter",
+  "studyNewChapter": "New chapter",
+  "studyImportFromChapterX": "Import from {param}",
+  "@studyImportFromChapterX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyOrientation": "Orientation",
+  "studyAnalysisMode": "Analysis mode",
+  "studyPinnedChapterComment": "Pinned chapter comment",
+  "studySaveChapter": "Save chapter",
+  "studyClearAnnotations": "Clear annotations",
+  "studyClearVariations": "Clear variations",
+  "studyDeleteChapter": "Delete chapter",
+  "studyDeleteThisChapter": "Delete this chapter. There is no going back!",
+  "studyClearAllCommentsInThisChapter": "Clear all comments, glyphs and drawn shapes in this chapter",
+  "studyRightUnderTheBoard": "Right under the board",
+  "studyNoPinnedComment": "None",
+  "studyNormalAnalysis": "Normal analysis",
+  "studyHideNextMoves": "Hide next moves",
+  "studyInteractiveLesson": "Interactive lesson",
+  "studyChapterX": "Chapter {param}",
+  "@studyChapterX": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyEmpty": "Empty",
+  "studyStartFromInitialPosition": "Start from initial position",
+  "studyEditor": "Editor",
+  "studyStartFromCustomPosition": "Start from custom position",
+  "studyLoadAGameByUrl": "Load games by URLs",
+  "studyLoadAPositionFromFen": "Load a position from FEN",
+  "studyLoadAGameFromPgn": "Load games from PGN",
+  "studyAutomatic": "Automatic",
+  "studyUrlOfTheGame": "URL of the games, one per line",
+  "studyCreateChapter": "Create chapter",
+  "studyCreateStudy": "Create study",
+  "studyEditStudy": "Edit study",
+  "studyVisibility": "Visibility",
+  "studyPublic": "Public",
+  "studyUnlisted": "Unlisted",
+  "studyInviteOnly": "Invite only",
+  "studyAllowCloning": "Allow cloning",
+  "studyNobody": "Nobody",
+  "studyOnlyMe": "Only me",
+  "studyContributors": "Contributors",
+  "studyMembers": "Members",
+  "studyEveryone": "Everyone",
+  "studyEnableSync": "Enable sync",
+  "studyYesKeepEveryoneOnTheSamePosition": "Yes: keep everyone on the same position",
+  "studyNoLetPeopleBrowseFreely": "No: let people browse freely",
+  "studyPinnedStudyComment": "Pinned study comment",
+  "studyStart": "Start",
+  "studySave": "Save",
+  "studyClearChat": "Clear chat",
+  "studyDeleteTheStudyChatHistory": "Delete the study chat history? There is no going back!",
+  "studyDeleteStudy": "Delete study",
+  "studyConfirmDeleteStudy": "Delete the entire study? There is no going back! Type the name of the study to confirm: {param}",
+  "@studyConfirmDeleteStudy": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyWhereDoYouWantToStudyThat": "Where do you want to study that?",
+  "studyGoodMove": "Good move",
+  "studyMistake": "Mistake",
+  "studyBrilliantMove": "Brilliant move",
+  "studyBlunder": "Blunder",
+  "studyInterestingMove": "Interesting move",
+  "studyDubiousMove": "Dubious move",
+  "studyOnlyMove": "Only move",
+  "studyZugzwang": "Zugzwang",
+  "studyEqualPosition": "Equal position",
+  "studyUnclearPosition": "Unclear position",
+  "studyWhiteIsSlightlyBetter": "White is slightly better",
+  "studyBlackIsSlightlyBetter": "Black is slightly better",
+  "studyWhiteIsBetter": "White is better",
+  "studyBlackIsBetter": "Black is better",
+  "studyWhiteIsWinning": "White is winning",
+  "studyBlackIsWinning": "Black is winning",
+  "studyNovelty": "Novelty",
+  "studyDevelopment": "Development",
+  "studyInitiative": "Initiative",
+  "studyAttack": "Attack",
+  "studyCounterplay": "Counterplay",
+  "studyTimeTrouble": "Time trouble",
+  "studyWithCompensation": "With compensation",
+  "studyWithTheIdea": "With the idea",
+  "studyNextChapter": "Next chapter",
+  "studyPrevChapter": "Previous chapter",
+  "studyStudyActions": "Study actions",
+  "studyTopics": "Topics",
+  "studyMyTopics": "My topics",
+  "studyPopularTopics": "Popular topics",
+  "studyManageTopics": "Manage topics",
+  "studyBack": "Back",
+  "studyPlayAgain": "Play again",
+  "studyWhatWouldYouPlay": "What would you play in this position?",
+  "studyYouCompletedThisLesson": "Congratulations! You completed this lesson.",
+  "studyPerPage": "{param} per page",
+  "@studyPerPage": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyGetTheTour": "Need help? Get the tour!",
+  "studyWelcomeToLichessStudyTitle": "Welcome to Lichess Study!",
+  "studyWelcomeToLichessStudyText": "This is a shared analysis board.<br><br>Use it to analyse and annotate games,<br>to discuss positions with friends,<br>and of course for chess lessons!<br><br>It's a powerful tool. Let's take some time to see how it works.",
+  "studySharedAndSaveTitle": "Shared and saved",
+  "studySharedAndSavedText": "Other members can see your moves in real time!<br>Plus, everything is saved forever.",
+  "studyStudyMembersTitle": "Study members",
+  "studyStudyMembersText": "{param1} Spectators can view the study and talk in the chat.<br><br>{param2} Contributors can make moves and update the study.",
+  "@studyStudyMembersText": {
+    "placeholders": {
+      "param1": {
+        "type": "String"
+      },
+      "param2": {
+        "type": "String"
+      }
+    }
+  },
+  "studyAddMembersText": "Select {param}.<br>Then decide who will be allowed to contribute.",
+  "@studyAddMembersText": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyStudyChaptersTitle": "Study chapters",
+  "studyStudyChaptersText": "A study can contain several chapters.<br>Each chapter has a distinct initial position and move tree.",
+  "studyCommentPositionTitle": "Comment on a position",
+  "studyCommentPositionText": "Click the {param} button, or right-click on the move list.<br>Comments are shared and saved.",
+  "@studyCommentPositionText": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "studyAnnotatePositionTitle": "Annotate a position",
+  "studyAnnotatePositionText": "Click the !? button, or right-click on the move list.<br>Annotation glyphs are shared and saved.",
+  "studyConclusionTitle": "Thanks for your time",
+  "studyConclusionText": "You can find your <a href='/study/mine/hot'>previous studies</a> on your profile page.<br>There is also a <a href='//lichess.org/blog/V0KrLSkAAMo3hsi4/study-chess-the-lichess-way'>blog post about studies</a>.<br>Power users might want to press \"?\" to see keyboard shortcuts.<br>Have fun!",
+  "studyCreateChapterTitle": "Let's create a study chapter",
+  "studyCreateChapterText": "A study can have several chapters.<br>Each chapter has a distinct move tree <br>and can be created in various ways.",
+  "studyFromInitialPositionTitle": "From initial position",
+  "studyFromInitialPositionText": "A board set up for a new game.<br>Useful for exploring openings.",
+  "studyCustomPositionTitle": "Custom position",
+  "studyCustomPositionText": "Set up the board your way.<br>Suited to explore endgames.",
+  "studyLoadExistingLichessGameTitle": "Load an existing lichess game",
+  "studyLoadGameFromTheWebTitle": "Load a game from the web",
+  "studyLoadExistingLichessGameText": "Paste a lichess game URL<br>(like lichess.org/7fHIU0XI)<br>to load the game moves in the chapter.",
+  "studyLoadGameFromTheWebText": "Paste a game URL<br>(like lichess.org/7fHIU0XI)<br>to load game moves in the chapter.",
+  "studyFromFenStringTitle": "From a FEN string",
+  "studyFromFenStringText": "Paste a position in FEN format<br><i>4k3/4rb2/8/7p/8/5Q2/1PP5/1K6 w</i><br>to start the chapter from a position.",
+  "studyFromPgnGameTitle": "From a PGN game",
+  "studyFromPgnGameText": "Paste a game in PGN format<br>to load moves, comments and variations in the chapter.",
+  "studyVariantsAreSupportedTitle": "Studies support variants",
+  "studyVariantsAreSupportedText": "Yes, you can study crazyhouse<br>and all lichess variants!",
+  "studyChapterConclusionText": "Chapters are saved forever.<br>Have fun organizing your chess content!",
+  "studyDoubleDefeat": "Double defeat",
+  "studyBlackDefeatWhiteCanNotWin": "Black defeat, but White can't win",
+  "studyWhiteDefeatBlackCanNotWin": "White defeat, but Black can't win",
+  "studyNbChapters": "{count, plural, =1{{count} Chapter} other{{count} Chapters}}",
+  "@studyNbChapters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "studyNbGames": "{count, plural, =1{{count} Game} other{{count} Games}}",
+  "@studyNbGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "studyNbMembers": "{count, plural, =1{{count} Member} other{{count} Members}}",
+  "@studyNbMembers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "studyPasteYourPgnTextHereUpToNbGames": "{count, plural, =1{Paste your PGN text here, up to {count} game} other{Paste games as PGN text here. For each game, a new chapter is created. The study can have up to {count} chapters.}}",
+  "@studyPasteYourPgnTextHereUpToNbGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamTeam": "Team",
+  "teamIncorrectEntryCode": "Incorrect entry code.",
+  "teamBattleOfNbTeams": "{count, plural, =1{Battle of {count} teams} other{Battle of {count} teams}}",
+  "@teamBattleOfNbTeams": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "teamNbLeadersPerTeam": "{count, plural, =1{One leader per team} other{{count} leaders per team}}",
+  "@teamNbLeadersPerTeam": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoJustNow": "just now",
+  "timeagoRightNow": "right now",
+  "timeagoCompleted": "completed",
+  "timeagoInNbSeconds": "{count, plural, =1{in {count} second} other{in {count} seconds}}",
+  "@timeagoInNbSeconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbMinutes": "{count, plural, =1{in {count} minute} other{in {count} minutes}}",
+  "@timeagoInNbMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbHours": "{count, plural, =1{in {count} hour} other{in {count} hours}}",
+  "@timeagoInNbHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbDays": "{count, plural, =1{in {count} day} other{in {count} days}}",
+  "@timeagoInNbDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbWeeks": "{count, plural, =1{in {count} week} other{in {count} weeks}}",
+  "@timeagoInNbWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbMonths": "{count, plural, =1{in {count} month} other{in {count} months}}",
+  "@timeagoInNbMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoInNbYears": "{count, plural, =1{in {count} year} other{in {count} years}}",
+  "@timeagoInNbYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbMinutesAgo": "{count, plural, =1{{count} minute ago} other{{count} minutes ago}}",
+  "@timeagoNbMinutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbHoursAgo": "{count, plural, =1{{count} hour ago} other{{count} hours ago}}",
+  "@timeagoNbHoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbDaysAgo": "{count, plural, =1{{count} day ago} other{{count} days ago}}",
+  "@timeagoNbDaysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbWeeksAgo": "{count, plural, =1{{count} week ago} other{{count} weeks ago}}",
+  "@timeagoNbWeeksAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbMonthsAgo": "{count, plural, =1{{count} month ago} other{{count} months ago}}",
+  "@timeagoNbMonthsAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbYearsAgo": "{count, plural, =1{{count} year ago} other{{count} years ago}}",
+  "@timeagoNbYearsAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbMinutesRemaining": "{count, plural, =1{{count} minute remaining} other{{count} minutes remaining}}",
+  "@timeagoNbMinutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeagoNbHoursRemaining": "{count, plural, =1{{count} hour remaining} other{{count} hours remaining}}",
+  "@timeagoNbHoursRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tfaTwoFactorAuth": "Two-factor authentication",
+  "ublogCommunity": "Community",
+  "ublogXBlog": "{param}'s Blog",
+  "@ublogXBlog": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  }
+}

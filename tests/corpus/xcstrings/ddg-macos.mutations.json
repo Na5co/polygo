@@ -1,0 +1,422 @@
+[
+ {
+  "key": "%@ does not support storing passwords",
+  "locale": "ru",
+  "source": "%@ does not support storing passwords",
+  "translation": "Браузер  не позволяет хранить пароли",
+  "kind": "drop"
+ },
+ {
+  "key": "%@: %@",
+  "locale": "fr",
+  "source": "%1$@: %2$@",
+  "translation": " : %2$@",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.attachment.image.turn.limit",
+  "locale": "pl",
+  "source": "You can only attach %d images at a time.",
+  "translation": "Możesz dołączyć maksymalnie %d %d obrazów na raz.",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.attachment.tab.count.limit",
+  "locale": "fr",
+  "source": "You can only add %d tabs at a time.",
+  "translation": "Vous ne pouvez ajouter que  onglets à la fois.",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.usageWarnings.daily-usage",
+  "locale": "pl",
+  "source": "%d%% of daily limit",
+  "translation": "%s%% limitu dziennego",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.usageWarnings.resets-in",
+  "locale": "de",
+  "source": "Resets in %@",
+  "translation": "Wird in %@ %@ zurückgesetzt",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.usageWarnings.weekly-usage",
+  "locale": "nl",
+  "source": "%d%% of weekly limit",
+  "translation": "%d %d%% van de wekelijkse limiet",
+  "kind": "dup"
+ },
+ {
+  "key": "autofill.items.delete-all-passwords-completion-message-text",
+  "locale": "pt",
+  "source": "All passwords deleted (%d)",
+  "translation": "Todas as palavras-passe eliminadas (%d %d)",
+  "kind": "dup"
+ },
+ {
+  "key": "autofill.popover.open-password-manager",
+  "locale": "it",
+  "source": "Open %@",
+  "translation": "Apri ",
+  "kind": "drop"
+ },
+ {
+  "key": "autofill.popover.password-manager-connected-to-user",
+  "locale": "de",
+  "source": "Connected to user %@",
+  "translation": "Verbunden mit Benutzer %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "close.tab.on.back.format",
+  "locale": "fr",
+  "source": "Close and Return to “%@”",
+  "translation": "Fermer et revenir à « %d »",
+  "kind": "retype"
+ },
+ {
+  "key": "contextual.onboarding.browsing.one.tracker",
+  "locale": "pt",
+  "source": "*%1$@* was trying to track you here. I blocked them!\n\n%2$@",
+  "translation": "** tentou rastrear-te aqui. Eu bloqueei-o!\n\n%2$@",
+  "kind": "drop"
+ },
+ {
+  "key": "domain-is-fireproof",
+  "locale": "it",
+  "source": "%@ is now Fireproof",
+  "translation": "%@ %@ è ora a prova di fuoco",
+  "kind": "dup"
+ },
+ {
+  "key": "duckai.prompt-bar.shortcut.reserved-error",
+  "locale": "nl",
+  "source": "“%1$@” is already used by %2$@. Try a different combination.",
+  "translation": "“” wordt al gebruikt door %2$@. Probeer een andere combinatie.",
+  "kind": "drop"
+ },
+ {
+  "key": "fire.active-tabs-and-chats-info",
+  "locale": "de",
+  "source": "Close active tabs (%1$d) and clear all browsing history and cookies (sites: %2$d), and clear Duck.ai chat history.",
+  "translation": "Aktive Tabs () schließen und alle Browserverläufe und Cookies (Websites: %2$d) sowie Duck.ai-Chatverlauf löschen.",
+  "kind": "drop"
+ },
+ {
+  "key": "fire.active-tabs-and-chats-info",
+  "locale": "es",
+  "source": "Close active tabs (%1$d) and clear all browsing history and cookies (sites: %2$d), and clear Duck.ai chat history.",
+  "translation": "Cierra las pestañas activas () y borra todo el historial de navegación y las cookies (sitios: %2$d), y borra el historial de chat de Duck.ai.",
+  "kind": "drop"
+ },
+ {
+  "key": "fire.dialog.history.items.title",
+  "locale": "es",
+  "source": "Delete %#@historyItems@?",
+  "translation": "¿Eliminar %#@historyItems@ %#@historyItems@?",
+  "kind": "dup"
+ },
+ {
+  "key": "fire.dialog.history.items.title",
+  "locale": "pl",
+  "source": "Delete %#@historyItems@?",
+  "translation": "Usunąć ?",
+  "kind": "drop"
+ },
+ {
+  "key": "fire.dialog.single.title.date",
+  "locale": "it",
+  "source": "Delete browsing data from %@?",
+  "translation": "Eliminare i dati di navigazione da %@ %@?",
+  "kind": "dup"
+ },
+ {
+  "key": "fire.dialog.single.title.date",
+  "locale": "ru",
+  "source": "Delete browsing data from %@?",
+  "translation": "Удалить данные о посещении сайтов: ?",
+  "kind": "drop"
+ },
+ {
+  "key": "fire.one-tab-info",
+  "locale": "es",
+  "source": "Close this tab and clear its browsing history and cookies (sites: %d).",
+  "translation": "Cierra esta pestaña y borra tu historial de navegación y cookies (sitios: %d %d).",
+  "kind": "dup"
+ },
+ {
+  "key": "history.delete.dialog.message.markdown",
+  "locale": "pt",
+  "source": "**%@** items will be deleted.",
+  "translation": "**%d** itens de histórico serão eliminados.",
+  "kind": "retype"
+ },
+ {
+  "key": "history.delete.dialog.message.markdown",
+  "locale": "ru",
+  "source": "**%@** items will be deleted.",
+  "translation": "Из журнала будут удалены записи (**%@ %@**).",
+  "kind": "dup"
+ },
+ {
+  "key": "history.menu.clear.data.question",
+  "locale": "es",
+  "source": "Clear History for %@?",
+  "translation": "¿Borrar historial para %@ %@?",
+  "kind": "dup"
+ },
+ {
+  "key": "import.bookmarks.from.source.automatic.error",
+  "locale": "fr",
+  "source": "Couldn't automatically import Bookmarks from %@",
+  "translation": "Impossible d'importer automatiquement les signets depuis ",
+  "kind": "drop"
+ },
+ {
+  "key": "import.bookmarks.from.source.automatic.error",
+  "locale": "nl",
+  "source": "Couldn't automatically import Bookmarks from %@",
+  "translation": "Bladwijzers konden niet automatisch worden geïmporteerd van %d",
+  "kind": "retype"
+ },
+ {
+  "key": "import.credit-cards.from.source.automatic.error",
+  "locale": "es",
+  "source": "Couldn't automatically import Credit Cards from %@",
+  "translation": "No se han podido importar automáticamente las tarjetas de crédito de ",
+  "kind": "drop"
+ },
+ {
+  "key": "import.credit-cards.number.progress.text",
+  "locale": "pt",
+  "source": "Importing credit cards (%d)…",
+  "translation": "A importar cartões de crédito ()…",
+  "kind": "drop"
+ },
+ {
+  "key": "import.csv.instructions.bitwarden",
+  "locale": "fr",
+  "source": "%1$d Open and unlock **%2$s**\n%3$d Select **File → Export vault** from the Menu Bar\n%4$d Select the File Format: **.csv**\n%5$d Enter your Bitwarden main password\n%6$d Click %7$@ and save the file someplace you can find it (e.g., Desktop)\n%8$d %9$@",
+  "translation": "%1$s Ouvrez et déverrouillez **%2$s**\n%3$d Sélectionnez **Fichier → Exporter le coffre-fort** dans la barre de menu\n%4$d Sélectionnez le format de fichier : **.csv**\n%5$d Saisissez votre mot de passe Bitwarden principal\n%6$d Cliquez sur %7$@ et enregistrez le fichier à un endroit où le trouver facilement (par exemple, sur le bureau)\n%8$d %9$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.chrome",
+  "locale": "ru",
+  "source": "%1$d Open **%2$s**\n%3$d In a fresh tab, click %4$@ then **Google Password Manager → Settings**\n%5$d Find “Export Passwords” and click **Download File**\n%6$d Save the passwords file someplace you can find it (e.g., Desktop)\n%7$d %8$@",
+  "translation": "%1$s Откройте **%2$s**\n%3$d В новой вкладке нажмите на значок %4$@, а затем: **Менеджер паролей Google → Настройки**\n%5$d Найдите опцию «Экспортировать пароли» и нажмите **Скачать файл**\n%6$d Сохраните файл с паролями там, где вы легко его найдете (например, на рабочем столе)\n%7$d %8$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.chrome.new.new",
+  "locale": "pl",
+  "source": "%1$d Open **%2$s → %3$@ → Google Password Manager → Settings**\n%4$d Find **Export Passwords → click Download File** and save the file\n%5$d Upload the exported CSV file to DuckDuckGo",
+  "translation": "%1$s Otwórz **%2$s → %3$@ → Menedżer haseł Google → Ustawienia**\n%4$d Znajdź **Eksportuj hasła → kliknij Pobierz plik** i zapisz plik\n%5$d Prześlij wyeksportowany plik CSV do DuckDuckGo",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.coccoc",
+  "locale": "es",
+  "source": "%1$d Open **%2$s**\n%3$d Type “_coccoc://settings/passwords_” into the Address bar\n%4$d Click %5$@ (on the right from _Saved Passwords_) and select **Export passwords**\n%6$d Save the passwords file someplace you can find it (e.g., Desktop)\n%7$d %8$@",
+  "translation": "%1$s Abre **%2$s**\n%3$d Escribe \"_coccoc://settings/passwords_\" en la barra de direcciones\n%4$d Haz clic en %5$@ (a la derecha de _Contraseñas guardadas_) y selecciona **Exportar contraseñas**\n%6$d Guarda el archivo de contraseñas donde puedas encontrarlo posteriormente (por ejemplo, en el escritorio)\n%7$d %8$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.generic",
+  "locale": "es",
+  "source": "The CSV importer will try to match column headers to their position.\nIf there is no header, it supports two formats:\n%1$d URL, Username, Password\n%2$d Title, URL, Username, Password\n%3$@",
+  "translation": "El importador de CSV intentará hacer coincidir los encabezados de columna con su posición.\nSi no hay encabezado, admite dos formatos:\n%1$s URL, Nombre de usuario, Contraseña\n%2$d Título, URL, Nombre de usuario, Contraseña\n%3$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.generic.new",
+  "locale": "es",
+  "source": "The CSV importer will try to match column headers to their position.\nIf there is no header, it supports two formats:\n%1$d URL, Username, Password\n%2$d Title, URL, Username, Password",
+  "translation": "El importador de CSV intentará hacer coincidir los encabezados de columna con su posición.\nSi no hay encabezado, admite dos formatos:\n URL, Nombre de usuario, Contraseña\n%2$d Título, URL, Nombre de usuario, Contraseña",
+  "kind": "drop"
+ },
+ {
+  "key": "import.csv.instructions.lastpass",
+  "locale": "pl",
+  "source": "%1$d Click on the **%2$s** icon in your browser and enter your main password\n%3$d Select **Open My Vault**\n%4$d From the sidebar select **Advanced Options → Export**\n%5$d Enter your LastPass main password\n%6$d Select the File Format: **Comma Delimited Text (.csv)**\n%7$d %8$@",
+  "translation": " Kliknij ikonę **%2$s** w przeglądarce i wprowadź hasło główne\n%3$d Wybierz **Otwórz mój sejf**\n%4$d Na pasku bocznym wybierz **Opcje zaawansowane → Eksportuj**\n%5$d Wprowadź hasło główne splikacji LastPass\n%6$d Wybierz format pliku: **Tekst rozdzielany przecinkami (.csv)**\n%7$d %8$@",
+  "kind": "drop"
+ },
+ {
+  "key": "import.csv.instructions.opera",
+  "locale": "nl",
+  "source": "%1$d Open **%2$s**\n%3$d Use the Menu Bar to select **View → Show Password Manager**\n%4$d Select **Settings**\n%5$d Find “Export Passwords” and click **Download File**\n%6$d Save the passwords file someplace you can find it (e.g., Desktop)\n%7$d %8$@",
+  "translation": "%1$s Open **%2$s**\n%3$d Ga in de menubalk naar **Bekijken → Wachtwoordbeheerder weergeven**\n%4$d Selecteer **Instellingen**\n%5$d Zoek 'Wachtwoorden exporteren' en klik op **Bestand downloaden**\n%6$d Bewaar het bestand met de wachtwoorden op een plek waar je het kunt vinden (bijv. het bureaublad)\n%7$d %8$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.safari.macos15-2.old",
+  "locale": "nl",
+  "source": "%1$d Open **Safari**\n%2$d Open the **File menu → Export Browsing Data to File...**\n%3$d Select **passwords** and save the file someplace you can find it (e.g., Desktop)\n%4$d Double click the .zip file to unzip it\n%5$d %6$@",
+  "translation": "%1$s Open **Safari**\n%2$d Open het menu **Bestand → Browsergegevens exporteren naar bestand...**\n%3$d Selecteer **wachtwoorden** en sla het bestand op een plek op waar je het kunt vinden (bijv. je bureaublad)\n%4$d Dubbelklik op het .zip-bestand om het uit te pakken\n%5$d %6$@",
+  "kind": "retype"
+ },
+ {
+  "key": "import.csv.instructions.vivaldi",
+  "locale": "es",
+  "source": "%1$d Open **%2$s**\n%3$d Type “_chrome://settings/passwords_” into the Address bar\n%4$d Click %5$@ (on the right from _Saved Passwords_) and select **Export passwords**\n%6$d Save the file someplace you can find it (e.g., Desktop)\n%7$d %8$@",
+  "translation": " Abre **%2$s**\n%3$d Escribe \"_chrome://settings/passwords_\" en la barra de direcciones\n%4$d Haz clic en %5$@ (a la derecha de _Contraseñas guardadas_) y selecciona **Exportar contraseñas**\n%6$d Guarda el archivo donde puedas encontrarlo posteriormente (por ejemplo, en el escritorio)\n%7$d %8$@",
+  "kind": "drop"
+ },
+ {
+  "key": "import.data.requires-password.body",
+  "locale": "de",
+  "source": "DuckDuckGo won't save or share your %1$@ Primary Password, but DuckDuckGo needs it to access and import passwords from %1$@.",
+  "translation": "DuckDuckGo wird dein %1$d-Primärpasswort nicht speichern oder weitergeben, aber DuckDuckGo braucht es, um auf Passwörter von %1$@ zuzugreifen und sie zu importieren.",
+  "kind": "retype"
+ },
+ {
+  "key": "import.data.requires-password.title",
+  "locale": "ru",
+  "source": "Enter Primary Password for %@",
+  "translation": "Введите основной пароль от %d",
+  "kind": "retype"
+ },
+ {
+  "key": "import.html.instructions.firefox.new",
+  "locale": "nl",
+  "source": "%1$d Open **%2$s → Bookmarks → Manage Bookmarks**\n%3$d Click %4$@ **→ Export bookmarks to HTML…** and save the file\n%5$d Upload the exported HTML file to DuckDuckGo",
+  "translation": "%1$s Open **%2$s → Bladwijzers → Bladwijzers beheren**\n%3$d Klik op %4$@ **→ Bladwijzers exporteren naar HTML…** en sla het bestand op\n%5$d Upload het geëxporteerde HTML-bestand naar DuckDuckGo",
+  "kind": "retype"
+ },
+ {
+  "key": "import.passwords.from.source.automatic.error",
+  "locale": "de",
+  "source": "Couldn't automatically import Passwords from %@",
+  "translation": "Passwörter konnten nicht automatisch von %d importiert werden",
+  "kind": "retype"
+ },
+ {
+  "key": "import.passwords.from.source.automatic.error",
+  "locale": "fr",
+  "source": "Couldn't automatically import Passwords from %@",
+  "translation": "Impossible d'importer automatiquement les mots de passe depuis %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "import.request-access.description",
+  "locale": "ru",
+  "source": "Click **Select %1$@ Data** and then select **Grant Access** when the file picker appears.",
+  "translation": "Нажмите **Выбрать данные ** и, когда появится окно выбора файла, нажмите **Предоставить доступ**.",
+  "kind": "drop"
+ },
+ {
+  "key": "import.request-access.title",
+  "locale": "nl",
+  "source": "DuckDuckGo needs access to your %1$@ data to finish importing.",
+  "translation": "DuckDuckGo heeft toegang tot je %1$d-gegevens nodig om het importeren te voltooien.",
+  "kind": "retype"
+ },
+ {
+  "key": "import.summary.failed.to.import",
+  "locale": "es",
+  "source": "Failed to Import: %d",
+  "translation": "Error al importar: %s",
+  "kind": "retype"
+ },
+ {
+  "key": "import.summary.passwords.imported",
+  "locale": "es",
+  "source": "Passwords Imported: %d",
+  "translation": "Contraseñas importadas: ",
+  "kind": "drop"
+ },
+ {
+  "key": "import.zip.instructions.safari",
+  "locale": "es",
+  "source": "%1$d Open %2$@ **Safari → File → Export Browsing Data to File...**\n%3$d Choose **Bookmarks, Passwords,** and **Credit Cards**, → **Export** and save the file\n%4$d Upload the exported ZIP or CSV file to DuckDuckGo",
+  "translation": " Abre %2$@ **Safari → Archivo → Exportar datos de navegación a un archivo…**\n%3$d Elige **Marcadores, contraseñas y tarjetas de crédito** → **Exportar** y guarda el archivo\n%4$d Sube el archivo ZIP o CSV exportado a DuckDuckGo",
+  "kind": "drop"
+ },
+ {
+  "key": "permission.authorization.externalScheme.empty.format",
+  "locale": "it",
+  "source": "Open this link in %@?",
+  "translation": "Apri questo link in ?",
+  "kind": "drop"
+ },
+ {
+  "key": "permission.authorization.location",
+  "locale": "it",
+  "source": "“%@“ website would like to use your current location.",
+  "translation": "Il sito web “%d“ vorrebbe utilizzare la tua posizione attuale.",
+  "kind": "retype"
+ },
+ {
+  "key": "permission.authorization.location",
+  "locale": "pt",
+  "source": "“%@“ website would like to use your current location.",
+  "translation": "O site \"%@ %@\" gostaria de utilizar a tua localização atual.",
+  "kind": "dup"
+ },
+ {
+  "key": "permission.center.title",
+  "locale": "pl",
+  "source": "Permissions for “%@”",
+  "translation": "Uprawnienia do domeny „%@ %@”",
+  "kind": "dup"
+ },
+ {
+  "key": "permission.disabled.app",
+  "locale": "pl",
+  "source": "%1$@ access is disabled for %2$@",
+  "translation": "%2$d ma wyłączony dostęp do urządzenia %1$@",
+  "kind": "retype"
+ },
+ {
+  "key": "permission.externalScheme.open.format",
+  "locale": "de",
+  "source": "Open %@",
+  "translation": "%d öffnen",
+  "kind": "retype"
+ },
+ {
+  "key": "permission.geolocation.prompt.format",
+  "locale": "it",
+  "source": "Allow “%@“ to use your current location once?",
+  "translation": "Consenti a \"%d\" di utilizzare la tua posizione attuale una volta?",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.about.more-at",
+  "locale": "it",
+  "source": "More at %@",
+  "translation": "Ulteriori informazioni su ",
+  "kind": "drop"
+ },
+ {
+  "key": "settings.downloading.update",
+  "locale": "es",
+  "source": "Downloading update %@",
+  "translation": "Descargando actualización ",
+  "kind": "drop"
+ },
+ {
+  "key": "storage.access.prompt.quirk.domains.label.2",
+  "locale": "pt",
+  "source": "If you pick “Don’t Allow” some site features may not work as expected, but it will reduce tracking by %@.",
+  "translation": "Se escolher \"Não permitir\", alguns recursos do site podem não funcionar como esperado, mas o rastreamento diminuirá em .",
+  "kind": "drop"
+ },
+ {
+  "key": "tooltip.clearHistory",
+  "locale": "nl",
+  "source": "Clear browsing history for %@",
+  "translation": "Surfgeschiedenis en -data van %d wissen",
+  "kind": "retype"
+ },
+ {
+  "key": "tooltip.clearHistoryAndData",
+  "locale": "de",
+  "source": "Clear browsing history and data for %@",
+  "translation": "Browserverlauf und Daten für %d löschen",
+  "kind": "retype"
+ }
+]

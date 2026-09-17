@@ -1,0 +1,422 @@
+[
+ {
+  "key": "auth.continue_with_oidc",
+  "locale": "en",
+  "source": "Continue with {oidcDisplayName}",
+  "translation": "Continue with ",
+  "kind": "drop"
+ },
+ {
+  "key": "common.delete_what",
+  "locale": "en",
+  "source": "Delete {deleteWhat}",
+  "translation": "Delete {{deleteWhat}}",
+  "kind": "braces"
+ },
+ {
+  "key": "common.digit_number_of_total",
+  "locale": "en",
+  "source": "Digit {number} of {total}",
+  "translation": "Digit {{number}} of {total}",
+  "kind": "braces"
+ },
+ {
+  "key": "common.invalid_date_with_value",
+  "locale": "en",
+  "source": "Invalid date: {value}",
+  "translation": "Invalid date: {{value}}",
+  "kind": "braces"
+ },
+ {
+  "key": "common.row_n",
+  "locale": "en",
+  "source": "Row {n}",
+  "translation": "Row {{n}}",
+  "kind": "braces"
+ },
+ {
+  "key": "common.row_n",
+  "locale": "en",
+  "source": "Row {n}",
+  "translation": "Row ",
+  "kind": "drop"
+ },
+ {
+  "key": "common.sort_by_value",
+  "locale": "en",
+  "source": "Sort by: {label}",
+  "translation": "Sort by: ",
+  "kind": "drop"
+ },
+ {
+  "key": "common.table_items_deleted_successfully",
+  "locale": "en",
+  "source": "{type}s deleted successfully",
+  "translation": "{{type}}s deleted successfully",
+  "kind": "braces"
+ },
+ {
+  "key": "emails.delete_account_email_link_valid_for_minutes",
+  "locale": "en",
+  "source": "The link is valid for {minutes} minutes.",
+  "translation": "The link is valid for  minutes.",
+  "kind": "drop"
+ },
+ {
+  "key": "emails.forgot_password_email_link_valid_for_24_hours",
+  "locale": "en",
+  "source": "The link is valid for {minutes} minutes.",
+  "translation": "The link is valid for  minutes.",
+  "kind": "drop"
+ },
+ {
+  "key": "emails.invite_email_heading",
+  "locale": "en",
+  "source": "Hey {inviteeName}",
+  "translation": "Hey {{inviteeName}}",
+  "kind": "braces"
+ },
+ {
+  "key": "s.survey_sent_to",
+  "locale": "en",
+  "source": "Survey sent to {email}",
+  "translation": "Survey sent to {{email}}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.actions.action_with_key_already_exists",
+  "locale": "en",
+  "source": "Action with key {key} already exists",
+  "translation": "Action with key  already exists",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.actions.time_in_seconds_with_unit",
+  "locale": "en",
+  "source": "{seconds}s",
+  "translation": "s",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.analysis.charts.distribution_segment_label",
+  "locale": "en",
+  "source": "{label}: {value} ({percent})",
+  "translation": "{{label}}: {value} ({percent})",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.contacts.attributes_msg_attribute_limit_exceeded",
+  "locale": "en",
+  "source": "Could not create {count} new attribute(s) as it would exceed the maximum limit of {limit} attribute classes. Existing attributes were updated successfully.",
+  "translation": "Could not create  new attribute(s) as it would exceed the maximum limit of {limit} attribute classes. Existing attributes were updated successfully.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.contacts.attributes_msg_new_attribute_created",
+  "locale": "en",
+  "source": "Created new attribute “{key}” with type “{dataType}”",
+  "translation": "Created new attribute “” with type “{dataType}”",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.contacts.personal_link_generated_but_clipboard_failed",
+  "locale": "en",
+  "source": "Personal link generated but failed to copy to clipboard: {url}",
+  "translation": "Personal link generated but failed to copy to clipboard: {{url}}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.contacts.upload_contacts_error_attribute_type_mismatch",
+  "locale": "en",
+  "source": "Attribute “{key}” is typed as “{dataType}” but CSV contains invalid values: {values}",
+  "translation": "Attribute “{{key}}” is typed as “{dataType}” but CSV contains invalid values: {values}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.contacts.upload_contacts_error_duplicate_mappings",
+  "locale": "en",
+  "source": "Duplicate mappings found for the following attributes: {attributes}",
+  "translation": "Duplicate mappings found for the following attributes: ",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.integrations.notion.que_name_of_type_cant_be_mapped_to",
+  "locale": "en",
+  "source": "{que_name} of type {question_label} cannot be mapped to the column {col_name} of type {col_type}. Instead use column of type {mapped_type}.",
+  "translation": "{{que_name}} of type {question_label} cannot be mapped to the column {col_name} of type {col_type}. Instead use column of type {mapped_type}.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.billing.confirm_hobby_downgrade_body",
+  "locale": "en",
+  "source": "Your free {plan} trial will end now and you'll switch to the Hobby plan immediately.",
+  "translation": "Your free  trial will end now and you'll switch to the Hobby plan immediately.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.billing.confirm_trial_continue_body",
+  "locale": "en",
+  "source": "Follow-ups, custom links, and everything else in {plan} — unlocked instantly.<br /><b>{chargeNow} today</b>, then {fullPrice} {period} incl. taxes. Billing starts today.",
+  "translation": "Follow-ups, custom links, and everything else in {{plan}} — unlocked instantly.<br /><b>{chargeNow} today</b>, then {fullPrice} {period} incl. taxes. Billing starts today.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.billing.confirm_trial_continue_title",
+  "locale": "en",
+  "source": "Start {plan} now?",
+  "translation": "Start {{plan}} now?",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.billing.confirm_trial_continue_title",
+  "locale": "en",
+  "source": "Start {plan} now?",
+  "translation": "Start  now?",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.billing.pending_plan_change_description",
+  "locale": "en",
+  "source": "Your plan will switch to {plan} on {date}.",
+  "translation": "Your plan will switch to  on {date}.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.billing.usage_count_of_limit_used",
+  "locale": "en",
+  "source": "{{current}} / {{limit}} <muted>used</muted>",
+  "translation": "{current} / {{limit}} <muted>used</muted>",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.feedback_directories.purge_all_data_warning",
+  "locale": "en",
+  "source": "This permanently deletes every feedback record in \"{directoryName}\", including its AI enrichment and the topics generated from it, for every workspace this dataset is shared with. The dataset and its sources are kept, and topics can be generated again once new feedback arrives. Charts built on this dataset will be empty until then.",
+  "translation": "This permanently deletes every feedback record in \"\", including its AI enrichment and the topics generated from it, for every workspace this dataset is shared with. The dataset and its sources are kept, and topics can be generated again once new feedback arrives. Charts built on this dataset will be empty until then.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.feedback_directories.purge_confirmation_name",
+  "locale": "en",
+  "source": "Type \"{directoryName}\" to confirm",
+  "translation": "Type \"{{directoryName}}\" to confirm",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.feedback_directories.workspace_assigned_to_directory",
+  "locale": "en",
+  "source": "{workspaceName} is linked to {directoryName}",
+  "translation": "{{workspaceName}} is linked to {directoryName}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.general.bulk_invite_billing_not_supported",
+  "locale": "en",
+  "source": "The Billing role is only available on Formbricks Cloud: {emails}. Choose a different role for these rows.",
+  "translation": "The Billing role is only available on Formbricks Cloud: . Choose a different role for these rows.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.general.bulk_invite_unknown_teams",
+  "locale": "en",
+  "source": "Unknown teams in CSV: {teams}. Create them first or remove them from the file.",
+  "translation": "Unknown teams in CSV: . Create them first or remove them from the file.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.general.delete_organization_warning_3",
+  "locale": "en",
+  "source": "Please enter {organizationName} in the following field to confirm the definitive deletion of this organization:",
+  "translation": "Please enter {{organizationName}} in the following field to confirm the definitive deletion of this organization:",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.general.from_your_organization",
+  "locale": "en",
+  "source": "{memberName} from your organization",
+  "translation": "{{memberName}} from your organization",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.general.invite_failure_already_member",
+  "locale": "en",
+  "source": "{email} is already a member of this organization",
+  "translation": "{{email}} is already a member of this organization",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.settings.general.invite_failures_more",
+  "locale": "en",
+  "source": "+{count} more failed invites",
+  "translation": "+ more failed invites",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.settings.profile.please_enter_email_to_confirm_account_deletion",
+  "locale": "en",
+  "source": "Please enter {email} in the following field to confirm the definitive deletion of your account:",
+  "translation": "Please enter  in the following field to confirm the definitive deletion of your account:",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.ai_create.characters",
+  "locale": "en",
+  "source": "{count}/{max}",
+  "translation": "{{count}}/{max}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.card_arrangement_for_survey_type_derived",
+  "locale": "en",
+  "source": "Card Arrangement for {surveyTypeDerived} Surveys",
+  "translation": "Card Arrangement for {{surveyTypeDerived}} Surveys",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.column_used_in_logic_error",
+  "locale": "en",
+  "source": "This column is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "translation": "This column is used in logic of question . Please remove it from logic first.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.fieldId_is_used_in_logic_of_question_please_remove_it_from_logic_first",
+  "locale": "en",
+  "source": "{fieldId} is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "translation": "{{fieldId}} is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.fieldId_is_used_in_logic_of_question_please_remove_it_from_logic_first",
+  "locale": "en",
+  "source": "{fieldId} is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "translation": " is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.max_file_size_limit_is_mb_upgrade",
+  "locale": "en",
+  "source": "Max file size limit is {{maxSize}} MB. If you need more, please <upgradeLink>upgrade your plan</upgradeLink>.",
+  "translation": "Max file size limit is {maxSize} MB. If you need more, please <upgradeLink>upgrade your plan</upgradeLink>.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.quotas.delete_quota_confirmation_text",
+  "locale": "en",
+  "source": "This will permanently delete the quota {quotaName}.",
+  "translation": "This will permanently delete the quota .",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.response_limit_needs_to_exceed_number_of_received_responses",
+  "locale": "en",
+  "source": "Response limit needs to exceed number of received responses ({responseCount}).",
+  "translation": "Response limit needs to exceed number of received responses ().",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.row_used_in_logic_error",
+  "locale": "en",
+  "source": "This row is used in logic of question {questionIndex}. Please remove it from logic first.",
+  "translation": "This row is used in logic of question . Please remove it from logic first.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.validate_id_invalid_chars",
+  "locale": "en",
+  "source": "{type} ID is not allowed. Please use only alphanumeric characters, hyphens, or underscores.",
+  "translation": "{{type}} ID is not allowed. Please use only alphanumeric characters, hyphens, or underscores.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.validate_id_no_spaces",
+  "locale": "en",
+  "source": "{type} ID cannot contain spaces. Please remove spaces.",
+  "translation": "{{type}} ID cannot contain spaces. Please remove spaces.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.validate_id_no_spaces",
+  "locale": "en",
+  "source": "{type} ID cannot contain spaces. Please remove spaces.",
+  "translation": " ID cannot contain spaces. Please remove spaces.",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.surveys.edit.validation.relative_summary_later_than",
+  "locale": "en",
+  "source": "Earliest accepted date: {bound}.",
+  "translation": "Earliest accepted date: {{bound}}.",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.edit.variable_is_used_in_quota_please_remove_it_from_quota_first",
+  "locale": "en",
+  "source": "Variable “{variableName}” is being used in “{quotaName}” quota",
+  "translation": "Variable “{{variableName}}” is being used in “{quotaName}” quota",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.summary.added_filter_for_responses_where_answer_to_question_is_skipped",
+  "locale": "en",
+  "source": "Added filter for responses where answer to question {questionIdx} is skipped",
+  "translation": "Added filter for responses where answer to question {{questionIdx}} is skipped",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.surveys.summary.added_filter_for_responses_where_answer_to_question_is_skipped",
+  "locale": "en",
+  "source": "Added filter for responses where answer to question {questionIdx} is skipped",
+  "translation": "Added filter for responses where answer to question  is skipped",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.unify.csv_import_complete",
+  "locale": "en",
+  "source": "CSV import complete: {successes} succeeded, {failures} failed, {skipped} skipped",
+  "translation": "CSV import complete: {{successes}} succeeded, {failures} failed, {skipped} skipped",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.unify.feedback_sources_directory_access_multiple",
+  "locale": "en",
+  "source": "New feedback data from these sources will be stored in: {directoryNames}",
+  "translation": "New feedback data from these sources will be stored in: {{directoryNames}}",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.unify.invalid_values_found",
+  "locale": "en",
+  "source": "Found: {values} (rows: {rows}) {extra}",
+  "translation": "Found:  (rows: {rows}) {extra}",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.unify.showing_count_loaded",
+  "locale": "en",
+  "source": "Showing {count} records",
+  "translation": "Showing {{count}} records",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.unify.taxonomy_remove_keyword_aria",
+  "locale": "en",
+  "source": "Remove {keyword}",
+  "translation": "Remove ",
+  "kind": "drop"
+ },
+ {
+  "key": "workspace.unify.taxonomy_text_records_short",
+  "locale": "en",
+  "source": "{count} text records",
+  "translation": "{{count}} text records",
+  "kind": "braces"
+ },
+ {
+  "key": "workspace.workflows.relative_today",
+  "locale": "en",
+  "source": "Today, {time}",
+  "translation": "Today, ",
+  "kind": "drop"
+ }
+]

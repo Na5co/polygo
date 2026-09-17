@@ -1,0 +1,422 @@
+[
+ {
+  "key": "active_count",
+  "locale": "en",
+  "source": "Active: {count}",
+  "translation": "Active: {{count}}",
+  "kind": "braces"
+ },
+ {
+  "key": "add_to_album_bottom_sheet_added",
+  "locale": "en",
+  "source": "Added to {album}",
+  "translation": "Added to ",
+  "kind": "drop"
+ },
+ {
+  "key": "admin.confirm_email_below",
+  "locale": "en",
+  "source": "To confirm, type \"{email}\" below",
+  "translation": "To confirm, type \"\" below",
+  "kind": "drop"
+ },
+ {
+  "key": "admin.notification_email_test_email_sent",
+  "locale": "en",
+  "source": "A test email has been sent to {email}. Please check your inbox.",
+  "translation": "A test email has been sent to . Please check your inbox.",
+  "kind": "drop"
+ },
+ {
+  "key": "admin.oauth_mobile_redirect_uri_override_description",
+  "locale": "en",
+  "source": "Enable when OAuth provider does not allow a mobile URI, like ''{callback}''",
+  "translation": "Enable when OAuth provider does not allow a mobile URI, like ''{{callback}}''",
+  "kind": "braces"
+ },
+ {
+  "key": "admin.storage_template_migration_description",
+  "locale": "en",
+  "source": "Apply the current <link>{template}</link> to previously uploaded assets",
+  "translation": "Apply the current <link>{{template}}</link> to previously uploaded assets",
+  "kind": "braces"
+ },
+ {
+  "key": "admin.storage_template_user_label",
+  "locale": "en",
+  "source": "<code>{label}</code> is the user's Storage Label",
+  "translation": "<code>{{label}}</code> is the user's Storage Label",
+  "kind": "braces"
+ },
+ {
+  "key": "admin.user_restore_description",
+  "locale": "en",
+  "source": "<b>{user}</b>'s account will be restored.",
+  "translation": "<b>{{user}}</b>'s account will be restored.",
+  "kind": "braces"
+ },
+ {
+  "key": "admin.version_check_implications",
+  "locale": "en",
+  "source": "The version check feature relies on periodic communication with {server}",
+  "translation": "The version check feature relies on periodic communication with {{server}}",
+  "kind": "braces"
+ },
+ {
+  "key": "advanced_settings_clear_image_cache_success",
+  "locale": "en",
+  "source": "Successfully cleared {size}",
+  "translation": "Successfully cleared ",
+  "kind": "drop"
+ },
+ {
+  "key": "album_remove_user_confirmation",
+  "locale": "en",
+  "source": "Are you sure you want to remove {user}?",
+  "translation": "Are you sure you want to remove {{user}}?",
+  "kind": "braces"
+ },
+ {
+  "key": "archive_action_prompt",
+  "locale": "en",
+  "source": "{count} added to Archive",
+  "translation": " added to Archive",
+  "kind": "drop"
+ },
+ {
+  "key": "change_password_form_description",
+  "locale": "en",
+  "source": "Hi {name},\n\nThis is either the first time you are signing into the system or a request has been made to change your password. Please enter the new password below.",
+  "translation": "Hi {{name}},\n\nThis is either the first time you are signing into the system or a request has been made to change your password. Please enter the new password below.",
+  "kind": "braces"
+ },
+ {
+  "key": "cleanup_confirm_description",
+  "locale": "en",
+  "source": "Immich found {count} assets (created before {date}) safely backed up to the server. Remove the local copies from this device?",
+  "translation": "Immich found  assets (created before {date}) safely backed up to the server. Remove the local copies from this device?",
+  "kind": "drop"
+ },
+ {
+  "key": "cleanup_deleted_assets",
+  "locale": "en",
+  "source": "Moved {count} assets to device trash",
+  "translation": "Moved {{count}} assets to device trash",
+  "kind": "braces"
+ },
+ {
+  "key": "cleanup_deleted_assets",
+  "locale": "en",
+  "source": "Moved {count} assets to device trash",
+  "translation": "Moved  assets to device trash",
+  "kind": "drop"
+ },
+ {
+  "key": "cleanup_found_assets",
+  "locale": "en",
+  "source": "Found {count} backed up assets",
+  "translation": "Found {{count}} backed up assets",
+  "kind": "braces"
+ },
+ {
+  "key": "cleanup_found_assets_with_size",
+  "locale": "en",
+  "source": "Found {count} backed up assets ({size})",
+  "translation": "Found {{count}} backed up assets ({size})",
+  "kind": "braces"
+ },
+ {
+  "key": "cleanup_preview_title",
+  "locale": "en",
+  "source": "Assets to remove ({count})",
+  "translation": "Assets to remove ({{count}})",
+  "kind": "braces"
+ },
+ {
+  "key": "cleanup_preview_title",
+  "locale": "en",
+  "source": "Assets to remove ({count})",
+  "translation": "Assets to remove ()",
+  "kind": "drop"
+ },
+ {
+  "key": "confirm_delete_face",
+  "locale": "en",
+  "source": "Are you sure you want to delete {name} face from the asset?",
+  "translation": "Are you sure you want to delete {{name}} face from the asset?",
+  "kind": "braces"
+ },
+ {
+  "key": "delete_tag_confirmation_prompt",
+  "locale": "en",
+  "source": "Are you sure you want to delete {tagName} tag?",
+  "translation": "Are you sure you want to delete  tag?",
+  "kind": "drop"
+ },
+ {
+  "key": "downloading_archive_filename_size",
+  "locale": "en",
+  "source": "Downloading archive {filename} (approximately {size})",
+  "translation": "Downloading archive  (approximately {size})",
+  "kind": "drop"
+ },
+ {
+  "key": "downloading_asset_filename",
+  "locale": "en",
+  "source": "Downloading asset {filename}",
+  "translation": "Downloading asset ",
+  "kind": "drop"
+ },
+ {
+  "key": "downloading_filename",
+  "locale": "en",
+  "source": "Downloading {filename}",
+  "translation": "Downloading {{filename}}",
+  "kind": "braces"
+ },
+ {
+  "key": "error_loading_partners",
+  "locale": "en",
+  "source": "Error loading partners: {error}",
+  "translation": "Error loading partners: {{error}}",
+  "kind": "braces"
+ },
+ {
+  "key": "error_saving_image",
+  "locale": "en",
+  "source": "Error: {error}",
+  "translation": "Error: ",
+  "kind": "drop"
+ },
+ {
+  "key": "errors.error_downloading",
+  "locale": "en",
+  "source": "Error downloading {filename}",
+  "translation": "Error downloading ",
+  "kind": "drop"
+ },
+ {
+  "key": "expires_date",
+  "locale": "en",
+  "source": "Expires {date}",
+  "translation": "Expires ",
+  "kind": "drop"
+ },
+ {
+  "key": "full_path",
+  "locale": "en",
+  "source": "Full path: {path}",
+  "translation": "Full path: ",
+  "kind": "drop"
+ },
+ {
+  "key": "keeping",
+  "locale": "en",
+  "source": "Keeping: {items}",
+  "translation": "Keeping: {{items}}",
+  "kind": "braces"
+ },
+ {
+  "key": "maintenance_restore_library_folder_has_files",
+  "locale": "en",
+  "source": "{folder} has {count} folder(s)",
+  "translation": " has {count} folder(s)",
+  "kind": "drop"
+ },
+ {
+  "key": "maintenance_restore_library_folder_no_files",
+  "locale": "en",
+  "source": "{folder} is missing files!",
+  "translation": "{{folder}} is missing files!",
+  "kind": "braces"
+ },
+ {
+  "key": "map_settings_date_range_option_days",
+  "locale": "en",
+  "source": "Past {days} days",
+  "translation": "Past {{days}} days",
+  "kind": "braces"
+ },
+ {
+  "key": "map_settings_date_range_option_years",
+  "locale": "en",
+  "source": "Past {years} years",
+  "translation": "Past {{years}} years",
+  "kind": "braces"
+ },
+ {
+  "key": "memory_lane_title",
+  "locale": "en",
+  "source": "Memory Lane {title}",
+  "translation": "Memory Lane {{title}}",
+  "kind": "braces"
+ },
+ {
+  "key": "onboarding_welcome_user",
+  "locale": "en",
+  "source": "Welcome, {user}",
+  "translation": "Welcome, ",
+  "kind": "drop"
+ },
+ {
+  "key": "partner_can_access",
+  "locale": "en",
+  "source": "{partner} can access",
+  "translation": " can access",
+  "kind": "drop"
+ },
+ {
+  "key": "person_birthdate",
+  "locale": "en",
+  "source": "Born on {date}",
+  "translation": "Born on {{date}}",
+  "kind": "braces"
+ },
+ {
+  "key": "person_birthdate",
+  "locale": "en",
+  "source": "Born on {date}",
+  "translation": "Born on ",
+  "kind": "drop"
+ },
+ {
+  "key": "setting_notifications_notify_minutes",
+  "locale": "en",
+  "source": "{count} minutes",
+  "translation": " minutes",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_by_user",
+  "locale": "en",
+  "source": "Shared by {user}",
+  "translation": "Shared by ",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_intent_upload_button_progress_text",
+  "locale": "en",
+  "source": "{current} / {total} Uploaded",
+  "translation": " / {total} Uploaded",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_link_edit_expire_after_option_days",
+  "locale": "en",
+  "source": "{count} days",
+  "translation": " days",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_link_edit_expire_after_option_year",
+  "locale": "en",
+  "source": "{count} year",
+  "translation": "{{count}} year",
+  "kind": "braces"
+ },
+ {
+  "key": "shared_link_edit_expire_after_option_year",
+  "locale": "en",
+  "source": "{count} year",
+  "translation": " year",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_link_expires_day",
+  "locale": "en",
+  "source": "Expires in {count} day",
+  "translation": "Expires in  day",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_link_expires_hours",
+  "locale": "en",
+  "source": "Expires in {count} hours",
+  "translation": "Expires in  hours",
+  "kind": "drop"
+ },
+ {
+  "key": "shared_link_expires_second",
+  "locale": "en",
+  "source": "Expires in {count} second",
+  "translation": "Expires in  second",
+  "kind": "drop"
+ },
+ {
+  "key": "storage_usage",
+  "locale": "en",
+  "source": "{used} of {available} used",
+  "translation": "{{used}} of {available} used",
+  "kind": "braces"
+ },
+ {
+  "key": "system_theme_command_description",
+  "locale": "en",
+  "source": "Use the system theme ({value})",
+  "translation": "Use the system theme ({{value}})",
+  "kind": "braces"
+ },
+ {
+  "key": "tag_full_path",
+  "locale": "en",
+  "source": "Full path: {tag}",
+  "translation": "Full path: {{tag}}",
+  "kind": "braces"
+ },
+ {
+  "key": "trash_action_prompt",
+  "locale": "en",
+  "source": "{count} moved to trash",
+  "translation": " moved to trash",
+  "kind": "drop"
+ },
+ {
+  "key": "unsupported_file_type",
+  "locale": "en",
+  "source": "File {file} can't be uploaded because its file type {type} is not supported.",
+  "translation": "File {{file}} can't be uploaded because its file type {type} is not supported.",
+  "kind": "braces"
+ },
+ {
+  "key": "upload_to_immich",
+  "locale": "en",
+  "source": "Upload to Immich ({count})",
+  "translation": "Upload to Immich ({{count}})",
+  "kind": "braces"
+ },
+ {
+  "key": "upload_to_immich",
+  "locale": "en",
+  "source": "Upload to Immich ({count})",
+  "translation": "Upload to Immich ()",
+  "kind": "drop"
+ },
+ {
+  "key": "version_history_item",
+  "locale": "en",
+  "source": "Installed {version} on {date}",
+  "translation": "Installed {{version}} on {date}",
+  "kind": "braces"
+ },
+ {
+  "key": "waiting_count",
+  "locale": "en",
+  "source": "Waiting: {count}",
+  "translation": "Waiting: ",
+  "kind": "drop"
+ },
+ {
+  "key": "whats_new_version",
+  "locale": "en",
+  "source": "Version {version}",
+  "translation": "Version ",
+  "kind": "drop"
+ },
+ {
+  "key": "x_of_total",
+  "locale": "en",
+  "source": "{x}/{total}",
+  "translation": "{{x}}/{total}",
+  "kind": "braces"
+ }
+]

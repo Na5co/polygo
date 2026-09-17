@@ -1,6 +1,53 @@
 [package]
-name = "polyglot"
+name = "polygo"
 version = "0.1.0"
 edition = "2024"
+description = "Lokalise for one person: a local-first, git-native localization CLI"
+license = "MIT"
+repository = "https://github.com/Na5co/polygo"
+readme = "README.md"
+keywords = ["i18n", "localization", "translation", "xcstrings", "cli"]
+categories = ["command-line-utilities", "internationalization", "development-tools"]
+exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "packaging/*", ".github/*"]
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/polygo-v{ version }-{ target-arch }-{ target-family }{ archive-suffix }"
+pkg-fmt = "tgz"
+bin-dir = "polygo{ binary-ext }"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
+
+[lib]
+name = "polygo"
+path = "src/lib.rs"
+
+[[bin]]
+name = "polygo"
+path = "src/main.rs"
 
 [dependencies]
+aho-corasick = "1"
+anyhow = "1"
+blake3 = "1"
+clap = { version = "4", features = ["derive"] }
+ignore = "0.4"
+quick-xml = "0.37"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+tiny_http = "0.12"
+toml = "0.8"
+ureq = { version = "3", features = ["json"] }
+
+[features]
+live = []
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

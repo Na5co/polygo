@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- The Android strings follow the Material Design writing style: https://m3.material.io/foundations/content-design and https://m1.material.io/style/writing.html The guidelines are only available in English, but they are intended to apply to all languages. -->
+    <string name="app_name_full">F-Droid</string>
+    <string name="app_name_basic">F-Droid Basic</string>
+    <!-- The app name of nightly builds, shortened to fit reduced space for app names -->
+    <string name="app_name_full_nightly">F-Nightly</string>
+    <!-- The app name of nightly builds, shortened to fit reduced space for app names -->
+    <string name="app_name_basic_nightly">F-Nightly Basic</string>
+
+    <string name="menu_about">About</string>
+    <string name="menu_discover">Discover</string>
+    <string name="menu_apps_my">My apps</string>
+
+    <string name="first_start_loading">Fetching app repositories…</string>
+    <string name="first_start_intro">To get started, sync app repositories</string>
+    <string name="first_start_offline">You\'re offline. Connect to the Internet to start.</string>
+    <string name="first_start_metered">You\'re on mobile data and more than 10 MB will be downloaded. Tap Fetch repositories to start anyway.</string>
+    <string name="first_start_button">Fetch repositories</string>
+    <string name="no_repos_enabled">No repositories available, add a repository to get started</string>
+
+    <!-- The %1$s placeholder will be replaced by the app name, e.g. "F-Droid" -->
+    <string name="my_apps_empty">Only apps available in %1$s\'s repositories are shown here</string>
+    <string name="my_apps_header_recently_installed_apps">Recently installed</string>
+    <string name="my_apps_header_apps_with_issue">Apps with issues</string>
+    <string name="my_apps_ignore_dialog_title">Hide issue</string>
+    <string name="my_apps_ignore_dialog_text">The issue with this version of \"%1$s\" will get ignored</string>
+    <string name="my_apps_ignore_dialog_button">Hide</string>
+    <string name="my_apps_export_installed_apps">Export app list</string>
+
+    <string name="app_list_new">New apps</string>
+    <string name="app_list_recently_updated">Recently updated</string>
+    <string name="app_list_most_downloaded">Most downloaded</string>
+    <string name="app_list_all">All apps</string>
+    <string name="app_list_author">Apps by %s</string>
+
+    <string name="search_placeholder">Search…</string>
+    <string name="search_history">Recent searches</string>
+    <string name="search_no_results">No apps found\n\nTry using fewer search terms or add more repositories</string>
+    <string name="search_filter_no_results">No matching apps\n\nTry using fewer search terms or remove filters</string>
+    <string name="search_my_apps_no_results">No matching apps\n\nTry using fewer search terms</string>
+    <string name="search_auto_keyboard">Automatically open keyboard</string>
+    <string name="sort_title">Sorting and compatibility</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_latest">Sort by last update</string>
+    <string name="filter_only_compatible">Apps compatible with this device</string>
+    <string name="filter_button_save">Save as default</string>
+    <!-- Shown above filter options such as categories, repositories and anti-features -->
+    <string name="filter_intro">Filter apps by</string>
+    <string name="filter_button_clear_all">Clear all filters</string>
+    <!-- Used as a noun for the button description. The feature allows for filtering lists of apps by certain criteria -->
+    <string name="filter">Filter</string>
+    <!-- Used for filter chips (e.g. categories) when they are currently selected -->
+    <string name="filter_selected">selected</string>
+    <string name="filter_antifeatures">Hide anti-features</string>
+    <string name="onboarding_app_list_filter_title">Filter</string>
+    <string name="onboarding_app_list_filter_message">Use filters to only show apps from specific categories or repositories. You can also change the sort order.</string>
+    <string name="got_it">Got it</string>
+    <string name="clear">Clear</string>
+    <string name="clear_all">Clear all</string>
+    <string name="hide">Hide</string>
+
+    <string name="category_group_productivity">Productivity</string>
+    <string name="category_group_tools">Tools</string>
+    <string name="category_group_wallets">Finances &amp; Wallets</string>
+    <string name="category_group_media">Entertainment &amp; Media</string>
+    <string name="category_group_communication">Communication</string>
+    <string name="category_group_device">Device</string>
+    <string name="category_group_games">Games</string>
+    <string name="category_group_health">Health</string>
+    <string name="category_group_network">Network</string>
+    <string name="category_group_storage">Files &amp; Storage</string>
+    <string name="category_group_interests">Interests</string>
+    <string name="category_group_misc">Miscellaneous</string>
+
+    <string name="category_group_summary_productivity">Calendars, tasks, clocks &amp; notes</string>
+    <string name="category_group_summary_tools">Navigation, weather, calculators &amp; converters</string>
+    <string name="category_group_summary_wallets">Finance, money &amp; pass managers</string>
+    <string name="category_group_summary_media">Music, podcasts &amp; ebook readers</string>
+    <string name="category_group_summary_communication">Email, messaging &amp; social networks</string>
+    <string name="category_group_summary_device">Launcher, keyboard, security &amp; theming</string>
+    <string name="category_group_summary_games">Board, card &amp; party games</string>
+    <string name="category_group_summary_health">Fitness, nutrition &amp; medical apps</string>
+    <string name="category_group_summary_network">Browser, VPNs, proxies &amp; firewall</string>
+    <string name="category_group_summary_storage">Files, gallery, cloud sync &amp; encryption</string>
+    <string name="category_group_summary_interests">Science, sports, drawing &amp; recipes</string>
+    <string name="category_group_summary_misc">Uncategorized</string>
+
+    <string name="last_updated">Last updated: %1$s</string>
+    <!-- The placeholder in round brackets will be replaced with the size of the app -->
+    <string name="last_updated_with_size">Last updated: %1$s (%2$s)</string>
+    <string name="status_install_preparing">Preparing installation…</string>
+    <string name="whats_new_title">What\'s new</string>
+    <string name="donate_title">Donate</string>
+    <string name="anti_features_title">This app has anti-features</string>
+    <string name="developer_contact">Developer contact</string>
+    <string name="technical_info">Technical information</string>
+    <string name="package_name">Package name:</string>
+    <string name="installed_version">Installed version:</string>
+
+    <!-- supported donation/payment options -->
+    <string name="liberapay">Liberapay</string>
+    <string name="open_collective">Open Collective</string>
+    <string name="bitcoin">Bitcoin</string>
+    <string name="litecoin">Litecoin</string>
+    <string name="taler">Taler</string>
+
+    <string name="SignatureMismatch">The new version is signed with a different key to the old one. To install the new
+        version, the old one must be uninstalled first. Please do this and try again. (Note that uninstalling will erase
+        any internal data stored by the app)
+    </string>
+    <string name="installIncompatible">App incompatible with your device, install anyway?</string>
+    <string name="version">Version</string>
+    <!-- Used in app details page to show who is the author of the app -->
+    <string name="by_author_format">by %s</string>
+    <string name="delete">Delete</string>
+    <!-- as in software updates -->
+    <string name="updates">Updates</string>
+    <!-- as in software updates -->
+    <string name="install_history">Install history</string>
+    <!-- message shown as a "toast" when the user enables the Send to F-Droid Metrics preference -->
+    <string name="pref_export_log_title">Debug log</string>
+    <string name="pref_export_log_summary">Creates a file with logcat output useful for debugging. Careful, it could contain sensitive information!</string>
+    <string name="export_log_success">Logcat saved successfully</string>
+    <string name="export_log_error">Error saving logcat</string>
+
+    <!-- as in software updates -->
+    <string name="update_auto_install">Automatically install updates</string>
+    <!-- as in software updates -->
+    <string name="scan_removable_storage_toast">Scanning %s…</string>
+
+    <string name="pref_dyn_colors_title">Use system colors</string>
+    <string name="pref_dyn_colors_summary">Apply dynamic colors from your system settings</string>
+    <string name="pref_language_summary">Open system language settings</string>
+    <string name="pref_auto_updates_only_wifi">Only on Wi-Fi</string>
+    <string name="pref_auto_updates_only_always">Always (even on mobile data)</string>
+    <string name="pref_auto_updates_only_only_when_open_app">Only when opening the app</string>
+    <string name="pref_auto_updates_only_never">Never</string>
+    <string name="pref_auto_updates_summary_only_wifi">Download and update apps daily when on Wi-Fi and the device isn\'t being used</string>
+    <string name="pref_auto_updates_summary_always">Download and update apps daily even on mobile data when the device isn\'t being used</string>
+    <string name="pref_auto_updates_summary_never">Auto-updates disabled • Apps will need to be updated manually</string>
+    <string name="pref_repo_updates_title">Check for updates</string>
+    <string name="pref_repo_updates_summary_only_wifi">Periodically fetch app updates from repositories only when on Wi-Fi</string>
+    <string name="pref_repo_updates_summary_always">Periodically fetch app updates from repositories even when on mobile data</string>
+    <string name="pref_repo_updates_summary_only_when_open_app">Check for updates only when opened • Apps will become outdated</string>
+    <string name="pref_repo_updates_summary_never">Don\'t check for updates • Apps will become outdated</string>
+    <string name="pref_category_network">Network</string>
+    <string name="pref_mirror_chooser_title">Download mirror selection</string>
+    <string name="pref_mirror_chooser_summary_random">Random</string>
+    <string name="pref_mirror_chooser_summary_prefer_foreign">Prefer from other countries</string>
+    <string name="pref_proxy_title">Connect via SOCKS proxy</string>
+    <string name="pref_proxy_disabled">Connect to the Internet without proxy</string>
+    <string name="pref_proxy_enabled">Uses %s to connect</string>
+    <string name="pref_proxy_hint">Proxy is expected in host:port format</string>
+    <string name="pref_proxy_error">Invalid proxy format</string>
+
+    <string name="no_such_app">No such app found.</string>
+    <!-- Shown above the repository an app is in -->
+    <string name="app_details_repository">Repository</string>
+    <!-- If an app is in more than one repository, this is shown above the selection dropdown -->
+    <string name="app_details_repositories">Repositories</string>
+    <!-- Shown next to the repository name of the repo that is currently preferred by the user.
+         Information and updates for that app only come from the preferred repo.
+         Other languages could use other words that work better in their language such as (chosen).
+    -->
+    <string name="app_details_repository_preferred">(preferred)</string>
+    <!-- A button label. When clicked, this changes the preferred repo to the currently shown one.
+         Information and updates for that app only come from the preferred repo.
+         Other languages could use other words that work better in their language such as (chosen).
+    -->
+    <string name="app_details_repository_button_prefer">Prefer repository</string>
+    <string name="app_details_repository_expand">Expand repository list</string>
+
+    <string name="app_details_more_apps_by_author">More apps by %1$s</string>
+
+    <string name="app_details_anti_features_title">What are Anti-Features?</string>
+    <string name="app_details_anti_features_text">Some apps come with behaviors you didn’t ask for — and might not want. Things like ads, tracking, or dependence on proprietary services. We call these Anti-Features.
+\n\nApps in F-Droid are clearly labeled when they contain Anti-Features, so you can make an informed choice.</string>
+
+    <string name="about_title_full">About F-Droid</string>
+    <string name="about_title_basic">About F-Droid Basic</string>
+    <string name="about_text">Apps on F-Droid are free and open source software (FOSS), they respect your privacy, and they\'re available for anyone to see the source code, build on and improve.\n\nApp distribution is transparent, privacy-respecting, and accountable, setting a standard that challenges the mobile ecosystem to do better.\n\nF-Droid\'s impact is measured not just in apps published, but in the freedom, trust, and digital rights it helps protect.\n\nHelp F-Droid to protect community-powered innovation and continue our mission of openness, privacy, and user empowerment.</string>
+    <string name="about_license_text">This program is Free Software. You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.</string>
+    <string name="about_version">Version</string>
+    <string name="about_forum">Support forum</string>
+    <string name="about_source">Source code</string>
+    <string name="about_license">License</string>
+
+    <string name="dialog_metered_title">Continue with mobile data?</string>
+    <!-- The placeholder will be replaced with a size string such as "13 MB" -->
+    <string name="dialog_metered_text">Downloading %1$s may incur charges depending on your data plan</string>
+    <string name="dialog_metered_text_no_size">Downloading may incur charges depending on your data plan</string>
+    <string name="dialog_metered_dont_show">Don\'t show this again</string>
+    <string name="dialog_metered_button">Download</string>
+    <string name="screenshots_metered">Tap to load screenshots via mobile data</string>
+
+    <string name="app_suggested">Suggested</string>
+    <string name="app_incompatible">Incompatible</string>
+    <string name="app_installed">Installed</string>
+    <string name="app_inst_known_source">Installed (from %s)</string>
+    <string name="app_inst_unknown_source">Installed (from unknown source)</string>
+    <string name="app__install_downloaded_update">Update</string>
+    <string name="copy_link">Copy link</string>
+    <string name="app_no_compatible_versions">This app is not compatible with your device</string>
+    <string name="app_no_compatible_signer">Can\'t update this app, because all versions have an incompatible signature\n\nIf you don\'t receive updates through other means, you may need to uninstall and then reinstall this app. The app\'s data will be lost.</string>
+    <string name="app_no_compatible_signer_in_this_repo">Can\'t update this app, because there are no compatible versions in the preferred repository\n\nTry changing the preferred repository</string>
+    <string name="app_no_auto_update">Auto-update not available because this app was built for an old version of Android</string>
+    <string name="app_issue_update_other_repo">An update is available in another repository. Change preferred repository to update</string>
+    <string name="app_issue_not_available_title">App no longer available</string>
+    <string name="app_issue_not_available_text">The app may have been removed or was in a repository you removed or disabled</string>
+    <string name="app_issue_not_available_button">Show app info</string>
+    <string name="app_issue_hint">The apps below need your attention. You can ignore an app issue by long pressing it.</string>
+    <string name="added_x_ago">Added %1$s</string>
+    <string name="size_colon">Size: %1$s</string>
+    <string name="version_code_colon">Version code: %1$s</string>
+    <string name="sdk_versions_colon">SDK versions: %1$s</string>
+    <!-- The minimum SDK version the app can be installed on, e.g. only Android 10 or higher -->
+    <string name="sdk_min_version">%1$s (min)</string>
+    <!-- The target SDK version of the app -->
+    <string name="sdk_target_version">%1$s (target)</string>
+    <!-- The maximum SDK version the app can be installed on, e.g. only Android 10 or lower -->
+    <string name="sdk_max_version">%1$s (max)</string>
+    <string name="signer_colon">Signer: %1$s</string>
+    <string name="architectures_colon">Architectures: %1$s</string>
+    <string name="app_details_incompatible_version">Incompatible • Installation likely to fail</string>
+    <string name="app_details_incompatible_signer">Signature mismatch, can\'t install</string>
+    <string name="app_details_install_error_text">Sorry! There was an unexpected error installing this app</string>
+
+    <string name="installed_apps__activity_title">Installed apps</string>
+    <string name="apps_updates_hint_title">Congratulations 🥳</string>
+    <string name="apps_updates_hint_text">All your apps are up to date</string>
+    <!-- Should be exactly the same as the standard word for "Share" throughout Android and apps -->
+    <string name="send_installed_apps">Share installed apps</string>
+
+    <!-- This is a button label, it must be the right size, or the layout gets messed up. It should ideally be 10-20 characters. -->
+    <string name="update_all">Update all</string>
+
+    <!-- This should be exactly the same as the standard word for Cancel throughout OK and apps -->
+    <string name="ok">OK</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="repo_add_new_title">Add repository</string>
+    <string name="repo_add_add">Add</string>
+    <string name="repo_add_mirror">Add mirror</string>
+    <string name="repo_add_repo_and_mirror">Add repository and mirror</string>
+    <string name="repo_view_repo">View repository</string>
+    <string name="links">Links</string>
+    <string name="versions">Versions</string>
+    <string name="more">More</string>
+    <string name="menu_overflow_description">More options</string>
+    <string name="less">Less</string>
+
+    <string name="back">Back</string>
+    <!-- This should be exactly the same as the standard word for Cancel throughout Android and apps -->
+    <string name="cancel">Cancel</string>
+    <string name="clear_search">Clear search</string>
+    <string name="sort_search">Sort search</string>
+
+    <string name="repo_intro">A repository is an additional source of apps. Third-party ones you add here have different standards than those providing apps built by F-Droid itself.\n\nPlease ensure that the repository you are adding is trustworthy.</string>
+    <string name="repo_scan_qr_code">Scan QR code</string>
+    <string name="repo_state_fetching">Fetching repository…</string>
+    <string name="repo_state_adding">Adding repository…</string>
+    <string name="repo_enter_url">Enter repository URL manually</string>
+    <string name="repo_preview_included_apps">Included apps:</string>
+    <string name="repo_exists">This repository was already added.</string>
+    <string name="repo_invalid">Invalid repository.\n\nContact the maintainer and let them know about the issue.</string>
+    <string name="repo_io_error">Error connecting to the repository.</string>
+    <string name="repo_error_adding_archive">Archive repositories can not be added directly. Tap the repository in the list and enable the archive there.</string>
+    <string name="repo_mirror_exists">This mirror was already added (%s).</string>
+    <string name="repo_mirror_add_info">The URL you are trying to add (%s) is a mirror of an existing repository.</string>
+    <string name="repo_and_mirror_add_both_info">The URL you are trying to add (%s) is a mirror of a new repository. Both the original repository and the mirror will be added.</string>
+    <string name="bad_fingerprint">Bad fingerprint</string>
+    <string name="malformed_repo_uri">Ignoring malformed repo URI: %s</string>
+    <!-- Message presented in a dialog box when the device-wide management policy restricts adding new repos, e.g. "Unknown Sources". -->
+    <string name="has_disallow_install_unknown_sources_globally">Your device admin doesn\'t allow installing apps from unknown sources, that includes new repos</string>
+    <!-- Message presented in a dialog box when the user restriction set by the system restricts adding new repos, e.g. "Unknown Sources". -->
+    <string name="has_disallow_install_unknown_sources">Unknown sources can\'t be added by this user, that includes new repos</string>
+
+    <string name="repositories_last_update_never">never</string>
+    <!-- This should be exactly the same as the standard word for Settings throughout Android and apps -->
+    <string name="menu_settings">Settings</string>
+    <!-- This should be exactly the same as the standard word for a Search action throughout Android and apps -->
+    <string name="menu_search">Search</string>
+    <string name="menu_add_repo">New repository</string>
+
+    <!-- This is like "launch" but for files and documents rather than apps -->
+    <string name="menu_open">Open</string>
+    <!-- This should be exactly the same as the standard word for Share throughout Android and apps -->
+    <string name="menu_share">Share</string>
+    <string name="menu_share_apk">Share APK file</string>
+    <!-- This is a button label, it must be the right size, or the layout gets messed up. It should ideally be 10-20 characters. -->
+    <string name="menu_install">Install</string>
+    <!-- This is a button label, it must be the right size, or the layout gets messed up. It should ideally be 10-20 characters. -->
+    <string name="menu_uninstall">Uninstall</string>
+    <string name="menu_ignore_all">Ignore all updates</string>
+    <string name="menu_ignore_this">Ignore this update</string>
+    <string name="menu_release_channel_beta">Allow beta updates</string>
+    <string name="menu_website">Website</string>
+    <string name="menu_email">Send an e-mail to the author</string>
+    <!-- The title for the link that points to the issue tracker for this app -->
+    <string name="menu_issues">Issues</string>
+    <!-- The title for the link that points to the Changelog document for this app -->
+    <string name="menu_changelog">Changelog</string>
+    <!-- The title for the link that points to a demo video for this app -->
+    <string name="menu_video">Video</string>
+    <!-- The title for the link that points to the license for this app -->
+    <string name="menu_license">License: %s</string>
+    <!-- The title for the link that points to the source code for this app -->
+    <string name="menu_source">Source code</string>
+    <!-- The title for the link that points to the translation service for this app -->
+    <string name="menu_translation">Translation</string>
+    <string name="menu_upgrade">Update</string>
+    <!-- The button label -->
+    <string name="main_menu__categories">Categories</string>
+    <!-- The button label.  Should be the same term used in the Google Nearby Settings -->
+    <string name="main_menu__swap_nearby">Nearby</string>
+
+    <string name="antiknownvulnlist">This app contains a known security vulnerability</string>
+    <string name="display">Display</string>
+
+    <string name="search_my_apps_hint">Search installed apps</string>
+
+    <string name="local_repo_running">F-Droid is ready to swap</string>
+    <string name="touch_to_configure_local_repo">Touch to view details and allow others to swap your apps.</string>
+    <string name="deleting_repo">Deleting current repo…</string>
+    <string name="linking_apks">Linking APKs into the repo…</string>
+    <string name="icon">Icon</string>
+    <string name="next">Next</string>
+    <string name="try_again">Try again</string>
+
+    <string name="useDnsCache">Use DNS cache</string>
+    <string name="useDnsCacheSummary">Use cached results to minimize DNS queries.</string>
+
+    <string name="privacy">Privacy</string>
+    <string name="preventScreenshots_title">Prevent screenshots</string>
+    <string name="preventScreenshots_summary">Blocks screenshots from being taken and hides app content from recent apps screen</string>
+
+    <string name="panic_app_setting_title">Panic button app</string>
+    <string name="panic_app_setting_summary">No app has been set</string>
+    <string name="panic_app_setting_none">None</string>
+    <string name="panic_app_dialog_title">Confirm panic app</string>
+    <string name="panic_app_dialog_message">Are you sure that you want to allow %1$s to trigger destructive panic button actions?</string>
+    <string name="panic_app_unknown_app">an unknown app</string>
+    <string name="allow">Allow</string>
+    <string name="panic_hide_migration_title">New F-Droid changed app hiding</string>
+    <string name="panic_hide_migration_message">The calculator is gone, but you can still change the app icon permanently in settings. Scroll to find \"App Icon\".</string>
+    <string name="panic_hide_migration_button">Review settings</string>
+
+    <!-- "panic button" is a well known concept in English, it is good to find a similar metaphor in your language -->
+    <string name="panic_settings">Panic button settings</string>
+    <string name="panic_settings_summary">Actions to be taken in case of emergency</string>
+    <string name="panic_exit_title">Exit app</string>
+    <string name="panic_exit_summary">This app will be closed</string>
+    <string name="panic_destructive_actions">Destructive actions</string>
+    <string name="panic_reset_repos_title">Reset repos</string>
+    <string name="panic_reset_repos_summary">Force the repo setup back to defaults</string>
+    <string name="panic_hide_title">Hide %s</string>
+    <string name="panic_hide_summary">App will hide itself</string>
+
+    <!-- placeholder is for download speed. Note that %s is the placeholder that needs to stay and /s is part of the speed unit and doesn't need translating in most languages. Example: Downloading at 2.3 MB/s -->
+    <string name="status_downloading">Downloading at %s/s</string>
+    <!-- placeholder is for how much is left to download. Example: 23 MB remaining -->
+    <string name="status_downloading_remaining">%1$s remaining</string>
+
+    <!-- This is a banner title, it should be maximum 30 characters -->
+    <string name="banner_updating_repositories">Updating repositories</string>
+    <!-- This is a banner title, it should be maximum 30 characters -->
+    <string name="banner_no_internet">No internet</string>
+    <!-- This is a banner title, it should be maximum 30 characters -->
+    <string name="no_handler_app_generic">You don\'t have any available app that can handle this.</string>
+    <string name="theme">Theme</string>
+    <string name="repo_list_info_title">Repository list</string>
+    <string name="repo_list_info_text">A repository is a source of apps. This list shows all currently added repositories. Disabled repositories are not used.\n\nIf an app is in more than one repository, the repository higher in the list is automatically preferred. You can reorder repositories by long pressing and dragging them.</string>
+    <string name="repo_details">Repository</string>
+    <string name="repo_details_info_text">A repository is a source of apps.\n\nMirrors are used to distribute the load of downloading apps across multiple servers. Mirrors closer to you may be faster.\n\nOfficial mirrors are defined by the repository owner. They cannot be deleted, only disabled. You can define additional custom mirrors by adding them just like a normal repository.</string>
+    <string name="repo_num_apps_button">Show apps</string>
+    <string name="repo_archive_toggle_description">Show archived apps and outdated versions of apps</string>
+    <string name="repo_archive_unknown">This repository does not appear to have an archive.</string>
+    <string name="repo_archive_check">Check for archive</string>
+    <string name="repo_fingerprint">Signing key fingerprint (SHA-256)</string>
+    <string name="repo_official_mirrors">Official mirrors</string>
+    <string name="repo_user_mirrors">User mirrors</string>
+    <plurals name="repo_num_apps_text">
+        <item quantity="zero">0 apps</item>
+        <item quantity="one">1 app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="repo_last_update_check">Last check for repo update: %s</string>
+    <string name="repo_confirm_delete_title">Delete repository?</string>
+    <string name="repo_confirm_delete_body">Deleting a repository means
+        apps from it will no longer be available.\n\nNote: All
+        previously installed apps will remain on your device.
+    </string>
+    <string name="repo_confirm_delete_mirror_title">Delete mirror?</string>
+    <string name="repo_confirm_delete_mirror_body">You can continue to install apps from this repository using the other mirrors.</string>
+    <string name="repo_disable_dialog_title">Disable repository</string>
+    <string name="repo_disable_dialog_warning">If you\'ve set this repository as preferred for any apps, that preference will be lost</string>
+    <string name="repo_disable_dialog_text">All apps from this repository will disappear. Already installed apps won\'t be affected.</string>
+    <string name="repo_disable_warning_button">Disable</string>
+    <!-- Should be exactly the same as the standard word for "Share" throughout Android and apps -->
+    <string name="share_repository">Share repository</string>
+    <string name="share_mirror">Share mirror</string>
+    <string name="show_repository_qr">Show repository QR code</string>
+    <string name="repo_basic_auth_title">Basic auth</string>
+
+    <!-- This is used as a content description for visually impaired users in the list of repositories for those repos that had errors updating -->
+    <string name="repo_has_update_error">Update errors</string>
+    <string name="repo_has_update_error_intro">An error occurred while updating this repository:</string>
+    <string name="repo_last_update_upstream">Published %s</string>
+    <string name="repo_last_downloaded">Downloaded %s</string>
+    <string name="repo_basicauth_username">Username</string>
+    <string name="repo_basicauth_password">Password</string>
+    <string name="repo_basicauth_edit">Save Changes</string>
+    <string name="repo_force_update">Check for updates</string>
+
+    <string name="not_on_same_wifi">Your device is not on the same Wi-Fi as the Local Repo you just added! Try joining
+        this network: %s
+    </string>
+    <string name="pref_language">Language</string>
+
+    <string name="wifi">Wi-Fi</string>
+    <string name="wifi_ap">Hotspot</string>
+
+    <string name="nearby_splash__download_apps_from_people_nearby">No internet? Get apps from people near you!</string>
+    <!-- The word "nearby" should be the same as used for Google/Android Nearby. This is a button label, it should ideally be 10-20 characters. -->
+    <string name="nearby_splash__find_people_button">Find people nearby</string>
+    <string name="nearby_splash__both_parties_need_fdroid">Both parties need %1$s to use nearby.</string>
+    <string name="nearby_splash__read_external_storage">Search SD Card for repos and mirrors.</string>
+    <string name="nearby_splash__document_tree">Search USB OTG for repos and mirrors.</string>
+    <!-- This is a button label for a small button, the text needs to be under 10 characters, the shorter the better. Also, a literal translation probably will miss the point. "Try it" is more a saying than two words. Google has been pushing these short buttons, like "Got it" and "Try now" so this button is trying to match those buttons in Android. -->
+    <string name="nearby_splash__request_permission">Search now</string>
+    <string name="nearby_splach__external_storage_permission_explainer">F-Droid can search for repos and mirrors on your SD Card, but needs your permission to do so.</string>
+    <string name="nearby_splace__external_storage_permission_button">Try it</string>
+
+    <string name="swap_join_same_wifi">Join the same Wi-Fi as your friend</string>
+    <string name="swap_join_same_wifi_desc">To swap using Wi-Fi, ensure you are on the same network. If you don\'t have
+        access to the same network, one of you can create a Wi-Fi hotspot.
+    </string>
+    <string name="swap_banner_message">To swap apps, start your Wi-Fi and connect to the same network as your friend.</string>
+    <string name="swap_join_this_hotspot">Help your friend join your hotspot</string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap">Swap apps</string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap_success">Swap success!</string>
+    <string name="swap_no_wifi_network">No network yet</string>
+    <string name="swap_active_hotspot">%1$s (your hotspot)</string>
+    <string name="swap_visible_hotspot">Visible via hotspot</string>
+    <string name="swap_blank_wifi_ssid">(blank)</string>
+    <string name="swap_hidden_wifi_ssid">(hidden)</string>
+    <string name="swap_view_available_networks">Tap to open available networks</string>
+    <string name="swap_switch_to_wifi">Tap to switch to a Wi-Fi network</string>
+    <string name="open_qr_code_scanner">Open QR scanner</string>
+    <string name="swap_welcome">Welcome to F-Droid!</string>
+    <string name="swap_confirm_connect">Do you want to get apps from %1$s now?</string>
+    <string name="swap_scan_or_type_url">One person needs to scan the code, or type the URL of the other in a browser.
+    </string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap_choose_apps">Choose apps</string>
+    <!-- This is a button label, it must be the right size, or the layout gets messed up. It should be less than 15 characters. -->
+    <string name="swap_scan_qr">QR code</string>
+    <string name="swap_people_nearby">People nearby</string>
+    <string name="swap_scanning_for_peers">Searching for nearby people…</string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap_nearby">Nearby swap</string>
+    <string name="swap_intro">Connect and trade apps with people near you.</string>
+    <string name="swap_starting">Starting…</string>
+    <string name="swap_stopping">Stopping…</string>
+    <string name="disabled">Disabled</string>
+    <string name="swap_visible_bluetooth">Visible via Bluetooth</string>
+    <string name="swap_setting_up_bluetooth">Setting up Bluetooth…</string>
+    <string name="swap_error_cannot_start_bluetooth">Cannot start Bluetooth!</string>
+    <string name="swap_not_visible_bluetooth">Not visible via Bluetooth</string>
+    <string name="swap_bluetooth_permissions">Please grant Bluetooth or Nearby Device permission!</string>
+    <string name="swap_visible_wifi">Visible via Wi-Fi</string>
+    <string name="swap_setting_up_wifi">Setting up Wi-Fi…</string>
+    <string name="swap_stopping_wifi">Stopping Wi-Fi…</string>
+    <string name="swap_not_visible_wifi">Not visible via Wi-Fi</string>
+    <string name="swap_wifi_vpn_conflict">Conflicts with active VPN!</string>
+    <string name="swap_wifi_device_name">Device name</string>
+    <string name="swap_cant_find_peers">Can\'t find who you\'re looking for?</string>
+    <!-- This is a button label, it must be the right size, or the layout gets messed up. It should be less than 15 characters. -->
+    <string name="swap_send_fdroid">Send F-Droid</string>
+    <string name="apps">Apps</string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap_connecting">Connecting</string>
+    <!-- This is a screen title, it should be maximum 25 characters -->
+    <string name="swap_confirm">Confirm swap</string>
+    <string name="swap_qr_isnt_for_swap">The QR code you scanned doesn\'t look like a swap code.</string>
+    <string name="use_bluetooth">Use Bluetooth</string>
+    <string name="swap_connection_indexv0_error">You\'re trying to connect to someone with an outdated version of F-Droid. To connect they have to upgrade their F-Droid app. They can use swap to update their F-Droid app from you.</string>
+    <string name="swap_toast_using_path">Using %1$s</string>
+    <string name="swap_toast_invalid_url">Invalid URL for swapping: %1$s</string>
+    <string name="swap_toast_hotspot_enabled">Wi-Fi hotspot enabled</string>
+    <string name="swap_toast_could_not_enable_hotspot">Could not enable Wi-Fi hotspot!</string>
+    <string name="swap_toast_closing_nearby_after_timeout">Nearby closed since it was idle.</string>
+
+    <string name="install_error_notify_title">Error installing %s</string>
+
+    <!-- [CHAR LIMIT=50] -->
+    <string name="installing">Installing…</string>
+
+    <!-- "updates" as in software updates -->
+    <string name="auto_update_time">Earliest next update: %s</string>
+    <string name="auto_update_time_past">Next update when conditions are fulfilled</string>
+
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_follow_system">Follow system</string>
+
+    <string name="crash_dialog_title">F-Droid has crashed</string>
+    <string name="crash_dialog_title_old">F-Droid had crashed</string>
+
+    <string name="crash_report_text">An unexpected error occurred.
+        This is not your fault.
+        Would you like to e-mail us the details to help fix the issue?
+    </string>
+    <string name="crash_report_comment_hint">Tell us what happened right before the crash</string>
+    <string name="crash_report_button_send">Send report</string>
+    <string name="crash_report_error">Could not send report. No e-mail app found :(</string>
+    <string name="crash_report_save">Save crash report as file</string>
+    <string name="crash_report_saved">Saved report to file</string>
+    <string name="crash_report_error_saving">Error saving crash report to file</string>
+
+    <!-- notifications -->
+    <string name="notification_title_single_update_available">Update available</string>
+    <!-- as in software updates -->
+    <plurals name="notification_summary_app_updates">
+        <item quantity="one">%1$d update available</item>
+        <item quantity="other">%1$d updates available</item>
+    </plurals>
+    <string name="notification_title_summary_installing">Installing</string>
+    <string name="notification_title_summary_install_error">Install failed</string>
+
+    <string name="notification_channel_installs_title">Installations</string>
+    <string name="notification_channel_installs_description">Displays app installation notifications.</string>
+    <string name="notification_channel_swaps_title">Swaps</string>
+    <string name="notification_channel_swaps_description">Displays P2P app swapping notifications.</string>
+    <string name="notification_channel_updates_title">Updates</string>
+    <string name="notification_channel_updates_description">Displays app and repository update notifications.</string>
+
+    <string name="notification_title">Notifications</string>
+    <string name="notification_summary">Opens system notification settings</string>
+    <string name="notification_channel_install_success_title">Automatically installed apps</string>
+    <string name="notification_channel_install_success_description">Displays a notification after apps were installed automatically</string>
+    <string name="notification_channel_updates_available_title">Available app updates</string>
+    <string name="notification_channel_updates_available_description">Displays a notification after repositories were updated and app updates were found</string>
+    <string name="notification_channel_self_update_title">Self-update</string>
+    <string name="notification_channel_self_update_description">Notifies when the app updated itself and was closed, so you can launch it again easily</string>
+
+    <string name="notification_repo_update_default">Connecting to %1$s…</string>
+    <string name="notification_repo_update_downloading">Downloaded %1$s from %2$s</string>
+    <plurals name="notification_repo_update_saving">
+        <item quantity="one">Saved %1$d app from %2$s</item>
+        <item quantity="other">Saved %1$d apps from %2$s</item>
+    </plurals>
+    <plurals name="notification_installing_title">
+        <item quantity="one">Installing %1$d app…</item>
+        <item quantity="other">Installing %1$d apps…</item>
+    </plurals>
+    <plurals name="notification_updating_title">
+        <item quantity="one">Updating %1$d app…</item>
+        <item quantity="other">Updating %1$d apps…</item>
+    </plurals>
+    <plurals name="notification_update_success_title">
+        <item quantity="one">%1$d app updated</item>
+        <item quantity="other">%1$d apps updated</item>
+    </plurals>
+    <string name="notification_installing_section_installing">Installing:</string>
+    <string name="notification_installing_section_confirmation">Needs user confirmation:</string>
+    <string name="notification_installing_section_installed">Installed:</string>
+    <string name="notification_installing_confirmation">Tap to confirm</string>
+    <!-- The placeholder %s will be replaced with the name of this app -->
+    <string name="notification_self_update_title">%s was updated. Tap to open</string>
+
+    <string name="warning_scaning_qr_code">Your camera doesn\'t seem to have an autofocus. It might be difficult to scan the code.</string>
+    <string name="permission_camera_denied">Grant camera permission to scan the QR code. Tap to grant camera permission in settings.</string>
+    <string name="error">Error</string>
+    <string name="turn_on_wifi">Turn on Wi-Fi</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+
+    <string name="paste">Paste</string>
+
+    <string name="ipfsgw_title">IPFS gateways</string>
+    <string name="ipfsgw_explainer">Download apps from IPFS web endpoints. (Only works for F-Droid repositories with IPFS support.)</string>
+    <string name="ipfsgw_summary_new">Download apps using IPFS web endpoints</string>
+    <string name="ipfsgw_add_title">Add IPFS gateway</string>
+    <string name="ipfsgw_add_add">Add</string>
+    <string name="ipfsgw_caption_official_gateways">Official IPFS gateways</string>
+    <string name="ipfsgw_caption_custom_gateways">Custom IPFS gateways</string>
+
+    <string name="install_history_switch">Use installation history</string>
+    <string name="install_history_empty_state">This list is still empty\n\nWhen you install, update or uninstall apps, a record will appear here</string>
+    <string name="install_history_disabled_state">Installation history is disabled\n\nInstallations, updates and uninstalls will not be recorded</string>
+    <string name="install_history_delete_ally">Delete installation history</string>
+    <string name="install_history_delete_text">Delete the installation history?</string>
+
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
+    <string name="call_to_action_keepandroidopen">F-Droid is under threat. Google is changing the way you install apps on your device. We need your help.</string>
+    <string name="call_to_action_keepandroidopen_url">https://keepandroidopen.org</string>
+
+    <string name="icon_title">App icon</string>
+    <string name="icon_summary">Select the icon used for this app on home screen and app drawer</string>
+    <string name="icon_intro">Select an icon and name for this app. This is shown on the home screen and app drawer.\n\nNote: Notifications will always use the default icon and name.</string>
+    <string name="icon_calculator">Calculator</string>
+
+</resources>

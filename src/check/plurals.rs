@@ -1,0 +1,250 @@
+//! CLDR plural-category completeness.
+//!
+//! Every locale needs a specific set of cardinal categories. Extra categories
+//! (`zero`, `=0`, an unnecessary `one` in Japanese) are harmless; missing ones make
+//! the UI show the wrong form or fall through. The table below covers the
+//! locales apps actually ship; unknown locales default to `one`/`other`.
+//! The CLDR 42+ `many` for fr/es/it/ca/pt (millions) is accepted but not required,
+//! because neither Xcode nor Android tooling requires it in practice.
+
+use std::collections::BTreeMap;
+
+/// Required cardinal categories for a locale (BCP-47 tag; region/script ignored).
+pub fn required(locale: &str) -> &'static [&'static str] {
+    let lang = locale
+        .split(['-', '_'])
+        .next()
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    match lang.as_str() {
+        // No plural distinction.
+        "ja" | "ko" | "zh" | "yue" | "vi" | "th" | "id" | "in" | "ms" | "lo" | "km" | "my"
+        | "jv" | "su" | "ig" | "yo" | "wo" | "kea" | "to" => &["other"],
+        // East Slavic + Polish + Baltic/Czech/Slovak: one, few, many, other.
+        "ru" | "uk" | "be" | "pl" | "lt" | "cs" | "sk" => &["one", "few", "many", "other"],
+        // South Slavic (Serbo-Croatian family): one, few, other.
+        "sr" | "hr" | "bs" | "sh" => &["one", "few", "other"],
+        "sl" => &["one", "two", "few", "other"],
+        "ro" | "mo" => &["one", "few", "other"],
+        "ar" | "ars" => &["zero", "one", "two", "few", "many", "other"],
+        "he" | "iw" => &["one", "two", "other"],
+        "cy" => &["zero", "one", "two", "few", "many", "other"],
+        "ga" => &["one", "two", "few", "many", "other"],
+        "mt" => &["one", "two", "few", "many", "other"],
+        "lv" | "prg" => &["zero", "one", "other"],
+        "gd" => &["one", "two", "few", "other"],
+        "br" => &["one", "two", "few", "many", "other"],
+        "gv" => &["one", "two", "few", "many", "other"],
+        "kw" => &["zero", "one", "two", "few", "many", "other"],
+        "dsb" | "hsb" => &["one", "two", "few", "other"],
+        "iu" | "naq" | "se" | "sma" | "smi" | "smj" | "smn" | "sms" => &["one", "two", "other"],
+        // Everything else (Germanic, Romance, Greek, Turkic, Indic, Finnic, ...).
+        _ => &["one", "other"],
+    }
+}
+
+/// Required categories not present in `present` (exact `=N` cases are ignored).
+pub fn missing<S: AsRef<str>>(locale: &str, present: &[S]) -> Vec<&'static str> {
+    // A plural that only has `other` (plus optional exact `=N` cases) is a deliberate
+    // opt-out: ICU allows it and authors use it just for `#` formatting.
+    let categories: Vec<&str> = present
+        .iter()
+        .map(AsRef::as_ref)
+        .filter(|c| !c.starts_with('='))
+        .collect();
+    if categories == ["other"] {
+        return vec![];
+    }
+    required(locale)
+        .iter()
+        .copied()
+        .filter(|req| !present.iter().any(|p| p.as_ref() == *req))
+        .collect()
+}
+
+/// `{arg, plural, one {..} other {..}}` arguments and their case keys (top level and nested).
+pub fn icu_cases(text: &str) -> Vec<(String, Vec<String>)> {
+    let mut out = Vec::new();
+    let b = text.as_bytes();
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == b'{'
+            && let Some((arg, kind, body_start, close)) = icu_arg(text, i)
+        {
+            if kind == "plural" {
+                out.push((arg, case_keys(&text[body_start..close])));
+            }
+            // Recurse into the argument body for nested plurals.
+            out.extend(icu_cases(&text[body_start..close]));
+            i = close + 1;
+            continue;
+        }
+        i += 1;
+    }
+    out
+}
+
+/// Parse `{name, kind, rest}` at `start`; returns (name, kind, index where `rest` begins, index of the closing brace).
+fn icu_arg(text: &str, start: usize) -> Option<(String, String, usize, usize)> {
+    let b = text.as_bytes();
+    let mut i = start + 1;
+    while i < b.len() && b[i] == b' ' {
+        i += 1;
+    }
+    let ns = i;
+    while i < b.len() && (b[i].is_ascii_alphanumeric() || b[i] == b'_') {
+        i += 1;
+    }
+    if i == ns {
+        return None;
+    }
+    let name = text[ns..i].to_string();
+    while i < b.len() && b[i] == b' ' {
+        i += 1;
+    }
+    if b.get(i) != Some(&b',') {
+        return None;
+    }
+    i += 1;
+    while i < b.len() && b[i] == b' ' {
+        i += 1;
+    }
+    let ks = i;
+    while i < b.len() && b[i].is_ascii_alphabetic() {
+        i += 1;
+    }
+    let kind = text[ks..i].to_string();
+    while i < b.len() && b[i] == b' ' {
+        i += 1;
+    }
+    if b.get(i) == Some(&b',') {
+        i += 1;
+    }
+    let body_start = i;
+    let mut depth = 1;
+    let mut j = start + 1;
+    while j < b.len() {
+        match b[j] {
+            b'{' => depth += 1,
+            b'}' => {
+                depth -= 1;
+                if depth == 0 {
+                    return Some((name, kind, body_start, j));
+                }
+            }
+            _ => {}
+        }
+        j += 1;
+    }
+    None
+}
+
+/// Case keys of an ICU plural body: `=0 {..} one {..} other {..}` → `["=0","one","other"]`.
+fn case_keys(body: &str) -> Vec<String> {
+    let b = body.as_bytes();
+    let mut i = 0;
+    let mut keys = Vec::new();
+    while i < b.len() {
+        while i < b.len() && b[i].is_ascii_whitespace() {
+            i += 1;
+        }
+        let ks = i;
+        while i < b.len() && !b[i].is_ascii_whitespace() && b[i] != b'{' {
+            i += 1;
+        }
+        if i == ks {
+            break;
+        }
+        keys.push(body[ks..i].to_string());
+        while i < b.len() && b[i].is_ascii_whitespace() {
+            i += 1;
+        }
+        if b.get(i) != Some(&b'{') {
+            break;
+        }
+        let mut depth = 0;
+        while i < b.len() {
+            match b[i] {
+                b'{' => depth += 1,
+                b'}' => {
+                    depth -= 1;
+                    if depth == 0 {
+                        i += 1;
+                        break;
+                    }
+                }
+                _ => {}
+            }
+            i += 1;
+        }
+    }
+    keys
+}
+
+const I18NEXT_SUFFIXES: [&str; 6] = ["zero", "one", "two", "few", "many", "other"];
+
+/// Group i18next plural keys: `item_one`, `item_other` → `item: [one, other]`.
+pub fn i18next_groups(keys: &[String]) -> BTreeMap<String, Vec<String>> {
+    let mut groups: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for k in keys {
+        if let Some((base, suffix)) = k.rsplit_once('_')
+            && I18NEXT_SUFFIXES.contains(&suffix)
+        {
+            groups
+                .entry(base.to_string())
+                .or_default()
+                .push(suffix.to_string());
+        }
+    }
+    groups
+}
+
+/// All plural category sets in a String Catalog: `(key, locale, categories)` for
+/// both `variations.plural` and `substitutions.*.variations.plural`.
+pub fn xcstrings_plurals(
+    doc: &crate::formats::xcstrings::Document,
+) -> Vec<(String, String, Vec<String>)> {
+    let mut out = Vec::new();
+    let Some(strings) = doc.root.get("strings").and_then(|v| v.as_object()) else {
+        return out;
+    };
+    for (key, entry) in strings {
+        let Some(locs) = entry.get("localizations").and_then(|v| v.as_object()) else {
+            continue;
+        };
+        for (locale, l) in locs {
+            if let Some(p) = l.pointer("/variations/plural").and_then(|v| v.as_object()) {
+                out.push((key.clone(), locale.clone(), p.keys().cloned().collect()));
+            }
+            if let Some(subs) = l.get("substitutions").and_then(|v| v.as_object()) {
+                for (name, sub) in subs {
+                    if let Some(p) = sub
+                        .pointer("/variations/plural")
+                        .and_then(|v| v.as_object())
+                    {
+                        out.push((
+                            format!("{key}#{name}"),
+                            locale.clone(),
+                            p.keys().cloned().collect(),
+                        ));
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+
+/// `(name, quantities)` for every `<plurals>` in an Android resources file.
+pub fn android_plurals(doc: &crate::formats::android::Document) -> Vec<(String, Vec<String>)> {
+    doc.entries
+        .iter()
+        .filter(|e| e.kind == crate::formats::android::Kind::Plurals)
+        .map(|e| {
+            (
+                e.name.clone(),
+                e.values.iter().filter_map(|v| v.quantity.clone()).collect(),
+            )
+        })
+        .collect()
+}
