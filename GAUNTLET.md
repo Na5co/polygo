@@ -42,7 +42,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
   - Acceptance: `hyperfine --warmup 3 'target/release/polygo --help'` mean < 50 ms.
 - [x] G1.2 `.xcstrings` parser + serializer, byte-stable roundtrip (key order, indentation, `extractionState`, plural variations, device variations preserved).
   - Acceptance: `cargo test roundtrip_xcstrings` passes on all 10 corpus files (diff is empty).
-- [ ] G1.3 Android `strings.xml` parser + serializer (plurals, string-arrays, escapes, `translatable=false` skipped, comments preserved).
+- [x] G1.3 Android `strings.xml` parser + serializer (plurals, string-arrays, escapes, `translatable=false` skipped, comments preserved).
   - Acceptance: `cargo test roundtrip_android`.
 - [ ] G1.4 i18next JSON (nested/flat, key sorting preserved).
   - Acceptance: `cargo test roundtrip_json`.
@@ -108,6 +108,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - clap 4 (derive) → CLI parsing; industry standard, tiny cold-start cost (2 ms measured)
 - serde_json (preserve_order) → JSON tree with insertion-order maps; Xcode key order is not code-point sorted, so order must be preserved, not recomputed
 - anyhow → error plumbing in a binary crate
+- quick-xml 0.37 → tolerant XML tokenizer with byte positions; we never re-emit XML, we splice edited value spans into the original text
 
 ## Blocked
 (gate → failure → what was tried)
@@ -118,3 +119,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G0.1 · killtest/de.csv (30 rows, same file, code context + 3 few-shot existing de translations). Judged blind by gemma4: wins 18 / losses 5 / ties 7 → PASS. Gate passed on de. Finding: code context alone does not win; code context + similar existing translations does. Phase 4 must ship both together; the few-shot half is not optional.
 - 2026-09-17 · G1.1 · clap skeleton with translate/check/status/review/init; tests/cli.rs (4 tests); hyperfine --help mean 2.0 ms; release binary 551 KB (lto, strip, panic=abort).
 - 2026-09-17 · G1.2 · xcstrings parse/serialize, byte-stable on 11/11 corpus files (Loop, Whisky, IceCubes, boring.notch, damus, 6× DuckDuckGo; 2.5 KB–3.8 MB) + synthetic edge cases (escapes, empty objects, bool/int, trailing newline, CRLF). Corpus fixtures + licenses in tests/corpus/SOURCES.md (dropped Cork/Pearcleaner: restrictive licenses). Release binary 551 KB (lib not yet linked into main).
+- 2026-09-17 · G1.3 · Android strings.xml: span-based model (original text + value spans), byte-stable on 5/5 corpus files (AntennaPod, NewPipe, F-Droid, K-9/Thunderbird, DuckDuckGo; 44–82 KB, plurals, CDATA+HTML, `\'`, translatable=false, preceding-comment capture); minimal-diff edits incl. empty-element rewrite and CDATA preservation; decode/encode for entities + Android escapes. 10 tests green.
