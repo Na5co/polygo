@@ -43,7 +43,15 @@ pub fn select(source: &str, candidates: &[(String, String)], k: usize) -> Vec<(S
     let mut scored: Vec<(f64, usize)> = candidates
         .iter()
         .enumerate()
-        .filter(|(_, (s, t))| s != source && !t.trim().is_empty())
+        // Skip the string itself, empty translations, untranslated entries (a translation
+        // identical to its source would teach the model to leave things in English) and
+        // pairs with broken placeholders.
+        .filter(|(_, (s, t))| {
+            s != source
+                && !t.trim().is_empty()
+                && !s.trim().eq_ignore_ascii_case(t.trim())
+                && crate::check::placeholders::compare(s, t).is_none()
+        })
         .filter_map(|(i, (s, _))| {
             let ts = tokens(s);
             let inter = target.intersection(&ts).count();

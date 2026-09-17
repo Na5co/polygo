@@ -14,6 +14,8 @@ fn pairs() -> Vec<(String, String)> {
         ),
         ("The quick brown fox", "Der schnelle braune Fuchs"),
         ("Settings", "Einstellungen"),
+        ("Delete changes now", "Delete changes now"),
+        ("Delete %d changes", "Änderungen löschen"),
     ]
     .iter()
     .map(|(s, t)| (s.to_string(), t.to_string()))
@@ -46,6 +48,12 @@ fn fewshot_selection() {
     // k caps the result; empty candidate list is fine.
     assert_eq!(select("Delete changes", &p, 1).len(), 1);
     assert!(select("Delete changes", &[], 3).is_empty());
+    // Untranslated entries and placeholder-broken pairs are never examples.
+    let ex = select("Delete changes", &p, 5);
+    assert!(
+        ex.iter().all(|(s, t)| s != t && s != "Delete %d changes"),
+        "{ex:?}"
+    );
     // Placeholders and punctuation are not tokens.
     let ex = select("%lld items", &p, 3);
     assert!(ex.iter().all(|(s, _)| !s.contains("fox")), "{ex:?}");
