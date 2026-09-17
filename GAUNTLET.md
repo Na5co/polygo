@@ -90,7 +90,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - [x] G5.2 `.po` (msgctxt, plural forms header) and `.resx`.
 - [x] G5.3 `polygo review`: axum serves one embedded HTML file (no build step, no node) at 127.0.0.1: table of pending translations, edit/approve/reject, writes back through the same serializers. Binds localhost only, rejects non-localhost Host header.
   - Acceptance: `cargo test review_roundtrip` (approve via HTTP → file updated byte-stably).
-- [ ] G5.4 GitHub Action `polygo/action`: runs `translate` on push, opens a PR with the diff.
+- [x] G5.4 GitHub Action `polygo/action`: runs `translate` on push, opens a PR with the diff.
   - Acceptance: dry-run in a fixture repo produces the expected diff.
 
 ## Phase 6 — Release
@@ -100,7 +100,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - [x] G6.3 README: GIF at line 1 (record with `vhs`), the Lokalise pricing sentence with link, format table, "runs fully offline with Ollama" proof, security note (no telemetry, localhost only).
   - Acceptance: `scripts/review_readme.sh` — a second model (`gemma4`) answers a fixed rubric (what is it / who is it for / how do I install in one command / what formats / does it phone home) from the README alone; all five answered correctly.
 - [x] G6.4 Docs page per format; `polygo --help` examples; CHANGELOG.
-- [ ] G6.5 Launch kit in `launch/`: r/iOSProgramming, r/FlutterDev, r/androiddev, r/reactjs posts (each leads with that community's format), Show HN title + first comment, Terminal Trove submission, awesome-lists PRs. Drafts only — the loop never posts anything.
+- [x] G6.5 Launch kit in `launch/`: r/iOSProgramming, r/FlutterDev, r/androiddev, r/reactjs posts (each leads with that community's format), Show HN title + first comment, Terminal Trove submission, awesome-lists PRs. Drafts only — the loop never posts anything.
   - Acceptance: files exist; each post under 300 words; a second model rates each ≥ 4/5 on "would a maintainer of that subreddit remove this as spam?" (5 = clearly not).
 
 ## Deps
@@ -149,3 +149,5 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G6.1 · .github/workflows/release.yml: 5-target matrix (aarch64/x86_64 darwin, x86_64/aarch64 linux-musl via cross, x86_64 windows), size budget enforced in CI, tarballs/zip named `polygo-<tag>-<arch>-<os>` exactly as action/action.yml, install.sh and the Homebrew formula expect (tests/release_layout.rs pins this), SHA256SUMS + GitHub release. ci.yml: fmt/clippy/test on 3 OSes + size budget. Verified locally: aarch64-darwin 3.9 MB, x86_64-darwin 4.8 MB (rustup target), aarch64-linux-musl 4.1 MB static ELF built and run in the rust:1-alpine container (`cross` itself fails on an arm64 Mac host — environment quirk, the workflow uses it on ubuntu). Windows and x86_64-linux rely on CI.
 - 2026-09-17 · G6.3 · docs/demo.gif (51 KB, 15 s, qwen3:8b via scripts/demo.sh — vhs 0.12 cannot encode with ffmpeg 9, so the script assembles frames); README with $149/mo Lokalise link, format table, sandbox-exec offline proof, security note; scripts/review_readme.sh → gemma4 5/5.
 - 2026-09-17 · G6.4 · docs/README.md (config, lockfile states, providers) + docs/formats/{xcstrings,android,json,arb,po,resx}.md (layout, plurals, placeholders, what is preserved — claims checked against the code: xcstrings variations / Android plurals / po msgid_plural are preserved, not translated); `after_help` Examples on every subcommand; CHANGELOG.md with known limitations; tests/docs.rs pins all three. 72 tests.
+- 2026-09-17 · G6.5 · launch/{README,show-hn,reddit-iosprogramming,reddit-flutterdev,reddit-androiddev,reddit-reactjs,terminal-trove,awesome-lists}.md — drafts only, nothing posts (tests/launch.rs asserts no reddit/HN/GitHub API strings under launch/ or scripts/). Posts 206–260 words, each leads with the community's format, one link, ends with a question, never mentions stars. scripts/review_launch.sh → gemma4 scores: six 5/5, awesome-lists 4/5 (after de-duplicating a 304-word 3/5 draft). 74 tests.
+- 2026-09-17 · G5.4 · (checkbox missed when 0d91679 landed) action/action.yml composite + action/run.sh; tests/action.rs runs run.sh with DRY_RUN=1 in a fixture repo and asserts the expected diff. Verified again today: passes.

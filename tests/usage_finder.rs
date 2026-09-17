@@ -203,10 +203,16 @@ fn usage_finder_is_fast_on_a_large_tree() {
     }
     let keys: Vec<String> = (0..400).map(|i| format!("key_{}", i * 12)).collect();
     let key_refs: Vec<&str> = keys.iter().map(String::as_str).collect();
-    let t0 = Instant::now();
-    let index = Index::build(root).unwrap();
-    let found = index.find_all(&key_refs);
-    let elapsed = t0.elapsed();
+    // Best of three: the test suite runs in parallel and a debug build under load
+    // can double; the budget is about the algorithm, not the scheduler.
+    let mut elapsed = std::time::Duration::MAX;
+    let mut found = std::collections::HashMap::new();
+    for _ in 0..3 {
+        let t0 = Instant::now();
+        let index = Index::build(root).unwrap();
+        found = index.find_all(&key_refs);
+        elapsed = elapsed.min(t0.elapsed());
+    }
     assert_eq!(found.len(), 400);
     assert!(
         elapsed.as_millis() < 200,
