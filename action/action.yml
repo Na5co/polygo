@@ -35,11 +35,11 @@ runs:
         set -euo pipefail
         v="${{ inputs.version }}"
         if [ "$v" = "latest" ]; then
-          v=$(curl -fsSL https://api.github.com/repos/atanasa/polygo/releases/latest | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
+          v=$(curl -fsSL https://api.github.com/repos/Na5co/polygo/releases/latest | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
         fi
         os=$(uname -s | tr '[:upper:]' '[:lower:]'); arch=$(uname -m)
         case "$arch" in x86_64) arch=x86_64;; aarch64|arm64) arch=aarch64;; esac
-        url="https://github.com/atanasa/polygo/releases/download/${v}/polygo-${v}-${arch}-${os}.tar.gz"
+        url="https://github.com/Na5co/polygo/releases/download/${v}/polygo-${v}-${arch}-${os}.tar.gz"
         mkdir -p "$RUNNER_TEMP/polygo" && curl -fsSL "$url" | tar -xz -C "$RUNNER_TEMP/polygo"
         echo "$RUNNER_TEMP/polygo" >> "$GITHUB_PATH"
     - name: Translate
@@ -59,6 +59,6 @@ runs:
         title: "chore(i18n): update translations"
         commit-message: "chore(i18n): update translations with polygo"
         body: |
-          Translations updated by [polygo](https://github.com/atanasa/polygo).
+          Translations updated by [polygo](https://github.com/Na5co/polygo).
           Review with `polygo review`, or edit the files directly — hand edits are never overwritten.
         labels: i18n

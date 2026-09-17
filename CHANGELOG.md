@@ -14,7 +14,7 @@ First release.
 - Plural translation: `.xcstrings` `variations.plural` (top-level and `%#@var@` substitutions), Android `<plurals>`, gettext `msgid_plural` — one unit per CLDR category the target locale needs, written into the native structure.
 - `polygo check`: printf / ICU / i18next / composite-format placeholders, CLDR plural categories, empty/identical/length, untranslated fragments in non-Latin-script targets; `--json`, `--strict`, `--fix`.
 - `polygo doctor`: config, files, provider reachability, model pulled — with the fix for each failure.
-- `polygo status`, `polygo review` (localhost-only approval page), GitHub Action (`atanasa/polygo/action`).
+- `polygo status`, `polygo review` (localhost-only approval page), GitHub Action (`Na5co/polygo/action`).
 - Providers: Ollama (default, `qwen3:8b`), any OpenAI-compatible endpoint, Anthropic, deterministic mock.
 - Distribution: prebuilt binaries for macOS (arm64, x86_64), Linux (musl, arm64, x86_64), Windows; `install.sh`, Homebrew tap, `cargo binstall`.
 

@@ -23,7 +23,7 @@ RUBRIC = [
     ),
     (
         "What is the single shell command to install it? Reply with the command only.",
-        [r"curl -fsSL https://raw\.githubusercontent\.com/atanasa/polygo/main/install\.sh \| sh|brew install atanasa/tap/polygo|cargo (bin)?install polygo"],
+        [r"curl -fsSL https://raw\.githubusercontent\.com/Na5co/polygo/main/install\.sh \| sh|brew install na5co/tap/polygo|cargo (bin)?install polygo"],
     ),
     (
         "Which localization file formats does it support? List all of them.",

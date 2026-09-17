@@ -18,6 +18,6 @@ Why not just paste the JSON into a chat:
 
 Round-trip tested on Excalidraw's, Hoppscotch's, Grafana's and Immich's locale files.
 
-Rust, one ~4 MB binary, MIT, no telemetry: https://github.com/atanasa/polygo
+Rust, one ~4 MB binary, MIT, no telemetry: https://github.com/Na5co/polygo
 
 Question: do most of you keep one big `translation.json` or split namespaces per feature? `init` handles both — which one should the docs lead with?

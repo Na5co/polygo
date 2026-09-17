@@ -7,10 +7,10 @@
 Built for solo developers and small teams who ship an iOS, Android, Flutter, web or .NET app in a few languages and don't want a translation-management SaaS in the loop. [Lokalise starts at $149/month](https://lokalise.com/pricing) and wants your strings on its servers; polygo is a 4 MB binary you run in your repo.
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/atanasa/polygo/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
 ```
 
-Also: `brew install atanasa/tap/polygo` · `cargo binstall polygo` · `cargo install polygo` · [Windows zip on the releases page](https://github.com/atanasa/polygo/releases). Requires [Ollama](https://ollama.com) with `ollama pull qwen3:8b` for the default provider (~5 GB, runs on a laptop), or point it at any OpenAI-compatible or Anthropic endpoint.
+Also: `brew install na5co/tap/polygo` · `cargo binstall polygo` · `cargo install polygo` · [Windows zip on the releases page](https://github.com/Na5co/polygo/releases). Requires [Ollama](https://ollama.com) with `ollama pull qwen3:8b` for the default provider (~5 GB, runs on a laptop), or point it at any OpenAI-compatible or Anthropic endpoint.
 
 ## Quick start
 

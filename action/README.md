@@ -15,7 +15,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: atanasa/polygo/action@v0
+      - uses: Na5co/polygo/action@v0
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}   # or ANTHROPIC_API_KEY, or point polygo.toml at your own endpoint
         with:

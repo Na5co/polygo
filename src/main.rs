@@ -104,7 +104,7 @@ Examples:
   polygo review --open            approve or reject quarantined translations
 
 Exit codes: 0 ok · 1 error (or check found problems) · 3 some strings need review
-Docs: https://github.com/atanasa/polygo/tree/main/docs";
+Docs: https://github.com/Na5co/polygo/tree/main/docs";
 
 const TRANSLATE_EXAMPLES: &str = "\
 Examples:

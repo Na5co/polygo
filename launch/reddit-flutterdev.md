@@ -17,6 +17,6 @@ What it does differently from pasting into a chat:
 
 Tested on FluffyChat's, Ente's and Immich's ARB bundles for round-trip stability. Rust, single ~4 MB binary, MIT.
 
-https://github.com/atanasa/polygo
+https://github.com/Na5co/polygo
 
 One thing I haven't decided: should `check` insist that a Polish translation adds `few`/`many` branches to every plural message, or is that too strict for how people actually write ICU in ARB — especially if you localise into Slavic languages?

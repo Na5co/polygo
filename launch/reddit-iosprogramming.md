@@ -19,6 +19,6 @@ Running `polygo check` on public catalogs was eye-opening: DuckDuckGo's macOS br
 
 Plural variations (including `%#@var@` substitutions) are translated one CLDR category at a time, so Polish gets its `few`/`many` forms and Japanese just `other`. Device variations are left alone for now.
 
-Free, MIT, no account, no telemetry: https://github.com/atanasa/polygo
+Free, MIT, no account, no telemetry: https://github.com/Na5co/polygo
 
 Question for people shipping in more languages than me: do you keep translations in the catalog and let Xcode manage state, or export `.xliff` and round-trip — which of the two should the docs lead with?

@@ -7,7 +7,7 @@ One PR per list, only after the first tagged release exists and only where the l
 Use the list's own bullet style and adapt the tail to the list's topic:
 
 ```
-- [polygo](https://github.com/atanasa/polygo) - Local-first localization CLI: translates .xcstrings, Android, i18next, ARB, .po and .resx files with a local model (Ollama) or any LLM endpoint; validates placeholders and plurals. MIT.
+- [polygo](https://github.com/Na5co/polygo) - Local-first localization CLI: translates .xcstrings, Android, i18next, ARB, .po and .resx files with a local model (Ollama) or any LLM endpoint; validates placeholders and plurals. MIT.
 ```
 
 ## Targets

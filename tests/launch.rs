@@ -38,7 +38,7 @@ fn launch_posts_lead_with_their_format_and_stay_short() {
         let words = body(&text).split_whitespace().count();
         assert!(words < 300, "{file}: {words} words");
         assert!(
-            text.contains("https://github.com/atanasa/polygo"),
+            text.contains("https://github.com/Na5co/polygo"),
             "{file}: link"
         );
         assert_eq!(

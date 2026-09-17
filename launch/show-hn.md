@@ -6,7 +6,7 @@ Show HN: Polygo – Lokalise for one person, a local-first CLI that translates y
 
 ## URL
 
-https://github.com/atanasa/polygo
+https://github.com/Na5co/polygo
 
 ## First comment (post right after submitting)
 

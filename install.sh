@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # Install the latest polygo release into ~/.local/bin (or $POLYGO_INSTALL_DIR).
-#   curl -fsSL https://raw.githubusercontent.com/atanasa/polygo/main/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
 set -eu
-repo="atanasa/polygo"
+repo="Na5co/polygo"
 dir="${POLYGO_INSTALL_DIR:-$HOME/.local/bin}"
 os=$(uname -s | tr '[:upper:]' '[:lower:]')
 arch=$(uname -m)

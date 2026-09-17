@@ -20,6 +20,6 @@ Round-trip tested against AntennaPod, NewPipe, F-Droid, Thunderbird and DuckDuck
 
 `<plurals>` get every quantity the locale needs, each asked with a concrete count so `few` and `many` come out different. `<string-array>` items are still hands-off.
 
-Single Rust binary, MIT, no telemetry: https://github.com/atanasa/polygo
+Single Rust binary, MIT, no telemetry: https://github.com/Na5co/polygo
 
 Genuine question: for those using Crowdin/Weblate with community translators, is there anything a local tool could do that would fit *alongside* that, rather than replace it?

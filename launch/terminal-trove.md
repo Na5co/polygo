@@ -16,9 +16,9 @@ polygo is a single-binary localization CLI. `polygo init` detects Xcode `.xcstri
 
 **License:** MIT
 
-**Repository:** https://github.com/atanasa/polygo
+**Repository:** https://github.com/Na5co/polygo
 
-**Install:** `brew install atanasa/tap/polygo` · `curl -fsSL https://raw.githubusercontent.com/atanasa/polygo/main/install.sh | sh` · `cargo binstall polygo`
+**Install:** `brew install na5co/tap/polygo` · `curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh` · `cargo binstall polygo`
 
 **Screenshot / GIF:** `docs/demo.gif` from the repository (15 s, 900 px wide).
 
