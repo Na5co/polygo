@@ -173,6 +173,15 @@ pub fn translate(
         if work.is_empty() {
             continue;
         }
+        if std::env::var("POLYGO_QUIET").is_err() {
+            eprintln!(
+                "{locale}: {} string(s) in {} batch(es) with {} ({})",
+                work.len(),
+                work.len().div_ceil(batch_size),
+                provider.name(),
+                provider.model()
+            );
+        }
         let ctx = Ctx {
             source_locale: cfg.source_locale.clone(),
             target_locale: locale.clone(),
@@ -281,6 +290,13 @@ pub fn translate(
                 ws.flush()?;
                 lock.save(&lock_path)?;
                 report.batches += 1;
+                if !opts.verbose && std::env::var("POLYGO_QUIET").is_err() {
+                    eprintln!(
+                        "  {locale}: batch {}/{total} done ({} string(s) so far)",
+                        i + 1,
+                        report.per_locale.get(locale).copied().unwrap_or(0)
+                    );
+                }
                 let _ = ack.send(());
             }
             Ok::<(), anyhow::Error>(())
