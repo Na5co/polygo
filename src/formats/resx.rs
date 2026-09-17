@@ -246,6 +246,7 @@ pub fn units(doc: &Document) -> Vec<Unit> {
             source: e.text(),
             comment: e.comment.clone(),
             translations: BTreeMap::new(),
+            locales: None,
         })
         .collect()
 }

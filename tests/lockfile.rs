@@ -12,6 +12,7 @@ fn unit(key: &str, source: &str, translations: &[(&str, &str)]) -> Unit {
             .iter()
             .map(|(l, t)| (l.to_string(), t.to_string()))
             .collect::<BTreeMap<_, _>>(),
+        locales: None,
     }
 }
 

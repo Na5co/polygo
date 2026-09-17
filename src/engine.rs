@@ -97,7 +97,7 @@ pub fn translate(
                 .planned
                 .values()
                 .flatten()
-                .map(|k| project::split_key(cfg, k).1)
+                .map(|k| crate::core::base_key(project::split_key(cfg, k).1))
                 .collect();
             let found = index.find_all(&all);
             report
@@ -106,7 +106,7 @@ pub fn translate(
                 .flatten()
                 .filter_map(|k| {
                     found
-                        .get(project::split_key(cfg, k).1)
+                        .get(crate::core::base_key(project::split_key(cfg, k).1))
                         .map(|u| (k.clone(), u.clone()))
                 })
                 .collect()
@@ -414,10 +414,24 @@ impl Workspace {
 
     fn set(&mut self, cfg: &Config, key: &str, locale: &str, text: &str) -> Result<()> {
         let (idx, local_key) = project::split_key(cfg, key);
+        let plural = crate::core::split_plural(local_key);
         let root = self.root.clone();
         match &mut self.files[idx] {
             Loaded::Xcstrings { doc, dirty, .. } => {
-                formats::xcstrings::set_translation(doc, local_key, locale, text);
+                let ok = match plural {
+                    Some((base, cat)) => formats::xcstrings::set_plural_form(
+                        doc,
+                        &cfg.source_locale,
+                        base,
+                        locale,
+                        cat,
+                        text,
+                    ),
+                    None => formats::xcstrings::set_translation(doc, local_key, locale, text),
+                };
+                if !ok {
+                    anyhow::bail!("{local_key}: not in the catalog");
+                }
                 *dirty = true;
             }
             Loaded::Android { template, locales } => {
@@ -435,9 +449,12 @@ impl Workspace {
                             .or_insert((path, doc, false))
                     }
                 };
-                match entry.1.index_of(local_key) {
-                    Some(i) => entry.1.set_text(i, 0, text),
-                    None => entry.1.insert_string(local_key, text),
+                match plural {
+                    Some((base, cat)) => entry.1.set_plural_item(base, cat, text),
+                    None => match entry.1.index_of(local_key) {
+                        Some(i) => entry.1.set_text(i, 0, text),
+                        None => entry.1.insert_string(local_key, text),
+                    },
                 }
                 entry.2 = true;
             }
@@ -525,6 +542,27 @@ impl Workspace {
                     }
                 };
                 match &mut entry.1 {
+                    PerLocaleDoc::Po(doc) if plural.is_some() => {
+                        let (base, cat) = plural.expect("checked");
+                        if doc.index_of(base).is_none() {
+                            let src = formats::po::parse(source_text)?;
+                            let i = src
+                                .index_of(base)
+                                .with_context(|| format!("{base}: not in the source .po"))?;
+                            let e = &src.entries[i];
+                            doc.insert_plural(
+                                e.ctxt.as_deref(),
+                                &e.msgid,
+                                e.plural.as_deref().unwrap_or(&e.msgid),
+                                e.comment.as_deref(),
+                            );
+                        }
+                        if !doc.set_plural_category(base, locale, cat, text) {
+                            anyhow::bail!(
+                                "{base}: cannot place plural form `{cat}` for {locale} (check the file's Plural-Forms header)"
+                            );
+                        }
+                    }
                     PerLocaleDoc::Po(doc) => match doc.index_of(local_key) {
                         Some(i) => doc.set_msgstr(i, text),
                         None => {

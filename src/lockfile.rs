@@ -212,6 +212,9 @@ impl Lock {
         for locale in locales {
             let map = status.per_locale.entry((*locale).to_string()).or_default();
             for u in units {
+                if !u.applies_to(locale) {
+                    continue;
+                }
                 let state = match self.keys.get(&u.key) {
                     // Unknown to the lockfile: an existing translation came from a human or
                     // another tool and is never overwritten; no translation means work to do.

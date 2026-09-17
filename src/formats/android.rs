@@ -420,36 +420,13 @@ impl Document {
     /// Append a new `<string>` before `</resources>`, matching the file's indentation.
     pub fn insert_string(&mut self, name: &str, text: &str) {
         let indent = self.detect_indent();
-        let close = self.text.rfind("</resources>").unwrap_or(self.text.len());
         let element = format!(
             "{indent}<string name=\"{}\">{}</string>\n",
             escape_attr(name),
             encode(text)
         );
-        // Insert at the start of the line holding </resources>.
-        let line_start = self.text[..close].rfind('\n').map(|i| i + 1).unwrap_or(0);
-        let at = if self.text[line_start..close].trim().is_empty() {
-            line_start
-        } else {
-            close
-        };
-        self.text.insert_str(at, &element);
-        // Spans after `at` shift by the inserted length.
-        let shift = element.len();
-        for e in &mut self.entries {
-            for v in &mut e.values {
-                if let Some(s) = &mut v.span
-                    && s.start >= at
-                {
-                    s.start += shift;
-                    s.end += shift;
-                }
-                if v.element.start >= at {
-                    v.element.start += shift;
-                    v.element.end += shift;
-                }
-            }
-        }
+        let at = self.before_resources_end();
+        self.splice_in(at, &element);
         self.entries.push(Entry {
             kind: Kind::String,
             name: name.to_string(),
@@ -459,10 +436,122 @@ impl Document {
                 raw: encode(text),
                 quantity: None,
                 span: None,
-                element: at..at + shift,
+                element: at..at + element.len(),
                 edited: None,
             }],
         });
+    }
+
+    /// Set one quantity of a `<plurals>`: replaces the existing `<item>`, appends a new
+    /// `<item>` to an existing block, or creates the block before `</resources>`.
+    pub fn set_plural_item(&mut self, name: &str, quantity: &str, text: &str) {
+        let indent = self.detect_indent();
+        match self
+            .entries
+            .iter()
+            .position(|e| e.kind == Kind::Plurals && e.name == name)
+        {
+            Some(i) => {
+                if let Some(idx) = self.entries[i]
+                    .values
+                    .iter()
+                    .position(|v| v.quantity.as_deref() == Some(quantity))
+                {
+                    self.set_text(i, idx, text);
+                    return;
+                }
+                // Append after the last item, copying its line's indentation.
+                let last_end = self.entries[i]
+                    .values
+                    .last()
+                    .map(|v| v.element.end)
+                    .unwrap_or_else(|| self.before_resources_end());
+                let line_start = self.text[..last_end]
+                    .rfind('\n')
+                    .map(|p| p + 1)
+                    .unwrap_or(0);
+                let item_indent: String = self.text[line_start..]
+                    .chars()
+                    .take_while(|c| c.is_whitespace() && *c != '\n')
+                    .collect();
+                let element = format!(
+                    "\n{item_indent}<item quantity=\"{quantity}\">{}</item>",
+                    encode(text)
+                );
+                self.splice_in(last_end, &element);
+                let content_start = last_end + element.len() - encode(text).len() - "</item>".len();
+                self.entries[i].values.push(Value {
+                    raw: encode(text),
+                    quantity: Some(quantity.to_string()),
+                    span: Some(content_start..content_start + encode(text).len()),
+                    element: last_end..last_end + element.len(),
+                    edited: None,
+                });
+            }
+            None => {
+                let item_indent = format!("{indent}{indent}");
+                let block = format!(
+                    "{indent}<plurals name=\"{}\">\n{item_indent}<item quantity=\"{quantity}\">{}</item>\n{indent}</plurals>\n",
+                    escape_attr(name),
+                    encode(text)
+                );
+                let at = self.before_resources_end();
+                self.splice_in(at, &block);
+                let item_start =
+                    at + indent.len() + "<plurals name=\"\">\n".len() + escape_attr(name).len();
+                let item_len = item_indent.len()
+                    + "<item quantity=\"\">".len()
+                    + quantity.len()
+                    + encode(text).len()
+                    + "</item>".len();
+                let content_start =
+                    item_start + item_indent.len() + "<item quantity=\"\">".len() + quantity.len();
+                self.entries.push(Entry {
+                    kind: Kind::Plurals,
+                    name: name.to_string(),
+                    translatable: true,
+                    comment: None,
+                    values: vec![Value {
+                        raw: encode(text),
+                        quantity: Some(quantity.to_string()),
+                        span: Some(content_start..content_start + encode(text).len()),
+                        element: item_start..item_start + item_len,
+                        edited: None,
+                    }],
+                });
+            }
+        }
+    }
+
+    /// Byte offset at the start of the `</resources>` line (or end of text).
+    fn before_resources_end(&self) -> usize {
+        let close = self.text.rfind("</resources>").unwrap_or(self.text.len());
+        let line_start = self.text[..close].rfind('\n').map(|i| i + 1).unwrap_or(0);
+        if self.text[line_start..close].trim().is_empty() {
+            line_start
+        } else {
+            close
+        }
+    }
+
+    /// Insert raw text at `at`, shifting every recorded span after it.
+    fn splice_in(&mut self, at: usize, s: &str) {
+        self.text.insert_str(at, s);
+        let shift = s.len();
+        for e in &mut self.entries {
+            for v in &mut e.values {
+                if let Some(sp) = &mut v.span
+                    && sp.start >= at
+                {
+                    sp.start += shift;
+                    sp.end += shift;
+                }
+                if v.element.start >= at {
+                    v.element.start += shift;
+                    v.element.end += shift;
+                }
+            }
+        }
     }
 
     fn detect_indent(&self) -> String {

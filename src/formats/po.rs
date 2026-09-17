@@ -23,6 +23,9 @@ pub struct Entry {
     msgstr_span: Range<usize>,
     edited: Option<String>,
     is_plural: bool,
+    /// Decoded `msgstr[n]` values with their spans, in index order (plural entries only).
+    plural_forms: Vec<(String, Range<usize>)>,
+    edited_forms: BTreeMap<usize, String>,
 }
 
 impl Entry {
@@ -82,6 +85,7 @@ pub fn parse(text: &str) -> Result<Document> {
         let mut plural = None;
         let mut msgstr: Option<(String, Range<usize>)> = None;
         let mut msgstr_plural_first: Option<(String, Range<usize>)> = None;
+        let mut plural_forms: Vec<(usize, String, Range<usize>)> = Vec::new();
         while i < n && !lines[i].1.trim().is_empty() {
             let (off, l) = lines[i];
             let (kw, rest) = match l.find(' ') {
@@ -109,9 +113,15 @@ pub fn parse(text: &str) -> Result<Document> {
                 "msgid_plural" => plural = Some(value),
                 "msgstr" => msgstr = Some((value, q..end)),
                 _ if kw.starts_with("msgstr[") => {
-                    if kw == "msgstr[0]" {
-                        msgstr_plural_first = Some((value, q..end));
+                    let idx: usize = kw
+                        .trim_start_matches("msgstr[")
+                        .trim_end_matches(']')
+                        .parse()
+                        .map_err(|_| anyhow::anyhow!("bad {kw} at byte {off}"))?;
+                    if idx == 0 {
+                        msgstr_plural_first = Some((value.clone(), q..end));
                     }
+                    plural_forms.push((idx, value, q..end));
                 }
                 _ => bail!("unknown keyword {kw} at byte {off}"),
             }
@@ -140,6 +150,11 @@ pub fn parse(text: &str) -> Result<Document> {
             msgstr_span: span,
             edited: None,
             is_plural,
+            plural_forms: {
+                plural_forms.sort_by_key(|(i, _, _)| *i);
+                plural_forms.into_iter().map(|(_, v, r)| (v, r)).collect()
+            },
+            edited_forms: BTreeMap::new(),
         });
     }
     Ok(Document {
@@ -220,6 +235,35 @@ impl Document {
         e.msgstr = text.to_string();
     }
 
+    /// Set `msgstr[n]` of a plural entry; `n` must exist in the file (gettext files
+    /// always carry every `msgstr[n]` slot for the header's `nplurals`).
+    pub fn set_plural_form(&mut self, i: usize, n: usize, text: &str) -> bool {
+        let e = &mut self.entries[i];
+        if n >= e.plural_forms.len() {
+            return false;
+        }
+        e.plural_forms[n].0 = text.to_string();
+        e.edited_forms.insert(n, text.to_string());
+        if n == 0 {
+            e.msgstr = text.to_string();
+        }
+        true
+    }
+
+    /// `nplurals` from the header's `Plural-Forms:` line, if any.
+    pub fn nplurals(&self) -> Option<usize> {
+        let line = self
+            .header
+            .lines()
+            .find(|l| l.starts_with("Plural-Forms:"))?;
+        let n = line.split("nplurals=").nth(1)?;
+        n.chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>()
+            .parse()
+            .ok()
+    }
+
     /// Append a new singular entry at the end of the file.
     pub fn insert(&mut self, ctxt: Option<&str>, msgid: &str, msgstr: &str, comment: Option<&str>) {
         if !self.text.ends_with('\n') && !self.text.is_empty() {
@@ -253,6 +297,8 @@ impl Document {
             msgstr_span: value_start..value_end,
             edited: None,
             is_plural: false,
+            plural_forms: vec![],
+            edited_forms: BTreeMap::new(),
         });
     }
 }
@@ -267,6 +313,11 @@ pub fn serialize(doc: &Document) -> String {
                 .map(|t| (e.msgstr_span.clone(), encode(t)))
         })
         .collect();
+    for e in &doc.entries {
+        for (n, t) in &e.edited_forms {
+            edits.push((e.plural_forms[*n].1.clone(), encode(t)));
+        }
+    }
     if edits.is_empty() {
         return doc.text.clone();
     }
@@ -288,6 +339,7 @@ pub fn units(doc: &Document) -> Vec<Unit> {
             source: e.msgid.clone(),
             comment: e.comment.clone(),
             translations: BTreeMap::new(),
+            locales: None,
         })
         .collect()
 }
@@ -357,5 +409,143 @@ pub fn plural_forms(locale: &str) -> &'static str {
             "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
         }
         _ => "nplurals=2; plural=(n != 1);",
+    }
+}
+
+// ---- plural entries ----------------------------------------------------------------
+
+/// CLDR-style labels for each `msgstr[n]` slot of a locale, in gettext index order,
+/// matching `plural_forms()`. `None` when the locale's rule is unknown for `nplurals`.
+pub fn plural_labels(locale: &str, nplurals: usize) -> Option<Vec<&'static str>> {
+    let lang = locale.split(['-', '_']).next().unwrap_or("");
+    let labels: Vec<&'static str> = match (lang, nplurals) {
+        (_, 1) => vec!["other"],
+        ("ar", 6) => vec!["zero", "one", "two", "few", "many", "other"],
+        ("sl", 4) => vec!["one", "two", "few", "other"],
+        ("ru" | "uk" | "be" | "pl" | "cs" | "sk" | "lt" | "hr" | "sr" | "bs", 3) => {
+            vec!["one", "few", "many"]
+        }
+        ("ro", 3) => vec!["one", "few", "other"],
+        ("lv", 3) => vec!["one", "other", "zero"],
+        (_, 2) => vec!["one", "other"],
+        _ => return None,
+    };
+    Some(labels)
+}
+
+/// Plural entries of the source file: `(key, {one: msgid, other: msgid_plural}, comment)`.
+pub fn plural_sources(doc: &Document) -> Vec<(String, BTreeMap<String, String>, Option<String>)> {
+    doc.entries
+        .iter()
+        .filter(|e| e.is_plural && !e.msgid.is_empty())
+        .map(|e| {
+            let mut forms = BTreeMap::new();
+            forms.insert("one".to_string(), e.msgid.clone());
+            forms.insert(
+                "other".to_string(),
+                e.plural.clone().unwrap_or_else(|| e.msgid.clone()),
+            );
+            (e.key(), forms, e.comment.clone())
+        })
+        .collect()
+}
+
+/// Existing translated plural forms of a locale file, keyed by category, using the
+/// file's own `nplurals` to label the slots.
+pub fn plural_values(doc: &Document, locale: &str) -> BTreeMap<String, BTreeMap<String, String>> {
+    let Some(labels) = doc.nplurals().and_then(|n| plural_labels(locale, n)) else {
+        return BTreeMap::new();
+    };
+    doc.entries
+        .iter()
+        .filter(|e| e.is_plural && !e.msgid.is_empty())
+        .map(|e| {
+            let forms = e
+                .plural_forms
+                .iter()
+                .enumerate()
+                .filter(|(_, (v, _))| !v.is_empty())
+                .filter_map(|(i, (v, _))| labels.get(i).map(|l| ((*l).to_string(), v.clone())))
+                .collect();
+            (e.key(), forms)
+        })
+        .collect()
+}
+
+impl Document {
+    /// Append a plural entry with empty `msgstr[n]` slots for the header's `nplurals`.
+    pub fn insert_plural(
+        &mut self,
+        ctxt: Option<&str>,
+        msgid: &str,
+        msgid_plural: &str,
+        comment: Option<&str>,
+    ) -> bool {
+        let Some(n) = self.nplurals() else {
+            return false;
+        };
+        if !self.text.ends_with('\n') && !self.text.is_empty() {
+            self.text.push('\n');
+        }
+        let mut block = String::from("\n");
+        if let Some(c) = comment {
+            for line in c.split(" · ") {
+                if let Some(r) = line.strip_prefix("refs: ") {
+                    block.push_str(&format!("#: {r}\n"));
+                } else {
+                    block.push_str(&format!("#. {line}\n"));
+                }
+            }
+        }
+        if let Some(c) = ctxt {
+            block.push_str(&format!("msgctxt {}\n", encode(c)));
+        }
+        block.push_str(&format!("msgid {}\n", encode(msgid)));
+        block.push_str(&format!("msgid_plural {}\n", encode(msgid_plural)));
+        let mut forms = Vec::new();
+        for i in 0..n {
+            let prefix = format!("msgstr[{i}] ");
+            let start = self.text.len() + block.len() + prefix.len();
+            block.push_str(&format!("{prefix}\"\"\n"));
+            forms.push((String::new(), start..start + 2));
+        }
+        let span0 = forms[0].1.clone();
+        self.text.push_str(&block);
+        self.entries.push(Entry {
+            ctxt: ctxt.map(str::to_string),
+            msgid: msgid.to_string(),
+            plural: Some(msgid_plural.to_string()),
+            msgstr: String::new(),
+            comment: comment.map(str::to_string),
+            msgstr_span: span0,
+            edited: None,
+            is_plural: true,
+            plural_forms: forms,
+            edited_forms: BTreeMap::new(),
+        });
+        true
+    }
+
+    /// Write a plural form by category into a locale file (slot from `plural_labels`).
+    pub fn set_plural_category(
+        &mut self,
+        key: &str,
+        locale: &str,
+        category: &str,
+        text: &str,
+    ) -> bool {
+        let Some(labels) = self.nplurals().and_then(|n| plural_labels(locale, n)) else {
+            return false;
+        };
+        let Some(n) = labels.iter().position(|l| *l == category) else {
+            return false;
+        };
+        let Some(i) = self.index_of(key) else {
+            return false;
+        };
+        if !self.entries[i].is_plural {
+            return false;
+        }
+        self.set_plural_form(i, n, text)
     }
 }

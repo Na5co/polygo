@@ -34,7 +34,13 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
     match spec.format {
         Format::Xcstrings => {
             let doc = formats::xcstrings::parse(&text)?;
-            Ok(formats::xcstrings::units(&doc, &cfg.source_locale))
+            let mut units = formats::xcstrings::units(&doc, &cfg.source_locale);
+            units.extend(formats::xcstrings::plural_units(
+                &doc,
+                &cfg.source_locale,
+                &cfg.target_locales,
+            ));
+            Ok(units)
         }
         Format::Android => {
             let doc = formats::android::parse(&text)?;
@@ -47,6 +53,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                     source: e.values[0].text(),
                     comment: e.comment.clone(),
                     translations: BTreeMap::new(),
+                    locales: None,
                 })
                 .collect();
             attach_locale_files(root, cfg, spec, &mut units, |text| {
@@ -58,6 +65,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                     .map(|e| (e.name.clone(), e.values[0].text()))
                     .collect())
             })?;
+            units.extend(android_plural_units(root, cfg, spec, &doc)?);
             Ok(units)
         }
         Format::Arb => {
@@ -75,6 +83,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
             attach_locale_files(root, cfg, spec, &mut units, |text| {
                 Ok(formats::po::values(&formats::po::parse(text)?))
             })?;
+            units.extend(po_plural_units(root, cfg, spec, &doc)?);
             Ok(units)
         }
         Format::Resx => {
@@ -95,6 +104,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                     source: e.text(),
                     comment: None,
                     translations: BTreeMap::new(),
+                    locales: None,
                 })
                 .collect();
             attach_locale_files(root, cfg, spec, &mut units, |text| {
@@ -166,4 +176,142 @@ pub fn android_qualifier(locale: &str) -> String {
         [lang, region] if region.len() == 2 => format!("{lang}-r{}", region.to_ascii_uppercase()),
         _ => format!("b+{}", parts.join("+")),
     }
+}
+
+/// Parse each existing target-locale file once (for plural extraction).
+fn locale_docs<T>(
+    root: &Path,
+    cfg: &Config,
+    spec: &FileSpec,
+    parse: impl Fn(&str) -> Result<T>,
+) -> Result<BTreeMap<String, T>> {
+    let mut out = BTreeMap::new();
+    let Some(template) = &spec.locale_path else {
+        return Ok(out);
+    };
+    for locale in &cfg.target_locales {
+        let path = root.join(locale_file(template, locale));
+        if !path.exists() {
+            continue;
+        }
+        let text = std::fs::read_to_string(&path)
+            .with_context(|| format!("reading {}", path.display()))?;
+        out.insert(
+            locale.clone(),
+            parse(&text).with_context(|| format!("parsing {}", path.display()))?,
+        );
+    }
+    Ok(out)
+}
+
+fn android_plural_units(
+    root: &Path,
+    cfg: &Config,
+    spec: &FileSpec,
+    source: &formats::android::Document,
+) -> Result<Vec<Unit>> {
+    let docs = locale_docs(root, cfg, spec, formats::android::parse)?;
+    let forms_of = |doc: &formats::android::Document, name: &str| -> BTreeMap<String, String> {
+        doc.entries
+            .iter()
+            .find(|e| e.kind == formats::android::Kind::Plurals && e.name == name)
+            .map(|e| {
+                e.values
+                    .iter()
+                    .filter_map(|v| v.quantity.clone().map(|q| (q, v.text())))
+                    .collect()
+            })
+            .unwrap_or_default()
+    };
+    let mut out = Vec::new();
+    for e in source
+        .entries
+        .iter()
+        .filter(|e| e.translatable && e.kind == formats::android::Kind::Plurals)
+    {
+        let forms = forms_of(source, &e.name);
+        let targets: BTreeMap<String, (Vec<String>, BTreeMap<String, String>)> = cfg
+            .target_locales
+            .iter()
+            .map(|l| {
+                let need = crate::check::plurals::required(l)
+                    .iter()
+                    .map(|s| (*s).to_string())
+                    .collect();
+                let have = docs
+                    .get(l)
+                    .map(|d| forms_of(d, &e.name))
+                    .unwrap_or_default();
+                (l.clone(), (need, have))
+            })
+            .collect();
+        out.extend(crate::core::plural_units(
+            &e.name,
+            e.comment.as_deref(),
+            &forms,
+            &targets,
+        ));
+    }
+    Ok(out)
+}
+
+fn po_plural_units(
+    root: &Path,
+    cfg: &Config,
+    spec: &FileSpec,
+    source: &formats::po::Document,
+) -> Result<Vec<Unit>> {
+    let docs = locale_docs(root, cfg, spec, formats::po::parse)?;
+    let values: BTreeMap<&String, BTreeMap<String, BTreeMap<String, String>>> = docs
+        .iter()
+        .map(|(l, d)| (l, formats::po::plural_values(d, l)))
+        .collect();
+    let mut out = Vec::new();
+    for (key, forms, comment) in formats::po::plural_sources(source) {
+        let targets: BTreeMap<String, (Vec<String>, BTreeMap<String, String>)> = cfg
+            .target_locales
+            .iter()
+            .filter_map(|l| {
+                // Slots come from the locale file's own header when it exists, else from
+                // the rule polygo would write into a new file.
+                let n = docs
+                    .get(l)
+                    .and_then(formats::po::Document::nplurals)
+                    .or_else(|| {
+                        formats::po::plural_labels(l, nplurals_of(formats::po::plural_forms(l)))
+                            .map(|v| v.len())
+                    })?;
+                let need: Vec<String> = formats::po::plural_labels(l, n)?
+                    .into_iter()
+                    .map(str::to_string)
+                    .collect();
+                let have = values
+                    .get(l)
+                    .and_then(|m| m.get(&key))
+                    .cloned()
+                    .unwrap_or_default();
+                Some((l.clone(), (need, have)))
+            })
+            .collect();
+        out.extend(crate::core::plural_units(
+            &key,
+            comment.as_deref(),
+            &forms,
+            &targets,
+        ));
+    }
+    Ok(out)
+}
+
+fn nplurals_of(rule: &str) -> usize {
+    rule.split("nplurals=")
+        .nth(1)
+        .and_then(|s| {
+            s.chars()
+                .take_while(char::is_ascii_digit)
+                .collect::<String>()
+                .parse()
+                .ok()
+        })
+        .unwrap_or(2)
 }

@@ -61,6 +61,7 @@ pub fn units(doc: &Document) -> Vec<Unit> {
                 source: e.text(),
                 comment,
                 translations: BTreeMap::new(),
+                locales: None,
             }
         })
         .collect()

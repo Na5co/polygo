@@ -181,6 +181,7 @@ pub fn units(doc: &Document, source_locale: &str) -> Vec<Unit> {
                 .and_then(Value::as_str)
                 .map(str::to_string),
             translations,
+            locales: None,
         });
     }
     out
@@ -241,4 +242,195 @@ pub fn set_translation(doc: &mut Document, key: &str, locale: &str, text: &str) 
     }
     *locs = rebuilt;
     true
+}
+
+// ---- plural variations ----------------------------------------------------------------
+
+/// `(plural key, source forms)` for every plural in the catalog: top-level
+/// `variations.plural` keyed as `key`, substitution plurals keyed as `key#name`.
+fn plural_sources(doc: &Document, source_locale: &str) -> Vec<(String, BTreeMap<String, String>)> {
+    let mut out = Vec::new();
+    let Some(strings) = doc.root.get("strings").and_then(Value::as_object) else {
+        return out;
+    };
+    for (key, entry) in strings {
+        if entry.get("shouldTranslate").and_then(Value::as_bool) == Some(false) {
+            continue;
+        }
+        let Some(src) = entry.pointer(&format!("/localizations/{source_locale}")) else {
+            continue;
+        };
+        if let Some(forms) = plural_forms_of(src) {
+            out.push((key.clone(), forms));
+        }
+        if let Some(subs) = src.get("substitutions").and_then(Value::as_object) {
+            for (name, sub) in subs {
+                if let Some(forms) = plural_forms_of(sub) {
+                    out.push((format!("{key}#{name}"), forms));
+                }
+            }
+        }
+    }
+    out
+}
+
+fn plural_forms_of(node: &Value) -> Option<BTreeMap<String, String>> {
+    let p = node.pointer("/variations/plural")?.as_object()?;
+    let forms: BTreeMap<String, String> = p
+        .iter()
+        .filter_map(|(cat, v)| {
+            v.pointer("/stringUnit/value")
+                .and_then(Value::as_str)
+                .map(|s| (cat.clone(), s.to_string()))
+        })
+        .collect();
+    (!forms.is_empty()).then_some(forms)
+}
+
+/// Existing plural forms of `plural_key` (`key` or `key#substitution`) in `locale`.
+fn plural_forms_in(doc: &Document, plural_key: &str, locale: &str) -> BTreeMap<String, String> {
+    let (key, sub) = match plural_key.rsplit_once('#') {
+        Some((k, s)) if doc.root.pointer(&format!("/strings/{}", ptr(k))).is_some() => (k, Some(s)),
+        _ => (plural_key, None),
+    };
+    let mut path = format!("/strings/{}/localizations/{}", ptr(key), ptr(locale));
+    if let Some(s) = sub {
+        path.push_str(&format!("/substitutions/{}", ptr(s)));
+    }
+    doc.root
+        .pointer(&path)
+        .and_then(plural_forms_of)
+        .unwrap_or_default()
+}
+
+fn ptr(s: &str) -> String {
+    s.replace('~', "~0").replace('/', "~1")
+}
+
+/// One unit per plural category every target locale needs (see `core::plural_units`).
+pub fn plural_units(doc: &Document, source_locale: &str, targets: &[String]) -> Vec<Unit> {
+    let mut out = Vec::new();
+    for (pkey, forms) in plural_sources(doc, source_locale) {
+        let comment = doc
+            .root
+            .pointer(&format!(
+                "/strings/{}/comment",
+                ptr(pkey.split('#').next().unwrap())
+            ))
+            .and_then(Value::as_str)
+            .map(str::to_string);
+        let per_locale: BTreeMap<String, (Vec<String>, BTreeMap<String, String>)> = targets
+            .iter()
+            .map(|l| {
+                let need = crate::check::plurals::required(l)
+                    .iter()
+                    .map(|s| (*s).to_string())
+                    .collect();
+                (l.clone(), (need, plural_forms_in(doc, &pkey, l)))
+            })
+            .collect();
+        out.extend(crate::core::plural_units(
+            &pkey,
+            comment.as_deref(),
+            &forms,
+            &per_locale,
+        ));
+    }
+    out
+}
+
+/// Write one plural form. For a substitution plural (`key#name`) the substitution's
+/// `argNumber`/`formatSpecifier` are copied from the source locale, and the outer
+/// `stringUnit` is left to the ordinary translation of `key`.
+pub fn set_plural_form(
+    doc: &mut Document,
+    source_locale: &str,
+    plural_key: &str,
+    locale: &str,
+    category: &str,
+    text: &str,
+) -> bool {
+    let (key, sub) = match plural_key.rsplit_once('#') {
+        Some((k, s)) if doc.root.pointer(&format!("/strings/{}", ptr(k))).is_some() => {
+            (k.to_string(), Some(s.to_string()))
+        }
+        _ => (plural_key.to_string(), None),
+    };
+    // Substitution metadata to mirror (source is read before the mutable borrow).
+    let meta: Vec<(String, Value)> = match &sub {
+        Some(s) => doc
+            .root
+            .pointer(&format!(
+                "/strings/{}/localizations/{}/substitutions/{}",
+                ptr(&key),
+                ptr(source_locale),
+                ptr(s)
+            ))
+            .and_then(Value::as_object)
+            .map(|o| {
+                o.iter()
+                    .filter(|(k, _)| k.as_str() != "variations")
+                    .map(|(k, v)| (k.clone(), v.clone()))
+                    .collect()
+            })
+            .unwrap_or_default(),
+        None => vec![],
+    };
+    let Some(entry) = doc
+        .root
+        .get_mut("strings")
+        .and_then(Value::as_object_mut)
+        .and_then(|s| s.get_mut(&key))
+        .and_then(Value::as_object_mut)
+    else {
+        return false;
+    };
+    let locs = sorted_entry(entry, "localizations");
+    let loc = sorted_entry(locs, locale);
+    let holder = match &sub {
+        Some(s) => {
+            let subs = sorted_entry(loc, "substitutions");
+            let node = sorted_entry(subs, s);
+            for (k, v) in meta {
+                if !node.contains_key(&k) {
+                    node.insert(k, v);
+                }
+            }
+            sort_keys(node);
+            node
+        }
+        None => loc,
+    };
+    let variations = sorted_entry(holder, "variations");
+    let plural = sorted_entry(variations, "plural");
+    let mut unit = serde_json::Map::new();
+    unit.insert("state".into(), Value::String("translated".into()));
+    unit.insert("value".into(), Value::String(text.to_string()));
+    let mut cat_obj = serde_json::Map::new();
+    cat_obj.insert("stringUnit".into(), Value::Object(unit));
+    plural.insert(category.to_string(), Value::Object(cat_obj));
+    sort_keys(plural);
+    true
+}
+
+/// Get-or-insert an object-valued child, keeping keys in Xcode's sorted order.
+fn sorted_entry<'a>(
+    obj: &'a mut serde_json::Map<String, Value>,
+    key: &str,
+) -> &'a mut serde_json::Map<String, Value> {
+    if !obj.get(key).is_some_and(Value::is_object) {
+        obj.insert(key.to_string(), Value::Object(Default::default()));
+        sort_keys(obj);
+    }
+    obj.get_mut(key)
+        .and_then(Value::as_object_mut)
+        .expect("just inserted")
+}
+
+fn sort_keys(obj: &mut serde_json::Map<String, Value>) {
+    let mut items: Vec<(String, Value)> = std::mem::take(obj).into_iter().collect();
+    items.sort_by(|a, b| a.0.cmp(&b.0));
+    for (k, v) in items {
+        obj.insert(k, v);
+    }
 }
