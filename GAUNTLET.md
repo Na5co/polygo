@@ -107,3 +107,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Log
 (date · gate · note)
+- 2026-09-17 · G0.1 · killtest/bg.csv generated (30 rows, MrKai77/Loop Localizable.xcstrings, qwen3:8b, code context on 30/30, no existing bg translations so 0 few-shots). Awaiting human rating.
