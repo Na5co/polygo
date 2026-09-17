@@ -57,9 +57,20 @@ impl Provider for Mock {
                     .open(path)?;
                 writeln!(f, "{}", r.key)?;
             }
+            // Behave like a model that follows the glossary (unless told to misbehave).
+            let mut text = r.source.clone();
+            if std::env::var("POLYGO_MOCK_IGNORE_GLOSSARY").is_err() {
+                for (term, tr) in &ctx.glossary {
+                    text = text.replace(term.as_str(), tr);
+                }
+            } else {
+                for (term, _) in &ctx.glossary {
+                    text = text.replace(term.as_str(), "???");
+                }
+            }
             out.push(Translation {
                 key: r.key.clone(),
-                text: format!("⟦{}⟧ {}", ctx.target_locale, r.source),
+                text: format!("⟦{}⟧ {text}", ctx.target_locale),
             });
         }
         Ok(out)
