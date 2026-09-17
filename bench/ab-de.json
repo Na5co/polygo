@@ -3,10 +3,10 @@
  "model": "qwen3:8b",
  "judge": "gemma4",
  "n": 60,
- "context_wins": 10,
- "nocontext_wins": 8,
- "ties": 42,
- "identical": 29,
+ "context_wins": 8,
+ "nocontext_wins": 9,
+ "ties": 43,
+ "identical": 31,
  "results": [
   {
    "key": "Locked icon alert title",
@@ -41,11 +41,11 @@
    "source": "Keybinds",
    "human": "Tastenbelegungen",
    "context": "Tastenbelegung",
-   "nocontext": "Keybinds",
-   "verdict": "context",
+   "nocontext": "Tastenkombinationen",
+   "verdict": "nocontext",
    "votes": [
-    "A",
-    "B"
+    "B",
+    "A"
    ]
   },
   {
@@ -53,7 +53,7 @@
    "source": "Unlocking this icon is just a matter of time and Loops.",
    "human": "Es ist nur noch eine Frage der Zeit und Loops, dieses Icon freizuschalten.",
    "context": "Das Entsperren dieses Icons ist nur eine Frage der Zeit und Loops.",
-   "nocontext": "Das Entsperren dieses Symbols ist nur eine Frage der Zeit und Schleifen.",
+   "nocontext": "Das Entsperren dieses Symbols ist nur eine Frage von Zeit und Schleifen.",
    "verdict": "tie",
    "votes": [
     "B",
@@ -72,8 +72,8 @@
    "key": "Move Up",
    "source": "Move Up",
    "human": "Hochbewegen",
-   "context": "Nach Oben bewegen",
-   "nocontext": "Oben verschieben",
+   "context": "Nach oben bewegen",
+   "nocontext": "Nach oben verschieben",
    "verdict": "nocontext",
    "votes": [
     "B",
@@ -112,12 +112,12 @@
    "key": "Vertical Center Third",
    "source": "Vertical Center Third",
    "human": "Vertikales Mittel-Drittel",
-   "context": "Vertical Center Third",
+   "context": "Vertikales Mitteldrittel",
    "nocontext": "Vertikale Mittel Drittel",
-   "verdict": "nocontext",
+   "verdict": "context",
    "votes": [
-    "B",
-    "A"
+    "A",
+    "B"
    ]
   },
   {
@@ -160,9 +160,13 @@
    "key": "Icon Name: Summer",
    "source": "Summer",
    "human": "Sommer",
-   "context": "Sommer",
+   "context": "Icon Name: Summer",
    "nocontext": "Sommer",
-   "verdict": "same"
+   "verdict": "nocontext",
+   "votes": [
+    "B",
+    "A"
+   ]
   },
   {
    "key": "Simple",
@@ -176,11 +180,11 @@
    "key": "No updates available message 31",
    "source": "I… uhh… one sec I lost it",
    "human": "Ich… Hm… Eine Sekunde, ich hab's gleich",
-   "context": "Ich… äh… ein Moment, ich hab es verloren",
-   "nocontext": "I… uhh… ein Moment, ich hab es verloren",
-   "verdict": "context",
+   "context": "Ich… äh… ein Sekunde, ich hab es verloren",
+   "nocontext": "I… uhh… ein Moment, ich habe es verloren",
+   "verdict": "tie",
    "votes": [
-    "A",
+    "B",
     "B"
    ]
   },
@@ -253,32 +257,28 @@
    "source": "Smaller",
    "human": "Kleiner",
    "context": "Kleiner",
-   "nocontext": "Kleiner",
-   "verdict": "same"
+   "nocontext": "Kleinerer",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
   },
   {
    "key": "Window",
    "source": "Window",
    "human": "Fenster",
-   "context": "Window",
+   "context": "Fenster",
    "nocontext": "Fenster",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "verdict": "same"
   },
   {
    "key": "No updates available message 19",
    "source": "Winter is coming. Updates aren't yet.",
    "human": "Der Winter kommt, aber noch keine Updates.",
    "context": "Winter kommt. Updates sind noch nicht da.",
-   "nocontext": "Der Winter kommt. Updates sind noch nicht da.",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "nocontext": "Winter kommt. Updates sind noch nicht da.",
+   "verdict": "same"
   },
   {
    "key": "Bottom Two Thirds",
@@ -296,7 +296,7 @@
    "key": "Icon Name: Daylight",
    "source": "Daylight",
    "human": "Tageslicht",
-   "context": "Daylight",
+   "context": "Icon Name: Daylight",
    "nocontext": "Taglicht",
    "verdict": "nocontext",
    "votes": [
@@ -328,12 +328,12 @@
    "key": "Move Left",
    "source": "Move Left",
    "human": "Nach Links bewegen",
-   "context": "Nach Links bewegen",
-   "nocontext": "Links verschieben",
-   "verdict": "tie",
+   "context": "Nach links bewegen",
+   "nocontext": "Nach links verschieben",
+   "verdict": "nocontext",
    "votes": [
     "B",
-    "B"
+    "A"
    ]
   },
   {
@@ -364,12 +364,12 @@
    "key": "Icon Name: Meta Loop",
    "source": "Meta Loop",
    "human": "Meta Loop",
-   "context": "Meta Loop",
+   "context": "Icon Name: Meta Loop",
    "nocontext": "Meta-Schleife",
-   "verdict": "context",
+   "verdict": "nocontext",
    "votes": [
-    "A",
-    "B"
+    "B",
+    "A"
    ]
   },
   {
@@ -437,7 +437,7 @@
    "source": "Keep up the good work, and this icon will be your reward.",
    "human": "Mach weiter so, und dieses Symbol wird deine Belohnung sein.",
    "context": "Bleib fleißig, und dieses Icon wird deine Belohnung sein.",
-   "nocontext": "Behalte das gute Tun bei und dieses Symbol wird deine Belohnung sein.",
+   "nocontext": "Behalte das gute Werkzeug bei und dieses Symbol wird deine Belohnung sein.",
    "verdict": "context",
    "votes": [
     "A",
@@ -480,11 +480,11 @@
    "key": "Use pixels",
    "source": "Use pixels",
    "human": "Pixel benutzen",
-   "context": "Use pixels",
-   "nocontext": "Pixelformat verwenden",
-   "verdict": "tie",
+   "context": "Pixelformat verwenden",
+   "nocontext": "Pixel verwenden",
+   "verdict": "nocontext",
    "votes": [
-    "A",
+    "B",
     "A"
    ]
   },
@@ -504,13 +504,9 @@
    "key": "Settings tab: Icon",
    "source": "Icon",
    "human": "Icon",
-   "context": "Icon",
+   "context": "Symbol",
    "nocontext": "Symbol",
-   "verdict": "context",
-   "votes": [
-    "A",
-    "B"
-   ]
+   "verdict": "same"
   },
   {
    "key": "No updates available message 28",
@@ -528,25 +524,17 @@
    "key": "Top",
    "source": "Top",
    "human": "Oben",
-   "context": "Top",
+   "context": "Oben",
    "nocontext": "Oben",
-   "verdict": "tie",
-   "votes": [
-    "A",
-    "A"
-   ]
+   "verdict": "same"
   },
   {
    "key": "Start hidden",
    "source": "Start hidden",
    "human": "Start hidden",
-   "context": "Start hidden",
+   "context": "Start versteckt",
    "nocontext": "Start versteckt",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "verdict": "same"
   },
   {
    "key": "Go Back",
@@ -601,8 +589,12 @@
    "source": "This will reset all radial menu actions to their default configuration.",
    "human": "This will reset all radial menu actions to their default configuration.",
    "context": "Dies setzt alle radialen Menüaktionen auf ihre Standardkonfiguration zurück.",
-   "nocontext": "Dies setzt alle radialen Menüaktionen auf ihre Standardkonfiguration zurück.",
-   "verdict": "same"
+   "nocontext": "Dies wird alle radialen Menüaktionen in ihre Standardkonfiguration zurücksetzen.",
+   "verdict": "context",
+   "votes": [
+    "A",
+    "B"
+   ]
   },
   {
    "key": "Quarters",

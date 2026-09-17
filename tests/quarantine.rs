@@ -164,3 +164,36 @@ fn identical_to_source_is_confirmed_by_a_second_ask_not_quarantined() {
     assert_eq!(calls.iter().filter(|k| *k == "ok").count(), 2);
     assert_eq!(calls.iter().filter(|k| *k == "hello").count(), 1);
 }
+
+#[test]
+fn key_echo_is_repaired_not_written() {
+    // Keys like "Icon Name: Summer" (source "Summer"): a reply equal to the key is rejected.
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    fs::write(
+        dir.path().join("locales/en.json"),
+        "{\n  \"icon.summer\": \"Summer\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = polygo()
+        .current_dir(dir.path())
+        .env("POLYGO_MOCK_KEY_ECHO_ONCE", "1")
+        .arg("translate")
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let de = fs::read_to_string(dir.path().join("locales/de.json")).unwrap();
+    assert!(
+        de.contains("⟦de⟧ Summer"),
+        "repair must replace the key echo:\n{de}"
+    );
+}

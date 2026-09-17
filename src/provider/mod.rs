@@ -206,6 +206,13 @@ fn validate(
         if out.iter().any(|(k, _)| k == &r.key) {
             continue;
         }
+        if r.key != r.source && t.text.trim() == r.key.trim() {
+            out.push((
+                r.key.clone(),
+                "returned the key instead of a translation of the source string".into(),
+            ));
+            continue;
+        }
         let (sl, tl) = (r.source.chars().count(), t.text.chars().count());
         if tl > sl * 3 + 20 {
             out.push((

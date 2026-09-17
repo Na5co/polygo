@@ -11,6 +11,7 @@
 //! - `POLYGO_MOCK_DROP_KEY=k`      never include key `k` in replies
 //! - `POLYGO_MOCK_ECHO_KEY=k`      reply with the source text for key `k`
 //! - `POLYGO_MOCK_DUMP=path`       append every user prompt received (for prompt tests)
+//! - `POLYGO_MOCK_KEY_ECHO_ONCE`   on the first call, reply with the key instead of a translation
 
 use super::{Ctx, Provider};
 use anyhow::Result;
@@ -86,6 +87,8 @@ impl Provider for Mock {
             }
             let text = if echo_key.as_deref() == Some(key.as_str()) {
                 source.clone()
+            } else if call == 1 && env("POLYGO_MOCK_KEY_ECHO_ONCE").is_some() {
+                key.clone()
             } else {
                 let mut t = source.clone();
                 for (term, tr) in &ctx.glossary {
