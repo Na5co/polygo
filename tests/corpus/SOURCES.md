@@ -35,4 +35,17 @@ Real-world files used as round-trip / validation fixtures (fetched 2026-09-17). 
 - ente · `mobile/packages/strings/lib/l10n/arb/strings_en.arb` · AGPL-3.0
 - fluffychat · `lib/l10n/intl_de.arb` · AGPL-3.0
 
+## po (gettext)
+- django · `django/conf/locale/en/LC_MESSAGES/django.po` · BSD-3-Clause
+- django · `django/conf/locale/de/LC_MESSAGES/django.po` · BSD-3-Clause
+- penpot · `frontend/translations/en.po` · MPL-2.0
+- penpot · `frontend/translations/de.po` · MPL-2.0
+
+## resx / resw (.NET)
+- ShareX · `ShareX/Properties/Resources.resx` · GPL-3.0
+- naps2 · `NAPS2.Lib/Lang/Resources/UiStrings.resx` · MIT
+- naps2 · `NAPS2.Lib/Lang/Resources/UiStrings.de.resx` · MIT
+- Files · `src/Files.App/Strings/en-US/Resources.resw` · MIT
+- Files · `src/Files.App/Strings/de-DE/Resources.resw` · MIT
+
 Fixtures are test data only; they keep their upstream licenses and are not part of the polygo binary or its MIT-licensed source.

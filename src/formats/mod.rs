@@ -3,4 +3,6 @@
 pub mod android;
 pub mod arb;
 pub mod json;
+pub mod po;
+pub mod resx;
 pub mod xcstrings;

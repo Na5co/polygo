@@ -213,7 +213,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                 }
             }
-            Format::Arb => {}
+            Format::Arb | Format::Po | Format::Resx => {}
         }
     }
     report.findings.sort_by(|a, b| {

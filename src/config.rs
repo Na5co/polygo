@@ -60,6 +60,8 @@ pub enum Format {
     Android,
     Json,
     Arb,
+    Po,
+    Resx,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

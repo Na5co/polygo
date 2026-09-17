@@ -145,6 +145,139 @@ pub fn detect(root: &Path) -> Result<Config> {
         }
     }
 
+    // gettext: <dir>/<locale>/LC_MESSAGES/<domain>.po and <dir>/<locale>.po.
+    let pos: Vec<&PathBuf> = files
+        .iter()
+        .filter(|p| p.extension().is_some_and(|e| e == "po"))
+        .collect();
+    let mut po_groups: BTreeMap<(PathBuf, String), BTreeSet<String>> = BTreeMap::new(); // (base dir, domain) → locales
+    let mut po_flat: BTreeMap<PathBuf, BTreeSet<String>> = BTreeMap::new();
+    for p in &pos {
+        let stem = p.file_stem().unwrap().to_string_lossy().into_owned();
+        let comps: Vec<String> = p
+            .components()
+            .map(|c| c.as_os_str().to_string_lossy().into_owned())
+            .collect();
+        if comps.len() >= 4
+            && comps[comps.len() - 2] == "LC_MESSAGES"
+            && is_locale(&comps[comps.len() - 3])
+        {
+            let base: PathBuf = comps[..comps.len() - 3].iter().collect();
+            po_groups
+                .entry((base, stem))
+                .or_default()
+                .insert(comps[comps.len() - 3].clone());
+        } else if is_locale(&stem) {
+            po_flat
+                .entry(p.parent().unwrap().to_path_buf())
+                .or_default()
+                .insert(stem);
+        }
+    }
+    for ((base, domain), locales) in po_groups {
+        let src_loc = pick_source(locales.iter(), source.as_deref());
+        specs.push(FileSpec {
+            format: Format::Po,
+            path: base
+                .join(&src_loc)
+                .join("LC_MESSAGES")
+                .join(format!("{domain}.po")),
+            locale_path: Some(format!(
+                "{}/{{locale}}/LC_MESSAGES/{domain}.po",
+                base.display()
+            )),
+        });
+        for l in &locales {
+            if *l != src_loc {
+                targets.insert(l.clone());
+            }
+        }
+        source.get_or_insert(src_loc);
+    }
+    for (dir, locales) in po_flat {
+        let src_loc = pick_source(locales.iter(), source.as_deref());
+        specs.push(FileSpec {
+            format: Format::Po,
+            path: dir.join(format!("{src_loc}.po")),
+            locale_path: Some(format!("{}/{{locale}}.po", dir.display())),
+        });
+        for l in &locales {
+            if *l != src_loc {
+                targets.insert(l.clone());
+            }
+        }
+        source.get_or_insert(src_loc);
+    }
+
+    // .NET: Name.resx + Name.<locale>.resx, and <dir>/<locale>/Resources.resw.
+    let resxs: Vec<&PathBuf> = files
+        .iter()
+        .filter(|p| p.extension().is_some_and(|e| e == "resx" || e == "resw"))
+        .collect();
+    let mut resx_groups: BTreeMap<PathBuf, BTreeSet<String>> = BTreeMap::new(); // base file (no locale) → locales
+    let mut resw_groups: BTreeMap<(PathBuf, String), BTreeSet<String>> = BTreeMap::new(); // (parent, file name) → locale dirs
+    for p in &resxs {
+        let ext = p.extension().unwrap().to_string_lossy().into_owned();
+        let stem = p.file_stem().unwrap().to_string_lossy().into_owned();
+        let dir = p.parent().unwrap();
+        let dir_name = dir
+            .file_name()
+            .map(|d| d.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        if is_locale(&dir_name) {
+            resw_groups
+                .entry((dir.parent().unwrap().to_path_buf(), format!("{stem}.{ext}")))
+                .or_default()
+                .insert(dir_name);
+        } else if let Some((base, loc)) = stem.rsplit_once('.').filter(|(_, l)| is_locale(l)) {
+            resx_groups
+                .entry(dir.join(format!("{base}.{ext}")))
+                .or_default()
+                .insert(loc.to_string());
+        } else {
+            resx_groups.entry(p.to_path_buf()).or_default();
+        }
+    }
+    for (base_file, locales) in resx_groups {
+        if !root.join(&base_file).exists() {
+            continue;
+        }
+        let stem = base_file
+            .file_stem()
+            .unwrap()
+            .to_string_lossy()
+            .into_owned();
+        let ext = base_file
+            .extension()
+            .unwrap()
+            .to_string_lossy()
+            .into_owned();
+        specs.push(FileSpec {
+            format: Format::Resx,
+            path: base_file.clone(),
+            locale_path: Some(format!(
+                "{}/{stem}.{{locale}}.{ext}",
+                base_file.parent().unwrap().display()
+            )),
+        });
+        targets.extend(locales);
+        source.get_or_insert_with(|| "en".to_string());
+    }
+    for ((parent, file), locales) in resw_groups {
+        let src_loc = pick_source(locales.iter(), source.as_deref());
+        specs.push(FileSpec {
+            format: Format::Resx,
+            path: parent.join(&src_loc).join(&file),
+            locale_path: Some(format!("{}/{{locale}}/{file}", parent.display())),
+        });
+        for l in &locales {
+            if *l != src_loc {
+                targets.insert(l.clone());
+            }
+        }
+        source.get_or_insert(src_loc);
+    }
+
     // JSON: <dir>/<locale>/<ns>.json and <dir>/<locale>.json.
     let jsons: Vec<&PathBuf> = files
         .iter()
@@ -230,7 +363,7 @@ pub fn detect(root: &Path) -> Result<Config> {
 
     if specs.is_empty() {
         bail!(
-            "no localization files found under {} (looked for .xcstrings, res/values/strings.xml, .arb, locales/*.json)",
+            "no localization files found under {} (looked for .xcstrings, res/values/strings.xml, .arb, locales/*.json, .po, .resx/.resw)",
             root.display()
         );
     }

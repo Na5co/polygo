@@ -283,6 +283,19 @@ enum Loaded {
         /// locale → (path, existing text, new values, dirty)
         locales: BTreeMap<String, ArbLocale>,
     },
+    /// .po and .resx: one document per locale, spliced or appended.
+    PerLocale {
+        format: Format,
+        source_text: String,
+        source_units: Vec<crate::core::Unit>,
+        template: String,
+        locales: BTreeMap<String, (PathBuf, PerLocaleDoc, bool)>,
+    },
+}
+
+enum PerLocaleDoc {
+    Po(formats::po::Document),
+    Resx(formats::resx::Document),
 }
 
 struct ArbLocale {
@@ -344,6 +357,19 @@ impl Workspace {
                     .context("json files need locale_path (e.g. locales/{locale}.json)")?,
                 locales: BTreeMap::new(),
             },
+            Format::Po | Format::Resx => Loaded::PerLocale {
+                format: spec.format,
+                source_units: match spec.format {
+                    Format::Po => formats::po::units(&formats::po::parse(&text)?),
+                    _ => formats::resx::units(&formats::resx::parse(&text)?),
+                },
+                source_text: text,
+                template: spec
+                    .locale_path
+                    .clone()
+                    .context("po/resx files need locale_path")?,
+                locales: BTreeMap::new(),
+            },
             Format::Arb => Loaded::Arb {
                 source_text: text,
                 template: spec
@@ -363,6 +389,8 @@ impl Workspace {
                 Format::Android => "Android specifiers like %s, %d, %1$s and inline tags",
                 Format::Json => "i18next interpolations like {{name}} and $t(key)",
                 Format::Arb => "ICU placeholders like {name}",
+                Format::Po => "printf placeholders like %s, %(name)s, {0}",
+                Format::Resx => ".NET placeholders like {0}, {name}",
             };
             if !hints.contains(&h) {
                 hints.push(h);
@@ -450,6 +478,61 @@ impl Workspace {
                 entry.values.insert(local_key.to_string(), text.to_string());
                 entry.dirty = true;
             }
+            Loaded::PerLocale {
+                format,
+                source_text,
+                source_units,
+                template,
+                locales,
+            } => {
+                let entry = match locales.get_mut(locale) {
+                    Some(e) => e,
+                    None => {
+                        let path = root.join(project::locale_file(template, locale));
+                        let existing = if path.exists() {
+                            Some(std::fs::read_to_string(&path)?)
+                        } else {
+                            None
+                        };
+                        let doc = match format {
+                            Format::Po => {
+                                let src = formats::po::parse(source_text)?;
+                                PerLocaleDoc::Po(formats::po::parse(&existing.unwrap_or_else(
+                                    || formats::po::new_locale_file(&src, locale),
+                                ))?)
+                            }
+                            _ => PerLocaleDoc::Resx(formats::resx::parse(
+                                &existing
+                                    .unwrap_or_else(|| formats::resx::new_locale_file(source_text)),
+                            )?),
+                        };
+                        locales
+                            .entry(locale.to_string())
+                            .or_insert((path, doc, false))
+                    }
+                };
+                match &mut entry.1 {
+                    PerLocaleDoc::Po(doc) => match doc.index_of(local_key) {
+                        Some(i) => doc.set_msgstr(i, text),
+                        None => {
+                            let (ctxt, msgid) = match local_key.split_once('\u{4}') {
+                                Some((c, m)) => (Some(c), m),
+                                None => (None, local_key),
+                            };
+                            let comment = source_units
+                                .iter()
+                                .find(|u| u.key == local_key)
+                                .and_then(|u| u.comment.clone());
+                            doc.insert(ctxt, msgid, text, comment.as_deref());
+                        }
+                    },
+                    PerLocaleDoc::Resx(doc) => match doc.index_of(local_key) {
+                        Some(i) => doc.set_text(i, text),
+                        None => doc.insert(local_key, text),
+                    },
+                }
+                entry.2 = true;
+            }
         }
         Ok(())
     }
@@ -485,6 +568,18 @@ impl Workspace {
                             let style = existing_style(&l.path).unwrap_or_else(|| style.clone());
                             write_atomic(&l.path, &formats::json::render(&tree, &style))?;
                             l.dirty = false;
+                        }
+                    }
+                }
+                Loaded::PerLocale { locales, .. } => {
+                    for (path, doc, dirty) in locales.values_mut() {
+                        if *dirty {
+                            let out = match doc {
+                                PerLocaleDoc::Po(d) => formats::po::serialize(d),
+                                PerLocaleDoc::Resx(d) => formats::resx::serialize(d),
+                            };
+                            write_atomic(path, &out)?;
+                            *dirty = false;
                         }
                     }
                 }

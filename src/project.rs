@@ -69,6 +69,22 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
             })?;
             Ok(units)
         }
+        Format::Po => {
+            let doc = formats::po::parse(&text)?;
+            let mut units = formats::po::units(&doc);
+            attach_locale_files(root, cfg, spec, &mut units, |text| {
+                Ok(formats::po::values(&formats::po::parse(text)?))
+            })?;
+            Ok(units)
+        }
+        Format::Resx => {
+            let doc = formats::resx::parse(&text)?;
+            let mut units = formats::resx::units(&doc);
+            attach_locale_files(root, cfg, spec, &mut units, |text| {
+                Ok(formats::resx::values(&formats::resx::parse(text)?))
+            })?;
+            Ok(units)
+        }
         Format::Json => {
             let doc = formats::json::parse(&text)?;
             let mut units: Vec<Unit> = doc
