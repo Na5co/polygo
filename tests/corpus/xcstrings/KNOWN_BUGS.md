@@ -16,3 +16,10 @@ upstream project's shipped translations (not checker false positives):
 
 They stay in the corpus on purpose: the false-positive test asserts that
 nothing *else* is flagged, and these show the check catches real-world breakage.
+
+## Plural completeness
+
+- IceCubes: 44 Belarusian / Polish / Ukrainian plural variations (and substitution
+  plurals) carry only `one`/`other`; CLDR requires `few`/`many` for these
+  languages, so counts like 2, 3, 4 and 5+ render the wrong form. `polygo check`
+  reports every one of them; no other corpus file has an incomplete set.
