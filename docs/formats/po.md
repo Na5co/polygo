@@ -1,4 +1,4 @@
-# gettext `.po`
+# Translating gettext `.po` files with polygo
 
 Django, Rails (fast_gettext), Python, PHP, GNOME apps, Penpot, Odoo, anything with `msgid`/`msgstr`.
 

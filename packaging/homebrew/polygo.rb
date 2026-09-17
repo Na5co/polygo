@@ -1,7 +1,7 @@
 # Homebrew formula for the tap `Na5co/homebrew-tap` (brew install na5co/tap/polygo).
 # Release automation fills in the version and sha256 values from SHA256SUMS.
 class Polygo < Formula
-  desc "Lokalise for one person: local-first, git-native localization CLI"
+  desc "Translate app strings (xcstrings, Android, ARB, i18next, po, resx) via local LLM"
   homepage "https://github.com/Na5co/polygo"
   version "0.1.1"
   license "MIT"

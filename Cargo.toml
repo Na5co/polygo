@@ -2,11 +2,11 @@
 name = "polygo"
 version = "0.1.1"
 edition = "2024"
-description = "Lokalise for one person: a local-first, git-native localization CLI"
+description = "Lokalise for one person. Translates .xcstrings, Android strings.xml, Flutter ARB, i18next JSON, gettext .po and .NET .resx with a local LLM (Ollama) or an API model; a lockfile tracks what changed and check verifies placeholders and plurals."
 license = "MIT"
 repository = "https://github.com/Na5co/polygo"
 readme = "README.md"
-keywords = ["i18n", "localization", "translation", "xcstrings", "cli"]
+keywords = ["i18n", "l10n", "localization", "translation", "llm"]
 categories = ["command-line-utilities", "internationalization", "development-tools"]
 exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "packaging/*"]
 

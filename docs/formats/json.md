@@ -1,4 +1,4 @@
-# i18next / JSON locale files
+# Translating i18next JSON locale files with polygo
 
 Flat or nested objects of strings, as used by i18next, react-i18next, vue-i18n, Next.js apps and most web projects.
 

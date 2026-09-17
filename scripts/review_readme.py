@@ -46,7 +46,7 @@ def ask(question: str) -> str:
         "model": MODEL,
         "stream": False,
         "think": False,
-        "options": {"temperature": 0},
+        "options": {"temperature": 0, "num_ctx": 8192},  # default 4096 silently truncates the README
         "messages": [
             {"role": "system", "content": SYSTEM},
             {"role": "user", "content": f"README.md:\n\n{README}\n\n---\nQuestion: {question}"},
