@@ -25,6 +25,8 @@ pub struct Options {
     pub retry_review: bool,
     /// Translate exactly these keys per locale regardless of lockfile state (used by `check --fix`).
     pub force_keys: Option<BTreeMap<String, Vec<String>>>,
+    /// Attach code-usage context and few-shot examples (config `context`, `--no-context` overrides).
+    pub context: bool,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -82,7 +84,38 @@ pub fn translate(
 
     let mut ws = Workspace::open(root, cfg)?;
     let glossary = crate::glossary::load(root, cfg)?;
-    let _ = &glossary;
+    // Context retrieval: index the source tree once, resolve every key that has work.
+    let usage_index = if opts.context {
+        Some(crate::context::usage::Index::build(root)?)
+    } else {
+        None
+    };
+    let usages: std::collections::HashMap<String, crate::context::usage::Usage> = match &usage_index
+    {
+        Some(index) => {
+            let all: Vec<&str> = report
+                .planned
+                .values()
+                .flatten()
+                .map(|k| project::split_key(cfg, k).1)
+                .collect();
+            let found = index.find_all(&all);
+            report
+                .planned
+                .values()
+                .flatten()
+                .filter_map(|k| {
+                    found
+                        .get(project::split_key(cfg, k).1)
+                        .map(|u| (k.clone(), u.clone()))
+                })
+                .collect()
+        }
+        None => Default::default(),
+    };
+    let budget = crate::context::assemble::Budget {
+        tokens: cfg.context_tokens,
+    };
     let batch_size = opts.batch_size.max(1);
     let jobs = opts.jobs.max(1);
 
@@ -108,13 +141,32 @@ pub fn translate(
                     keys.iter()
                         .map(|k| {
                             let u = by_key[k.as_str()];
-                            Request {
+                            let mut r = Request {
                                 key: u.key.clone(),
                                 source: u.source.clone(),
                                 comment: u.comment.clone(),
                                 context: None,
                                 examples: vec![],
+                            };
+                            if opts.context {
+                                let candidates: Vec<(String, String)> = units
+                                    .iter()
+                                    .filter_map(|o| {
+                                        o.translations
+                                            .get(locale)
+                                            .map(|t| (o.source.clone(), t.clone()))
+                                    })
+                                    .collect();
+                                let examples =
+                                    crate::context::fewshot::select(&u.source, &candidates, 3);
+                                crate::context::assemble::attach(
+                                    &mut r,
+                                    usages.get(&u.key),
+                                    &examples,
+                                    &budget,
+                                );
                             }
+                            r
                         })
                         .collect(),
                 )

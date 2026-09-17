@@ -18,26 +18,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Translate new or changed strings into every target locale.
-    Translate {
-        /// Only these locales (comma-separated).
-        #[arg(long, value_delimiter = ',')]
-        locale: Option<Vec<String>>,
-        /// Strings per provider call (overrides polygo.toml).
-        #[arg(long)]
-        batch_size: Option<usize>,
-        /// Parallel provider calls (overrides polygo.toml).
-        #[arg(long)]
-        jobs: Option<usize>,
-        /// Show what would be translated and exit.
-        #[arg(long)]
-        dry_run: bool,
-        /// Print every translation as it is written.
-        #[arg(short, long)]
-        verbose: bool,
-        /// Also retry keys quarantined as needs-review on a previous run.
-        #[arg(long)]
-        retry_review: bool,
-    },
+    Translate(TranslateArgs),
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
     Check {
         /// Only these locales (comma-separated).
@@ -69,25 +50,35 @@ enum Commands {
     },
 }
 
+#[derive(clap::Args)]
+struct TranslateArgs {
+    /// Only these locales (comma-separated).
+    #[arg(long, value_delimiter = ',')]
+    locale: Option<Vec<String>>,
+    /// Strings per provider call (overrides polygo.toml).
+    #[arg(long)]
+    batch_size: Option<usize>,
+    /// Parallel provider calls (overrides polygo.toml).
+    #[arg(long)]
+    jobs: Option<usize>,
+    /// Show what would be translated and exit.
+    #[arg(long)]
+    dry_run: bool,
+    /// Print every translation as it is written.
+    #[arg(short, long)]
+    verbose: bool,
+    /// Also retry keys quarantined as needs-review on a previous run.
+    #[arg(long)]
+    retry_review: bool,
+    /// Do not attach code-usage context or similar translations to prompts.
+    #[arg(long)]
+    no_context: bool,
+}
+
 fn main() {
     let cli = Cli::parse();
     let result = match cli.command {
-        Commands::Translate {
-            locale,
-            batch_size,
-            jobs,
-            dry_run,
-            verbose,
-            retry_review,
-        } => translate(
-            &cli.root,
-            locale,
-            batch_size,
-            jobs,
-            dry_run,
-            verbose,
-            retry_review,
-        ),
+        Commands::Translate(args) => translate(&cli.root, args),
         Commands::Check {
             locale,
             json,
@@ -109,28 +100,21 @@ fn todo_cmd(name: &str) -> Result<()> {
     std::process::exit(2);
 }
 
-fn translate(
-    root: &Path,
-    locale: Option<Vec<String>>,
-    batch_size: Option<usize>,
-    jobs: Option<usize>,
-    dry_run: bool,
-    verbose: bool,
-    retry_review: bool,
-) -> Result<()> {
+fn translate(root: &Path, args: TranslateArgs) -> Result<()> {
     let cfg = Config::load(root)?;
     let provider = polygo::provider::from_config(&cfg.provider)?;
     let opts = polygo::engine::Options {
-        locales: locale,
-        batch_size: batch_size.unwrap_or(cfg.batch_size),
-        jobs: jobs.unwrap_or(cfg.jobs),
-        dry_run,
-        verbose,
-        retry_review,
+        locales: args.locale,
+        batch_size: args.batch_size.unwrap_or(cfg.batch_size),
+        jobs: args.jobs.unwrap_or(cfg.jobs),
+        dry_run: args.dry_run,
+        verbose: args.verbose,
+        retry_review: args.retry_review,
         force_keys: None,
+        context: cfg.context && !args.no_context,
     };
     let report = polygo::engine::translate(root, &cfg, provider.as_ref(), &opts)?;
-    if dry_run {
+    if args.dry_run {
         for (l, keys) in &report.planned {
             println!("{l:<8} {} to translate", keys.len());
             for k in keys {
@@ -194,6 +178,7 @@ fn check(
                 verbose: false,
                 retry_review: false,
                 force_keys: Some(keys),
+                context: cfg.context,
             };
             polygo::engine::translate(root, &cfg, provider.as_ref(), &topts)?;
             report = polygo::check::run::run(root, &cfg, &opts)?;

@@ -10,6 +10,7 @@
 //! - `POLYGO_MOCK_MALFORMED_ONCE`  garbage on the first call only
 //! - `POLYGO_MOCK_DROP_KEY=k`      never include key `k` in replies
 //! - `POLYGO_MOCK_ECHO_KEY=k`      reply with the source text for key `k`
+//! - `POLYGO_MOCK_DUMP=path`       append every user prompt received (for prompt tests)
 
 use super::{Ctx, Provider};
 use anyhow::Result;
@@ -45,6 +46,14 @@ impl Provider for Mock {
 
     fn complete(&self, _system: &str, user: &str, ctx: &Ctx) -> Result<String> {
         let call = CALLS.fetch_add(1, Ordering::SeqCst) + 1;
+        if let Some(path) = env("POLYGO_MOCK_DUMP") {
+            use std::io::Write as _;
+            let mut f = std::fs::OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(path)?;
+            writeln!(f, "{user}\n-----")?;
+        }
         if env("POLYGO_MOCK_MALFORMED").is_some()
             || (call == 1 && env("POLYGO_MOCK_MALFORMED_ONCE").is_some())
         {

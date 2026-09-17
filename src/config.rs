@@ -25,6 +25,20 @@ pub struct Config {
     /// `check` warns when a translation is longer than this multiple of the source.
     #[serde(default = "default_length_ratio")]
     pub length_ratio: f64,
+    /// Attach code-usage context and similar translations to prompts.
+    #[serde(default = "default_true")]
+    pub context: bool,
+    /// Approximate token budget for context per string.
+    #[serde(default = "default_context_tokens")]
+    pub context_tokens: usize,
+}
+
+fn default_true() -> bool {
+    true
+}
+
+fn default_context_tokens() -> usize {
+    600
 }
 
 fn default_length_ratio() -> f64 {

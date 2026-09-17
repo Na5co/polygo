@@ -244,6 +244,8 @@ pub fn detect(root: &Path) -> Result<Config> {
         batch_size: 20,
         jobs: 1,
         length_ratio: 2.5,
+        context: true,
+        context_tokens: 600,
     })
 }
 
