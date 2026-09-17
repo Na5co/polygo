@@ -327,22 +327,25 @@ pub fn scan_text(file: &str, text: &str, out: &mut Vec<Hit>) {
                 let start = i + lead;
                 // A continuation of a sentence split by inline markup is a fragment:
                 // translate the whole sentence by hand instead.
-                let next_tag_inline = text[run_end..]
+                // A sentence split by inline markup (`writes a <code>.form</code> file`)
+                // is a fragment. The whole content of an inline element
+                // (`<a>Write a form</a>`) is not: only a run followed by an *opening*
+                // inline tag, or preceded by a *closing* one, counts.
+                let next_opens_inline = text[run_end..]
                     .strip_prefix('<')
                     .map(|rest| {
                         let n: String = rest
-                            .trim_start_matches('/')
                             .chars()
                             .take_while(|c| c.is_ascii_alphabetic())
                             .collect();
-                        INLINE.contains(&n.to_ascii_lowercase().as_str())
+                        !rest.starts_with('/') && INLINE.contains(&n.to_ascii_lowercase().as_str())
                     })
                     .unwrap_or(false);
                 let first = cleaned.chars().next().unwrap();
                 let fragment = (closing && INLINE.contains(&name.as_str()))
                     || first.is_lowercase()
                     || matches!(first, '.' | ',' | ';' | ':' | ')')
-                    || (next_tag_inline && !cleaned.ends_with(['.', '!', '?', ':']));
+                    || next_opens_inline;
                 out.push(make_hit(
                     file,
                     line,
