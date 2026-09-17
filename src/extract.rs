@@ -218,6 +218,9 @@ pub fn scan_text(file: &str, text: &str, out: &mut Vec<Hit>) {
     let ext = file.rsplit('.').next().unwrap_or("");
     let is_js = JS_EXT.contains(&ext);
     let ctx = if is_js { Some(js_contexts(text)) } else { None };
+    if let Some(c) = &ctx {
+        scan_properties(file, text, c, out);
+    }
     let context_at = |pos: usize| -> &'static str {
         match ctx.as_ref().and_then(|c| c.get(pos)) {
             None => "markup",
@@ -453,6 +456,82 @@ fn is_mixed_sentence(inner: &str) -> bool {
             .filter(|c| c.is_alphabetic())
             .count()
             >= 3
+}
+
+/// Object properties whose string values are UI copy: `{ id: "rating", label: "Rating" }`.
+const TEXT_PROPS: &[&str] = &[
+    "label",
+    "title",
+    "text",
+    "description",
+    "placeholder",
+    "message",
+    "heading",
+    "subtitle",
+    "caption",
+    "tooltip",
+    "hint",
+    "summary",
+    "cta",
+];
+
+/// `label: "Rating"` / `title: 'Sign in'` in code (not inside strings, templates or
+/// comments): the value becomes a hit with `kind = "prop"` and is rewritten to
+/// `label: t("Rating")`. JSX props (`label="x"`) are handled by the markup scan.
+fn scan_properties(file: &str, text: &str, ctx: &[JsCtx], out: &mut Vec<Hit>) {
+    let b = text.as_bytes();
+    let mut line = 1;
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == b'\n' {
+            line += 1;
+            i += 1;
+            continue;
+        }
+        if ctx[i] != JsCtx::Code || !b[i].is_ascii_alphabetic() {
+            i += 1;
+            continue;
+        }
+        // Identifier at a property position: preceded by `{`, `,` or newline/whitespace.
+        let start = i;
+        while i < b.len() && (b[i].is_ascii_alphanumeric() || b[i] == b'_') {
+            i += 1;
+        }
+        let ident = &text[start..i];
+        if !TEXT_PROPS.contains(&ident) {
+            continue;
+        }
+        let before = text[..start].trim_end();
+        if !(before.ends_with('{') || before.ends_with(',') || before.is_empty()) {
+            continue;
+        }
+        let mut j = i;
+        while j < b.len() && b[j].is_ascii_whitespace() {
+            j += 1;
+        }
+        if b.get(j) != Some(&b':') {
+            continue;
+        }
+        j += 1;
+        while j < b.len() && b[j].is_ascii_whitespace() {
+            j += 1;
+        }
+        let Some(&q) = b.get(j) else { break };
+        if q != b'"' && q != b'\'' {
+            continue;
+        }
+        let vstart = j + 1;
+        let Some(vend) = text[vstart..].find(q as char).map(|k| vstart + k) else {
+            break;
+        };
+        let value = &text[vstart..vend];
+        if !value.contains('\\') && looks_like_copy(value) {
+            out.push(make_hit(
+                file, line, value, "prop", vstart, vend, "jsx", false,
+            ));
+        }
+        i = vend + 1;
+    }
 }
 
 const HTML_ELEMENTS: &[&str] = &[
@@ -972,6 +1051,11 @@ pub fn rewrite(root: &Path, hits: &[Hit], catalog: &Path, i18n: &Path) -> Result
                 ("template", "text") => format!("${{{call}}}"),
                 ("jsx", "text") => format!("{{{call}}}"),
                 ("template", _) => format!("${{{call}}}"),
+                ("jsx", "prop") => {
+                    // label: "Rating" → label: t("Rating"): swallow the quotes.
+                    edits.push((h.start - 1, h.end + 1, call));
+                    continue;
+                }
                 ("jsx", _) => {
                     // placeholder="x" → placeholder={t("x")}: swallow the quotes.
                     let q_before = h.start.checked_sub(1).map(|p| text.as_bytes()[p]);

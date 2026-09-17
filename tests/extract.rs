@@ -131,6 +131,11 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
     )
     .unwrap();
     fs::write(
+        root.join("src/doors.ts"),
+        "type Door = { id: string; label: string };\nexport const doors: Door[] = [\n  { id: \"typed\", label: \"typed\" },\n  { id: \"drawn\", label: \"Drawn by hand\", title: 'Open the editor' },\n];\nconst cfg = { label: \"btn-primary\", description: \"\" };\n",
+    )
+    .unwrap();
+    fs::write(
         root.join("polygo.toml"),
         "source_locale = \"en\"\ntarget_locales = []\n\n[extract]\nignore = [\"leafslip\"]\nignore_paths = [\"src/admin/**\"]\n",
     )
@@ -190,6 +195,25 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
     );
     assert!(app.contains("placeholder={t(\"Search forms\")}"), "{app}");
 
+    let doors = fs::read_to_string(root.join("src/doors.ts")).unwrap();
+    assert!(doors.contains("label: t(\"typed\")"), "{doors}");
+    assert!(
+        doors.contains("label: t(\"Drawn by hand\"), title: t(\"Open the editor\")"),
+        "{doors}"
+    );
+    assert!(
+        doors.contains("label: \"btn-primary\""),
+        "identifier-like values stay:\n{doors}"
+    );
+    assert!(
+        doors.contains("label: string"),
+        "type annotations stay:\n{doors}"
+    );
+    assert!(
+        doors.starts_with("import { t } from \"./i18n\";\n"),
+        "{doors}"
+    );
+
     let helper = fs::read_to_string(root.join("src/i18n.ts")).unwrap();
     assert!(
         helper.contains("../locales/de.json") && !helper.contains("import en"),
@@ -221,5 +245,9 @@ fn rewrite_replaces_strings_generates_helper_and_honours_ignores() {
     assert_eq!(
         fs::read_to_string(root.join("src/site/page.ts")).unwrap(),
         page
+    );
+    assert_eq!(
+        fs::read_to_string(root.join("src/doors.ts")).unwrap(),
+        doors
     );
 }
