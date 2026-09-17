@@ -10,3 +10,4 @@ pub mod formats;
 pub mod init;
 pub mod lockfile;
 pub mod project;
+pub mod provider;

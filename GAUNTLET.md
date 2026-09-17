@@ -53,7 +53,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Phase 2 — Translation engine
 
-- [ ] G2.1 `Provider` trait: `translate(batch: &[Unit], ctx: &Ctx) -> Result<Vec<Translation>>`. Implement `mock` (deterministic, reversible), `ollama` (`/api/chat`, JSON schema output), `openai_compatible` (any base URL), `anthropic`.
+- [x] G2.1 `Provider` trait: `translate(batch: &[Unit], ctx: &Ctx) -> Result<Vec<Translation>>`. Implement `mock` (deterministic, reversible), `ollama` (`/api/chat`, JSON schema output), `openai_compatible` (any base URL), `anthropic`.
   - Acceptance: `cargo test provider_mock_*`; `cargo test --features live provider_ollama_smoke` (manual).
 - [ ] G2.2 Batching + concurrency + retry/backoff + resume: a run killed halfway resumes without re-translating finished keys (lockfile written incrementally).
   - Acceptance: `cargo test resume_after_kill` (test kills the run after N keys using the mock provider with an injected panic).
@@ -112,6 +112,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - serde + toml 0.8 → polygo.toml config and polygo.lock parsing; lock is emitted by hand so key/locale order is deterministic
 - tempfile (dev) → CLI integration tests in throwaway project dirs
 - ignore 0.4 → gitignore-aware directory walking for init (and later the usage finder); pulls regex, binary grows to 1.9 MB — still under the 15 MB budget
+- ureq 3 (json) → blocking HTTP for providers; small, no tokio; TLS via rustls; binary stays 1.9 MB (the provider code is only linked into the CLI when used)
 - quick-xml 0.37 → tolerant XML tokenizer with byte positions; we never re-emit XML, we splice edited value spans into the original text
 
 ## Blocked
@@ -127,3 +128,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G1.4 · i18next JSON: own position-tracking parser (no deps), span-splice serializer; byte-stable on 6/6 corpus files (excalidraw, hoppscotch — mixes raw Unicode with \u2026 escapes, jellyfin-web 4-space, immich, grafana 780 KB depth 8, formbricks); nested + flat dotted keys, arrays as index paths, BOM/CRLF preserved, minimal-diff edits; cross-checked every entry against serde_json. 14 tests green.
 - 2026-09-17 · G1.5 · core::Unit model, config (polygo.toml), lockfile (sorted TOML, blake3 hashes, provider/model/at), project loader for xcstrings/android/json incl. per-locale files, `polygo status [--json]`. States: new / stale / untranslated / edited / up-to-date; pre-existing human translations are `edited` and never overwritten (caught by smoke test on Loop: 399 de translations protected). 20 tests green; binary 999 KB; --help 1.5 ms.
 - 2026-09-17 · G1.6 · `polygo init [--force]` detects iOS String Catalogs (source + locales read from the file), Android values dirs (pt-rBR/b+sr+Latn qualifiers mapped both ways), Flutter ARB (l10n.yaml template-arb-file), i18next namespace dirs and flat locale files; skips node_modules/Pods/build/etc. 7 tests incl. CLI refuse-overwrite; smoke on Loop found 13 locales. Phase 1 complete: 27 tests, binary 1.9 MB, --help 1.5 ms.
+- 2026-09-17 · G2.1 · provider trait + Request/Ctx/Translation; backends: mock (deterministic `⟦loc⟧ src`, reversible, fail-injection), ollama (/api/chat, JSON-schema `format`, think:false), openai-compatible (json_schema response_format, works for llama.cpp/vLLM/LM Studio/OpenRouter), anthropic (messages API). Lenient JSON extraction (fenced/prose/shorthand) with missing-key errors. Live smoke on qwen3:8b: 2 strings, placeholders %@/%lld preserved, 6.8 s. 31 tests green.
