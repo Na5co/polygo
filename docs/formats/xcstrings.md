@@ -1,4 +1,4 @@
-# Xcode string catalogs (`.xcstrings`)
+# Translating Xcode string catalogs (`.xcstrings`) with polygo
 
 Xcode 15+ string catalogs: one JSON file per catalog holding the source language and every translation.
 

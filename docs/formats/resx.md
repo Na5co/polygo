@@ -1,4 +1,4 @@
-# .NET `.resx` / WinUI `.resw`
+# Translating .NET `.resx` and WinUI `.resw` with polygo
 
 ## Layout
 

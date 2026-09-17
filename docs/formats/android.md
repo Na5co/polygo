@@ -1,4 +1,4 @@
-# Android resources (`strings.xml`)
+# Translating Android `strings.xml` with polygo
 
 ## Layout
 

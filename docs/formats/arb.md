@@ -1,4 +1,4 @@
-# Flutter ARB
+# Translating Flutter ARB files with polygo
 
 ## Layout
 
