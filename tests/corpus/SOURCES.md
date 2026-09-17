@@ -29,4 +29,10 @@ Real-world files used as round-trip / validation fixtures (fetched 2026-09-17). 
 - grafana/grafana · `public/locales/en-US/grafana.json` · AGPL-3.0
 - formbricks/formbricks · `apps/web/locales/en-US.json` · AGPL-3.0
 
+## arb (Flutter)
+- fluffychat · `lib/l10n/intl_en.arb` · AGPL-3.0
+- mobile · `lib/l10n/app_en.arb` · GPL-3.0
+- ente · `mobile/packages/strings/lib/l10n/arb/strings_en.arb` · AGPL-3.0
+- fluffychat · `lib/l10n/intl_de.arb` · AGPL-3.0
+
 Fixtures are test data only; they keep their upstream licenses and are not part of the polygo binary or its MIT-licensed source.

@@ -60,7 +60,15 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
             })?;
             Ok(units)
         }
-        Format::Arb => anyhow::bail!("Flutter .arb support is not implemented yet"),
+        Format::Arb => {
+            let doc = formats::arb::parse(&text)?;
+            let mut units = formats::arb::units(&doc);
+            attach_locale_files(root, cfg, spec, &mut units, |text| {
+                let doc = formats::arb::parse(text)?;
+                Ok(formats::arb::values(&doc))
+            })?;
+            Ok(units)
+        }
         Format::Json => {
             let doc = formats::json::parse(&text)?;
             let mut units: Vec<Unit> = doc

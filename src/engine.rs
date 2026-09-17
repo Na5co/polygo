@@ -277,6 +277,20 @@ enum Loaded {
         template: String,
         locales: BTreeMap<String, JsonLocale>,
     },
+    Arb {
+        source_text: String,
+        template: String,
+        /// locale → (path, existing text, new values, dirty)
+        locales: BTreeMap<String, ArbLocale>,
+    },
+}
+
+struct ArbLocale {
+    path: PathBuf,
+    locale: String,
+    existing: Option<String>,
+    values: BTreeMap<String, String>,
+    dirty: bool,
 }
 
 struct JsonLocale {
@@ -330,7 +344,14 @@ impl Workspace {
                     .context("json files need locale_path (e.g. locales/{locale}.json)")?,
                 locales: BTreeMap::new(),
             },
-            Format::Arb => anyhow::bail!("Flutter .arb support is not implemented yet"),
+            Format::Arb => Loaded::Arb {
+                source_text: text,
+                template: spec
+                    .locale_path
+                    .clone()
+                    .context("arb files need locale_path (e.g. lib/l10n/app_{locale}.arb)")?,
+                locales: BTreeMap::new(),
+            },
         })
     }
 
@@ -405,6 +426,30 @@ impl Workspace {
                 entry.values.insert(local_key.to_string(), text.to_string());
                 entry.dirty = true;
             }
+            Loaded::Arb {
+                template, locales, ..
+            } => {
+                let entry = match locales.get_mut(locale) {
+                    Some(e) => e,
+                    None => {
+                        let path = root.join(project::locale_file(template, locale));
+                        let existing = if path.exists() {
+                            Some(std::fs::read_to_string(&path)?)
+                        } else {
+                            None
+                        };
+                        locales.entry(locale.to_string()).or_insert(ArbLocale {
+                            path,
+                            locale: locale.to_string(),
+                            existing,
+                            values: BTreeMap::new(),
+                            dirty: false,
+                        })
+                    }
+                };
+                entry.values.insert(local_key.to_string(), text.to_string());
+                entry.dirty = true;
+            }
         }
         Ok(())
     }
@@ -439,6 +484,25 @@ impl Workspace {
                             );
                             let style = existing_style(&l.path).unwrap_or_else(|| style.clone());
                             write_atomic(&l.path, &formats::json::render(&tree, &style))?;
+                            l.dirty = false;
+                        }
+                    }
+                }
+                Loaded::Arb {
+                    source_text,
+                    locales,
+                    ..
+                } => {
+                    for l in locales.values_mut() {
+                        if l.dirty {
+                            let out = formats::arb::build_locale_file(
+                                source_text,
+                                l.existing.as_deref(),
+                                &l.locale,
+                                &l.values,
+                            );
+                            write_atomic(&l.path, &out)?;
+                            l.existing = Some(out);
                             l.dirty = false;
                         }
                     }
