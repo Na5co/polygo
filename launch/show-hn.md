@@ -24,6 +24,6 @@ The part I'm most pleased with: before translating "Open" it greps your code for
 
 It also checks placeholders and CLDR plural categories. Run against real repos it found 32 shipped placeholder bugs in DuckDuckGo's macOS browser and 44 missing Polish/Ukrainian/Belarusian plural forms in Ice Cubes — the corpus and the findings are in the repo.
 
-MIT, no telemetry, no account. Plural variations in `.xcstrings` and `<plurals>` are validated but not translated yet; that's next.
+MIT, no telemetry, no account. Plurals are translated per CLDR category with a concrete count in the prompt; in a live run qwen3:8b got 8/8 Polish forms and 6/8 Russian, so for Slavic languages I'd point it at a bigger model — the workflow is the same.
 
 Happy to answer anything about the byte-stable writers or the prompt validation loop.

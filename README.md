@@ -17,6 +17,7 @@ Also: `brew install atanasa/tap/polygo` · `cargo binstall polygo` · `cargo ins
 ```sh
 cd your-app
 polygo init          # detects the project type and locales → writes polygo.toml
+polygo doctor        # config ok? Ollama running? model pulled? — says exactly what to fix
 polygo translate     # translates new/changed strings into every target locale
 polygo check         # placeholders, plurals, lengths; exit 1 on errors
 git diff             # review, commit, done
@@ -28,11 +29,11 @@ git diff             # review, commit, done
 
 | Format | Ecosystem | Layout `init` detects |
 |---|---|---|
-| `.xcstrings` | iOS / macOS (Xcode 15+ string catalogs) | one catalog holding every locale, incl. plural variations |
-| `strings.xml` | Android | `res/values/` + `res/values-<locale>/`, plurals and string arrays |
+| `.xcstrings` | iOS / macOS (Xcode 15+ string catalogs) | one catalog holding every locale; plural variations and `%#@var@` substitutions translated per CLDR category |
+| `strings.xml` | Android | `res/values/` + `res/values-<locale>/`; `<plurals>` translated per quantity |
 | `.json` (i18next) | React / web | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys |
 | `.arb` | Flutter | `l10n.yaml` → `lib/l10n/app_<locale>.arb`, ICU plurals and `@metadata` |
-| `.po` | gettext (Django, Rails, Python, PHP…) | `locale/<locale>/LC_MESSAGES/*.po` or flat `<locale>.po`, plurals and `msgctxt` |
+| `.po` | gettext (Django, Rails, Python, PHP…) | `locale/<locale>/LC_MESSAGES/*.po` or flat `<locale>.po`; `msgid_plural` filled per `Plural-Forms` slot, `msgctxt` kept |
 | `.resx` / `.resw` | .NET / WinUI | `Name.<locale>.resx` or `<locale>/Resources.resw` |
 
 Every writer is byte-stable: parse → serialize reproduces the original file exactly (tested on 35 real files from open-source apps such as DuckDuckGo, IceCubes, Grafana, Django, NewPipe and Penpot), so translations never bury a real change under a reformatting diff.
@@ -41,15 +42,18 @@ Every writer is byte-stable: parse → serialize reproduces the original file ex
 
 - **Knows what changed.** `polygo.lock` records a hash of every source string per locale. Edit the English, and only that string is re-translated. Hand-edit a translation and it is marked `edited` and never overwritten.
 - **Reads your code.** Before translating `"Open"` it finds `Button("Open")` in `LibraryView.swift` and tells the model this is a menu item, not a verb in a sentence. It also attaches the most similar strings you already translated, so terminology stays consistent. In blind A/B judging with a second model, context won 9 : 5 with the rest tied.
-- **Checks what the model produced.** Placeholders (`%@`, `%1$s`, `{count}`, `{{name}}`, `%(name)s`, `{0}`, ICU `{count, plural, …}`) must survive translation; CLDR plural categories must be complete for the locale; empty, untranslated and runaway-length strings are flagged. Anything the model gets wrong twice is quarantined as `needs-review` and never written to your files.
+- **Translates plurals properly.** "%lld photos" becomes four strings for Polish (`one`, `few`, `many`, `other`) and one for Japanese, each requested with a concrete count so the model inflects correctly, and written into the format's native structure (`variations.plural`, `<item quantity>`, `msgstr[n]`).
+- **Checks what the model produced.** Placeholders (`%@`, `%1$s`, `{count}`, `{{name}}`, `%(name)s`, `{0}`, ICU `{count, plural, …}`) must survive translation; CLDR plural categories must be complete for the locale; empty, identical, runaway-length and half-translated strings (`ようこそ back!`) are flagged. Anything the model gets wrong twice is quarantined as `needs-review` and never written to your files.
 - **Runs in CI.** `polygo check --json --strict` in a pipeline, or the [GitHub Action](action/README.md) that opens a PR with new translations on every push.
 - **Reviews locally.** `polygo review` serves a page on `127.0.0.1` to approve or reject pending translations; approvals are recorded as human.
 
-Run against real projects, `polygo check` found 32 shipped placeholder bugs in the DuckDuckGo macOS browser and IceCubes (`Ouvrir dans % @`, a dropped `%d`, mangled `%#@var@` variables) and 44 missing Slavic plural forms in IceCubes — see [`tests/corpus/xcstrings/KNOWN_BUGS.md`](tests/corpus/xcstrings/KNOWN_BUGS.md).
+Run against real projects, `polygo check` found 32 shipped placeholder bugs in the DuckDuckGo macOS browser and IceCubes (`Ouvrir dans % @`, a dropped `%d`, mangled `%#@var@` variables), 44 missing Slavic plural forms in IceCubes, and a Ukrainian string that reads "ключа DeepL API key" — see [`tests/corpus/xcstrings/KNOWN_BUGS.md`](tests/corpus/xcstrings/KNOWN_BUGS.md).
+
+**How good is an 8B model at this?** Good enough for UI strings into major languages, and `check` + quarantine catch the structural failures. What it does *not* catch is a wrong inflection: on a live test `qwen3:8b` got all 8 Polish plural forms right and 6 of 8 Russian ones (it swapped `one`/`few` for "photos"). For Slavic plurals or anything customer-facing, point `polygo.toml` at a bigger model (a 30B-class local model, or an API) and keep the same workflow.
 
 ## Runs fully offline
 
-The default provider is Ollama on `127.0.0.1:11434`; the GIF above was recorded with `qwen3:8b` on a MacBook. The test-suite (`cargo test`, 69 tests) makes no network calls, and `check`, `status`, `review` and `init` never touch the network at all. Proof you can run yourself on macOS — deny every network connection except the local Ollama port and translate anyway:
+The default provider is Ollama on `127.0.0.1:11434`; the GIF above was recorded with `qwen3:8b` on a MacBook. The test-suite (`cargo test`, 80+ tests) makes no network calls, and `check`, `status`, `review` and `init` never touch the network at all. Proof you can run yourself on macOS — deny every network connection except the local Ollama port and translate anyway:
 
 ```sh
 cat > offline.sb <<'SB'
@@ -115,8 +119,9 @@ do_not_translate = ["Polygo", "GitHub"]
 | | |
 |---|---|
 | `polygo init` | detect project type and locales, write `polygo.toml` |
+| `polygo doctor [--json]` | config parses, files load, provider reachable, model pulled — each failure names its fix |
 | `polygo translate [--locale de,fr] [--dry-run] [-v] [--retry-review] [--no-context]` | translate new / changed strings; exit 3 if some were quarantined |
-| `polygo check [--json] [--strict] [--fix]` | validate placeholders, plurals and lengths; `--fix` re-translates the failures |
+| `polygo check [--json] [--strict] [--fix]` | validate placeholders, plurals, lengths and untranslated fragments; `--fix` re-translates the failures |
 | `polygo status [--json]` | new / stale / untranslated / edited / needs-review counts per locale |
 | `polygo review [--port 4133] [--open]` | local page to approve or reject quarantined translations |
 

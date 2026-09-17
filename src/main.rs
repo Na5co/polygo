@@ -126,7 +126,7 @@ Examples:
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
-Codes: placeholders · plural · empty · identical · length";
+Codes: placeholders · plural · empty · identical · length · fragment";
 
 const STATUS_EXAMPLES: &str = "\
 Examples:

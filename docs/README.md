@@ -4,6 +4,7 @@
 - [`polygo.toml` reference](#polygotoml)
 - [Lockfile](#polygolock) — how polygo knows what changed.
 - [Providers](#providers) — Ollama (default), OpenAI-compatible, Anthropic.
+- `polygo doctor` — run it first: it checks the config, loads every file, pings the provider and confirms the model is pulled, printing the fix for whatever fails.
 - [CI](../action/README.md) — the GitHub Action.
 - [Re-recording the demo](../scripts/demo.sh)
 
@@ -70,6 +71,8 @@ States shown by `polygo status`:
 | `untranslated` | key known, no translation in the locale file |
 | `edited` | the translation in the file differs from what polygo wrote (a human edited it, or it pre-dates polygo); never overwritten |
 | `needs-review` | quarantined after the model failed validation twice; not written to your files; retried only with `--retry-review` or resolved in `polygo review` |
+
+Plural forms appear as `key#plural.<category>` and count only for the locales that need that category.
 | `up-to-date` | translation matches the current source |
 
 Delete `polygo.lock` to re-translate everything except `edited` strings (pre-existing translations are treated as human).
@@ -83,6 +86,6 @@ Delete `polygo.lock` to re-translate everything except `edited` strings (pre-exi
 | `anthropic` | `base_url` + `/v1/messages` | `POLYGO_API_KEY` or `ANTHROPIC_API_KEY` |
 | `mock` | none — deterministic `⟦de⟧ Source` output for tests and dry runs of your pipeline | none |
 
-Every provider gets the same prompt: the source string, its key, the developer comment, where the string is used in code (a few lines around each hit), up to three similar strings you already translated into that locale, and the glossary. The model answers one JSON object per batch. Each answer is validated (every key present, placeholders intact, glossary respected, not identical to the source, not a runaway) and repaired once before the string is quarantined.
+Every provider gets the same prompt: the source string, its key, the developer comment, where the string is used in code (a few lines around each hit), up to three similar strings you already translated into that locale, and the glossary. The model answers one JSON object per batch. Each answer is validated (every key present, placeholders intact, glossary respected, not identical to the source, not a runaway, no source words left untranslated in a non-Latin-script target) and repaired once before the string is quarantined.
 
 `POLYGO_DEBUG_PROMPT=1` prints every prompt and raw response to stderr.

@@ -17,7 +17,7 @@ Things I cared about:
 
 Running `polygo check` on public catalogs was eye-opening: DuckDuckGo's macOS browser ships `Ouvrir dans % @` (space inside the placeholder) in five locales, and Ice Cubes is missing the `few`/`many` forms in Polish and Ukrainian for 44 strings.
 
-Not done yet: plural and device variations are validated but not translated.
+Plural variations (including `%#@var@` substitutions) are translated one CLDR category at a time, so Polish gets its `few`/`many` forms and Japanese just `other`. Device variations are left alone for now.
 
 Free, MIT, no account, no telemetry: https://github.com/atanasa/polygo
 

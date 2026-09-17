@@ -18,7 +18,7 @@ Details that mattered to me:
 
 Round-trip tested against AntennaPod, NewPipe, F-Droid, Thunderbird and DuckDuckGo's Android catalogs.
 
-Not yet: `<plurals>` and `<string-array>` items are validated but not translated. That's the next thing.
+`<plurals>` get every quantity the locale needs, each asked with a concrete count so `few` and `many` come out different. `<string-array>` items are still hands-off.
 
 Single Rust binary, MIT, no telemetry: https://github.com/atanasa/polygo
 

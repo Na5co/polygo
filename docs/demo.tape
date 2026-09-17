@@ -4,7 +4,7 @@ Output "docs/demo-frames/"
 Set Shell "zsh"
 Set FontSize 15
 Set Width 1000
-Set Height 400
+Set Height 470
 Set Framerate 12
 Set Theme "Catppuccin Mocha"
 Set TypingSpeed 40ms
@@ -15,7 +15,11 @@ Enter
 Show
 Type "polygo init"
 Enter
-Wait+Screen@10s /file\(s\)/
+Wait+Screen@10s /next:/
+Sleep 1.2s
+Type "polygo doctor"
+Enter
+Wait+Screen@10s /ready/
 Sleep 1.5s
 Type "polygo translate -v"
 Enter

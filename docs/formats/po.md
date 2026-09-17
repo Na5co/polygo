@@ -22,7 +22,7 @@ New locale files are created with a header copied from the source, `Language:` s
 
 ## Plurals
 
-`msgid_plural` entries are **preserved untouched and not translated** yet (`msgstr[0]`, `msgstr[1]`… are left as they are). Singular entries are translated normally.
+`msgid_plural` entries are translated into every `msgstr[n]` slot the locale file's `Plural-Forms:` header declares. Slots are labelled by their CLDR role (Russian `nplurals=3` → `one`, `few`, `many`; Arabic `nplurals=6` → `zero` … `other`; Slovenian, Latvian, Romanian and the two-form default are also known), and the model is asked for each form with a concrete count. Slots that already hold a translation are kept. New locale files get the right `Plural-Forms` line and a `msgid_plural` block with empty slots before the forms are filled. A locale whose `nplurals` polygo cannot map is left untouched (`polygo doctor` and `translate -v` will show no plural units for it).
 
 ## Placeholders
 
