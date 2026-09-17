@@ -29,6 +29,11 @@ pub struct Options {
     pub context: bool,
 }
 
+/// Source characters per batch, whatever `batch_size` says: 20 one-line labels are
+/// fine, 20 paragraphs are not (a 4k-context model truncates the prompt and answers
+/// garbage).
+const BATCH_CHARS: usize = 2500;
+
 #[derive(Debug, Default, Clone)]
 pub struct Report {
     pub translated: usize,
@@ -173,6 +178,14 @@ pub fn translate(
         if work.is_empty() {
             continue;
         }
+        if std::env::var("POLYGO_QUIET").is_err() {
+            eprintln!(
+                "{locale}: {} string(s) with {} ({})",
+                work.len(),
+                provider.name(),
+                provider.model()
+            );
+        }
         let ctx = Ctx {
             source_locale: cfg.source_locale.clone(),
             target_locale: locale.clone(),
@@ -180,9 +193,25 @@ pub fn translate(
             do_not_translate: glossary.do_not_translate.clone(),
             format_hint: Some(ws.format_hint()),
         };
-        // Build batches of requests.
-        let batches: VecDeque<(usize, Vec<Request>)> = work
-            .chunks(batch_size)
+        // Build batches of requests: at most `batch_size` strings, and at most
+        // ~BATCH_CHARS of source text, so paragraphs don't blow the model's context.
+        let mut groups: Vec<Vec<String>> = Vec::new();
+        let mut cur: Vec<String> = Vec::new();
+        let mut cur_chars = 0usize;
+        for k in work {
+            let n = by_key[k.as_str()].source.chars().count();
+            if !cur.is_empty() && (cur.len() >= batch_size || cur_chars + n > BATCH_CHARS) {
+                groups.push(std::mem::take(&mut cur));
+                cur_chars = 0;
+            }
+            cur.push(k.clone());
+            cur_chars += n;
+        }
+        if !cur.is_empty() {
+            groups.push(cur);
+        }
+        let batches: VecDeque<(usize, Vec<Request>)> = groups
+            .iter()
             .enumerate()
             .map(|(i, keys)| {
                 (
@@ -281,6 +310,13 @@ pub fn translate(
                 ws.flush()?;
                 lock.save(&lock_path)?;
                 report.batches += 1;
+                if !opts.verbose && std::env::var("POLYGO_QUIET").is_err() {
+                    eprintln!(
+                        "  {locale}: batch {}/{total} done ({} string(s) so far)",
+                        i + 1,
+                        report.per_locale.get(locale).copied().unwrap_or(0)
+                    );
+                }
                 let _ = ack.send(());
             }
             Ok::<(), anyhow::Error>(())

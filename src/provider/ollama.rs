@@ -59,7 +59,8 @@ impl Provider for Ollama {
             "stream": false,
             "think": false,
             "format": schema,
-            "options": { "temperature": 0.2 },
+            // Ollama's default context is 4k; batches with code context need more.
+            "options": { "temperature": 0.2, "num_ctx": 16384 },
             "messages": [
                 { "role": "system", "content": system },
                 { "role": "user", "content": user }
