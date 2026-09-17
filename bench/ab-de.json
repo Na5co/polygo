@@ -3,10 +3,10 @@
  "model": "qwen3:8b",
  "judge": "gemma4",
  "n": 60,
- "context_wins": 8,
- "nocontext_wins": 9,
- "ties": 43,
- "identical": 31,
+ "context_wins": 9,
+ "nocontext_wins": 5,
+ "ties": 45,
+ "identical": 33,
  "results": [
   {
    "key": "Locked icon alert title",
@@ -72,8 +72,8 @@
    "key": "Move Up",
    "source": "Move Up",
    "human": "Hochbewegen",
-   "context": "Nach oben bewegen",
-   "nocontext": "Nach oben verschieben",
+   "context": "Nach Oben bewegen",
+   "nocontext": "Oben verschieben",
    "verdict": "nocontext",
    "votes": [
     "B",
@@ -160,13 +160,9 @@
    "key": "Icon Name: Summer",
    "source": "Summer",
    "human": "Sommer",
-   "context": "Icon Name: Summer",
+   "context": "Sommer",
    "nocontext": "Sommer",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "verdict": "same"
   },
   {
    "key": "Simple",
@@ -180,11 +176,11 @@
    "key": "No updates available message 31",
    "source": "I… uhh… one sec I lost it",
    "human": "Ich… Hm… Eine Sekunde, ich hab's gleich",
-   "context": "Ich… äh… ein Sekunde, ich hab es verloren",
+   "context": "Ich… äh… ein Moment, ich hab es verloren",
    "nocontext": "I… uhh… ein Moment, ich habe es verloren",
-   "verdict": "tie",
+   "verdict": "context",
    "votes": [
-    "B",
+    "A",
     "B"
    ]
   },
@@ -249,20 +245,20 @@
    "source": "Press \"Add\" to add an application",
    "human": "Drücke \"Hinzufügen\" um eine Applikation hinzuzufügen",
    "context": "Drücke \"Hinzufügen\", um eine Anwendung hinzuzufügen",
-   "nocontext": "Drücke \"Hinzufügen\", um eine Anwendung hinzuzufügen",
-   "verdict": "same"
+   "nocontext": "Drücke „Hinzufügen“, um eine Anwendung hinzuzufügen",
+   "verdict": "tie",
+   "votes": [
+    "B",
+    "B"
+   ]
   },
   {
    "key": "Smaller",
    "source": "Smaller",
    "human": "Kleiner",
    "context": "Kleiner",
-   "nocontext": "Kleinerer",
-   "verdict": "tie",
-   "votes": [
-    "B",
-    "B"
-   ]
+   "nocontext": "Kleiner",
+   "verdict": "same"
   },
   {
    "key": "Window",
@@ -296,13 +292,9 @@
    "key": "Icon Name: Daylight",
    "source": "Daylight",
    "human": "Tageslicht",
-   "context": "Icon Name: Daylight",
+   "context": "Taglicht",
    "nocontext": "Taglicht",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "verdict": "same"
   },
   {
    "key": "Apply trigger delay on middle-click",
@@ -328,12 +320,12 @@
    "key": "Move Left",
    "source": "Move Left",
    "human": "Nach Links bewegen",
-   "context": "Nach links bewegen",
-   "nocontext": "Nach links verschieben",
-   "verdict": "nocontext",
+   "context": "Nach Links bewegen",
+   "nocontext": "Links verschieben",
+   "verdict": "tie",
    "votes": [
     "B",
-    "A"
+    "B"
    ]
   },
   {
@@ -364,13 +356,9 @@
    "key": "Icon Name: Meta Loop",
    "source": "Meta Loop",
    "human": "Meta Loop",
-   "context": "Icon Name: Meta Loop",
+   "context": null,
    "nocontext": "Meta-Schleife",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "verdict": "missing"
   },
   {
    "key": "Window gaps",
@@ -412,7 +400,7 @@
    "key": "Left Three Fourths",
    "source": "Left Three Fourths",
    "human": "Linkes drei Viertel",
-   "context": "Linke drei Viertel",
+   "context": "Linkes drei Viertel",
    "nocontext": "Links drei Viertel",
    "verdict": "tie",
    "votes": [
@@ -457,7 +445,7 @@
    "source": "Loop is in its prime!",
    "human": "Loop in seiner prime time!",
    "context": "Loop ist in seiner besten Form!",
-   "nocontext": "Loop ist in seiner Blüte!",
+   "nocontext": "Loop ist in seiner Blütezeit!",
    "verdict": "tie",
    "votes": [
     "B",
