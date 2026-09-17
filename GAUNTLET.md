@@ -44,7 +44,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
   - Acceptance: `cargo test roundtrip_xcstrings` passes on all 10 corpus files (diff is empty).
 - [x] G1.3 Android `strings.xml` parser + serializer (plurals, string-arrays, escapes, `translatable=false` skipped, comments preserved).
   - Acceptance: `cargo test roundtrip_android`.
-- [ ] G1.4 i18next JSON (nested/flat, key sorting preserved).
+- [x] G1.4 i18next JSON (nested/flat, key sorting preserved).
   - Acceptance: `cargo test roundtrip_json`.
 - [ ] G1.5 Lockfile `polygo.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
   - Acceptance: `cargo test lockfile_*` — changing one source string marks exactly one key stale in every locale.
@@ -120,3 +120,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G1.1 · clap skeleton with translate/check/status/review/init; tests/cli.rs (4 tests); hyperfine --help mean 2.0 ms; release binary 551 KB (lto, strip, panic=abort).
 - 2026-09-17 · G1.2 · xcstrings parse/serialize, byte-stable on 11/11 corpus files (Loop, Whisky, IceCubes, boring.notch, damus, 6× DuckDuckGo; 2.5 KB–3.8 MB) + synthetic edge cases (escapes, empty objects, bool/int, trailing newline, CRLF). Corpus fixtures + licenses in tests/corpus/SOURCES.md (dropped Cork/Pearcleaner: restrictive licenses). Release binary 551 KB (lib not yet linked into main).
 - 2026-09-17 · G1.3 · Android strings.xml: span-based model (original text + value spans), byte-stable on 5/5 corpus files (AntennaPod, NewPipe, F-Droid, K-9/Thunderbird, DuckDuckGo; 44–82 KB, plurals, CDATA+HTML, `\'`, translatable=false, preceding-comment capture); minimal-diff edits incl. empty-element rewrite and CDATA preservation; decode/encode for entities + Android escapes. 10 tests green.
+- 2026-09-17 · G1.4 · i18next JSON: own position-tracking parser (no deps), span-splice serializer; byte-stable on 6/6 corpus files (excalidraw, hoppscotch — mixes raw Unicode with \u2026 escapes, jellyfin-web 4-space, immich, grafana 780 KB depth 8, formbricks); nested + flat dotted keys, arrays as index paths, BOM/CRLF preserved, minimal-diff edits; cross-checked every entry against serde_json. 14 tests green.

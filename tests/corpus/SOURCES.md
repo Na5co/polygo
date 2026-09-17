@@ -21,4 +21,12 @@ Real-world files used as round-trip / validation fixtures (fetched 2026-09-17). 
 - fdroidclient · `app/src/main/res/values/strings.xml` · GPL-3.0
 - thunderbird-android · `legacy/ui/legacy/src/main/res/values/strings.xml` · Apache-2.0
 
+## json (i18next-style)
+- excalidraw/excalidraw · `packages/excalidraw/locales/en.json` · MIT
+- hoppscotch/hoppscotch · `packages/hoppscotch-common/locales/en.json` · MIT
+- jellyfin/jellyfin-web · `src/strings/en-us.json` · GPL-2.0 / MPL-2.0
+- immich-app/immich · `i18n/en.json` · AGPL-3.0
+- grafana/grafana · `public/locales/en-US/grafana.json` · AGPL-3.0
+- formbricks/formbricks · `apps/web/locales/en-US.json` · AGPL-3.0
+
 Fixtures are test data only; they keep their upstream licenses and are not part of the polygo binary or its MIT-licensed source.
