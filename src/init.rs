@@ -402,6 +402,7 @@ framework's i18n guide covers this), then run `polygo init` again.",
         context: true,
         context_tokens: 600,
         memory: true,
+        extract: Default::default(),
     })
 }
 

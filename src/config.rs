@@ -34,6 +34,31 @@ pub struct Config {
     /// Use the cross-project translation memory (~/.config/polygo/memory.toml).
     #[serde(default = "default_true")]
     pub memory: bool,
+    /// `polygo extract` settings.
+    #[serde(default, skip_serializing_if = "Extract::is_default")]
+    pub extract: Extract,
+}
+
+/// `[extract]` in polygo.toml.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
+pub struct Extract {
+    /// Paths to leave alone (gitignore-style globs, relative to the project root):
+    /// `["src/admin*", "packages/internal/**"]`.
+    #[serde(default)]
+    pub ignore_paths: Vec<String>,
+    /// Strings containing any of these (case-insensitive) are not extracted:
+    /// brand names, internal jargon, `["Leafslip", "API key"]`.
+    #[serde(default)]
+    pub ignore: Vec<String>,
+    /// Exact strings to skip.
+    #[serde(default)]
+    pub ignore_exact: Vec<String>,
+}
+
+impl Extract {
+    fn is_default(&self) -> bool {
+        *self == Extract::default()
+    }
 }
 
 fn default_true() -> bool {

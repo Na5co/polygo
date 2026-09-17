@@ -104,6 +104,19 @@ enum Commands {
         /// Machine-readable list of hits.
         #[arg(long)]
         json: bool,
+        /// Also replace the strings in .ts/.tsx/.js/.jsx files with t("key") calls and
+        /// generate the i18n helper. Review with `git diff`.
+        #[arg(long)]
+        rewrite: bool,
+        /// Where to generate the helper module (with --rewrite).
+        #[arg(long, default_value = "src/i18n.ts")]
+        i18n: PathBuf,
+        /// Skip strings containing this word (repeatable; also `[extract] ignore` in polygo.toml).
+        #[arg(long = "ignore", value_name = "WORD")]
+        ignore_words: Vec<String>,
+        /// Skip these paths, gitignore-style glob (repeatable; also `[extract] ignore_paths`).
+        #[arg(long = "ignore-path", value_name = "GLOB")]
+        ignore_paths: Vec<String>,
     },
     /// Write a pseudo-locale ([Šéţţíñĝš ~~~]) to catch hardcoded strings and truncation.
     #[command(after_help = PSEUDO_EXAMPLES)]
@@ -257,12 +270,19 @@ const EXTRACT_EXAMPLES: &str = "\
 Examples:
   polygo extract --dry-run        list every string it would pull out, with file:line
   polygo extract                  write locales/en.json (keys are the English text)
+  polygo extract --rewrite        also replace them in .ts/.tsx with t(\"key\") and generate src/i18n.ts
+  polygo extract --ignore Leafslip --ignore-path \"src/admin*\"   leave brand names and pages alone
   polygo extract --json | jq      the same list as JSON
+
+Permanent rules go in polygo.toml:
+  [extract]
+  ignore = [\"Leafslip\", \"API key\"]          # strings containing these are skipped
+  ignore_paths = [\"src/admin*\", \"legacy/**\"]
 
 Looks at markup only: text between tags and placeholder/title/alt/aria-label attributes, in
 JSX, HTML inside template literals, and .html/.vue/.svelte files. Skips <script>, <style>,
 <svg>, <code>, tests, node_modules, dist. Interpolations become {{0}}, {{1}} placeholders.
-It does not rewrite your code; the catalog plus the list is the starting point.";
+Sentences split by inline markup (<em>, <a>, <code>) are listed as fragments and left for you.";
 
 const PSEUDO_EXAMPLES: &str = "\
 Examples:
@@ -330,7 +350,26 @@ fn main() {
         Commands::Review { port, open } => polygo::review::serve(&cli.root, port, open),
         Commands::Add { locales } => edit_locales(&cli.root, &locales, true),
         Commands::Remove { locales } => edit_locales(&cli.root, &locales, false),
-        Commands::Extract { out, dry_run, json } => extract(&cli.root, &out, dry_run, json),
+        Commands::Extract {
+            out,
+            dry_run,
+            json,
+            rewrite,
+            i18n,
+            ignore_words,
+            ignore_paths,
+        } => extract(
+            &cli.root,
+            ExtractArgs {
+                out,
+                dry_run,
+                json,
+                rewrite,
+                i18n,
+                ignore_words,
+                ignore_paths,
+            },
+        ),
         Commands::Pseudo { locale } => pseudo(&cli.root, &locale),
         Commands::Memory { forget, locale } => memory(forget, locale.as_deref()),
         Commands::Models => polygo::models::list(&cli.root, &mut std::io::stdout()),
@@ -663,9 +702,23 @@ fn edit_locales(root: &Path, locales: &[String], add: bool) -> Result<()> {
     Ok(())
 }
 
-fn extract(root: &Path, out: &Path, dry_run: bool, json: bool) -> Result<()> {
-    let hits = polygo::extract::scan(root)?;
-    if json {
+struct ExtractArgs {
+    out: PathBuf,
+    dry_run: bool,
+    json: bool,
+    rewrite: bool,
+    i18n: PathBuf,
+    ignore_words: Vec<String>,
+    ignore_paths: Vec<String>,
+}
+
+fn extract(root: &Path, args: ExtractArgs) -> Result<()> {
+    // Rules: polygo.toml's [extract] (when there is one) plus the flags.
+    let mut rules = Config::load(root).map(|c| c.extract).unwrap_or_default();
+    rules.ignore.extend(args.ignore_words);
+    rules.ignore_paths.extend(args.ignore_paths);
+    let hits = polygo::extract::scan(root, &rules)?;
+    if args.json {
         println!("{}", serde_json::to_string_pretty(&hits)?);
         return Ok(());
     }
@@ -673,11 +726,18 @@ fn extract(root: &Path, out: &Path, dry_run: bool, json: bool) -> Result<()> {
     for h in &hits {
         let first = seen.insert(&h.key);
         println!(
-            "{}:{}  {}{}",
+            "{}:{}  {}{}{}",
             h.file,
             h.line,
             h.text.chars().take(90).collect::<String>(),
-            if first { "" } else { "  (dup)" }
+            if first { "" } else { "  (dup)" },
+            match h.skip.as_deref() {
+                Some("fragment") =>
+                    "  [fragment: part of a sentence split by markup, left for you]",
+                Some("markup") => "  [markup file: listed, not rewritten]",
+                Some("string") => "  [inside a plain string: not rewritten]",
+                _ => "",
+            }
         );
     }
     if hits.is_empty() {
@@ -687,20 +747,48 @@ fn extract(root: &Path, out: &Path, dry_run: bool, json: bool) -> Result<()> {
         );
         return Ok(());
     }
-    println!("\n{} string(s), {} unique", hits.len(), seen.len());
-    if dry_run {
+    let fragments = hits
+        .iter()
+        .filter(|h| h.skip.as_deref() == Some("fragment"))
+        .count();
+    println!(
+        "\n{} string(s), {} unique, {fragments} fragment(s) to handle by hand",
+        hits.len(),
+        seen.len()
+    );
+    if args.dry_run {
         println!(
-            "dry run: nothing written (drop --dry-run to write {})",
-            out.display()
+            "dry run: nothing written (drop --dry-run to write {}{})",
+            args.out.display(),
+            if args.rewrite {
+                " and rewrite the code"
+            } else {
+                ""
+            }
         );
         return Ok(());
     }
-    let (added, total) = polygo::extract::write_catalog(&root.join(out), &hits)?;
-    println!("wrote {} ({added} new, {total} total)", out.display());
-    println!(
-        "next: replace each string in the code with your i18n library's lookup (t(\"key\")), \
-then `polygo init` and `polygo translate`"
-    );
+    let (added, total) = polygo::extract::write_catalog(&root.join(&args.out), &hits)?;
+    println!("wrote {} ({added} new, {total} total)", args.out.display());
+    if args.rewrite {
+        let r = polygo::extract::rewrite(root, &hits, &args.out, &args.i18n)?;
+        println!(
+            "rewrote {} string(s) in {} file(s) as t(\"key\") calls; {} left alone",
+            r.replaced, r.files, r.skipped
+        );
+        if let Some(f) = r.i18n_file {
+            println!(
+                "generated {f} (t, setLocale, addCatalog; imports the catalog as JSON, so tsconfig needs resolveJsonModule)"
+            );
+        }
+        println!(
+            "review with `git diff`, then `polygo init`, `polygo add <locale>`, `polygo translate`"
+        );
+    } else {
+        println!(
+            "next: `polygo extract --rewrite` to replace them in the code with t(\"key\"), or do it by hand; then `polygo init` and `polygo translate`"
+        );
+    }
     Ok(())
 }
 
