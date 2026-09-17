@@ -3,6 +3,7 @@ use std::fs;
 use std::process::Command;
 
 #[test]
+#[cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 fn install_scripts_are_valid_and_consistent() {
     let root = env!("CARGO_MANIFEST_DIR");
     // install.sh is POSIX sh and parses.

@@ -3,6 +3,7 @@ use std::fs;
 use std::process::Command;
 
 #[test]
+#[cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 fn action_dry_run_produces_expected_diff() {
     let dir = tempfile::tempdir().unwrap();
     let root = dir.path();
