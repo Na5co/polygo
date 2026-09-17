@@ -102,6 +102,10 @@ fn todo_cmd(name: &str) -> Result<()> {
 
 fn translate(root: &Path, args: TranslateArgs) -> Result<()> {
     let cfg = Config::load(root)?;
+    if std::env::var("POLYGO_HTTP_TIMEOUT").is_err() {
+        // SAFETY: single-threaded at this point; workers are spawned later.
+        unsafe { std::env::set_var("POLYGO_HTTP_TIMEOUT", cfg.provider.timeout_secs.to_string()) };
+    }
     let provider = polygo::provider::from_config(&cfg.provider)?;
     let opts = polygo::engine::Options {
         locales: args.locale,

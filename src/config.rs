@@ -81,6 +81,13 @@ pub struct Provider {
     pub model: Option<String>,
     #[serde(default)]
     pub base_url: Option<String>,
+    /// Per-request HTTP timeout in seconds (local models can be slow on big batches).
+    #[serde(default = "default_timeout")]
+    pub timeout_secs: u64,
+}
+
+fn default_timeout() -> u64 {
+    300
 }
 
 impl Default for Provider {
@@ -89,6 +96,7 @@ impl Default for Provider {
             kind: "ollama".into(),
             model: Some("qwen3:8b".into()),
             base_url: None,
+            timeout_secs: default_timeout(),
         }
     }
 }

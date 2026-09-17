@@ -1,0 +1,331 @@
+{
+ "locale": "de",
+ "model": "qwen3:8b",
+ "judge": "gemma4",
+ "n": 40,
+ "context_wins": 12,
+ "nocontext_wins": 10,
+ "ties": 18,
+ "results": [
+  {
+   "key": "No updates available message 30",
+   "source": "99 problems, updates ain't one.",
+   "human": "99 Probleme, aber ein Update ist keins davon.",
+   "context": "99 Probleme, Updates sind nicht einer davon.",
+   "nocontext": "99 Probleme, Updates sind nicht einer davon.",
+   "verdict": "tie"
+  },
+  {
+   "key": "Right Third",
+   "source": "Right Third",
+   "human": "Rechter Drittel",
+   "context": "Rechter Drittel",
+   "nocontext": "Rechter Drittel",
+   "verdict": "tie"
+  },
+  {
+   "key": "No updates available message 37",
+   "source": "No updates, Mr. Anderson",
+   "human": "Keine Updates, Mr. Anderson",
+   "context": "Keine Updates, Mr. Anderson",
+   "nocontext": "Keine Updates, Mr. Anderson",
+   "verdict": "tie"
+  },
+  {
+   "key": "Press \"Add\" to add a keybind",
+   "source": "Press \"Add\" to add a keybind",
+   "human": "Drücke \"Hinzufügen\" um eine Tastenbelegung hinzuzufügen",
+   "context": "Drücke \"Hinzufügen\", um eine Tastenkombination hinzuzufügen",
+   "nocontext": "Drücke \"Add\", um eine Tastenkombination hinzuzufügen",
+   "verdict": "context"
+  },
+  {
+   "key": "Settings tab: Behavior",
+   "source": "Behavior",
+   "human": "Verhalten",
+   "context": "Verhalten",
+   "nocontext": "Verhalten",
+   "verdict": "tie"
+  },
+  {
+   "key": "Hide when no action is selected",
+   "source": "Hide when no action is selected",
+   "human": "Hide when no action is selected",
+   "context": "Verstecke, wenn keine Aktion ausgewählt ist",
+   "nocontext": "Verstecke, wenn keine Aktion ausgewählt ist",
+   "verdict": "tie"
+  },
+  {
+   "key": "Height",
+   "source": "Height",
+   "human": "Höhe",
+   "context": "Höhe",
+   "nocontext": "Höhe",
+   "verdict": "tie"
+  },
+  {
+   "key": "Press \"Add\" to add an application",
+   "source": "Press \"Add\" to add an application",
+   "human": "Drücke \"Hinzufügen\" um eine Applikation hinzuzufügen",
+   "context": "Drücke \"Hinzufügen\", um eine Anwendung hinzuzufügen",
+   "nocontext": "Drücke \"Add\", um eine Anwendung hinzuzufügen",
+   "verdict": "context"
+  },
+  {
+   "key": "No updates available message 42",
+   "source": "All systems are a-go!",
+   "human": "Alle Systeme sind bereit!",
+   "context": "Alle Systeme sind im Einsatz!",
+   "nocontext": "Alle Systeme laufen!",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Smaller (Proportional)",
+   "source": "Smaller (Proportional)",
+   "human": "Smaller (Proportional)",
+   "context": "Kleiner (proportional)",
+   "nocontext": "Kleiner (verhältnismäßig)",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Shrink Right",
+   "source": "Shrink Right",
+   "human": "Rechts verkleinern",
+   "context": "Rechts verkleinern",
+   "nocontext": "Rechts verkleinern",
+   "verdict": "tie"
+  },
+  {
+   "key": "Hide",
+   "source": "Hide",
+   "human": "Verstecken",
+   "context": "Verstecken",
+   "nocontext": "Verstecken",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Custom",
+   "source": "Custom",
+   "human": "Benutzerdefiniert",
+   "context": "Benutzerdefiniert",
+   "nocontext": "Benutzerdefiniert",
+   "verdict": "tie"
+  },
+  {
+   "key": "No updates available message 27",
+   "source": "One does not simply update Loop.",
+   "human": "Man aktualisiert Loop nicht einfach so.",
+   "context": "Man kann Loop nicht einfach aktualisieren.",
+   "nocontext": "Man kann Loop nicht einfach aktualisieren.",
+   "verdict": "tie"
+  },
+  {
+   "key": "Locked icon message 7",
+   "source": "Some icons are worth the wait, don't you think?",
+   "human": "Für manche Icons lohnt sich das warten, oder?",
+   "context": "Einige Symbole sind es wert, auf sie zu warten, findest du nicht?",
+   "nocontext": "Einige Symbole lohnen die Warte, findest du nicht?",
+   "verdict": "context"
+  },
+  {
+   "key": "Fluid",
+   "source": "Fluid",
+   "human": "Fließend",
+   "context": "Flüssig",
+   "nocontext": "Flüssig",
+   "verdict": "tie"
+  },
+  {
+   "key": "Credits",
+   "source": "Credits",
+   "human": "Mitwirkende",
+   "context": "Credits",
+   "nocontext": "Credits",
+   "verdict": "tie"
+  },
+  {
+   "key": "Reset",
+   "source": "Reset",
+   "human": "Zurücksetzen",
+   "context": "Zurücksetzen",
+   "nocontext": "Zurücksetzen",
+   "verdict": "tie"
+  },
+  {
+   "key": "Trigger Key",
+   "source": "Trigger Key",
+   "human": "Aktivierungstaste",
+   "context": "Auslöser-Taste",
+   "nocontext": "Auslösetaste",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Some features, ideas, and bug fixes",
+   "source": "Some features, ideas, and bug fixes",
+   "human": "Manche Funktionen, Ideen und Fehler Behebungen",
+   "context": "Einige Funktionen, Ideen und Fehlerbehebungen",
+   "nocontext": "Einige Features, Ideen und Fehlerbehebungen",
+   "verdict": "context"
+  },
+  {
+   "key": "Border thickness",
+   "source": "Border thickness",
+   "human": "Rahmendicke",
+   "context": "Randdicke",
+   "nocontext": "Randstärke",
+   "verdict": "context"
+  },
+  {
+   "key": "Settings tab: Preview",
+   "source": "Preview",
+   "human": "Vorschau",
+   "context": "Vorschau",
+   "nocontext": "Vorschau",
+   "verdict": "context"
+  },
+  {
+   "key": "No updates available message 01",
+   "source": "Engage! …in the current version, it's the latest.",
+   "human": "Engagieren! …in der aktuellen Version ist es die neueste.",
+   "context": "Engagiere dich! …in dieser Version ist es die neueste.",
+   "nocontext": "Aktivieren! …in der aktuellen Version ist es die neueste.",
+   "verdict": "context"
+  },
+  {
+   "key": "That keybind is already being used by %@.",
+   "source": "That keybind is already being used by %@.",
+   "human": "Diese Tastenbelegung wird bereits von %@ benutzt.",
+   "context": "Diese Tastenkombination wird bereits von %@ verwendet.",
+   "nocontext": "Diese Tastenkombination wird bereits von %@ verwendet.",
+   "verdict": "tie"
+  },
+  {
+   "key": "Window snapping will still use the preview.",
+   "source": "Window snapping will still use the preview.",
+   "human": "Das Einrasten von Fenstern wird weiterhin die Vorschau verwenden.",
+   "context": "Fenster Snapping wird weiterhin die Vorschau verwenden.",
+   "nocontext": "Das Fensteranlehnen wird weiterhin die Vorschau verwenden.",
+   "verdict": "context"
+  },
+  {
+   "key": "Shrink Top",
+   "source": "Shrink Top",
+   "human": "Oben verkleinern",
+   "context": "Oben verkleinern",
+   "nocontext": "Oben verkleinern",
+   "verdict": "tie"
+  },
+  {
+   "key": "Sync Wallpaper",
+   "source": "Sync Wallpaper",
+   "human": "Hintergrundbild synchronisieren",
+   "context": "Hintergrundbild synchronisieren",
+   "nocontext": "Hintergrundbild synchronisieren",
+   "verdict": "tie"
+  },
+  {
+   "key": "Fourth Fourth",
+   "source": "Fourth Fourth",
+   "human": "Viertes Viertel",
+   "context": "Viertes Viertel",
+   "nocontext": "Vierte Vierte",
+   "verdict": "context"
+  },
+  {
+   "key": "Size Adjustment",
+   "source": "Size Adjustment",
+   "human": "Größenänderung",
+   "context": "Größe anpassen",
+   "nocontext": "Größenanpassung",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Actions",
+   "source": "Actions",
+   "human": "Actions",
+   "context": "Aktionen",
+   "nocontext": "Aktionen",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Relaunch to complete",
+   "source": "Relaunch to complete",
+   "human": "Neustarten, um abzuschließen",
+   "context": "Neustart durchführen, um abzuschließen",
+   "nocontext": "Neustart durchführen, um abzuschließen",
+   "verdict": "tie"
+  },
+  {
+   "key": "Cancel",
+   "source": "Cancel",
+   "human": "Abbrechen",
+   "context": "Abbrechen",
+   "nocontext": "Abbrechen",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Brisk",
+   "source": "Brisk",
+   "human": "Zügig",
+   "context": "Schnell",
+   "nocontext": "Schnell",
+   "verdict": "tie"
+  },
+  {
+   "key": "Apply trigger delay on middle-click",
+   "source": "Apply trigger delay on middle-click",
+   "human": "Verzögerung bei mittlerem Klick",
+   "context": "Aktivierungsverzögerung bei Mittelklick",
+   "nocontext": "Trigger delay bei mittlerem Klick anwenden",
+   "verdict": "context"
+  },
+  {
+   "key": "Import keybinds: erase",
+   "source": "Erase",
+   "human": "Löschen",
+   "context": "Importieren Sie Tastenkombinationen: löschen",
+   "nocontext": "Löschen",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Shift focus when stashed",
+   "source": "Shift focus when stashed",
+   "human": "Fokus verschieben, wenn gestasht",
+   "context": "Fokus wechseln, wenn gestapelt",
+   "nocontext": "Fokus verschieben, wenn versteckt",
+   "verdict": "nocontext"
+  },
+  {
+   "key": "Animation speed",
+   "source": "Animation speed",
+   "human": "Animationsgeschwindigkeit",
+   "context": "Animationsgeschwindigkeit",
+   "nocontext": "Animationsgeschwindigkeit",
+   "verdict": "context"
+  },
+  {
+   "key": "No updates available message 36",
+   "source": "No updates? Great Scott!",
+   "human": "Keine Updates? Verflucht!",
+   "context": "Keine Updates? Great Scott!",
+   "nocontext": "Keine Updates? Great Scott!",
+   "verdict": "tie"
+  },
+  {
+   "key": "Locked icon message 19",
+   "source": "With each Loop, the lock on this icon weakens.",
+   "human": "Mit jedem Loop wird dieses Schloss schwächer.",
+   "context": "Mit jedem Loop schwächt sich der Schloss auf diesem Symbol ab.",
+   "nocontext": "Mit jedem Loop schwächt sich der Schloss auf diesem Symbol ab.",
+   "verdict": "context"
+  },
+  {
+   "key": "No updates available message 24",
+   "source": "We’ll be back. With updates… later",
+   "human": "Wir werden später wieder hier sein. Mit Updates",
+   "context": "Wir kommen zurück. Mit Updates… später",
+   "nocontext": "Wir sind bald wieder da. Mit Updates… später",
+   "verdict": "nocontext"
+  }
+ ]
+}

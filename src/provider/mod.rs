@@ -171,6 +171,15 @@ fn validate(
         if out.iter().any(|(k, _)| k == &r.key) {
             continue;
         }
+        let (sl, tl) = (r.source.chars().count(), t.text.chars().count());
+        if tl > sl * 3 + 20 {
+            out.push((
+                r.key.clone(),
+                "far longer than the source — translate only the source string, not its context"
+                    .into(),
+            ));
+            continue;
+        }
         let same_language = ctx.source_locale.split(['-', '_']).next()
             == ctx.target_locale.split(['-', '_']).next();
         let has_letters = r.source.chars().any(|c| c.is_alphabetic());
@@ -260,7 +269,9 @@ fn api_key(names: &[&str]) -> Option<String> {
 pub const SYSTEM_PROMPT: &str = "You are a professional software localizer translating user-interface strings \
 from {src} into {dst}. Every \"translation\" value MUST be written in {dst}; copying the source text is a failure. \
 Rules: keep every placeholder exactly as written ({hint}); keep inline markup and HTML tags; match the tone and \
-terminology of the examples when given; be as short and natural as a native {dst} app would; never add explanations.\n\
+terminology of the examples when given; be as short and natural as a native {dst} app would; never add explanations. \
+Any \"used in\" code shown is reference only, to tell a button from a heading — translate ONLY the source string, \
+never the code or the other strings around it.\n\
 Respond with JSON only, one item per input key, in the same order:\n\
 {\"translations\":[{\"key\":\"<key>\",\"translation\":\"<{dst} text>\"}]}";
 
@@ -500,8 +511,12 @@ pub(crate) fn post_json(
     headers: &[(&str, &str)],
     body: &serde_json::Value,
 ) -> Result<serde_json::Value> {
+    let secs = std::env::var("POLYGO_HTTP_TIMEOUT")
+        .ok()
+        .and_then(|v| v.parse().ok())
+        .unwrap_or(300);
     let agent = ureq::Agent::config_builder()
-        .timeout_global(Some(std::time::Duration::from_secs(600)))
+        .timeout_global(Some(std::time::Duration::from_secs(secs)))
         .build()
         .new_agent();
     let mut req = agent.post(url);
