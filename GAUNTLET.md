@@ -75,7 +75,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Phase 4 — Context retrieval (the differentiator)
 
-- [ ] G4.1 Usage finder: for each key, locate usages in Swift/Kotlin/Java/Dart/TS/TSX/JS (regex per language, `ignore` crate for gitignore-aware walking), capture ±6 lines and the enclosing identifier (function/view/component name).
+- [x] G4.1 Usage finder: for each key, locate usages in Swift/Kotlin/Java/Dart/TS/TSX/JS (regex per language, `ignore` crate for gitignore-aware walking), capture ±6 lines and the enclosing identifier (function/view/component name).
   - Acceptance: `cargo test usage_finder_*` on fixture projects — ≥ 90% of keys resolved, < 200 ms for a 5k-file tree.
 - [ ] G4.2 Similar-translation few-shot: pick up to 3 existing translations for the target locale with highest token-overlap/Jaccard to the source string (no embeddings needed for MVP).
   - Acceptance: `cargo test fewshot_selection`.
@@ -112,6 +112,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - serde + toml 0.8 → polygo.toml config and polygo.lock parsing; lock is emitted by hand so key/locale order is deterministic
 - tempfile (dev) → CLI integration tests in throwaway project dirs
 - ignore 0.4 → gitignore-aware directory walking for init (and later the usage finder); pulls regex, binary grows to 1.9 MB — still under the 15 MB budget
+- aho-corasick 1 → one-pass multi-needle scan of the source tree for the usage finder (already a transitive dep via regex)
 - ureq 3 (json) → blocking HTTP for providers; small, no tokio; TLS via rustls; binary stays 1.9 MB (the provider code is only linked into the CLI when used)
 - quick-xml 0.37 → tolerant XML tokenizer with byte positions; we never re-emit XML, we splice edited value spans into the original text
 
@@ -136,3 +137,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G3.2 · check/plurals: CLDR cardinal table (~50 languages; CLDR-42 `many` for fr/es/it/ca/pt accepted, not required; `other`-only = deliberate opt-out; extras like `zero`/`=N` fine), collectors for xcstrings variations + substitutions, Android <plurals>, ICU inline (recursive), i18next `_one/_other` suffix groups. Corpus: Loop complete in 13 locales; Android/grafana/immich sources complete; IceCubes has 44 be/pl/uk plural sets shipping only one/other — genuine upstream gaps, documented in KNOWN_BUGS.md. 47 tests.
 - 2026-09-17 · G3.3 · check/text: empty (error), identical-to-source (warning; ignores same-language targets, placeholder-only and markup-only strings), length ratio both directions (warning; configurable, default 2.5× with +8 char slack so "OK"→"Akkoord" passes). 48 tests.
 - 2026-09-17 · G3.4 · `polygo check [--locale] [--json] [--strict] [--fix]`: placeholders + text checks per translation, plural structures per format (xcstrings variations/substitutions, Android <plurals> per locale file, i18next `_one/_other` groups, ICU inline). Exit 1 on errors (or warnings with --strict); `--fix` re-translates only keys with errors via engine `force_keys` then re-checks. Identical warnings skip acronyms/≤3 letters and lock-confirmed translations. IceCubes catalog: 50 ms, 65 errors (44 plural, 19 placeholders, 2 empty). 50 tests. Phase 3 complete.
+- 2026-09-17 · G4.1 · context/usage: gitignore-aware index of Swift/ObjC/Kotlin/Java/Dart/TS/JS/Vue/Svelte/XML, needles per key (`"k"`, `'k'`, `` `k` ``, `R.string.k`, `@string/k`, `.k` with boundary checks, dot-refs as weak fallback), enclosing declaration (func/fun/function/struct/class/component, skipping `var body`/`const { t }`), dedented ±6-line snippet. Fixture: 16/16 keys across 5 languages; boundaries `title` vs `title_long`; 5k-file tree < 200 ms in debug. Real repo (Loop): 382/406 keys resolved in 61 ms. examples/usage_probe.rs kept as a dev probe. 53 tests.

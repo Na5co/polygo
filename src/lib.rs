@@ -6,6 +6,7 @@
 
 pub mod check;
 pub mod config;
+pub mod context;
 pub mod core;
 pub mod engine;
 pub mod formats;
