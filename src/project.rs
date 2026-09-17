@@ -60,6 +60,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
             })?;
             Ok(units)
         }
+        Format::Arb => anyhow::bail!("Flutter .arb support is not implemented yet"),
         Format::Json => {
             let doc = formats::json::parse(&text)?;
             let mut units: Vec<Unit> = doc
@@ -112,6 +113,20 @@ fn attach_locale_files(
     Ok(())
 }
 
+/// Expand a locale path template. `{locale}` is the BCP-47 tag as configured;
+/// `{android_locale}` is the Android resource-qualifier form (`pt-BR` → `pt-rBR`,
+/// `sr-Latn` → `b+sr+Latn`).
 pub fn locale_file(template: &str, locale: &str) -> String {
-    template.replace("{locale}", locale)
+    template
+        .replace("{locale}", locale)
+        .replace("{android_locale}", &android_qualifier(locale))
+}
+
+pub fn android_qualifier(locale: &str) -> String {
+    let parts: Vec<&str> = locale.split(['-', '_']).collect();
+    match parts.as_slice() {
+        [lang] => (*lang).to_string(),
+        [lang, region] if region.len() == 2 => format!("{lang}-r{}", region.to_ascii_uppercase()),
+        _ => format!("b+{}", parts.join("+")),
+    }
 }

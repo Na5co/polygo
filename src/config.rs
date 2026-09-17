@@ -24,6 +24,7 @@ pub enum Format {
     Xcstrings,
     Android,
     Json,
+    Arb,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

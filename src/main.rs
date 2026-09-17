@@ -30,7 +30,11 @@ enum Commands {
     /// Open a local review page for pending translations.
     Review,
     /// Create polygo.toml by detecting the project type.
-    Init,
+    Init {
+        /// Overwrite an existing polygo.toml.
+        #[arg(long)]
+        force: bool,
+    },
 }
 
 fn main() {
@@ -40,7 +44,7 @@ fn main() {
         Commands::Check => todo_cmd("check"),
         Commands::Status { json } => status(&cli.root, json),
         Commands::Review => todo_cmd("review"),
-        Commands::Init => todo_cmd("init"),
+        Commands::Init { force } => init(&cli.root, force),
     };
     if let Err(e) = result {
         eprintln!("polygo: {e:#}");
@@ -51,6 +55,33 @@ fn main() {
 fn todo_cmd(name: &str) -> Result<()> {
     eprintln!("polygo {name}: not implemented yet");
     std::process::exit(2);
+}
+
+fn init(root: &Path, force: bool) -> Result<()> {
+    let path = root.join(polygo::config::FILE_NAME);
+    if path.exists() && !force {
+        anyhow::bail!(
+            "{} already exists (use --force to overwrite)",
+            path.display()
+        );
+    }
+    let cfg = polygo::init::detect(root)?;
+    std::fs::write(&path, cfg.to_toml())?;
+    println!(
+        "wrote {} · source {} · targets [{}] · {} file(s):",
+        path.display(),
+        cfg.source_locale,
+        cfg.target_locales.join(", "),
+        cfg.files.len()
+    );
+    for f in &cfg.files {
+        println!(
+            "  {:<10} {}",
+            format!("{:?}", f.format).to_lowercase(),
+            f.path.display()
+        );
+    }
+    Ok(())
 }
 
 fn status(root: &Path, json: bool) -> Result<()> {

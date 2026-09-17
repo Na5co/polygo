@@ -17,6 +17,7 @@ path = "src/main.rs"
 anyhow = "1"
 blake3 = "1"
 clap = { version = "4", features = ["derive"] }
+ignore = "0.4"
 quick-xml = "0.37"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }

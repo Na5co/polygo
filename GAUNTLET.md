@@ -48,7 +48,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
   - Acceptance: `cargo test roundtrip_json`.
 - [x] G1.5 Lockfile `polygo.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
   - Acceptance: `cargo test lockfile_*` — changing one source string marks exactly one key stale in every locale.
-- [ ] G1.6 `polygo init` writes `polygo.toml` (source locale, targets, file globs, provider, glossary path) by detecting the project type from the file tree.
+- [x] G1.6 `polygo init` writes `polygo.toml` (source locale, targets, file globs, provider, glossary path) by detecting the project type from the file tree.
   - Acceptance: `cargo test init_detects_*` for an iOS, Android, Flutter, and Next.js fixture tree.
 
 ## Phase 2 — Translation engine
@@ -111,6 +111,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - blake3 → content hashes for source/translation change detection (fast, 32-hex truncated)
 - serde + toml 0.8 → polygo.toml config and polygo.lock parsing; lock is emitted by hand so key/locale order is deterministic
 - tempfile (dev) → CLI integration tests in throwaway project dirs
+- ignore 0.4 → gitignore-aware directory walking for init (and later the usage finder); pulls regex, binary grows to 1.9 MB — still under the 15 MB budget
 - quick-xml 0.37 → tolerant XML tokenizer with byte positions; we never re-emit XML, we splice edited value spans into the original text
 
 ## Blocked
@@ -125,3 +126,4 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - 2026-09-17 · G1.3 · Android strings.xml: span-based model (original text + value spans), byte-stable on 5/5 corpus files (AntennaPod, NewPipe, F-Droid, K-9/Thunderbird, DuckDuckGo; 44–82 KB, plurals, CDATA+HTML, `\'`, translatable=false, preceding-comment capture); minimal-diff edits incl. empty-element rewrite and CDATA preservation; decode/encode for entities + Android escapes. 10 tests green.
 - 2026-09-17 · G1.4 · i18next JSON: own position-tracking parser (no deps), span-splice serializer; byte-stable on 6/6 corpus files (excalidraw, hoppscotch — mixes raw Unicode with \u2026 escapes, jellyfin-web 4-space, immich, grafana 780 KB depth 8, formbricks); nested + flat dotted keys, arrays as index paths, BOM/CRLF preserved, minimal-diff edits; cross-checked every entry against serde_json. 14 tests green.
 - 2026-09-17 · G1.5 · core::Unit model, config (polygo.toml), lockfile (sorted TOML, blake3 hashes, provider/model/at), project loader for xcstrings/android/json incl. per-locale files, `polygo status [--json]`. States: new / stale / untranslated / edited / up-to-date; pre-existing human translations are `edited` and never overwritten (caught by smoke test on Loop: 399 de translations protected). 20 tests green; binary 999 KB; --help 1.5 ms.
+- 2026-09-17 · G1.6 · `polygo init [--force]` detects iOS String Catalogs (source + locales read from the file), Android values dirs (pt-rBR/b+sr+Latn qualifiers mapped both ways), Flutter ARB (l10n.yaml template-arb-file), i18next namespace dirs and flat locale files; skips node_modules/Pods/build/etc. 7 tests incl. CLI refuse-overwrite; smoke on Loop found 13 locales. Phase 1 complete: 27 tests, binary 1.9 MB, --help 1.5 ms.
