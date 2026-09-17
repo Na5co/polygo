@@ -15,3 +15,4 @@ pub mod init;
 pub mod lockfile;
 pub mod project;
 pub mod provider;
+pub mod review;

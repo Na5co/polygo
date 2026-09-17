@@ -41,7 +41,14 @@ enum Commands {
         json: bool,
     },
     /// Open a local review page for pending translations.
-    Review,
+    Review {
+        /// Port on 127.0.0.1 (0 = pick a free one).
+        #[arg(long, default_value_t = 4133)]
+        port: u16,
+        /// Open the page in the default browser.
+        #[arg(long)]
+        open: bool,
+    },
     /// Create polygo.toml by detecting the project type.
     Init {
         /// Overwrite an existing polygo.toml.
@@ -86,18 +93,13 @@ fn main() {
             fix,
         } => check(&cli.root, locale, json, strict, fix),
         Commands::Status { json } => status(&cli.root, json),
-        Commands::Review => todo_cmd("review"),
+        Commands::Review { port, open } => polygo::review::serve(&cli.root, port, open),
         Commands::Init { force } => init(&cli.root, force),
     };
     if let Err(e) = result {
         eprintln!("polygo: {e:#}");
         std::process::exit(1);
     }
-}
-
-fn todo_cmd(name: &str) -> Result<()> {
-    eprintln!("polygo {name}: not implemented yet");
-    std::process::exit(2);
 }
 
 fn translate(root: &Path, args: TranslateArgs) -> Result<()> {

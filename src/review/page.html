@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>polygo review</title>
+<style>
+  :root { --bg:#fff; --fg:#111; --muted:#666; --line:#e5e5e5; --accent:#2563eb; --warn:#b45309; --field:#fafafa; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --fg:#eee; --muted:#999; --line:#333; --accent:#60a5fa; --warn:#fbbf24; --field:#181818; } }
+  body { margin:0; font: 14px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--fg); }
+  header { display:flex; gap:16px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); }
+  header h1 { font-size:16px; margin:0; }
+  header .count { color:var(--muted); }
+  select, input, textarea, button { font:inherit; color:inherit; }
+  select { background:var(--field); border:1px solid var(--line); border-radius:6px; padding:4px 8px; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--line); }
+  th { font-weight:600; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  td.key { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:var(--muted); max-width:220px; word-break:break-all; }
+  td.src { max-width:320px; white-space:pre-wrap; }
+  textarea { width:100%; min-width:260px; min-height:44px; background:var(--field); border:1px solid var(--line); border-radius:6px; padding:6px 8px; resize:vertical; }
+  .reason { color:var(--warn); font-size:12px; margin-top:4px; }
+  .ctx { color:var(--muted); font-size:12px; margin-top:4px; white-space:pre-wrap; }
+  button { border:1px solid var(--line); background:var(--field); border-radius:6px; padding:5px 10px; cursor:pointer; margin-right:6px; }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  tr.done { opacity:.45; }
+  .empty { padding:40px; text-align:center; color:var(--muted); }
+  kbd { font: 11px ui-monospace, monospace; border:1px solid var(--line); border-radius:4px; padding:1px 4px; color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>polygo review</h1>
+  <select id="locale"></select>
+  <select id="filter">
+    <option value="all">all pending</option>
+    <option value="needs-review">needs review</option>
+    <option value="machine">machine translated</option>
+  </select>
+  <span class="count" id="count"></span>
+  <span class="count" style="margin-left:auto">Edit, then <kbd>⌘/Ctrl</kbd>+<kbd>Enter</kbd> to approve</span>
+</header>
+<div id="app"></div>
+<script>
+const $ = s => document.querySelector(s);
+let items = [];
+async function load() {
+  const r = await fetch('/api/items'); const j = await r.json(); items = j.items;
+  const locales = [...new Set(items.map(i => i.locale))];
+  const sel = $('#locale'); const cur = sel.value;
+  sel.innerHTML = locales.map(l => `<option ${l===cur?'selected':''}>${l}</option>`).join('');
+  render();
+}
+function esc(s) { return (s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function render() {
+  const loc = $('#locale').value, f = $('#filter').value;
+  const rows = items.filter(i => i.locale === loc && (f === 'all' || i.state === f));
+  $('#count').textContent = `${rows.length} item(s)`;
+  if (!rows.length) { $('#app').innerHTML = '<div class="empty">Nothing to review for this locale.</div>'; return; }
+  $('#app').innerHTML = `<table><thead><tr><th>key</th><th>source</th><th>translation</th><th></th></tr></thead><tbody>` +
+    rows.map((i, n) => `<tr data-n="${n}">
+      <td class="key">${esc(i.key)}${i.comment ? `<div class="ctx">${esc(i.comment)}</div>` : ''}</td>
+      <td class="src">${esc(i.source)}${i.context ? `<div class="ctx">${esc(i.context)}</div>` : ''}</td>
+      <td><textarea>${esc(i.translation ?? i.suggestion ?? '')}</textarea>${i.reason ? `<div class="reason">${esc(i.reason)}</div>` : ''}</td>
+      <td><button class="primary" data-act="approve">Approve</button><button data-act="reject">Reject</button></td>
+    </tr>`).join('') + '</tbody></table>';
+  document.querySelectorAll('button[data-act]').forEach(b => b.onclick = () => act(b.closest('tr'), b.dataset.act, rows));
+  document.querySelectorAll('textarea').forEach(t => t.onkeydown = e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') act(t.closest('tr'), 'approve', rows); });
+}
+async function act(tr, action, rows) {
+  const i = rows[+tr.dataset.n]; const text = tr.querySelector('textarea').value;
+  const r = await fetch('/api/' + action, { method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ locale: i.locale, key: i.key, text }) });
+  if (!r.ok) { alert(await r.text()); return; }
+  tr.classList.add('done'); tr.querySelectorAll('button,textarea').forEach(el => el.disabled = true);
+}
+$('#locale').onchange = render; $('#filter').onchange = render;
+load();
+</script>
+</body>
+</html>

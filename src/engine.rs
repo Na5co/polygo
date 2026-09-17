@@ -239,6 +239,19 @@ pub fn translate(
     Ok(report)
 }
 
+/// Write one translation through the format serializers (used by `review`).
+pub fn write_translation(
+    root: &Path,
+    cfg: &Config,
+    key: &str,
+    locale: &str,
+    text: &str,
+) -> Result<()> {
+    let mut ws = Workspace::open(root, cfg)?;
+    ws.set(cfg, key, locale, text)?;
+    ws.flush()
+}
+
 fn translate_with_retry(
     provider: &dyn Provider,
     batch: &[Request],
