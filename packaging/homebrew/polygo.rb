@@ -3,28 +3,28 @@
 class Polygo < Formula
   desc "Lokalise for one person: local-first, git-native localization CLI"
   homepage "https://github.com/Na5co/polygo"
-  version "0.1.0"
+  version "0.1.1"
   license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/Na5co/polygo/releases/download/v#{version}/polygo-v#{version}-aarch64-darwin.tar.gz"
-      sha256 "7a36ef2bd12092bb381c01c349e0d43810056e75b0cd873b7230e1e718a88642"
+      sha256 "edac8a1b0dcfce58b4edaffd0b7f9772dc22685482941301263d6c0abbb55a1a"
     end
     on_intel do
       url "https://github.com/Na5co/polygo/releases/download/v#{version}/polygo-v#{version}-x86_64-darwin.tar.gz"
-      sha256 "1d05bb8ce92337babda85e116cca622e2774ae8baec702f53acc09dacfabc160"
+      sha256 "274364cc4dc60357d2cc276019a1d00af3cd032f83c8ba921c16d613152fd023"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/Na5co/polygo/releases/download/v#{version}/polygo-v#{version}-aarch64-linux.tar.gz"
-      sha256 "d3c007f9aa2033dafb1a7faff1501f2399e97ac54aee90100e60acb2da9c9eec"
+      sha256 "f92dd89226f7db019551782911df1f56698b66814c8d4b08b35e52e3a35b6952"
     end
     on_intel do
       url "https://github.com/Na5co/polygo/releases/download/v#{version}/polygo-v#{version}-x86_64-linux.tar.gz"
-      sha256 "a5c6127c91c4812f9094002793b49a6afa7c7ebc6c24c8b257ab7c23ad673078"
+      sha256 "7473b50be399c155d438317a64954a7dd87cf94abf73985abbf871667a8fa236"
     end
   end
 
