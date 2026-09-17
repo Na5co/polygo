@@ -4,6 +4,19 @@ version = "0.1.0"
 edition = "2024"
 description = "Lokalise for one person: a local-first, git-native localization CLI"
 license = "MIT"
+repository = "https://github.com/atanasa/polygo"
+readme = "README.md"
+keywords = ["i18n", "localization", "translation", "xcstrings", "cli"]
+categories = ["command-line-utilities", "internationalization", "development-tools"]
+exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "packaging/*", ".github/*"]
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/polygo-v{ version }-{ target-arch }-{ target-family }{ archive-suffix }"
+pkg-fmt = "tgz"
+bin-dir = "polygo{ binary-ext }"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
 
 [lib]
 name = "polygo"

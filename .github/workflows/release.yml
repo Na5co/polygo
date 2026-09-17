@@ -1,0 +1,65 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: aarch64-apple-darwin,      os: macos-latest,   asset: aarch64-darwin }
+          - { target: x86_64-apple-darwin,       os: macos-latest,   asset: x86_64-darwin }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-latest,  asset: x86_64-linux }
+          - { target: aarch64-unknown-linux-musl, os: ubuntu-latest, asset: aarch64-linux, cross: true }
+          - { target: x86_64-pc-windows-msvc,    os: windows-latest, asset: x86_64-windows }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - name: Install cross
+        if: ${{ matrix.cross }}
+        run: cargo install cross --locked
+      - name: Build
+        shell: bash
+        run: |
+          if [ "${{ matrix.cross }}" = "true" ]; then cross build --release --target ${{ matrix.target }};
+          else cargo build --release --target ${{ matrix.target }}; fi
+      - name: Package
+        shell: bash
+        run: |
+          set -euo pipefail
+          v="${GITHUB_REF_NAME}"
+          bin=target/${{ matrix.target }}/release/polygo; [ -f "$bin.exe" ] && bin="$bin.exe"
+          size=$(wc -c < "$bin"); echo "size: $size"; [ "$size" -lt 15728640 ]
+          mkdir -p dist/pkg && cp "$bin" dist/pkg/ && cp README.md LICENSE dist/pkg/ 2>/dev/null || true
+          if [[ "${{ matrix.target }}" == *windows* ]]; then
+            (cd dist/pkg && 7z a "../polygo-${v}-${{ matrix.asset }}.zip" .)
+          else
+            tar -C dist/pkg -czf "dist/polygo-${v}-${{ matrix.asset }}.tar.gz" .
+          fi
+          ls -la dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: dist/polygo-*
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: cd dist && sha256sum polygo-* > SHA256SUMS
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/polygo-*
+            dist/SHA256SUMS
+          generate_release_notes: true
