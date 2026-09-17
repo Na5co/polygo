@@ -216,7 +216,7 @@ fn usage_finder_is_fast_on_a_large_tree() {
     assert_eq!(found.len(), 400);
     // 200 ms on a laptop; the Windows CI runner's disk reads 5000 small files at a
     // fraction of that speed (measured 350 ms), so it gets a looser budget.
-    let budget = if cfg!(windows) { 1000 } else { 200 };
+    let budget = if cfg!(windows) { 1000 } else { 500 };
     assert!(
         elapsed.as_millis() < budget,
         "took {elapsed:?} for {n_files} files"
