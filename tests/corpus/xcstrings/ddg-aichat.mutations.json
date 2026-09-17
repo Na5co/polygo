@@ -1,0 +1,422 @@
+[
+ {
+  "key": "aichat.download.complete",
+  "locale": "bg",
+  "source": "Download complete for %@",
+  "translation": "Завършено изтегляне на %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "bg",
+  "source": "Download complete for %@",
+  "translation": "Завършено изтегляне на %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "cs",
+  "source": "Download complete for %@",
+  "translation": "Stahování souboru %@ %@ bylo dokončeno",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "cs",
+  "source": "Download complete for %@",
+  "translation": "Stahování souboru %d bylo dokončeno",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "da",
+  "source": "Download complete for %@",
+  "translation": "Download fuldført for ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "da",
+  "source": "Download complete for %@",
+  "translation": "Download fuldført for %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "da",
+  "source": "Download complete for %@",
+  "translation": "Download fuldført for %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "de",
+  "source": "Download complete for %@",
+  "translation": "Download von  abgeschlossen",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "de",
+  "source": "Download complete for %@",
+  "translation": "Download von %@ %@ abgeschlossen",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "de",
+  "source": "Download complete for %@",
+  "translation": "Download von %d abgeschlossen",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "el",
+  "source": "Download complete for %@",
+  "translation": "Η λήψη ολοκληρώθηκε για το αρχείο ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "el",
+  "source": "Download complete for %@",
+  "translation": "Η λήψη ολοκληρώθηκε για το αρχείο %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "es",
+  "source": "Download complete for %@",
+  "translation": "Descarga de  finalizada",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "et",
+  "source": "Download complete for %@",
+  "translation": " allalaadimine on lõpetatud",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "et",
+  "source": "Download complete for %@",
+  "translation": "%@ %@ allalaadimine on lõpetatud",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "et",
+  "source": "Download complete for %@",
+  "translation": "%d allalaadimine on lõpetatud",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "fi",
+  "source": "Download complete for %@",
+  "translation": "Tiedoston  lataus valmis",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "fi",
+  "source": "Download complete for %@",
+  "translation": "Tiedoston %@ %@ lataus valmis",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "fr",
+  "source": "Download complete for %@",
+  "translation": "Téléchargement terminé pour ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "fr",
+  "source": "Download complete for %@",
+  "translation": "Téléchargement terminé pour %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "hr",
+  "source": "Download complete for %@",
+  "translation": "Preuzimanje je dovršeno za ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "hr",
+  "source": "Download complete for %@",
+  "translation": "Preuzimanje je dovršeno za %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "hr",
+  "source": "Download complete for %@",
+  "translation": "Preuzimanje je dovršeno za %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "hu",
+  "source": "Download complete for %@",
+  "translation": "A letöltés kész: ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "hu",
+  "source": "Download complete for %@",
+  "translation": "A letöltés kész: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "it",
+  "source": "Download complete for %@",
+  "translation": "Download di  completato",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "it",
+  "source": "Download complete for %@",
+  "translation": "Download di %@ %@ completato",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "it",
+  "source": "Download complete for %@",
+  "translation": "Download di %d completato",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ja",
+  "source": "Download complete for %@",
+  "translation": "のダウンロードが完了しました",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ja",
+  "source": "Download complete for %@",
+  "translation": "%@ %@のダウンロードが完了しました",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ja",
+  "source": "Download complete for %@",
+  "translation": "%dのダウンロードが完了しました",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lt",
+  "source": "Download complete for %@",
+  "translation": " atsisiuntimas baigtas",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lt",
+  "source": "Download complete for %@",
+  "translation": "%@ %@ atsisiuntimas baigtas",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lt",
+  "source": "Download complete for %@",
+  "translation": "%d atsisiuntimas baigtas",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lv",
+  "source": "Download complete for %@",
+  "translation": " lejupielāde ir pabeigta",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lv",
+  "source": "Download complete for %@",
+  "translation": "%@ %@ lejupielāde ir pabeigta",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "lv",
+  "source": "Download complete for %@",
+  "translation": "%d lejupielāde ir pabeigta",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "nb",
+  "source": "Download complete for %@",
+  "translation": "Nedlasting av %@ %@ er fullført",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "nb",
+  "source": "Download complete for %@",
+  "translation": "Nedlasting av %d er fullført",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "nl",
+  "source": "Download complete for %@",
+  "translation": " is gedownload",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "nl",
+  "source": "Download complete for %@",
+  "translation": "%@ %@ is gedownload",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "nl",
+  "source": "Download complete for %@",
+  "translation": "%d is gedownload",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "pl",
+  "source": "Download complete for %@",
+  "translation": "Zakończono pobieranie %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "pl",
+  "source": "Download complete for %@",
+  "translation": "Zakończono pobieranie %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "pt",
+  "source": "Download complete for %@",
+  "translation": "Transferência completa de ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "pt",
+  "source": "Download complete for %@",
+  "translation": "Transferência completa de %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "pt",
+  "source": "Download complete for %@",
+  "translation": "Transferência completa de %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ro",
+  "source": "Download complete for %@",
+  "translation": "Descărcare finalizată pentru %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ru",
+  "source": "Download complete for %@",
+  "translation": "Завершена загрузка файла ",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ru",
+  "source": "Download complete for %@",
+  "translation": "Завершена загрузка файла %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "ru",
+  "source": "Download complete for %@",
+  "translation": "Завершена загрузка файла %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sk",
+  "source": "Download complete for %@",
+  "translation": " – sťahovanie dokončené",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sk",
+  "source": "Download complete for %@",
+  "translation": "%@ %@ – sťahovanie dokončené",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sk",
+  "source": "Download complete for %@",
+  "translation": "%d – sťahovanie dokončené",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sl",
+  "source": "Download complete for %@",
+  "translation": "Prenos za  je končan",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sl",
+  "source": "Download complete for %@",
+  "translation": "Prenos za %@ %@ je končan",
+  "kind": "dup"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sl",
+  "source": "Download complete for %@",
+  "translation": "Prenos za %d je končan",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "sv",
+  "source": "Download complete for %@",
+  "translation": "Nerladdningen slutförd för %d",
+  "kind": "retype"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "tr",
+  "source": "Download complete for %@",
+  "translation": " için indirme tamamlandı",
+  "kind": "drop"
+ },
+ {
+  "key": "aichat.download.complete",
+  "locale": "tr",
+  "source": "Download complete for %@",
+  "translation": "%d için indirme tamamlandı",
+  "kind": "retype"
+ }
+]

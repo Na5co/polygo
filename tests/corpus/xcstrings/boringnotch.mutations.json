@@ -1,0 +1,422 @@
+[
+ {
+  "key": " – %lld",
+  "locale": "cs",
+  "source": " – %lld",
+  "translation": " – %lld %lld",
+  "kind": "dup"
+ },
+ {
+  "key": " – %lld",
+  "locale": "fr",
+  "source": " – %lld",
+  "translation": " – ",
+  "kind": "drop"
+ },
+ {
+  "key": " – %lld",
+  "locale": "fr",
+  "source": " – %lld",
+  "translation": " – %lls",
+  "kind": "retype"
+ },
+ {
+  "key": " – %lld",
+  "locale": "it",
+  "source": " – %lld",
+  "translation": " – %lld %lld",
+  "kind": "dup"
+ },
+ {
+  "key": " – %lld",
+  "locale": "ko",
+  "source": " – %lld",
+  "translation": " – ",
+  "kind": "drop"
+ },
+ {
+  "key": " – %lld",
+  "locale": "ko",
+  "source": " – %lld",
+  "translation": " – %lls",
+  "kind": "retype"
+ },
+ {
+  "key": " – %lld",
+  "locale": "pl",
+  "source": " – %lld",
+  "translation": " – ",
+  "kind": "drop"
+ },
+ {
+  "key": " – %lld",
+  "locale": "tr",
+  "source": " – %lld",
+  "translation": " – %lls",
+  "kind": "retype"
+ },
+ {
+  "key": "%.0f seconds",
+  "locale": "it",
+  "source": "%.0f seconds",
+  "translation": " secondi",
+  "kind": "drop"
+ },
+ {
+  "key": "%.0f seconds",
+  "locale": "it",
+  "source": "%.0f seconds",
+  "translation": "%.0d secondi",
+  "kind": "retype"
+ },
+ {
+  "key": "%.0f seconds",
+  "locale": "ko",
+  "source": "%.0f seconds",
+  "translation": "%.0f %.0f 초",
+  "kind": "dup"
+ },
+ {
+  "key": "%.0f seconds",
+  "locale": "tr",
+  "source": "%.0f seconds",
+  "translation": " saniye",
+  "kind": "drop"
+ },
+ {
+  "key": "%.0f seconds",
+  "locale": "tr",
+  "source": "%.0f seconds",
+  "translation": "%.0f %.0f saniye",
+  "kind": "dup"
+ },
+ {
+  "key": "%.1fs",
+  "locale": "de",
+  "source": "%.1fs",
+  "translation": "%.1f %.1fs",
+  "kind": "dup"
+ },
+ {
+  "key": "%.1fs",
+  "locale": "es",
+  "source": "%.1fs",
+  "translation": "s",
+  "kind": "drop"
+ },
+ {
+  "key": "%@",
+  "locale": "de",
+  "source": "%@",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%@",
+  "locale": "de",
+  "source": "%@",
+  "translation": "%@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "%@",
+  "locale": "en-GB",
+  "source": "%@",
+  "translation": "%@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "%@",
+  "locale": "pl",
+  "source": "%@",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%d%%",
+  "locale": "hu",
+  "source": "%d%%",
+  "translation": "%s%%",
+  "kind": "retype"
+ },
+ {
+  "key": "%d%%",
+  "locale": "pl",
+  "source": "%d%%",
+  "translation": "%%",
+  "kind": "drop"
+ },
+ {
+  "key": "%d%%",
+  "locale": "pt-BR",
+  "source": "%d%%",
+  "translation": "%%",
+  "kind": "drop"
+ },
+ {
+  "key": "%d%%",
+  "locale": "pt-BR",
+  "source": "%d%%",
+  "translation": "%d %d%%",
+  "kind": "dup"
+ },
+ {
+  "key": "%d%%",
+  "locale": "ru",
+  "source": "%d%%",
+  "translation": "%d %d%%",
+  "kind": "dup"
+ },
+ {
+  "key": "%d%%",
+  "locale": "tr",
+  "source": "%d%%",
+  "translation": "%d %d%%",
+  "kind": "dup"
+ },
+ {
+  "key": "%d%%",
+  "locale": "uk",
+  "source": "%d%%",
+  "translation": "%d %d%%",
+  "kind": "dup"
+ },
+ {
+  "key": "%lld",
+  "locale": "ar",
+  "source": "%lld",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld",
+  "locale": "en-GB",
+  "source": "%lld",
+  "translation": "%lls",
+  "kind": "retype"
+ },
+ {
+  "key": "%lld",
+  "locale": "fr",
+  "source": "%lld",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "cs",
+  "source": "%lld%%",
+  "translation": "%%",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "hu",
+  "source": "%lld%%",
+  "translation": "%lld %lld%%",
+  "kind": "dup"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "ko",
+  "source": "%lld%%",
+  "translation": "%lls%%",
+  "kind": "retype"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "tr",
+  "source": "%lld%%",
+  "translation": "%lls%%",
+  "kind": "retype"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "uk",
+  "source": "%lld%%",
+  "translation": "%%",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld%%",
+  "locale": "uk",
+  "source": "%lld%%",
+  "translation": "%lls%%",
+  "kind": "retype"
+ },
+ {
+  "key": "(%@)",
+  "locale": "es",
+  "source": "(%@)",
+  "translation": "()",
+  "kind": "drop"
+ },
+ {
+  "key": "(%@)",
+  "locale": "hu",
+  "source": "(%@)",
+  "translation": "()",
+  "kind": "drop"
+ },
+ {
+  "key": "(%@)",
+  "locale": "hu",
+  "source": "(%@)",
+  "translation": "(%@ %@)",
+  "kind": "dup"
+ },
+ {
+  "key": "(%@)",
+  "locale": "hu",
+  "source": "(%@)",
+  "translation": "(%d)",
+  "kind": "retype"
+ },
+ {
+  "key": "Currently selected: %@",
+  "locale": "de",
+  "source": "Currently selected: %@",
+  "translation": "Derzeit ausgewählt: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "Currently selected: %@",
+  "locale": "ko",
+  "source": "Currently selected: %@",
+  "translation": "현재 선택된: %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "en-GB",
+  "source": "Custom notch size - %.0f",
+  "translation": "Custom notch size - %.0f %.0f",
+  "kind": "dup"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "hu",
+  "source": "Custom notch size - %.0f",
+  "translation": "Custom notch size - ",
+  "kind": "drop"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "hu",
+  "source": "Custom notch size - %.0f",
+  "translation": "Custom notch size - %.0d",
+  "kind": "retype"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "ko",
+  "source": "Custom notch size - %.0f",
+  "translation": "사용자 정의 노치 사이즈 - %.0d",
+  "kind": "retype"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "uk",
+  "source": "Custom notch size - %.0f",
+  "translation": "Користувацький розмір брові - ",
+  "kind": "drop"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "zh-Hans",
+  "source": "Custom notch size - %.0f",
+  "translation": "自定义Notch大小 - ",
+  "kind": "drop"
+ },
+ {
+  "key": "Custom notch size - %.0f",
+  "locale": "zh-Hans",
+  "source": "Custom notch size - %.0f",
+  "translation": "自定义Notch大小 - %.0f %.0f",
+  "kind": "dup"
+ },
+ {
+  "key": "Max Capacity: %lld%%",
+  "locale": "uk",
+  "source": "Max Capacity: %lld%%",
+  "translation": "Max Capacity: %%",
+  "kind": "drop"
+ },
+ {
+  "key": "Max Capacity: %lld%%",
+  "locale": "uk",
+  "source": "Max Capacity: %lld%%",
+  "translation": "Max Capacity: %lls%%",
+  "kind": "retype"
+ },
+ {
+  "key": "Mic %@",
+  "locale": "pt-BR",
+  "source": "Mic %@",
+  "translation": "Mic %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "Mic %@",
+  "locale": "ru",
+  "source": "Mic %@",
+  "translation": "Mic %d",
+  "kind": "retype"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "de",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Zeit bis zur vollen Ladung: %lls min",
+  "kind": "retype"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "es",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Tiempo para recarga completa: %lld %lld min",
+  "kind": "dup"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "ko",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "완충 까지 남은 시간: %lls 분",
+  "kind": "retype"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "pt-BR",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Time to Full Charge: %lld %lld min",
+  "kind": "dup"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "tr",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Tam Şarj Süresi: %lld %lld dakika",
+  "kind": "dup"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "tr",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Tam Şarj Süresi: %lls dakika",
+  "kind": "retype"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "uk",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Time to Full Charge:  min",
+  "kind": "drop"
+ },
+ {
+  "key": "Time to Full Charge: %lld min",
+  "locale": "uk",
+  "source": "Time to Full Charge: %lld min",
+  "translation": "Time to Full Charge: %lld %lld min",
+  "kind": "dup"
+ }
+]

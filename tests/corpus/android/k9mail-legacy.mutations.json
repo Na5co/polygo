@@ -1,0 +1,226 @@
+[
+ {
+  "key": "account_settings_automatic_special_folder",
+  "locale": "en",
+  "source": "Automatic (%s)",
+  "translation": "Automatic ()",
+  "kind": "drop"
+ },
+ {
+  "key": "account_settings_automatic_special_folder",
+  "locale": "en",
+  "source": "Automatic (%s)",
+  "translation": "Automatic (%s %s)",
+  "kind": "dup"
+ },
+ {
+  "key": "account_settings_automatic_special_folder",
+  "locale": "en",
+  "source": "Automatic (%s)",
+  "translation": "Automatic (%d)",
+  "kind": "retype"
+ },
+ {
+  "key": "account_settings_crypto_summary_on",
+  "locale": "en",
+  "source": "Connected to %s",
+  "translation": "Connected to ",
+  "kind": "drop"
+ },
+ {
+  "key": "account_settings_crypto_summary_on",
+  "locale": "en",
+  "source": "Connected to %s",
+  "translation": "Connected to %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "account_settings_crypto_summary_on",
+  "locale": "en",
+  "source": "Connected to %s",
+  "translation": "Connected to %d",
+  "kind": "retype"
+ },
+ {
+  "key": "changelog_version_title",
+  "locale": "en",
+  "source": "Version %s",
+  "translation": "Version ",
+  "kind": "drop"
+ },
+ {
+  "key": "changelog_version_title",
+  "locale": "en",
+  "source": "Version %s",
+  "translation": "Version %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "changelog_version_title",
+  "locale": "en",
+  "source": "Version %s",
+  "translation": "Version %d",
+  "kind": "retype"
+ },
+ {
+  "key": "message_list_content_description_unread_prefix",
+  "locale": "en",
+  "source": "unread, %s",
+  "translation": "unread, ",
+  "kind": "drop"
+ },
+ {
+  "key": "message_list_content_description_unread_prefix",
+  "locale": "en",
+  "source": "unread, %s",
+  "translation": "unread, %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "message_list_content_description_unread_prefix",
+  "locale": "en",
+  "source": "unread, %s",
+  "translation": "unread, %d",
+  "kind": "retype"
+ },
+ {
+  "key": "message_view_sender_label",
+  "locale": "en",
+  "source": "via %1$s",
+  "translation": "via ",
+  "kind": "drop"
+ },
+ {
+  "key": "message_view_sender_label",
+  "locale": "en",
+  "source": "via %1$s",
+  "translation": "via %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "send_failed_reason",
+  "locale": "en",
+  "source": "Send failed: %s",
+  "translation": "Send failed: ",
+  "kind": "drop"
+ },
+ {
+  "key": "send_failed_reason",
+  "locale": "en",
+  "source": "Send failed: %s",
+  "translation": "Send failed: %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "send_failed_reason",
+  "locale": "en",
+  "source": "Send failed: %s",
+  "translation": "Send failed: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "size_format_bytes",
+  "locale": "en",
+  "source": "%d B",
+  "translation": " B",
+  "kind": "drop"
+ },
+ {
+  "key": "size_format_bytes",
+  "locale": "en",
+  "source": "%d B",
+  "translation": "%d %d B",
+  "kind": "dup"
+ },
+ {
+  "key": "size_format_bytes",
+  "locale": "en",
+  "source": "%d B",
+  "translation": "%s B",
+  "kind": "retype"
+ },
+ {
+  "key": "size_format_gigabytes",
+  "locale": "en",
+  "source": "%.1f GB",
+  "translation": " GB",
+  "kind": "drop"
+ },
+ {
+  "key": "size_format_gigabytes",
+  "locale": "en",
+  "source": "%.1f GB",
+  "translation": "%.1f %.1f GB",
+  "kind": "dup"
+ },
+ {
+  "key": "size_format_gigabytes",
+  "locale": "en",
+  "source": "%.1f GB",
+  "translation": "%.1d GB",
+  "kind": "retype"
+ },
+ {
+  "key": "size_format_kilobytes",
+  "locale": "en",
+  "source": "%.1f kB",
+  "translation": " kB",
+  "kind": "drop"
+ },
+ {
+  "key": "size_format_kilobytes",
+  "locale": "en",
+  "source": "%.1f kB",
+  "translation": "%.1f %.1f kB",
+  "kind": "dup"
+ },
+ {
+  "key": "size_format_kilobytes",
+  "locale": "en",
+  "source": "%.1f kB",
+  "translation": "%.1d kB",
+  "kind": "retype"
+ },
+ {
+  "key": "size_format_megabytes",
+  "locale": "en",
+  "source": "%.1f MB",
+  "translation": " MB",
+  "kind": "drop"
+ },
+ {
+  "key": "size_format_megabytes",
+  "locale": "en",
+  "source": "%.1f MB",
+  "translation": "%.1f %.1f MB",
+  "kind": "dup"
+ },
+ {
+  "key": "size_format_megabytes",
+  "locale": "en",
+  "source": "%.1f MB",
+  "translation": "%.1d MB",
+  "kind": "retype"
+ },
+ {
+  "key": "toast_openpgp_provider_error",
+  "locale": "en",
+  "source": "Error connecting to %s!",
+  "translation": "Error connecting to !",
+  "kind": "drop"
+ },
+ {
+  "key": "toast_openpgp_provider_error",
+  "locale": "en",
+  "source": "Error connecting to %s!",
+  "translation": "Error connecting to %s %s!",
+  "kind": "dup"
+ },
+ {
+  "key": "toast_openpgp_provider_error",
+  "locale": "en",
+  "source": "Error connecting to %s!",
+  "translation": "Error connecting to %d!",
+  "kind": "retype"
+ }
+]

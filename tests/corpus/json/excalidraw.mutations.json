@@ -1,0 +1,422 @@
+[
+ {
+  "key": "alerts.confirmAddLibrary",
+  "locale": "en",
+  "source": "This will add {{numShapes}} shape(s) to your library. Are you sure?",
+  "translation": "This will add {numShapes} shape(s) to your library. Are you sure?",
+  "kind": "braces"
+ },
+ {
+  "key": "alerts.confirmAddLibrary",
+  "locale": "en",
+  "source": "This will add {{numShapes}} shape(s) to your library. Are you sure?",
+  "translation": "This will add  shape(s) to your library. Are you sure?",
+  "kind": "drop"
+ },
+ {
+  "key": "alerts.removeItemsFromsLibrary",
+  "locale": "en",
+  "source": "Delete {{count}} item(s) from library?",
+  "translation": "Delete {count} item(s) from library?",
+  "kind": "braces"
+ },
+ {
+  "key": "alerts.removeItemsFromsLibrary",
+  "locale": "en",
+  "source": "Delete {{count}} item(s) from library?",
+  "translation": "Delete  item(s) from library?",
+  "kind": "drop"
+ },
+ {
+  "key": "chat.errors.promptTooLong",
+  "locale": "en",
+  "source": "Prompt is too long (max {{max}} characters)",
+  "translation": "Prompt is too long (max  characters)",
+  "kind": "drop"
+ },
+ {
+  "key": "chat.errors.promptTooShort",
+  "locale": "en",
+  "source": "Prompt is too short (min {{min}} characters)",
+  "translation": "Prompt is too short (min  characters)",
+  "kind": "drop"
+ },
+ {
+  "key": "chat.inputPlaceholder",
+  "locale": "en",
+  "source": "Start typing your diagram idea here... ({{shortcut}} for new line)",
+  "translation": "Start typing your diagram idea here... ({shortcut} for new line)",
+  "kind": "braces"
+ },
+ {
+  "key": "chat.inputPlaceholder",
+  "locale": "en",
+  "source": "Start typing your diagram idea here... ({{shortcut}} for new line)",
+  "translation": "Start typing your diagram idea here... ( for new line)",
+  "kind": "drop"
+ },
+ {
+  "key": "chat.rateLimitRemaining",
+  "locale": "en",
+  "source": "{{count}} requests left today",
+  "translation": "{count} requests left today",
+  "kind": "braces"
+ },
+ {
+  "key": "chat.rateLimitRemaining",
+  "locale": "en",
+  "source": "{{count}} requests left today",
+  "translation": " requests left today",
+  "kind": "drop"
+ },
+ {
+  "key": "commandPalette.shortcutHint",
+  "locale": "en",
+  "source": "For Command palette, use {{shortcut}}",
+  "translation": "For Command palette, use {shortcut}",
+  "kind": "braces"
+ },
+ {
+  "key": "commandPalette.shortcutHint",
+  "locale": "en",
+  "source": "For Command palette, use {{shortcut}}",
+  "translation": "For Command palette, use ",
+  "kind": "drop"
+ },
+ {
+  "key": "errorSplash.trackedToSentry",
+  "locale": "en",
+  "source": "The error with identifier {{eventId}} was tracked on our system.",
+  "translation": "The error with identifier {eventId} was tracked on our system.",
+  "kind": "braces"
+ },
+ {
+  "key": "errorSplash.trackedToSentry",
+  "locale": "en",
+  "source": "The error with identifier {{eventId}} was tracked on our system.",
+  "translation": "The error with identifier  was tracked on our system.",
+  "kind": "drop"
+ },
+ {
+  "key": "errors.fileTooBig",
+  "locale": "en",
+  "source": "File is too big. Maximum allowed size is {{maxSize}}.",
+  "translation": "File is too big. Maximum allowed size is {maxSize}.",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.arrowBindModifiers",
+  "locale": "en",
+  "source": "Hold {{shortcut_1}} to disable binding, or {{shortcut_2}} to bind at a fixed point",
+  "translation": "Hold {shortcut_1} to disable binding, or {{shortcut_2}} to bind at a fixed point",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.arrowBindModifiers",
+  "locale": "en",
+  "source": "Hold {{shortcut_1}} to disable binding, or {{shortcut_2}} to bind at a fixed point",
+  "translation": "Hold  to disable binding, or {{shortcut_2}} to bind at a fixed point",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.arrowTool",
+  "locale": "en",
+  "source": "Click to start multiple points, drag for single line. Press {{shortcut}} again to change arrow type.",
+  "translation": "Click to start multiple points, drag for single line. Press {shortcut} again to change arrow type.",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.arrowTool",
+  "locale": "en",
+  "source": "Click to start multiple points, drag for single line. Press {{shortcut}} again to change arrow type.",
+  "translation": "Click to start multiple points, drag for single line. Press  again to change arrow type.",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.bindTextToElement",
+  "locale": "en",
+  "source": "{{shortcut}} to add text",
+  "translation": "{shortcut} to add text",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.bindTextToElement",
+  "locale": "en",
+  "source": "{{shortcut}} to add text",
+  "translation": " to add text",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.canvasPanning",
+  "locale": "en",
+  "source": "To move canvas, hold {{shortcut_1}} or {{shortcut_2}} while dragging, or use the hand tool",
+  "translation": "To move canvas, hold  or {{shortcut_2}} while dragging, or use the hand tool",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.createFlowchart",
+  "locale": "en",
+  "source": "{{shortcut}} to create a flowchart",
+  "translation": " to create a flowchart",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.disableSnapping",
+  "locale": "en",
+  "source": "Hold {{shortcut}} to disable snapping",
+  "translation": "Hold  to disable snapping",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.dismissSearch",
+  "locale": "en",
+  "source": "{{shortcut}} to dismiss search",
+  "translation": "{shortcut} to dismiss search",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.dismissSearch",
+  "locale": "en",
+  "source": "{{shortcut}} to dismiss search",
+  "translation": " to dismiss search",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.enterCropEditor",
+  "locale": "en",
+  "source": "Double click the image or press {{shortcut}} to crop the image",
+  "translation": "Double click the image or press {shortcut} to crop the image",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.enterCropEditor",
+  "locale": "en",
+  "source": "Double click the image or press {{shortcut}} to crop the image",
+  "translation": "Double click the image or press  to crop the image",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.eraserRevert",
+  "locale": "en",
+  "source": "Hold {{shortcut}} to revert the elements marked for deletion",
+  "translation": "Hold {shortcut} to revert the elements marked for deletion",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.eraserRevert",
+  "locale": "en",
+  "source": "Hold {{shortcut}} to revert the elements marked for deletion",
+  "translation": "Hold  to revert the elements marked for deletion",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.leaveCropEditor",
+  "locale": "en",
+  "source": "Click outside the image or press {{shortcut_1}} or {{shortcut_2}} to finish cropping",
+  "translation": "Click outside the image or press {shortcut_1} or {{shortcut_2}} to finish cropping",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.leaveCropEditor",
+  "locale": "en",
+  "source": "Click outside the image or press {{shortcut_1}} or {{shortcut_2}} to finish cropping",
+  "translation": "Click outside the image or press  or {{shortcut_2}} to finish cropping",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.lineEditor_info",
+  "locale": "en",
+  "source": "Hold {{shortcut_1}} and Double-click or press {{shortcut_2}} to edit points",
+  "translation": "Hold {shortcut_1} and Double-click or press {{shortcut_2}} to edit points",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.lineEditor_info",
+  "locale": "en",
+  "source": "Hold {{shortcut_1}} and Double-click or press {{shortcut_2}} to edit points",
+  "translation": "Hold  and Double-click or press {{shortcut_2}} to edit points",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.lineEditor_line_info",
+  "locale": "en",
+  "source": "Double-click or press {{shortcut}} to edit points",
+  "translation": "Double-click or press {shortcut} to edit points",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.lineEditor_pointSelected",
+  "locale": "en",
+  "source": "Press {{shortcut_1}} to remove point(s),\n{{shortcut_2}} to duplicate, or drag to move",
+  "translation": "Press {shortcut_1} to remove point(s),\n{{shortcut_2}} to duplicate, or drag to move",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.lineEditor_pointSelected",
+  "locale": "en",
+  "source": "Press {{shortcut_1}} to remove point(s),\n{{shortcut_2}} to duplicate, or drag to move",
+  "translation": "Press  to remove point(s),\n{{shortcut_2}} to duplicate, or drag to move",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.linearElementMulti",
+  "locale": "en",
+  "source": "Click on last point or press {{shortcut_1}} or {{shortcut_2}} to finish",
+  "translation": "Click on last point or press {shortcut_1} or {{shortcut_2}} to finish",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.linearElementMulti",
+  "locale": "en",
+  "source": "Click on last point or press {{shortcut_1}} or {{shortcut_2}} to finish",
+  "translation": "Click on last point or press  or {{shortcut_2}} to finish",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.lockAngle",
+  "locale": "en",
+  "source": "You can constrain angle by holding {{shortcut}}",
+  "translation": "You can constrain angle by holding {shortcut}",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.resize",
+  "locale": "en",
+  "source": "You can constrain proportions by holding {{shortcut_1}} while resizing,\nhold {{shortcut_2}} to resize from the center",
+  "translation": "You can constrain proportions by holding {shortcut_1} while resizing,\nhold {{shortcut_2}} to resize from the center",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.resize",
+  "locale": "en",
+  "source": "You can constrain proportions by holding {{shortcut_1}} while resizing,\nhold {{shortcut_2}} to resize from the center",
+  "translation": "You can constrain proportions by holding  while resizing,\nhold {{shortcut_2}} to resize from the center",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.resizeImage",
+  "locale": "en",
+  "source": "You can resize freely by holding {{shortcut_1}},\nhold {{shortcut_2}} to resize from the center",
+  "translation": "You can resize freely by holding {shortcut_1},\nhold {{shortcut_2}} to resize from the center",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.resizeImage",
+  "locale": "en",
+  "source": "You can resize freely by holding {{shortcut_1}},\nhold {{shortcut_2}} to resize from the center",
+  "translation": "You can resize freely by holding ,\nhold {{shortcut_2}} to resize from the center",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.resizeStickyNote",
+  "locale": "en",
+  "source": "hold {{shortcut_1}} to resize freely, {{shortcut_2}} to resize from the center",
+  "translation": "hold {shortcut_1} to resize freely, {{shortcut_2}} to resize from the center",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.resizeStickyNote",
+  "locale": "en",
+  "source": "hold {{shortcut_1}} to resize freely, {{shortcut_2}} to resize from the center",
+  "translation": "hold  to resize freely, {{shortcut_2}} to resize from the center",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.rotate",
+  "locale": "en",
+  "source": "You can constrain angles by holding {{shortcut}} while rotating",
+  "translation": "You can constrain angles by holding {shortcut} while rotating",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.rotate",
+  "locale": "en",
+  "source": "You can constrain angles by holding {{shortcut}} while rotating",
+  "translation": "You can constrain angles by holding  while rotating",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.text_editing",
+  "locale": "en",
+  "source": "Press {{shortcut_1}} or {{shortcut_2}} to finish editing",
+  "translation": "Press {shortcut_1} or {{shortcut_2}} to finish editing",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.text_editing",
+  "locale": "en",
+  "source": "Press {{shortcut_1}} or {{shortcut_2}} to finish editing",
+  "translation": "Press  or {{shortcut_2}} to finish editing",
+  "kind": "drop"
+ },
+ {
+  "key": "hints.text_selected",
+  "locale": "en",
+  "source": "Double-click or press {{shortcut}} to edit text",
+  "translation": "Double-click or press {shortcut} to edit text",
+  "kind": "braces"
+ },
+ {
+  "key": "hints.text_selected",
+  "locale": "en",
+  "source": "Double-click or press {{shortcut}} to edit text",
+  "translation": "Double-click or press  to edit text",
+  "kind": "drop"
+ },
+ {
+  "key": "publishSuccessDialog.content",
+  "locale": "en",
+  "source": "Thank you {{authorName}}. Your library has been submitted for review. You can track the status <link>here</link>",
+  "translation": "Thank you . Your library has been submitted for review. You can track the status <link>here</link>",
+  "kind": "drop"
+ },
+ {
+  "key": "toast.copyToClipboardAsPng",
+  "locale": "en",
+  "source": "Copied {{exportSelection}} to clipboard as PNG\n({{exportColorScheme}})",
+  "translation": "Copied  to clipboard as PNG\n({{exportColorScheme}})",
+  "kind": "drop"
+ },
+ {
+  "key": "toast.copyToClipboardAsSvg",
+  "locale": "en",
+  "source": "Copied {{exportSelection}} to clipboard as SVG\n({{exportColorScheme}})",
+  "translation": "Copied {exportSelection} to clipboard as SVG\n({{exportColorScheme}})",
+  "kind": "braces"
+ },
+ {
+  "key": "toast.copyToClipboardAsSvg",
+  "locale": "en",
+  "source": "Copied {{exportSelection}} to clipboard as SVG\n({{exportColorScheme}})",
+  "translation": "Copied  to clipboard as SVG\n({{exportColorScheme}})",
+  "kind": "drop"
+ },
+ {
+  "key": "toast.fileSavedToFilename",
+  "locale": "en",
+  "source": "Saved to {filename}",
+  "translation": "Saved to {{filename}}",
+  "kind": "braces"
+ },
+ {
+  "key": "toast.fileSavedToFilename",
+  "locale": "en",
+  "source": "Saved to {filename}",
+  "translation": "Saved to ",
+  "kind": "drop"
+ },
+ {
+  "key": "toast.pasteAsSingleElement",
+  "locale": "en",
+  "source": "Use {{shortcut}} to paste as a single element,\nor paste into an existing text editor",
+  "translation": "Use {shortcut} to paste as a single element,\nor paste into an existing text editor",
+  "kind": "braces"
+ },
+ {
+  "key": "toast.pasteAsSingleElement",
+  "locale": "en",
+  "source": "Use {{shortcut}} to paste as a single element,\nor paste into an existing text editor",
+  "translation": "Use  to paste as a single element,\nor paste into an existing text editor",
+  "kind": "drop"
+ }
+]

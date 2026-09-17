@@ -1,0 +1,422 @@
+[
+ {
+  "key": "%@",
+  "locale": "ja",
+  "source": "%@",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ %@",
+  "locale": "it",
+  "source": "%1$@ %2$@",
+  "translation": "%2$d %1$@",
+  "kind": "retype"
+ },
+ {
+  "key": "%@ %@",
+  "locale": "ja",
+  "source": "%1$@ %2$@",
+  "translation": " %2$@",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ could not install the update at %@ (%@). Would you like to install this update in your Applications folder instead?",
+  "locale": "ja",
+  "source": "%1$@ could not install the update at %2$@ (%3$@). Would you like to install this update in your Applications folder instead?",
+  "translation": "%1$d は %2$@（%3$@）でアップデートをインストールできませんでした。代わりにアプリケーションフォルダにインストールしますか？",
+  "kind": "retype"
+ },
+ {
+  "key": "%@ could not install the update at %@ (%@). Would you like to install this update in your Applications folder instead?",
+  "locale": "zh-Hant",
+  "source": "%1$@ could not install the update at %2$@ (%3$@). Would you like to install this update in your Applications folder instead?",
+  "translation": " could not install the update at %2$@ (%3$@). Would you like to install this update in your Applications folder instead?",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "locale": "ar",
+  "source": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "translation": " is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "locale": "ar",
+  "source": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "translation": "%d is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "kind": "retype"
+ },
+ {
+  "key": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "locale": "de",
+  "source": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "translation": " is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "kind": "drop"
+ },
+ {
+  "key": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "locale": "ja",
+  "source": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "translation": "%@ %@ はアプリケーションフォルダにありません。代わりにアプリケーションフォルダにアップデートをインストールしますか？",
+  "kind": "dup"
+ },
+ {
+  "key": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "locale": "nl-BE",
+  "source": "%@ is not in your Applications folder. Would you like to install the update to your Applications folder instead?",
+  "translation": "%d staat niet in je Applications-folder. Wil je de update in je Applications-folder installeren?",
+  "kind": "retype"
+ },
+ {
+  "key": "%@ places windows slightly above the absolute center,\nwhich can be found more ergonomic.",
+  "locale": "de",
+  "source": "%@ places windows slightly above the absolute center,\nwhich can be found more ergonomic.",
+  "translation": "%@ %@ platziert Fenster etwas über der absoluten Mitte, was als ergonomischer empfunden werden kann.",
+  "kind": "dup"
+ },
+ {
+  "key": "%lld",
+  "locale": "fr",
+  "source": "%lld",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld",
+  "locale": "nl-BE",
+  "source": "%lld",
+  "translation": "%lld %lld",
+  "kind": "dup"
+ },
+ {
+  "key": "%lld",
+  "locale": "pt-BR",
+  "source": "%lld",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld",
+  "locale": "ru",
+  "source": "%lld",
+  "translation": "",
+  "kind": "drop"
+ },
+ {
+  "key": "%lld",
+  "locale": "ru",
+  "source": "%lld",
+  "translation": "%lls",
+  "kind": "retype"
+ },
+ {
+  "key": "%lld",
+  "locale": "zh-Hant",
+  "source": "%lld",
+  "translation": "%lls",
+  "kind": "retype"
+ },
+ {
+  "key": "A single %@ action can only track one window. To stash\nmultiple windows, add additional %@ actions.",
+  "locale": "ru",
+  "source": "A single %1$@ action can only track one window. To stash\nmultiple windows, add additional %2$@ actions.",
+  "translation": "Действие  может следить только за одним окном. Добавьте дополнительные %2$@ действий, чтобы спрятать несколько окон.",
+  "kind": "drop"
+ },
+ {
+  "key": "Accessibility Request: Title",
+  "locale": "ar",
+  "source": "%@ Needs Accessibility Permissions",
+  "translation": "%@ %@ يحتاج إلى أذونات الوصول",
+  "kind": "dup"
+ },
+ {
+  "key": "Accessibility Request: Title",
+  "locale": "es",
+  "source": "%@ Needs Accessibility Permissions",
+  "translation": "%@ %@ necesita permisos de Accesibilidad",
+  "kind": "dup"
+ },
+ {
+  "key": "Accessibility Request: Title",
+  "locale": "zh-Hant",
+  "source": "%@ Needs Accessibility Permissions",
+  "translation": "%@ %@需要輔助功能權限",
+  "kind": "dup"
+ },
+ {
+  "key": "Icon Unlock Message",
+  "locale": "nl-BE",
+  "source": "You've unlocked a new icon: %@!",
+  "translation": "Je hebt deze icoon ontgrendelt: %d!",
+  "kind": "retype"
+ },
+ {
+  "key": "Icon Unlock Message",
+  "locale": "pl",
+  "source": "You've unlocked a new icon: %@!",
+  "translation": "Odblokowałeś nową ikonę: %@ %@!",
+  "kind": "dup"
+ },
+ {
+  "key": "Icon Unlock Message: Holo",
+  "locale": "de",
+  "source": "You've already looped 25 times! As a reward, here's new icon: %@. Continue to loop more to unlock new icons!",
+  "translation": "Du hast bereits 25 Mal gelooped! Als Belohnung gibt es ein neues Icon: %d. Loop weiter, um neue Symbole freizuschalten!",
+  "kind": "retype"
+ },
+ {
+  "key": "Icon Unlock Message: Holo",
+  "locale": "es",
+  "source": "You've already looped 25 times! As a reward, here's new icon: %@. Continue to loop more to unlock new icons!",
+  "translation": "Has usado Loop 25 veces! Como recompensa, aquí tienes un nuevo icono: %d. Continúa usando Loop para desbloquear más iconos!",
+  "kind": "retype"
+ },
+ {
+  "key": "Icon Unlock Message: Holo",
+  "locale": "nl-BE",
+  "source": "You've already looped 25 times! As a reward, here's new icon: %@. Continue to loop more to unlock new icons!",
+  "translation": "Je hebt al 25 keer geloopt! Als een cadeau krijg je deze icoon: %@ %@. Blijf loopen voor meer icoontjes!",
+  "kind": "dup"
+ },
+ {
+  "key": "Icon Unlock Message: Holo",
+  "locale": "pt-BR",
+  "source": "You've already looped 25 times! As a reward, here's new icon: %@. Continue to loop more to unlock new icons!",
+  "translation": "Você ja fez 25 loops! Aqui está um novo ícone como prêmio: . Continue dando loops para desbloquear novos ícones.",
+  "kind": "drop"
+ },
+ {
+  "key": "Move to Desktop %lld",
+  "locale": "fr",
+  "source": "Move to Desktop %lld",
+  "translation": "Déplacer sur le bureau ",
+  "kind": "drop"
+ },
+ {
+  "key": "Move to Desktop %lld",
+  "locale": "pl",
+  "source": "Move to Desktop %lld",
+  "translation": "Move to Desktop %lls",
+  "kind": "retype"
+ },
+ {
+  "key": "Move to Desktop %lld",
+  "locale": "pt-BR",
+  "source": "Move to Desktop %lld",
+  "translation": "Move to Desktop %lld %lld",
+  "kind": "dup"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "ar",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "%d's notification permissions are currently disabled.",
+  "kind": "retype"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "de",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "%@ %@'s Benachrichtigungen wurden deaktiviert.",
+  "kind": "dup"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "es",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "La¡os permisos de notificaciones de  están desactivados.",
+  "kind": "drop"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "fr",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": " n’a pas l’autorisation d’envoyer des notifications pour le moment.",
+  "kind": "drop"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "ja",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "%@ %@ の通知権限は現在無効になっています。",
+  "kind": "dup"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "pt-BR",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "As notificações de %d está desabilitadas.",
+  "kind": "retype"
+ },
+ {
+  "key": "Notification permits: info",
+  "locale": "zh-Hans",
+  "source": "%@'s notification permissions are currently disabled.",
+  "translation": "%d的通知权限目前已被禁用。",
+  "kind": "retype"
+ },
+ {
+  "key": "Quit %@",
+  "locale": "ar",
+  "source": "Quit %@",
+  "translation": "Quit %d",
+  "kind": "retype"
+ },
+ {
+  "key": "Quit %@",
+  "locale": "it",
+  "source": "Quit %@",
+  "translation": "Esci da %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "Quit %@",
+  "locale": "zh-Hant",
+  "source": "Quit %@",
+  "translation": "退出%@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "That keybind is already being used by %@.",
+  "locale": "de",
+  "source": "That keybind is already being used by %@.",
+  "translation": "Diese Tastenbelegung wird bereits von %d benutzt.",
+  "kind": "retype"
+ },
+ {
+  "key": "That keybind is already being used by %@.",
+  "locale": "es",
+  "source": "That keybind is already being used by %@.",
+  "translation": "Esta combinación está siendo usada por %d",
+  "kind": "retype"
+ },
+ {
+  "key": "That keybind is already being used by %@.",
+  "locale": "nl-BE",
+  "source": "That keybind is already being used by %@.",
+  "translation": "Die toetscombinatie wordt al gebruikt door .",
+  "kind": "drop"
+ },
+ {
+  "key": "That keybind is already being used by %@.",
+  "locale": "zh-Hant",
+  "source": "That keybind is already being used by %@.",
+  "translation": "此按鍵绑定已被占用。",
+  "kind": "drop"
+ },
+ {
+  "key": "Update from: %@",
+  "locale": "nl-BE",
+  "source": "Update from: %@",
+  "translation": "Update van: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "Update from: %@",
+  "locale": "zh-Hans",
+  "source": "Update from: %@",
+  "translation": "从%@ %@更新",
+  "kind": "dup"
+ },
+ {
+  "key": "Updates will only be installed when %@ is in the background.",
+  "locale": "ko",
+  "source": "Updates will only be installed when %@ is in the background.",
+  "translation": "가 백그라운드에 있을 때만 업데이트가 설치됩니다.",
+  "kind": "drop"
+ },
+ {
+  "key": "Updates will only be installed when %@ is in the background.",
+  "locale": "ru",
+  "source": "Updates will only be installed when %@ is in the background.",
+  "translation": "Обновления могут быть установлены только когда %@ %@ запущен в фоновом режиме.",
+  "kind": "dup"
+ },
+ {
+  "key": "Version %@",
+  "locale": "de",
+  "source": "Version %@",
+  "translation": "Version %d",
+  "kind": "retype"
+ },
+ {
+  "key": "Version %@",
+  "locale": "it",
+  "source": "Version %@",
+  "translation": "Versione %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "Version %@",
+  "locale": "ru",
+  "source": "Version %@",
+  "translation": "Версия %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "You can only use up to %lld keys in a keybind.",
+  "locale": "it",
+  "source": "You can only use up to %lld keys in a keybind.",
+  "translation": "Puoi usare un massimo di %lld %lld tasti in una scorciatoia.",
+  "kind": "dup"
+ },
+ {
+  "key": "You can only use up to %lld keys in a keybind.",
+  "locale": "ko",
+  "source": "You can only use up to %lld keys in a keybind.",
+  "translation": "하나의 키 바인딩에는 최대 %lls 개의 키만 사용할 수 있습니다.",
+  "kind": "retype"
+ },
+ {
+  "key": "You can only use up to %lld keys in a keybind.",
+  "locale": "nl-BE",
+  "source": "You can only use up to %lld keys in a keybind.",
+  "translation": "Je kan maximaal  toetsen gebruiken in een toetscombinatie.",
+  "kind": "drop"
+ },
+ {
+  "key": "You can only use up to %lld keys in a keybind.",
+  "locale": "zh-Hant",
+  "source": "You can only use up to %lld keys in a keybind.",
+  "translation": "你最多只能使用%lls個按鍵組成按鍵綁定。",
+  "kind": "retype"
+ },
+ {
+  "key": "You can only use up to %lld keys in your trigger key.",
+  "locale": "nl-BE",
+  "source": "You can only use up to %lld keys in your trigger key.",
+  "translation": "Je kunt maximaal  toetsen gebruiken in uw activatie knop.",
+  "kind": "drop"
+ },
+ {
+  "key": "You've looped %lld times!",
+  "locale": "ar",
+  "source": "You've looped %lld times!",
+  "translation": "لقد كررت %lld %lld مرات!",
+  "kind": "dup"
+ },
+ {
+  "key": "You've looped %lld times!",
+  "locale": "nl-BE",
+  "source": "You've looped %lld times!",
+  "translation": "Je hebt %lld %lld keer gelooped!",
+  "kind": "dup"
+ },
+ {
+  "key": "You've looped %lld times!",
+  "locale": "ru",
+  "source": "You've looped %lld times!",
+  "translation": "Вы использовали Loop %lld %lld раз!",
+  "kind": "dup"
+ },
+ {
+  "key": "You've looped %lld times!",
+  "locale": "zh-Hans",
+  "source": "You've looped %lld times!",
+  "translation": "你已经环绕了次！",
+  "kind": "drop"
+ }
+]

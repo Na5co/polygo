@@ -4,6 +4,7 @@
 //! hard requirement), the unit model, the config and lockfile, and — later —
 //! providers and validators.
 
+pub mod check;
 pub mod config;
 pub mod core;
 pub mod engine;

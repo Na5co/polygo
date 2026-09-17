@@ -1,0 +1,422 @@
+[
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "cs",
+  "source": "Remove %@?",
+  "translation": "Odebrat ?",
+  "kind": "drop"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "de",
+  "source": "Remove %@?",
+  "translation": "%d löschen?",
+  "kind": "retype"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "es",
+  "source": "Remove %@?",
+  "translation": "¿Borrar %@ %@?",
+  "kind": "dup"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "fr",
+  "source": "Remove %@?",
+  "translation": "Supprimer %@ %@ ?",
+  "kind": "dup"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "ro",
+  "source": "Remove %@?",
+  "translation": "Elimină %d?",
+  "kind": "retype"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "uk",
+  "source": "Remove %@?",
+  "translation": "Видалити %d?",
+  "kind": "retype"
+ },
+ {
+  "key": "button.removeAlert.msg",
+  "locale": "vi",
+  "source": "Remove %@?",
+  "translation": "Gỡ %d?",
+  "kind": "retype"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "de",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"\" ist bereits angepinnt!",
+  "kind": "drop"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "fi",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"%@ %@\" on jo kiinnitetty!",
+  "kind": "dup"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "it",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"%d\" è già fissato!",
+  "kind": "retype"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "ko",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"%@ %@\"은(는) 이미 고정되어 있습니다!",
+  "kind": "dup"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "pl",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"\" jest już przypięty!",
+  "kind": "drop"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "ru",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"%d\" уже закреплен!",
+  "kind": "retype"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "tr",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"\" zaten sabitlenmiş!",
+  "kind": "drop"
+ },
+ {
+  "key": "pin.error.duplicate.%@",
+  "locale": "zh-Hans",
+  "source": "\"%@\" is already pinned!",
+  "translation": "\"\" 已被置顶！",
+  "kind": "drop"
+ },
+ {
+  "key": "run.title",
+  "locale": "ar",
+  "source": "Run \"%@\"",
+  "translation": "تشغيل \"\"",
+  "kind": "drop"
+ },
+ {
+  "key": "run.title",
+  "locale": "de",
+  "source": "Run \"%@\"",
+  "translation": "Starte \"%d\"",
+  "kind": "retype"
+ },
+ {
+  "key": "run.title",
+  "locale": "es",
+  "source": "Run \"%@\"",
+  "translation": "Ejecutar \"%d\"",
+  "kind": "retype"
+ },
+ {
+  "key": "run.title",
+  "locale": "nl",
+  "source": "Run \"%@\"",
+  "translation": "Start \"\"",
+  "kind": "drop"
+ },
+ {
+  "key": "run.title",
+  "locale": "pt-BR",
+  "source": "Run \"%@\"",
+  "translation": "Executar \"%@ %@\"",
+  "kind": "dup"
+ },
+ {
+  "key": "run.title",
+  "locale": "pt-BR",
+  "source": "Run \"%@\"",
+  "translation": "Executar \"%d\"",
+  "kind": "retype"
+ },
+ {
+  "key": "run.title",
+  "locale": "ru",
+  "source": "Run \"%@\"",
+  "translation": "Запустить \"\"",
+  "kind": "drop"
+ },
+ {
+  "key": "run.title",
+  "locale": "uk",
+  "source": "Run \"%@\"",
+  "translation": "Запустити \"%@ %@\"",
+  "kind": "dup"
+ },
+ {
+  "key": "run.title",
+  "locale": "uk",
+  "source": "Run \"%@\"",
+  "translation": "Запустити \"%d\"",
+  "kind": "retype"
+ },
+ {
+  "key": "run.title",
+  "locale": "zh-Hant",
+  "source": "Run \"%@\"",
+  "translation": "執行「」",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.install.checking",
+  "locale": "uk",
+  "source": "Checking %@ installation...",
+  "translation": "Перевірка інсталяції ...",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.install.checking",
+  "locale": "zh-Hant",
+  "source": "Checking %@ installation...",
+  "translation": "正在檢查 %d 安裝⋯⋯",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.install.installed",
+  "locale": "cs",
+  "source": "%@ installed",
+  "translation": "%d nainstalováno",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.install.installed",
+  "locale": "de",
+  "source": "%@ installed",
+  "translation": "%@ %@ installiert",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.install.installed",
+  "locale": "ja",
+  "source": "%@ installed",
+  "translation": "%d がインストールされました",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.install.installed",
+  "locale": "uk",
+  "source": "%@ installed",
+  "translation": "%@ %@ встановлено",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.install.installed",
+  "locale": "vi",
+  "source": "%@ installed",
+  "translation": " đã được cài đặt",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "da",
+  "source": "%@ not installed",
+  "translation": "%@ %@ ikke installeret",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "de",
+  "source": "%@ not installed",
+  "translation": "%d nicht installiert",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "es",
+  "source": "%@ not installed",
+  "translation": " instalado",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "es",
+  "source": "%@ not installed",
+  "translation": "%@ %@ instalado",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "fr",
+  "source": "%@ not installed",
+  "translation": "%d pas installé",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "ja",
+  "source": "%@ not installed",
+  "translation": " が未インストール",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "ja",
+  "source": "%@ not installed",
+  "translation": "%@ %@ が未インストール",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.install.notInstalled",
+  "locale": "pl",
+  "source": "%@ not installed",
+  "translation": " nie zainstalowano",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "ar",
+  "source": "- %@ remaining",
+  "translation": "- متبقي ",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "fi",
+  "source": "- %@ remaining",
+  "translation": "-  jäljellä",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "fi",
+  "source": "- %@ remaining",
+  "translation": "- %d jäljellä",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "ko",
+  "source": "- %@ remaining",
+  "translation": "- %@ %@ 남음",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "ko",
+  "source": "- %@ remaining",
+  "translation": "- %d 남음",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "nl",
+  "source": "- %@ remaining",
+  "translation": "- %d resterend",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "pt-BR",
+  "source": "- %@ remaining",
+  "translation": "- %@ %@ restantes",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "tr",
+  "source": "- %@ remaining",
+  "translation": "-%@ %@ kaldı",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "tr",
+  "source": "- %@ remaining",
+  "translation": "-%d kaldı",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.eta",
+  "locale": "uk",
+  "source": "- %@ remaining",
+  "translation": "- залишилось %@ %@",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "fi",
+  "source": "%@ of %@",
+  "translation": "%d / %@",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "fr",
+  "source": "%@ of %@",
+  "translation": "%@ %@ sur %@",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "nl",
+  "source": "%@ of %@",
+  "translation": "%@ %@ van de %@",
+  "kind": "dup"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "pt-BR",
+  "source": "%@ of %@",
+  "translation": " de %@",
+  "kind": "drop"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "tr",
+  "source": "%@ of %@",
+  "translation": "%d'nin %@'si",
+  "kind": "retype"
+ },
+ {
+  "key": "setup.whiskywine.progress",
+  "locale": "vi",
+  "source": "%@ of %@",
+  "translation": "%d của %@",
+  "kind": "retype"
+ },
+ {
+  "key": "update.whiskywine.description",
+  "locale": "fi",
+  "source": "You are running WhiskyWine %@, but %@ is available. Would you like to update?",
+  "translation": "Käytössäsi on WhiskyWine %d, mutta %@ on saatavilla. Haluatko päivittää sen?",
+  "kind": "retype"
+ },
+ {
+  "key": "update.whiskywine.description",
+  "locale": "tr",
+  "source": "You are running WhiskyWine %@, but %@ is available. Would you like to update?",
+  "translation": "WhiskyWine %@ %@ versiyonu kullanıyorsunuz ama %@ versiyonu mevcut. Güncellemek ister misiniz?",
+  "kind": "dup"
+ },
+ {
+  "key": "update.whiskywine.description",
+  "locale": "uk",
+  "source": "You are running WhiskyWine %@, but %@ is available. Would you like to update?",
+  "translation": "Ви використовуєте WhiskyWine %d, але доступна версія %@. Оновити?",
+  "kind": "retype"
+ },
+ {
+  "key": "update.whiskywine.description",
+  "locale": "vi",
+  "source": "You are running WhiskyWine %@, but %@ is available. Would you like to update?",
+  "translation": "Bạn đang sử dụng WhiskyWine phiên bản , nhưng phiên bản%@ đã được phát hành. Bạn có muốn cập nhật không?",
+  "kind": "drop"
+ }
+]

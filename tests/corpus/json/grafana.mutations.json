@@ -1,0 +1,422 @@
+[
+ {
+  "key": "admin.org-users-table.body-delete",
+  "locale": "en",
+  "source": "Are you sure you want to delete user {{user}}?",
+  "translation": "Are you sure you want to delete user {user}?",
+  "kind": "braces"
+ },
+ {
+  "key": "alerting.alert-groups-summary.text-suppressed_other",
+  "locale": "en",
+  "source": "{{count}} suppressed",
+  "translation": " suppressed",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.dag.missing-reference",
+  "locale": "en",
+  "source": "Expression \"{{source}}\" failed to run because \"{{target}}\" is missing or also failed.",
+  "translation": "Expression \"{source}\" failed to run because \"{{target}}\" is missing or also failed.",
+  "kind": "braces"
+ },
+ {
+  "key": "alerting.import-to-gma.step2.yaml-error",
+  "locale": "en",
+  "source": "Failed to parse YAML file: {{error}}",
+  "translation": "Failed to parse YAML file: ",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.notification-detail.alert-count-inline_one",
+  "locale": "en",
+  "source": "{{count}} alert(s)",
+  "translation": " alert(s)",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.notification-detail.uuid-not-found-body",
+  "locale": "en",
+  "source": "No notification found with UUID: {{uuid}}",
+  "translation": "No notification found with UUID: ",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.rule-list-errors.button-errors_other",
+  "locale": "en",
+  "source": "{{count}} errors",
+  "translation": "{count} errors",
+  "kind": "braces"
+ },
+ {
+  "key": "alerting.rule-list.filter-view.results-loading",
+  "locale": "en",
+  "source": "Searching – found {{numberOfRules}} rules",
+  "translation": "Searching – found  rules",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.rule-stats.firing",
+  "locale": "en",
+  "source": "{{alertingStats}} firing",
+  "translation": " firing",
+  "kind": "drop"
+ },
+ {
+  "key": "alerting.settings.import.inhibition-equal",
+  "locale": "en",
+  "source": "equal: {{labels}}",
+  "translation": "equal: ",
+  "kind": "drop"
+ },
+ {
+  "key": "annolist.anno-list-panel.aria-label-remove-filter",
+  "locale": "en",
+  "source": "Remove filter: {{filterToRemove}}",
+  "translation": "Remove filter: ",
+  "kind": "drop"
+ },
+ {
+  "key": "auth-config.fields.workload-identity-token-file-label",
+  "locale": "en",
+  "source": "{{ workloadIdentityLabel }} token file",
+  "translation": "{ workloadIdentityLabel } token file",
+  "kind": "braces"
+ },
+ {
+  "key": "browse-dashboards.folder-picker.non-folder-item",
+  "locale": "en",
+  "source": "Non-folder {{itemKind}} {{itemUID}}",
+  "translation": "Non-folder {itemKind} {{itemUID}}",
+  "kind": "braces"
+ },
+ {
+  "key": "browse-dashboards.restore.success-count_other",
+  "locale": "en",
+  "source": "{{count}} dashboard restored successfully",
+  "translation": "{count} dashboard restored successfully",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard-library.card.view-template-button-label",
+  "locale": "en",
+  "source": "View template: {{title}}",
+  "translation": "View template: ",
+  "kind": "drop"
+ },
+ {
+  "key": "dashboard-library.compatibility-badge.score-text",
+  "locale": "en",
+  "source": "{{score}}% compatible",
+  "translation": "{score}% compatible",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard-scene.annotation-settings-list.disabled",
+  "locale": "en",
+  "source": "(Disabled) {{annoName}}",
+  "translation": "(Disabled) {annoName}",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard-scene.library-viz-panel-info.usage-count_other",
+  "locale": "en",
+  "source": "Used on {{count}} dashboards",
+  "translation": "Used on  dashboards",
+  "kind": "drop"
+ },
+ {
+  "key": "dashboard-scene.version-history-header.compare-versions",
+  "locale": "en",
+  "source": "Comparing {{baseVersion}} <3></3> {{newVersion}}",
+  "translation": "Comparing {baseVersion} <3></3> {{newVersion}}",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard.canvas-actions.disabled-nested-grouping",
+  "locale": "en",
+  "source": "Grouping is limited to {{maxDepth}} levels",
+  "translation": "Grouping is limited to {maxDepth} levels",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard.conditional-rendering.conditions.time-range-size.values.hour",
+  "locale": "en",
+  "source": "{{value}} hour",
+  "translation": " hour",
+  "kind": "drop"
+ },
+ {
+  "key": "dashboard.get-field-override-categories.override-name",
+  "locale": "en",
+  "source": "Override {{overrideNum}}",
+  "translation": "Override {overrideNum}",
+  "kind": "braces"
+ },
+ {
+  "key": "dashboard.save-provisioned-dashboard-form.file-path",
+  "locale": "en",
+  "source": "<strong>File path:</strong> {{filePath}}",
+  "translation": "<strong>File path:</strong> {filePath}",
+  "kind": "braces"
+ },
+ {
+  "key": "explore.correlation-helper.body-correlation-details",
+  "locale": "en",
+  "source": "The correlation link will appear by the <1>{{resultField}}</1> field. You can use the following variables to set up your correlations:",
+  "translation": "The correlation link will appear by the <1>{resultField}</1> field. You can use the following variables to set up your correlations:",
+  "kind": "braces"
+ },
+ {
+  "key": "explore.next-prev-result.services-span-filter-matches",
+  "locale": "en",
+  "source": "Services: {{total}}/{{services}}",
+  "translation": "Services: {total}/{{services}}",
+  "kind": "braces"
+ },
+ {
+  "key": "explore.next-prev-result.services-span-filter-matches",
+  "locale": "en",
+  "source": "Services: {{total}}/{{services}}",
+  "translation": "Services: /{{services}}",
+  "kind": "drop"
+ },
+ {
+  "key": "explore.rich-history-queries-tab.showing-queries",
+  "locale": "en",
+  "source": "Showing {{ shown }} of {{ total }} <0>Load more</0>",
+  "translation": "Showing { shown } of {{ total }} <0>Load more</0>",
+  "kind": "braces"
+ },
+ {
+  "key": "gops.progress-bar.steps-status",
+  "locale": "en",
+  "source": "<0>{{stepsDone}}</0> of {{totalStepsToDo}}",
+  "translation": "<0></0> of {{totalStepsToDo}}",
+  "kind": "drop"
+ },
+ {
+  "key": "grafana-data.datetime.rangeutils.lastNHours_one",
+  "locale": "en",
+  "source": "Last {{count}} hour",
+  "translation": "Last  hour",
+  "kind": "drop"
+ },
+ {
+  "key": "home.firing-alerts-card.critical-count_one",
+  "locale": "en",
+  "source": "{{count}} critical",
+  "translation": "{count} critical",
+  "kind": "braces"
+ },
+ {
+  "key": "home.recommendations.go-to",
+  "locale": "en",
+  "source": "Go to recommendation {{index}}",
+  "translation": "Go to recommendation ",
+  "kind": "drop"
+ },
+ {
+  "key": "home.solutions.kubernetes.health-pods_one",
+  "locale": "en",
+  "source": "{{count}} pod pending or failed",
+  "translation": "{count} pod pending or failed",
+  "kind": "braces"
+ },
+ {
+  "key": "home.solutions.metrics.disk-eta_other",
+  "locale": "en",
+  "source": "~{{count}} h to full",
+  "translation": "~ h to full",
+  "kind": "drop"
+ },
+ {
+  "key": "home.solutions.synthetics.checks_other",
+  "locale": "en",
+  "source": "{{value}} checks",
+  "translation": " checks",
+  "kind": "drop"
+ },
+ {
+  "key": "home.solutions.traces.spans_other",
+  "locale": "en",
+  "source": "{{value}} spans",
+  "translation": "{value} spans",
+  "kind": "braces"
+ },
+ {
+  "key": "logs.field-selector.label-title",
+  "locale": "en",
+  "source": "{{fieldName}} appears in {{percentage}}% of log lines",
+  "translation": " appears in {{percentage}}% of log lines",
+  "kind": "drop"
+ },
+ {
+  "key": "nodeGraph.node.aria-label-node-title",
+  "locale": "en",
+  "source": "Node: {{nodeName}}",
+  "translation": "Node: {nodeName}",
+  "kind": "braces"
+ },
+ {
+  "key": "notebook.cell.frame.aria-label-panel",
+  "locale": "en",
+  "source": "Visualization block: {{name}}",
+  "translation": "Visualization block: ",
+  "kind": "drop"
+ },
+ {
+  "key": "notebooks.list.count-of-total-approx",
+  "locale": "en",
+  "source": "Showing {{shown}} of up to {{total}}",
+  "translation": "Showing {shown} of up to {{total}}",
+  "kind": "braces"
+ },
+ {
+  "key": "notebooks.list.count-truncated_one",
+  "locale": "en",
+  "source": "First {{count}} notebook loaded",
+  "translation": "First {count} notebook loaded",
+  "kind": "braces"
+ },
+ {
+  "key": "notebooks.new.default-title",
+  "locale": "en",
+  "source": "Notebook #{{token}}",
+  "translation": "Notebook #",
+  "kind": "drop"
+ },
+ {
+  "key": "panel.visualization-suggestions.error-loading-suggestions.plugin-failed",
+  "locale": "en",
+  "source": "Failed to load panel plugin: {{ pluginId }}.",
+  "translation": "Failed to load panel plugin: { pluginId }.",
+  "kind": "braces"
+ },
+ {
+  "key": "plugins.install-controls-button.title-uninstall-modal",
+  "locale": "en",
+  "source": "Uninstall {{plugin}}",
+  "translation": "Uninstall {plugin}",
+  "kind": "braces"
+ },
+ {
+  "key": "plugins.install-controls-button.title-uninstall-modal",
+  "locale": "en",
+  "source": "Uninstall {{plugin}}",
+  "translation": "Uninstall ",
+  "kind": "drop"
+ },
+ {
+  "key": "plugins.plugin-details-header-dependencies.grafana-dependency",
+  "locale": "en",
+  "source": "Grafana {{grafanaDependency}}",
+  "translation": "Grafana {grafanaDependency}",
+  "kind": "braces"
+ },
+ {
+  "key": "provisioning.config-form.description-commit-message-template",
+  "locale": "en",
+  "source": "The commit message used when someone saves, moves, renames, or deletes a resource and leaves the Comment field blank. Placeholders, filled in per operation: {{actionVar}} (create/update/delete/move/rename), {{kindVar}} (dashboard/folder), {{idVar}} (unique resource ID), {{titleVar}}, {{userNameVar}} (display name), {{userLoginVar}} (username), {{userEmailVar}}. Leave blank to use the built-in default messages.",
+  "translation": "The commit message used when someone saves, moves, renames, or deletes a resource and leaves the Comment field blank. Placeholders, filled in per operation:  (create/update/delete/move/rename), {{kindVar}} (dashboard/folder), {{idVar}} (unique resource ID), {{titleVar}}, {{userNameVar}} (display name), {{userLoginVar}} (username), {{userEmailVar}}. Leave blank to use the built-in default messages.",
+  "kind": "drop"
+ },
+ {
+  "key": "provisioning.migrate.resources-to-migrate-footer_one",
+  "locale": "en",
+  "source": "Showing {{from}}–{{to}} of {{count}} folder",
+  "translation": "Showing –{{to}} of {{count}} folder",
+  "kind": "drop"
+ },
+ {
+  "key": "provisioning.quota-limit.message-both-resources-onprem_other",
+  "locale": "en",
+  "source": "and {{count}} synced resources per repository.",
+  "translation": "and  synced resources per repository.",
+  "kind": "drop"
+ },
+ {
+  "key": "public-dashboard.share-externally.no-upsert-perm-alert-title",
+  "locale": "en",
+  "source": "You don’t have permission to {{ action }} a shared dashboard",
+  "translation": "You don’t have permission to { action } a shared dashboard",
+  "kind": "braces"
+ },
+ {
+  "key": "query-editor-next.sidebar.footer-items_one",
+  "locale": "en",
+  "source": "{{count}} items",
+  "translation": " items",
+  "kind": "drop"
+ },
+ {
+  "key": "query-editor-next.sidebar.footer-items_other",
+  "locale": "en",
+  "source": "{{count}} items",
+  "translation": "{count} items",
+  "kind": "braces"
+ },
+ {
+  "key": "query-editor-next.sidebar.new-type",
+  "locale": "en",
+  "source": "New {{type}}",
+  "translation": "New ",
+  "kind": "drop"
+ },
+ {
+  "key": "recent-queries.description_other",
+  "locale": "en",
+  "source": "Recent queries are queries that you've run in Explore within the past {{count}} days",
+  "translation": "Recent queries are queries that you've run in Explore within the past {count} days",
+  "kind": "braces"
+ },
+ {
+  "key": "time-picker.copy-paste.default-error-message",
+  "locale": "en",
+  "source": "{{error}} is not a valid time range",
+  "translation": " is not a valid time range",
+  "kind": "drop"
+ },
+ {
+  "key": "time-picker.time-range.from-to",
+  "locale": "en",
+  "source": "{{timeOptionFrom}} to {{timeOptionTo}}",
+  "translation": "{timeOptionFrom} to {{timeOptionTo}}",
+  "kind": "braces"
+ },
+ {
+  "key": "transformers.extract-fields-transformer-editor.tooltip-regexp",
+  "locale": "en",
+  "source": "Example: {{regexExample}}",
+  "translation": "Example: {regexExample}",
+  "kind": "braces"
+ },
+ {
+  "key": "upgrade-box.get-started",
+  "locale": "en",
+  "source": "Get started with {{featureName}}",
+  "translation": "Get started with {featureName}",
+  "kind": "braces"
+ },
+ {
+  "key": "variables-management.bulk.moved_one",
+  "locale": "en",
+  "source": "{{count}} variable moved",
+  "translation": " variable moved",
+  "kind": "drop"
+ },
+ {
+  "key": "variables-management.bulk.moved_other",
+  "locale": "en",
+  "source": "{{count}} variables moved",
+  "translation": "{count} variables moved",
+  "kind": "braces"
+ },
+ {
+  "key": "variables-management.editor.delete-modal-body",
+  "locale": "en",
+  "source": "Are you sure you want to delete \"{{name}}\"?",
+  "translation": "Are you sure you want to delete \"{name}\"?",
+  "kind": "braces"
+ }
+]

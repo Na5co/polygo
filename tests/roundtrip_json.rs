@@ -8,7 +8,10 @@ fn corpus() -> Vec<PathBuf> {
     let mut files: Vec<PathBuf> = fs::read_dir(&dir)
         .expect("corpus dir")
         .map(|e| e.unwrap().path())
-        .filter(|p| p.extension().is_some_and(|e| e == "json"))
+        .filter(|p| {
+            p.extension().is_some_and(|e| e == "json")
+                && !p.to_string_lossy().ends_with(".mutations.json")
+        })
         .collect();
     files.sort();
     assert!(

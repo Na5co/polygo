@@ -1,0 +1,422 @@
+[
+ {
+  "key": "allowlistEntryDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to remove <b>%1$s</b> from Unprotected Sites?",
+  "translation": "Are you sure you want to remove <b></b> from Unprotected Sites?",
+  "kind": "drop"
+ },
+ {
+  "key": "allowlistEntryDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to remove <b>%1$s</b> from Unprotected Sites?",
+  "translation": "Are you sure you want to remove <b>%1$d</b> from Unprotected Sites?",
+  "kind": "retype"
+ },
+ {
+  "key": "allowlistEntryOverflowContentDescription",
+  "locale": "en",
+  "source": "More options for unprotected site %1$s",
+  "translation": "More options for unprotected site ",
+  "kind": "drop"
+ },
+ {
+  "key": "appLinkSnackBarMessage",
+  "locale": "en",
+  "source": "You can open this link in %1$s.",
+  "translation": "You can open this link in .",
+  "kind": "drop"
+ },
+ {
+  "key": "authenticationDialogMessage",
+  "locale": "en",
+  "source": "%1$s requires a username and password.",
+  "translation": " requires a username and password.",
+  "kind": "drop"
+ },
+ {
+  "key": "authenticationDialogMessage",
+  "locale": "en",
+  "source": "%1$s requires a username and password.",
+  "translation": "%1$d requires a username and password.",
+  "kind": "retype"
+ },
+ {
+  "key": "autocompleteSwitchToTab",
+  "locale": "en",
+  "source": "Switch to Tab · %1$s",
+  "translation": "Switch to Tab · ",
+  "kind": "drop"
+ },
+ {
+  "key": "autocompleteSwitchToTab",
+  "locale": "en",
+  "source": "Switch to Tab · %1$s",
+  "translation": "Switch to Tab · %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "daxMainNetworkCtaText",
+  "locale": "en",
+  "source": "Heads up! I can\\'t stop %1$s from seeing your activity on %2$s <br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "translation": "Heads up! I can\\'t stop  from seeing your activity on %2$s <br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "kind": "drop"
+ },
+ {
+  "key": "daxMainNetworkCtaText",
+  "locale": "en",
+  "source": "Heads up! I can\\'t stop %1$s from seeing your activity on %2$s <br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "translation": "Heads up! I can\\'t stop %1$d from seeing your activity on %2$s <br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "kind": "retype"
+ },
+ {
+  "key": "daxMainNetworkOwnedCtaText",
+  "locale": "en",
+  "source": "Heads up! Since %1$s owns %2$s, I can\\'t stop them from seeing your activity here.<br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "translation": "Heads up! Since  owns %2$s, I can\\'t stop them from seeing your activity here.<br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "kind": "drop"
+ },
+ {
+  "key": "daxMainNetworkOwnedCtaText",
+  "locale": "en",
+  "source": "Heads up! Since %1$s owns %2$s, I can\\'t stop them from seeing your activity here.<br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "translation": "Heads up! Since %1$d owns %2$s, I can\\'t stop them from seeing your activity here.<br/><br/>But browse with me, and I can reduce what %3$s knows about you overall by blocking their trackers on lots of other sites.",
+  "kind": "retype"
+ },
+ {
+  "key": "downloadConfirmationSaveFileTitle",
+  "locale": "en",
+  "source": "Save %1$s",
+  "translation": "Save %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "fireproofWebsiteDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to delete <b>%1$s</b>?",
+  "translation": "Are you sure you want to delete <b></b>?",
+  "kind": "drop"
+ },
+ {
+  "key": "fireproofWebsiteDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to delete <b>%1$s</b>?",
+  "translation": "Are you sure you want to delete <b>%1$d</b>?",
+  "kind": "retype"
+ },
+ {
+  "key": "fireproofWebsiteLoginDialogTitle",
+  "locale": "en",
+  "source": "Would you like to Fireproof %1$s?",
+  "translation": "Would you like to Fireproof ?",
+  "kind": "drop"
+ },
+ {
+  "key": "fireproofWebsiteLoginDialogTitle",
+  "locale": "en",
+  "source": "Would you like to Fireproof %1$s?",
+  "translation": "Would you like to Fireproof %1$d?",
+  "kind": "retype"
+ },
+ {
+  "key": "fireproofWebsiteOverflowContentDescription",
+  "locale": "en",
+  "source": "More options for fireproof website %1$s",
+  "translation": "More options for fireproof website ",
+  "kind": "drop"
+ },
+ {
+  "key": "fireproofWebsiteOverflowContentDescription",
+  "locale": "en",
+  "source": "More options for fireproof website %1$s",
+  "translation": "More options for fireproof website %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "fireproofWebsiteRemovalConfirmation",
+  "locale": "en",
+  "source": "Fireproofing removed for <b>%1$s</b>",
+  "translation": "Fireproofing removed for <b></b>",
+  "kind": "drop"
+ },
+ {
+  "key": "fireproofWebsiteRemovalConfirmation",
+  "locale": "en",
+  "source": "Fireproofing removed for <b>%1$s</b>",
+  "translation": "Fireproofing removed for <b>%1$d</b>",
+  "kind": "retype"
+ },
+ {
+  "key": "fireproofWebsiteSnackbarConfirmation",
+  "locale": "en",
+  "source": "<b>%1$s</b> is now Fireproof",
+  "translation": "<b></b> is now Fireproof",
+  "kind": "drop"
+ },
+ {
+  "key": "fireproofWebsiteSnackbarConfirmation",
+  "locale": "en",
+  "source": "<b>%1$s</b> is now Fireproof",
+  "translation": "<b>%1$d</b> is now Fireproof",
+  "kind": "retype"
+ },
+ {
+  "key": "homeScreenWidgetAdded",
+  "locale": "en",
+  "source": "%1$s widget added to home screen",
+  "translation": " widget added to home screen",
+  "kind": "drop"
+ },
+ {
+  "key": "homeScreenWidgetAdded",
+  "locale": "en",
+  "source": "%1$s widget added to home screen",
+  "translation": "%1$d widget added to home screen",
+  "kind": "retype"
+ },
+ {
+  "key": "onboardingStepIndicatorText",
+  "locale": "en",
+  "source": "%1$d of %2$d",
+  "translation": " of %2$d",
+  "kind": "drop"
+ },
+ {
+  "key": "preOnboardingImportCompleteImported",
+  "locale": "en",
+  "source": "Passwords imported: %1$s",
+  "translation": "Passwords imported: ",
+  "kind": "drop"
+ },
+ {
+  "key": "preOnboardingImportCompleteSkipped",
+  "locale": "en",
+  "source": "Skipped (duplicate or invalid): %1$s",
+  "translation": "Skipped (duplicate or invalid): ",
+  "kind": "drop"
+ },
+ {
+  "key": "preciseLocationDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to delete <b>%1$s</b>?",
+  "translation": "Are you sure you want to delete <b></b>?",
+  "kind": "drop"
+ },
+ {
+  "key": "preciseLocationDeleteConfirmMessage",
+  "locale": "en",
+  "source": "Are you sure you want to delete <b>%1$s</b>?",
+  "translation": "Are you sure you want to delete <b>%1$d</b>?",
+  "kind": "retype"
+ },
+ {
+  "key": "preciseLocationDeleteContentDescription",
+  "locale": "en",
+  "source": "More options for location permissions in domain %1$s",
+  "translation": "More options for location permissions in domain %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "preciseLocationSiteDialogTitle",
+  "locale": "en",
+  "source": "Grant %1$s permission to access location?",
+  "translation": "Grant  permission to access location?",
+  "kind": "drop"
+ },
+ {
+  "key": "preciseLocationSnackbarMessage",
+  "locale": "en",
+  "source": "You previously granted %1$s permission to access your device location.",
+  "translation": "You previously granted %1$d permission to access your device location.",
+  "kind": "retype"
+ },
+ {
+  "key": "preciseLocationSystemDialogSubtitle",
+  "locale": "en",
+  "source": "%1$s is requesting your device location. You\\'ll first need to allow the app to send your device location, then %2$s can ask permission.",
+  "translation": " is requesting your device location. You\\'ll first need to allow the app to send your device location, then %2$s can ask permission.",
+  "kind": "drop"
+ },
+ {
+  "key": "privacyProtectionDisabledConfirmationMessage",
+  "locale": "en",
+  "source": "Privacy Protection disabled for %1$s",
+  "translation": "Privacy Protection disabled for ",
+  "kind": "drop"
+ },
+ {
+  "key": "privacyProtectionEnabledConfirmationMessage",
+  "locale": "en",
+  "source": "Privacy Protection enabled for %1$s",
+  "translation": "Privacy Protection enabled for ",
+  "kind": "drop"
+ },
+ {
+  "key": "privacyProtectionEnabledConfirmationMessage",
+  "locale": "en",
+  "source": "Privacy Protection enabled for %1$s",
+  "translation": "Privacy Protection enabled for %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "privacyProtectionNotificationBothDescription",
+  "locale": "en",
+  "source": "You protected your data by blocking %1$d trackers and securing %2$d unencrypted connections while using DuckDuckGo.",
+  "translation": "You protected your data by blocking  trackers and securing %2$d unencrypted connections while using DuckDuckGo.",
+  "kind": "drop"
+ },
+ {
+  "key": "privacyProtectionNotificationBothDescription",
+  "locale": "en",
+  "source": "You protected your data by blocking %1$d trackers and securing %2$d unencrypted connections while using DuckDuckGo.",
+  "translation": "You protected your data by blocking %1$s trackers and securing %2$d unencrypted connections while using DuckDuckGo.",
+  "kind": "retype"
+ },
+ {
+  "key": "privacyProtectionNotificationTrackerDescription",
+  "locale": "en",
+  "source": "You protected your data by blocking %1$d trackers while using DuckDuckGo.",
+  "translation": "You protected your data by blocking  trackers while using DuckDuckGo.",
+  "kind": "drop"
+ },
+ {
+  "key": "privacyProtectionNotificationTrackerDescription",
+  "locale": "en",
+  "source": "You protected your data by blocking %1$d trackers while using DuckDuckGo.",
+  "translation": "You protected your data by blocking %1$s trackers while using DuckDuckGo.",
+  "kind": "retype"
+ },
+ {
+  "key": "privacyProtectionNotificationUpgadeDescription",
+  "locale": "en",
+  "source": "You protected your data by securing %1$d unencrypted connections while using DuckDuckGo.",
+  "translation": "You protected your data by securing %1$s unencrypted connections while using DuckDuckGo.",
+  "kind": "retype"
+ },
+ {
+  "key": "shortcutAddedText",
+  "locale": "en",
+  "source": "Success! %1$s has been added to your home screen.",
+  "translation": "Success!  has been added to your home screen.",
+  "kind": "drop"
+ },
+ {
+  "key": "sslErrorExpiredMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s is expired. It’s possible that the website is misconfigured, that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for  is expired. It’s possible that the website is misconfigured, that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "drop"
+ },
+ {
+  "key": "sslErrorExpiredMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s is expired. It’s possible that the website is misconfigured, that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for %1$d is expired. It’s possible that the website is misconfigured, that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "retype"
+ },
+ {
+  "key": "sslErrorHeadline",
+  "locale": "en",
+  "source": "The certificate for this site is invalid. You might be connecting to a server that is pretending to be %1$s which could put your confidential information at risk.",
+  "translation": "The certificate for this site is invalid. You might be connecting to a server that is pretending to be  which could put your confidential information at risk.",
+  "kind": "drop"
+ },
+ {
+  "key": "sslErrorHeadline",
+  "locale": "en",
+  "source": "The certificate for this site is invalid. You might be connecting to a server that is pretending to be %1$s which could put your confidential information at risk.",
+  "translation": "The certificate for this site is invalid. You might be connecting to a server that is pretending to be %1$d which could put your confidential information at risk.",
+  "kind": "retype"
+ },
+ {
+  "key": "sslErrorUntrustedMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s is not trusted by your device\\'s operating system. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for  is not trusted by your device\\'s operating system. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "drop"
+ },
+ {
+  "key": "sslErrorUntrustedMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s is not trusted by your device\\'s operating system. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for %1$d is not trusted by your device\\'s operating system. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "retype"
+ },
+ {
+  "key": "sslErrorWrongHostMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s does not match *.%2$s. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for  does not match *.%2$s. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "drop"
+ },
+ {
+  "key": "sslErrorWrongHostMessage",
+  "locale": "en",
+  "source": "The security certificate for %1$s does not match *.%2$s. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "translation": "The security certificate for %1$d does not match *.%2$s. It’s possible that the website is misconfigured or that an attacker has compromised your connection, or that your system clock is incorrect.",
+  "kind": "retype"
+ },
+ {
+  "key": "tabSelectionTitle",
+  "locale": "en",
+  "source": "%1$d Selected",
+  "translation": "%1$s Selected",
+  "kind": "retype"
+ },
+ {
+  "key": "trackerBlockedInTheLast7days",
+  "locale": "en",
+  "source": "<b>%1$s tracker blocked </b> in the last 7 days",
+  "translation": "<b> tracker blocked </b> in the last 7 days",
+  "kind": "drop"
+ },
+ {
+  "key": "trackerBlockedInTheLast7days",
+  "locale": "en",
+  "source": "<b>%1$s tracker blocked </b> in the last 7 days",
+  "translation": "<b>%1$d tracker blocked </b> in the last 7 days",
+  "kind": "retype"
+ },
+ {
+  "key": "trackersBlocked",
+  "locale": "en",
+  "source": "<b>%1$s trackers blocked </b>",
+  "translation": "<b> trackers blocked </b>",
+  "kind": "drop"
+ },
+ {
+  "key": "trackersBlocked",
+  "locale": "en",
+  "source": "<b>%1$s trackers blocked </b>",
+  "translation": "<b>%1$d trackers blocked </b>",
+  "kind": "retype"
+ },
+ {
+  "key": "trackersBlockedInTheLast7days",
+  "locale": "en",
+  "source": "<b>%1$s trackers blocked </b> in the last 7 days",
+  "translation": "<b> trackers blocked </b> in the last 7 days",
+  "kind": "drop"
+ },
+ {
+  "key": "trackersBlockedInTheLast7days",
+  "locale": "en",
+  "source": "<b>%1$s trackers blocked </b> in the last 7 days",
+  "translation": "<b>%1$d trackers blocked </b> in the last 7 days",
+  "kind": "retype"
+ },
+ {
+  "key": "webViewErrorSslProtocol",
+  "locale": "en",
+  "source": "The certificate for this server is invalid. You might be connecting to a server that is pretending to be <b>%1$s</b> which could put your confidential information at risk.",
+  "translation": "The certificate for this server is invalid. You might be connecting to a server that is pretending to be <b></b> which could put your confidential information at risk.",
+  "kind": "drop"
+ },
+ {
+  "key": "webViewErrorSslProtocol",
+  "locale": "en",
+  "source": "The certificate for this server is invalid. You might be connecting to a server that is pretending to be <b>%1$s</b> which could put your confidential information at risk.",
+  "translation": "The certificate for this server is invalid. You might be connecting to a server that is pretending to be <b>%1$d</b> which could put your confidential information at risk.",
+  "kind": "retype"
+ }
+]

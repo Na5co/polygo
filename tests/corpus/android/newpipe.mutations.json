@@ -1,0 +1,422 @@
+[
+ {
+  "key": "account_terminated_service_provides_reason",
+  "locale": "en",
+  "source": "Account terminated\\n\\n%1$s provides this reason: %2$s",
+  "translation": "Account terminated\\n\\n provides this reason: %2$s",
+  "kind": "drop"
+ },
+ {
+  "key": "account_terminated_service_provides_reason",
+  "locale": "en",
+  "source": "Account terminated\\n\\n%1$s provides this reason: %2$s",
+  "translation": "Account terminated\\n\\n%1$d provides this reason: %2$s",
+  "kind": "retype"
+ },
+ {
+  "key": "audio_track_name",
+  "locale": "en",
+  "source": "%1$s %2$s",
+  "translation": "%1$d %2$s",
+  "kind": "retype"
+ },
+ {
+  "key": "autoplay_summary",
+  "locale": "en",
+  "source": "Start playback automatically — %s",
+  "translation": "Start playback automatically — ",
+  "kind": "drop"
+ },
+ {
+  "key": "autoplay_summary",
+  "locale": "en",
+  "source": "Start playback automatically — %s",
+  "translation": "Start playback automatically — %d",
+  "kind": "retype"
+ },
+ {
+  "key": "channel_created_by",
+  "locale": "en",
+  "source": "Created by %s",
+  "translation": "Created by ",
+  "kind": "drop"
+ },
+ {
+  "key": "channel_created_by",
+  "locale": "en",
+  "source": "Created by %s",
+  "translation": "Created by %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "channel_created_by",
+  "locale": "en",
+  "source": "Created by %s",
+  "translation": "Created by %d",
+  "kind": "retype"
+ },
+ {
+  "key": "did_you_mean",
+  "locale": "en",
+  "source": "Did you mean \\\"%1$s\\\"?",
+  "translation": "Did you mean \\\"\\\"?",
+  "kind": "drop"
+ },
+ {
+  "key": "did_you_mean",
+  "locale": "en",
+  "source": "Did you mean \\\"%1$s\\\"?",
+  "translation": "Did you mean \\\"%1$d\\\"?",
+  "kind": "retype"
+ },
+ {
+  "key": "feed_load_error_account_info",
+  "locale": "en",
+  "source": "Could not load feed for \\'%s\\'.",
+  "translation": "Could not load feed for \\'\\'.",
+  "kind": "drop"
+ },
+ {
+  "key": "feed_oldest_subscription_update",
+  "locale": "en",
+  "source": "Feed last updated: %s",
+  "translation": "Feed last updated: %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "feed_oldest_subscription_update",
+  "locale": "en",
+  "source": "Feed last updated: %s",
+  "translation": "Feed last updated: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "feed_subscription_not_loaded_count",
+  "locale": "en",
+  "source": "Not loaded: %d",
+  "translation": "Not loaded: ",
+  "kind": "drop"
+ },
+ {
+  "key": "feed_subscription_not_loaded_count",
+  "locale": "en",
+  "source": "Not loaded: %d",
+  "translation": "Not loaded: %d %d",
+  "kind": "dup"
+ },
+ {
+  "key": "feed_subscription_not_loaded_count",
+  "locale": "en",
+  "source": "Not loaded: %d",
+  "translation": "Not loaded: %s",
+  "kind": "retype"
+ },
+ {
+  "key": "feed_update_threshold_summary",
+  "locale": "en",
+  "source": "Time after last update before a subscription is considered outdated — %s",
+  "translation": "Time after last update before a subscription is considered outdated — %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "feed_update_threshold_summary",
+  "locale": "en",
+  "source": "Time after last update before a subscription is considered outdated — %s",
+  "translation": "Time after last update before a subscription is considered outdated — %d",
+  "kind": "retype"
+ },
+ {
+  "key": "image_quality_summary",
+  "locale": "en",
+  "source": "Choose the quality of images and whether to load images at all, to reduce data and memory usage. Changes clear both in-memory and on-disk image cache — %s",
+  "translation": "Choose the quality of images and whether to load images at all, to reduce data and memory usage. Changes clear both in-memory and on-disk image cache — %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "image_quality_summary",
+  "locale": "en",
+  "source": "Choose the quality of images and whether to load images at all, to reduce data and memory usage. Changes clear both in-memory and on-disk image cache — %s",
+  "translation": "Choose the quality of images and whether to load images at all, to reduce data and memory usage. Changes clear both in-memory and on-disk image cache — %d",
+  "kind": "retype"
+ },
+ {
+  "key": "import_soundcloud_instructions",
+  "locale": "en",
+  "source": "Import a SoundCloud profile by typing either the URL or your ID:\\n\\n1. Enable \\\"desktop mode\\\" in a web-browser (the site is not available for mobile devices)\\n2. Go to this URL: %1$s\\n3. Log in when asked\\n4. Copy the profile URL you were redirected to.",
+  "translation": "Import a SoundCloud profile by typing either the URL or your ID:\\n\\n1. Enable \\\"desktop mode\\\" in a web-browser (the site is not available for mobile devices)\\n2. Go to this URL: \\n3. Log in when asked\\n4. Copy the profile URL you were redirected to.",
+  "kind": "drop"
+ },
+ {
+  "key": "minimize_on_exit_summary",
+  "locale": "en",
+  "source": "Action when switching to other app from main video player — %s",
+  "translation": "Action when switching to other app from main video player — ",
+  "kind": "drop"
+ },
+ {
+  "key": "minimize_on_exit_summary",
+  "locale": "en",
+  "source": "Action when switching to other app from main video player — %s",
+  "translation": "Action when switching to other app from main video player — %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "new_seek_duration_toast",
+  "locale": "en",
+  "source": "Due to ExoPlayer constraints the seek duration was set to %d seconds",
+  "translation": "Due to ExoPlayer constraints the seek duration was set to  seconds",
+  "kind": "drop"
+ },
+ {
+  "key": "night_theme_summary",
+  "locale": "en",
+  "source": "Select your favorite night theme — %s",
+  "translation": "Select your favorite night theme — ",
+  "kind": "drop"
+ },
+ {
+  "key": "night_theme_summary",
+  "locale": "en",
+  "source": "Select your favorite night theme — %s",
+  "translation": "Select your favorite night theme — %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "no_appropriate_file_manager_message",
+  "locale": "en",
+  "source": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'%s\\' in the download settings",
+  "translation": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'\\' in the download settings",
+  "kind": "drop"
+ },
+ {
+  "key": "no_appropriate_file_manager_message",
+  "locale": "en",
+  "source": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'%s\\' in the download settings",
+  "translation": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'%s %s\\' in the download settings",
+  "kind": "dup"
+ },
+ {
+  "key": "no_appropriate_file_manager_message",
+  "locale": "en",
+  "source": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'%s\\' in the download settings",
+  "translation": "No appropriate file manager was found for this action.\n\\nPlease install a file manager or try to disable \\'%d\\' in the download settings",
+  "kind": "retype"
+ },
+ {
+  "key": "peertube_instance_url_help",
+  "locale": "en",
+  "source": "Find the instances you like on %s",
+  "translation": "Find the instances you like on ",
+  "kind": "drop"
+ },
+ {
+  "key": "peertube_instance_url_help",
+  "locale": "en",
+  "source": "Find the instances you like on %s",
+  "translation": "Find the instances you like on %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "peertube_instance_url_help",
+  "locale": "en",
+  "source": "Find the instances you like on %s",
+  "translation": "Find the instances you like on %d",
+  "kind": "retype"
+ },
+ {
+  "key": "play_queue_audio_track",
+  "locale": "en",
+  "source": "Audio: %s",
+  "translation": "Audio: ",
+  "kind": "drop"
+ },
+ {
+  "key": "play_queue_audio_track",
+  "locale": "en",
+  "source": "Audio: %s",
+  "translation": "Audio: %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "player_http_invalid_status",
+  "locale": "en",
+  "source": "HTTP error %1$s received from server while playing",
+  "translation": "HTTP error  received from server while playing",
+  "kind": "drop"
+ },
+ {
+  "key": "player_http_invalid_status",
+  "locale": "en",
+  "source": "HTTP error %1$s received from server while playing",
+  "translation": "HTTP error %1$d received from server while playing",
+  "kind": "retype"
+ },
+ {
+  "key": "playlist_add_stream_success_duplicate",
+  "locale": "en",
+  "source": "Duplicate added %d time(s)",
+  "translation": "Duplicate added  time(s)",
+  "kind": "drop"
+ },
+ {
+  "key": "playlist_add_stream_success_duplicate",
+  "locale": "en",
+  "source": "Duplicate added %d time(s)",
+  "translation": "Duplicate added %s time(s)",
+  "kind": "retype"
+ },
+ {
+  "key": "preferred_open_action_settings_summary",
+  "locale": "en",
+  "source": "Default action when opening content — %s",
+  "translation": "Default action when opening content — ",
+  "kind": "drop"
+ },
+ {
+  "key": "preferred_open_action_settings_summary",
+  "locale": "en",
+  "source": "Default action when opening content — %s",
+  "translation": "Default action when opening content — %s %s",
+  "kind": "dup"
+ },
+ {
+  "key": "progressive_load_interval_summary",
+  "locale": "en",
+  "source": "Change the load interval size on progressive contents (currently %s). A lower value may speed up their initial loading",
+  "translation": "Change the load interval size on progressive contents (currently %s %s). A lower value may speed up their initial loading",
+  "kind": "dup"
+ },
+ {
+  "key": "progressive_load_interval_summary",
+  "locale": "en",
+  "source": "Change the load interval size on progressive contents (currently %s). A lower value may speed up their initial loading",
+  "translation": "Change the load interval size on progressive contents (currently %d). A lower value may speed up their initial loading",
+  "kind": "retype"
+ },
+ {
+  "key": "restricted_video",
+  "locale": "en",
+  "source": "This video is age restricted.\\n\\nTurn on \\\"%1$s\\\" in the settings if you want to see it.",
+  "translation": "This video is age restricted.\\n\\nTurn on \\\"\\\" in the settings if you want to see it.",
+  "kind": "drop"
+ },
+ {
+  "key": "restricted_video",
+  "locale": "en",
+  "source": "This video is age restricted.\\n\\nTurn on \\\"%1$s\\\" in the settings if you want to see it.",
+  "translation": "This video is age restricted.\\n\\nTurn on \\\"%1$d\\\" in the settings if you want to see it.",
+  "kind": "retype"
+ },
+ {
+  "key": "search_showing_result_for",
+  "locale": "en",
+  "source": "Showing results for: %s",
+  "translation": "Showing results for: %d",
+  "kind": "retype"
+ },
+ {
+  "key": "search_with_service_name",
+  "locale": "en",
+  "source": "Search %1$s",
+  "translation": "Search ",
+  "kind": "drop"
+ },
+ {
+  "key": "search_with_service_name",
+  "locale": "en",
+  "source": "Search %1$s",
+  "translation": "Search %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "share_playlist_content_details",
+  "locale": "en",
+  "source": "%1$s\\n%2$s",
+  "translation": "\\n%2$s",
+  "kind": "drop"
+ },
+ {
+  "key": "share_playlist_content_details",
+  "locale": "en",
+  "source": "%1$s\\n%2$s",
+  "translation": "%1$d\\n%2$s",
+  "kind": "retype"
+ },
+ {
+  "key": "short_billion",
+  "locale": "en",
+  "source": "%sB",
+  "translation": "%s %sB",
+  "kind": "dup"
+ },
+ {
+  "key": "short_billion",
+  "locale": "en",
+  "source": "%sB",
+  "translation": "%dB",
+  "kind": "retype"
+ },
+ {
+  "key": "short_million",
+  "locale": "en",
+  "source": "%sM",
+  "translation": "M",
+  "kind": "drop"
+ },
+ {
+  "key": "short_million",
+  "locale": "en",
+  "source": "%sM",
+  "translation": "%s %sM",
+  "kind": "dup"
+ },
+ {
+  "key": "short_thousand",
+  "locale": "en",
+  "source": "%sK",
+  "translation": "%dK",
+  "kind": "retype"
+ },
+ {
+  "key": "sign_in_confirm_not_bot_error",
+  "locale": "en",
+  "source": "%1$s refused to provide data, asking for a login to confirm the requester is not a bot.\\n\\nYour IP might have been temporarily banned by %1$s, you can wait some time or switch to a different IP (for example by turning on/off a VPN, or by switching from WiFi to mobile data).\\n\\nPlease see ",
+  "translation": "%1$d refused to provide data, asking for a login to confirm the requester is not a bot.\\n\\nYour IP might have been temporarily banned by %1$s, you can wait some time or switch to a different IP (for example by turning on/off a VPN, or by switching from WiFi to mobile data).\\n\\nPlease see ",
+  "kind": "retype"
+ },
+ {
+  "key": "upload_date_text",
+  "locale": "en",
+  "source": "Published on %1$s",
+  "translation": "Published on ",
+  "kind": "drop"
+ },
+ {
+  "key": "upload_date_text",
+  "locale": "en",
+  "source": "Published on %1$s",
+  "translation": "Published on %1$d",
+  "kind": "retype"
+ },
+ {
+  "key": "video_detail_by",
+  "locale": "en",
+  "source": "By %s",
+  "translation": "By %d",
+  "kind": "retype"
+ },
+ {
+  "key": "video_details_list_item",
+  "locale": "en",
+  "source": "- %1$s: %2$s",
+  "translation": "- : %2$s",
+  "kind": "drop"
+ },
+ {
+  "key": "video_details_list_item",
+  "locale": "en",
+  "source": "- %1$s: %2$s",
+  "translation": "- %1$d: %2$s",
+  "kind": "retype"
+ }
+]

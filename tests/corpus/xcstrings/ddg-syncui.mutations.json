@@ -1,0 +1,422 @@
+[
+ {
+  "key": "(%@)",
+  "locale": "pt",
+  "source": "(%@)",
+  "translation": "(%@ %@)",
+  "kind": "dup"
+ },
+ {
+  "key": "(%@)",
+  "locale": "ru",
+  "source": "(%@)",
+  "translation": "(%@ %@)",
+  "kind": "dup"
+ },
+ {
+  "key": "(%@)",
+  "locale": "ru",
+  "source": "(%@)",
+  "translation": "(%d)",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.remove-device-message",
+  "locale": "nl",
+  "source": "\"%@\" will no longer be able to access your synced data.",
+  "translation": "'' heeft geen toegang meer tot je gesynchroniseerde gegevens.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.remove-device-v2.message",
+  "locale": "it",
+  "source": "**%@** will no longer be able to access your synced data.\n\nYour autofill data, bookmarks, and duck.ai chats won’t sync across your other devices with DuckDuckGo.",
+  "translation": "**** non potrà più accedere ai tuoi dati sincronizzati.\n\nI tuoi dati di compilazione automatica, i segnalibri e le chat di Duck.ai non si sincronizzeranno tra gli altri tuoi dispositivi con DuckDuckGo.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.remove-device-v2.message",
+  "locale": "pl",
+  "source": "**%@** will no longer be able to access your synced data.\n\nYour autofill data, bookmarks, and duck.ai chats won’t sync across your other devices with DuckDuckGo.",
+  "translation": "**** nie będzie już mieć dostępu do zsynchronizowanych danych.\n\nTwoje dane autouzupełniania, zakładki i czaty Duck.ai nie będą synchronizowane na innych Twoich urządzeniach z DuckDuckGo.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.remove-device-v2.message",
+  "locale": "pt",
+  "source": "**%@** will no longer be able to access your synced data.\n\nYour autofill data, bookmarks, and duck.ai chats won’t sync across your other devices with DuckDuckGo.",
+  "translation": "**** deixará de poder aceder aos teus dados sincronizados.\n\nOs teus dados de preenchimento automático, marcadores e conversas do Duck.ai não serão sincronizados nos teus outros dispositivos com o DuckDuckGo.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.remove-device-v2.message",
+  "locale": "pt",
+  "source": "**%@** will no longer be able to access your synced data.\n\nYour autofill data, bookmarks, and duck.ai chats won’t sync across your other devices with DuckDuckGo.",
+  "translation": "**%@ %@** deixará de poder aceder aos teus dados sincronizados.\n\nOs teus dados de preenchimento automático, marcadores e conversas do Duck.ai não serão sincronizados nos teus outros dispositivos com o DuckDuckGo.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.remove-device-v2.message",
+  "locale": "pt",
+  "source": "**%@** will no longer be able to access your synced data.\n\nYour autofill data, bookmarks, and duck.ai chats won’t sync across your other devices with DuckDuckGo.",
+  "translation": "**%d** deixará de poder aceder aos teus dados sincronizados.\n\nOs teus dados de preenchimento automático, marcadores e conversas do Duck.ai não serão sincronizados nos teus outros dispositivos com o DuckDuckGo.",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.success-v2.title",
+  "locale": "es",
+  "source": "%@ has been added to Sync & Backup.",
+  "translation": "Se ha añadido %@ %@ a Sync & Backup.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.success-v2.title",
+  "locale": "fr",
+  "source": "%@ has been added to Sync & Backup.",
+  "translation": " a été ajouté à Sync & Backup.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.success-v2.title",
+  "locale": "pl",
+  "source": "%@ has been added to Sync & Backup.",
+  "translation": "Dodano %@ %@ do Sync & Backup.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.success-v2.title",
+  "locale": "pt",
+  "source": "%@ has been added to Sync & Backup.",
+  "translation": "O %@ %@ foi adicionado a Sync & Backup.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.success-v2.title",
+  "locale": "pt",
+  "source": "%@ has been added to Sync & Backup.",
+  "translation": "O %d foi adicionado a Sync & Backup.",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle1",
+  "locale": "de",
+  "source": "Go to %@ in the DuckDuckGo Browser on another device and select Sync With Another Device.",
+  "translation": "Gehe im DuckDuckGo-Browser auf einem anderen Gerät zu  und wähle „Mit einem anderen Gerät synchronisieren“.",
+  "kind": "drop"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle1",
+  "locale": "fr",
+  "source": "Go to %@ in the DuckDuckGo Browser on another device and select Sync With Another Device.",
+  "translation": "Accédez à %@ %@ dans le navigateur DuckDuckGo d'un autre appareil, puis sélectionnez Synchroniser avec un autre appareil.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle2",
+  "locale": "de",
+  "source": "Open the DuckDuckGo app on your other device and go to %@.",
+  "translation": "Öffne die DuckDuckGo-App auf deinem anderen Gerät und gehe zu %d.",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle2",
+  "locale": "es",
+  "source": "Open the DuckDuckGo app on your other device and go to %@.",
+  "translation": "Abre la aplicación DuckDuckGo en tu otro dispositivo y dirígete a %d.",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle2",
+  "locale": "fr",
+  "source": "Open the DuckDuckGo app on your other device and go to %@.",
+  "translation": "Ouvrez l'application DuckDuckGo sur votre autre appareil et accédez à %d.",
+  "kind": "retype"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle2",
+  "locale": "pl",
+  "source": "Open the DuckDuckGo app on your other device and go to %@.",
+  "translation": "Otwórz aplikację DuckDuckGo na drugim urządzeniu i przejdź do pozycji %@ %@.",
+  "kind": "dup"
+ },
+ {
+  "key": "preferences.sync.sync-with-another-device.dialog-subtitle2",
+  "locale": "pt",
+  "source": "Open the DuckDuckGo app on your other device and go to %@.",
+  "translation": "Abre a aplicação DuckDuckGo no teu outro dispositivo e acede a %d.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "de",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks () can't sync because some of their fields exceed the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "es",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks () can't sync because some of their fields exceed the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "es",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks (%d %d) can't sync because some of their fields exceed the character limit.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "fr",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks (%s) can't sync because some of their fields exceed the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "pt",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks (%s) can't sync because some of their fields exceed the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-many",
+  "locale": "ru",
+  "source": "Some bookmarks (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Some bookmarks (%s) can't sync because some of their fields exceed the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "de",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "es",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %@ %@ can't sync because one of its fields exceeds the character limit.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "fr",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %@ %@ can't sync because one of its fields exceeds the character limit.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "it",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %@ %@ can't sync because one of its fields exceeds the character limit.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "nl",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %@ %@ can't sync because one of its fields exceeds the character limit.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "nl",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "pl",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for  can't sync because one of its fields exceeds the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-bookmarks-present-description-one",
+  "locale": "pl",
+  "source": "Your bookmark for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your bookmark for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-many",
+  "locale": "fr",
+  "source": "Some passwords (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Certains mots de passe () ne peuvent pas être synchronisés car certains de leurs champs dépassent la limite de caractères.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-many",
+  "locale": "fr",
+  "source": "Some passwords (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Certains mots de passe (%s) ne peuvent pas être synchronisés car certains de leurs champs dépassent la limite de caractères.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-many",
+  "locale": "pl",
+  "source": "Some passwords (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Nie można zsynchronizować części haseł (%s), ponieważ długość niektórych pól przekracza limit znaków.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-many",
+  "locale": "pt",
+  "source": "Some passwords (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Não é possível sincronizar algumas palavras-passe (%s) porque alguns dos campos excedem o limite de carateres.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "de",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for  can't sync because one of its fields exceeds the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "es",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "fr",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "nl",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for  can't sync because one of its fields exceeds the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "pl",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for  can't sync because one of its fields exceeds the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "pl",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for %d can't sync because one of its fields exceeds the character limit.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credentials-present-description-one",
+  "locale": "pt",
+  "source": "Your password for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Your password for  can't sync because one of its fields exceeds the character limit.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credit-cards-present-description-many",
+  "locale": "nl",
+  "source": "Some credit cards (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Sommige creditcards () kunnen niet worden gesynchroniseerd omdat sommige velden de tekenlimiet overschrijden.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credit-cards-present-description-one",
+  "locale": "es",
+  "source": "Your credit card %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Tu tarjeta de crédito %d no se puede sincronizar porque uno de sus campos supera el límite de caracteres.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-credit-cards-present-description-one",
+  "locale": "nl",
+  "source": "Your credit card %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Je creditcard  kan niet worden gesynchroniseerd omdat een van de velden de tekenlimiet overschrijdt.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-credit-cards-present-description-one",
+  "locale": "ru",
+  "source": "Your credit card %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Синхронизировать карту %d невозможно: слишком длинная запись в одном из полей.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-many",
+  "locale": "de",
+  "source": "Some identities (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Einige Identitäten (%s) können nicht synchronisiert werden, weil einige ihrer Felder das Zeichenlimit überschreiten.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-many",
+  "locale": "pl",
+  "source": "Some identities (%d) can't sync because some of their fields exceed the character limit.",
+  "translation": "Nie można zsynchronizować części tożsamości (), ponieważ długość niektórych pól przekracza limit znaków.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "de",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Deine Identität für %@ %@ kann nicht synchronisiert werden, weil eines ihrer Felder das Zeichenlimit überschreitet.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "es",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "La identidad para %d no se puede sincronizar porque uno de sus campos supera el límite de caracteres.",
+  "kind": "retype"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "fr",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Votre identité pour  ne peut pas être synchronisée car l'un de ses champs dépasse la limite de caractères.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "it",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "La tua identità per %@ %@ non può essere sincronizzata perché uno dei suoi campi supera il limite di caratteri.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "nl",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Je identiteit voor %@ %@ kan niet worden gesynchroniseerd omdat een van de velden de tekenlimiet overschrijdt.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "pl",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Nie można zsynchronizować tożsamości , ponieważ długość jednego z pól przekracza limit znaków.",
+  "kind": "drop"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "pl",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Nie można zsynchronizować tożsamości %@ %@, ponieważ długość jednego z pól przekracza limit znaków.",
+  "kind": "dup"
+ },
+ {
+  "key": "prefrences.sync.invalid-identities-present-description-one",
+  "locale": "pl",
+  "source": "Your identity for %@ can't sync because one of its fields exceeds the character limit.",
+  "translation": "Nie można zsynchronizować tożsamości %d, ponieważ długość jednego z pól przekracza limit znaków.",
+  "kind": "retype"
+ }
+]
