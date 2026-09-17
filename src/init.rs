@@ -368,7 +368,16 @@ pub fn detect(root: &Path) -> Result<Config> {
 
     if specs.is_empty() {
         bail!(
-            "no localization files found under {} (looked for .xcstrings, res/values/strings.xml, .arb, locales/*.json, .po, .resx/.resw)",
+            "no localization files found under {}\n\n\
+polygo translates string files your app already has. None of these were found:\n\
+  iOS/macOS   *.xcstrings                (Xcode: File > New > String Catalog)\n\
+  Android     res/values/strings.xml\n\
+  Flutter     l10n.yaml + lib/l10n/app_en.arb\n\
+  Web         locales/en.json            (i18next, vue-i18n, next-intl)\n\
+  gettext     locale/en/LC_MESSAGES/*.po or *.po\n\
+  .NET        *.resx / *.resw\n\n\
+If the app's text still lives in code, move it into one of these first (your\n\
+framework's i18n guide covers this), then run `polygo init` again.",
             root.display()
         );
     }
