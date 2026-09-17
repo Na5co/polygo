@@ -32,11 +32,23 @@ git diff             # look it over, commit
 
 ```sh
 polygo extract --dry-run   # lists every piece of UI text it found, with file:line
-polygo extract             # writes locales/en.json (keys are the English text)
+polygo extract --rewrite   # writes locales/en.json, replaces the strings in the code with t("key"), generates src/i18n.ts
 polygo init && polygo add de fr && polygo translate
 ```
 
-`extract` scans JSX/TSX, HTML in template literals, and `.html`/`.vue`/`.svelte`: text between tags plus `placeholder`, `title`, `alt` and `aria-label`. It skips `<script>`, `<style>`, `<svg>`, `<code>`, tests and `node_modules`, and turns `${expr}` / `{expr}` into `{{0}}` placeholders. On a real 160-file server-rendered app it found 580 unique strings in under a second. Wiring the strings back through your i18n library's `t("key")` is still your job. iOS, Android, Flutter and gettext already ship their own extractors, so `extract` is for the web.
+`extract` reads the markup in JSX, HTML inside template literals, and `.html`/`.vue`/`.svelte` files: text between tags plus `placeholder`, `title`, `alt` and `aria-label` attributes. It skips `<script>`, `<style>`, `<svg>`, `<code>`, tests and `node_modules`. `${expr}` and `{expr}` become `{{0}}` placeholders and are passed as arguments: `<p>Signed in as ${email}.</p>` becomes `<p>${t("Signed in as {{0}}.", { 0: email })}</p>`.
+
+`--rewrite` edits `.ts`/`.tsx`/`.js`/`.jsx` files in place, adds the import, and generates a 20-line `i18n.ts` with `t`, `setLocale` and `addCatalog` (no library needed; keys are the English text, so English works with nothing loaded). Review it with `git diff`. Sentences split by inline markup (`writes a <code>.form</code> file`) are listed as fragments and left alone, because translating the pieces separately gives bad results. On a 160-file server-rendered app it rewrote 387 strings in 20 files with no new TypeScript errors.
+
+Keep brand names and whole pages out of it with flags or `polygo.toml`:
+
+```toml
+[extract]
+ignore = ["Leafslip", "API key"]          # strings containing these are skipped
+ignore_paths = ["src/admin*", "legacy/**"]
+```
+
+iOS, Android, Flutter and gettext already have their own extractors, so `extract` is for the web.
 
 ## What it catches
 
@@ -125,7 +137,7 @@ polygo use openai/llama-3.3-70b --base-url https://api.groq.com/openai/v1   # an
 
 ## Privacy
 
-- **No telemetry, no analytics, no update checks.** The only network request polygo makes is the translation call to the provider in your `polygo.toml`. With the default Ollama provider that is `127.0.0.1:11434`.
+- **No telemetry, no analytics, no update checks.** The only network request polygo makes is the translation call to the provider in your `polygo.toml`. With the default Ollama provider that is `127.0.0.1:11434`. The one opt-in exception: set `PHOENIX_COLLECTOR_ENDPOINT` and prompts and replies are also exported as traces to that address, for your own [Phoenix](docs/README.md#tracing-with-phoenix) instance.
 - `check`, `status`, `review` and `init` never touch the network. `translate --dry-run` lists what would be sent and sends nothing. The test suite makes no network calls.
 - `polygo review` binds to `127.0.0.1` only and rejects requests whose `Host` header is not localhost.
 - Nothing is written outside your repo (`polygo.toml`, `polygo.lock`, your string files) except `~/.config/polygo/` when you ask for it with `--global` or `--api-key`.
@@ -187,7 +199,7 @@ do_not_translate = ["Polygo", "GitHub"]
 |---|---|
 | `polygo init` | detect project type and locales, write `polygo.toml` |
 | `polygo add <locale>...` / `polygo remove` | edit `target_locales` |
-| `polygo extract [--dry-run] [--out locales/en.json] [--json]` | pull UI text out of web markup into an i18next catalog |
+| `polygo extract [--dry-run] [--rewrite] [--ignore WORD] [--ignore-path GLOB] [--json]` | pull UI text out of web markup into an i18next catalog; `--rewrite` swaps in `t("key")` calls |
 | `polygo models` | local models with sizes and notes, marks pulled (`+`) and active (`*`), API options |
 | `polygo use <model> [--base-url] [--api-key] [--global] [--no-pull]` | pull an Ollama model or set an API provider, writes `[provider]` |
 | `polygo doctor [--json]` | config parses, files load, provider reachable, model pulled; each failure names its fix |

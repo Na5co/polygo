@@ -1,6 +1,6 @@
 //! Ollama `/api/chat` with structured (JSON-schema) output and thinking disabled.
 
-use super::{Ctx, Provider, post_json, response_schema};
+use super::{Ctx, Provider, Reply, Usage, post_json, response_schema};
 use anyhow::{Context as _, Result};
 
 pub struct Ollama {
@@ -43,7 +43,7 @@ impl Provider for Ollama {
         &self.model
     }
 
-    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<String> {
+    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<Reply> {
         self.complete_json(system, user, ctx, &response_schema())
     }
 
@@ -53,13 +53,14 @@ impl Provider for Ollama {
         user: &str,
         _ctx: &Ctx,
         schema: &serde_json::Value,
-    ) -> Result<String> {
+    ) -> Result<Reply> {
         let body = serde_json::json!({
             "model": self.model,
             "stream": false,
             "think": false,
             "format": schema,
-            "options": { "temperature": 0.2 },
+            // Ollama's default context is 4k; batches with code context need more.
+            "options": { "temperature": 0.2, "num_ctx": 16384 },
             "messages": [
                 { "role": "system", "content": system },
                 { "role": "user", "content": user }
@@ -82,6 +83,15 @@ impl Provider for Ollama {
         if std::env::var("POLYGO_DEBUG_PROMPT").is_ok() {
             eprintln!("--- response ---\n{content}");
         }
-        Ok(content)
+        let usage = resp["prompt_eval_count"]
+            .as_u64()
+            .map(|input_tokens| Usage {
+                input_tokens,
+                output_tokens: resp["eval_count"].as_u64().unwrap_or(0),
+            });
+        Ok(Reply {
+            text: content,
+            usage,
+        })
     }
 }
