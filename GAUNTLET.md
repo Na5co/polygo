@@ -1,4 +1,4 @@
-# polyglot — Gauntlet
+# polygo — Gauntlet
 
 Single-binary, git-native localization CLI for solo devs. Rust. BYOM (default `ollama/qwen3:8b`).
 Pitch: "Lokalise for one person. Runs in your repo, knows your code, never phones home."
@@ -13,7 +13,7 @@ acceptance command passes. Never edit acceptance commands to make them pass.
 3. Run: `cargo fmt --check && cargo clippy -- -D warnings && cargo test` plus the gate's acceptance command.
 4. If green: mark `[x]`, append one line to `## Log` (date, gate, what changed), commit `gate(N): <name>`.
 5. If red after 3 attempts on the same failure: write the failure under `## Blocked`, commit WIP on a branch `blocked/gate-N`, move to the next gate that does not depend on it.
-6. Never add a dependency without noting why in `## Deps`. Keep the release binary < 15 MB and cold start < 50 ms (`hyperfine 'polyglot --help'`).
+6. Never add a dependency without noting why in `## Deps`. Keep the release binary < 15 MB and cold start < 50 ms (`hyperfine 'polygo --help'`).
 7. Never call a paid API in tests. Tests use the `mock` provider (deterministic) or a recorded fixture.
 8. No network in `cargo test`. Provider integration is behind `--features live`.
 9. Stop and report when all gates in the current phase are `[x]` or blocked.
@@ -36,17 +36,17 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 ## Phase 1 — Formats + lockfile
 
-- [ ] G1.1 `polyglot` crate skeleton: `clap` CLI with `translate`, `check`, `status`, `review`, `init`. `--help` under 50 ms.
-  - Acceptance: `hyperfine --warmup 3 'target/release/polyglot --help'` mean < 50 ms.
+- [ ] G1.1 `polygo` crate skeleton: `clap` CLI with `translate`, `check`, `status`, `review`, `init`. `--help` under 50 ms.
+  - Acceptance: `hyperfine --warmup 3 'target/release/polygo --help'` mean < 50 ms.
 - [ ] G1.2 `.xcstrings` parser + serializer, byte-stable roundtrip (key order, indentation, `extractionState`, plural variations, device variations preserved).
   - Acceptance: `cargo test roundtrip_xcstrings` passes on all 10 corpus files (diff is empty).
 - [ ] G1.3 Android `strings.xml` parser + serializer (plurals, string-arrays, escapes, `translatable=false` skipped, comments preserved).
   - Acceptance: `cargo test roundtrip_android`.
 - [ ] G1.4 i18next JSON (nested/flat, key sorting preserved).
   - Acceptance: `cargo test roundtrip_json`.
-- [ ] G1.5 Lockfile `polyglot.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
+- [ ] G1.5 Lockfile `polygo.lock` (TOML): per key → blake3(source) + per-locale blake3(translation) + provider/model + timestamp. `status` prints new/changed/stale/untranslated counts per locale.
   - Acceptance: `cargo test lockfile_*` — changing one source string marks exactly one key stale in every locale.
-- [ ] G1.6 `polyglot init` writes `polyglot.toml` (source locale, targets, file globs, provider, glossary path) by detecting the project type from the file tree.
+- [ ] G1.6 `polygo init` writes `polygo.toml` (source locale, targets, file globs, provider, glossary path) by detecting the project type from the file tree.
   - Acceptance: `cargo test init_detects_*` for an iOS, Android, Flutter, and Next.js fixture tree.
 
 ## Phase 2 — Translation engine
@@ -60,7 +60,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - [ ] G2.4 Prompt templates per format with strict output schema; parse failures retried once with a repair prompt, then marked `needs_review` rather than written.
   - Acceptance: `cargo test malformed_output_is_quarantined`.
 
-## Phase 3 — Validation (`polyglot check`)
+## Phase 3 — Validation (`polygo check`)
 
 - [ ] G3.1 Placeholder parity: `%@ %d %lld %1$@ %1$s {name} {{name}} $name` — same multiset in source and translation, positional order allowed to change only with numbered args.
   - Acceptance: `cargo test check_placeholders` catches 100% of `expected.mutations.json` in corpus with 0 false positives on originals.
@@ -86,9 +86,9 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 
 - [ ] G5.1 Flutter `.arb` (ICU plural/select, `@meta` preserved).
 - [ ] G5.2 `.po` (msgctxt, plural forms header) and `.resx`.
-- [ ] G5.3 `polyglot review`: axum serves one embedded HTML file (no build step, no node) at 127.0.0.1: table of pending translations, edit/approve/reject, writes back through the same serializers. Binds localhost only, rejects non-localhost Host header.
+- [ ] G5.3 `polygo review`: axum serves one embedded HTML file (no build step, no node) at 127.0.0.1: table of pending translations, edit/approve/reject, writes back through the same serializers. Binds localhost only, rejects non-localhost Host header.
   - Acceptance: `cargo test review_roundtrip` (approve via HTTP → file updated byte-stably).
-- [ ] G5.4 GitHub Action `polyglot/action`: runs `translate` on push, opens a PR with the diff.
+- [ ] G5.4 GitHub Action `polygo/action`: runs `translate` on push, opens a PR with the diff.
   - Acceptance: dry-run in a fixture repo produces the expected diff.
 
 ## Phase 6 — Release
@@ -96,7 +96,7 @@ Corpus sources are recorded in `tests/corpus/SOURCES.md` with repo URL + license
 - [ ] G6.1 `cargo dist` or `cross` builds for macOS arm64/x64, Linux x64/arm64, Windows x64; release binary < 15 MB.
 - [ ] G6.2 `brew tap`, `cargo install`, `npx`-style shim optional. Install-to-first-translation under 5 minutes measured on a clean machine.
 - [ ] G6.3 README: GIF at line 1 (record with `vhs`), the Lokalise pricing sentence with link, format table, "runs fully offline with Ollama" proof, security note (no telemetry, localhost only).
-- [ ] G6.4 Docs page per format; `polyglot --help` examples; CHANGELOG.
+- [ ] G6.4 Docs page per format; `polygo --help` examples; CHANGELOG.
 - [ ] G6.5 Launch kit in `launch/`: r/iOSProgramming, r/FlutterDev, r/androiddev, r/reactjs posts (each leads with that community's format), Show HN title + first comment, Terminal Trove submission, awesome-lists PRs.
 
 ## Deps
