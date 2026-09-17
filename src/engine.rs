@@ -29,6 +29,11 @@ pub struct Options {
     pub context: bool,
 }
 
+/// Source characters per batch, whatever `batch_size` says: 20 one-line labels are
+/// fine, 20 paragraphs are not (a 4k-context model truncates the prompt and answers
+/// garbage).
+const BATCH_CHARS: usize = 2500;
+
 #[derive(Debug, Default, Clone)]
 pub struct Report {
     pub translated: usize,
@@ -175,9 +180,8 @@ pub fn translate(
         }
         if std::env::var("POLYGO_QUIET").is_err() {
             eprintln!(
-                "{locale}: {} string(s) in {} batch(es) with {} ({})",
+                "{locale}: {} string(s) with {} ({})",
                 work.len(),
-                work.len().div_ceil(batch_size),
                 provider.name(),
                 provider.model()
             );
@@ -189,9 +193,25 @@ pub fn translate(
             do_not_translate: glossary.do_not_translate.clone(),
             format_hint: Some(ws.format_hint()),
         };
-        // Build batches of requests.
-        let batches: VecDeque<(usize, Vec<Request>)> = work
-            .chunks(batch_size)
+        // Build batches of requests: at most `batch_size` strings, and at most
+        // ~BATCH_CHARS of source text, so paragraphs don't blow the model's context.
+        let mut groups: Vec<Vec<String>> = Vec::new();
+        let mut cur: Vec<String> = Vec::new();
+        let mut cur_chars = 0usize;
+        for k in work {
+            let n = by_key[k.as_str()].source.chars().count();
+            if !cur.is_empty() && (cur.len() >= batch_size || cur_chars + n > BATCH_CHARS) {
+                groups.push(std::mem::take(&mut cur));
+                cur_chars = 0;
+            }
+            cur.push(k.clone());
+            cur_chars += n;
+        }
+        if !cur.is_empty() {
+            groups.push(cur);
+        }
+        let batches: VecDeque<(usize, Vec<Request>)> = groups
+            .iter()
             .enumerate()
             .map(|(i, keys)| {
                 (
