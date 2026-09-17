@@ -21,12 +21,25 @@ pub struct LocaleRecord {
     pub at: String,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ReviewNote {
+    /// Hash of the source text the attempt was made from.
+    pub source: String,
+    pub reason: String,
+    #[serde(default)]
+    pub suggestion: Option<String>,
+    pub at: String,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct KeyRecord {
     /// Hash of the source text the translations were made from.
     pub source: String,
     #[serde(default)]
     pub locales: BTreeMap<String, LocaleRecord>,
+    /// Locales where the last attempt was quarantined for a human (or `--retry-review`).
+    #[serde(default)]
+    pub review: BTreeMap<String, ReviewNote>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -64,6 +77,8 @@ pub enum State {
     Edited,
     /// Translation matches the lockfile and the source is unchanged.
     UpToDate,
+    /// The last attempt was quarantined; not retried unless asked.
+    NeedsReview,
 }
 
 impl State {
@@ -74,15 +89,17 @@ impl State {
             State::Untranslated => "untranslated",
             State::Edited => "edited",
             State::UpToDate => "up-to-date",
+            State::NeedsReview => "needs-review",
         }
     }
 
-    pub const ALL: [State; 5] = [
+    pub const ALL: [State; 6] = [
         State::New,
         State::Stale,
         State::Untranslated,
         State::Edited,
         State::UpToDate,
+        State::NeedsReview,
     ];
 }
 
@@ -112,13 +129,21 @@ impl Status {
             .unwrap_or_default()
     }
 
-    /// Keys that `translate` should (re)translate for a locale: new, stale, untranslated.
+    /// Keys that `translate` should (re)translate for a locale: new, stale, untranslated,
+    /// plus quarantined ones when `retry_review` is set.
     pub fn work(&self, locale: &str) -> Vec<String> {
+        self.work_with(locale, false)
+    }
+
+    pub fn work_with(&self, locale: &str, retry_review: bool) -> Vec<String> {
         self.per_locale
             .get(locale)
             .map(|m| {
                 m.iter()
-                    .filter(|(_, s)| matches!(s, State::New | State::Stale | State::Untranslated))
+                    .filter(|(_, s)| {
+                        matches!(s, State::New | State::Stale | State::Untranslated)
+                            || (retry_review && **s == State::NeedsReview)
+                    })
                     .map(|(k, _)| k.clone())
                     .collect()
             })
@@ -152,6 +177,19 @@ impl Lock {
                     escape(&l.model),
                     l.at
                 ));
+            }
+            for (locale, r) in &rec.review {
+                out.push_str(&format!(
+                    "\n[keys.{}.review.{}]\nsource = \"{}\"\nreason = \"{}\"\n",
+                    toml_key(key),
+                    toml_key(locale),
+                    r.source,
+                    escape(&r.reason)
+                ));
+                if let Some(sug) = &r.suggestion {
+                    out.push_str(&format!("suggestion = \"{}\"\n", escape(sug)));
+                }
+                out.push_str(&format!("at = \"{}\"\n", r.at));
             }
         }
         out
@@ -187,6 +225,15 @@ impl Lock {
                     Some(rec) => {
                         let translation = u.translations.get(*locale);
                         match (rec.locales.get(*locale), translation) {
+                            // Quarantined for this exact source text and still untranslated.
+                            (None, None)
+                                if rec
+                                    .review
+                                    .get(*locale)
+                                    .is_some_and(|r| r.source == hash(&u.source)) =>
+                            {
+                                State::NeedsReview
+                            }
                             // Never translated into this locale: treat like a new key.
                             (None, None) => State::New,
                             // Was translated before, but the translation is gone now.
@@ -236,6 +283,27 @@ impl Lock {
         self.keys = keys;
     }
 
+    /// Quarantine a key for a locale: recorded so it is not retried until asked.
+    pub fn quarantine(
+        &mut self,
+        unit: &Unit,
+        locale: &str,
+        reason: &str,
+        suggestion: Option<&str>,
+    ) {
+        let rec = self.keys.entry(unit.key.clone()).or_default();
+        rec.source = hash(&unit.source);
+        rec.review.insert(
+            locale.to_string(),
+            ReviewNote {
+                source: hash(&unit.source),
+                reason: reason.to_string(),
+                suggestion: suggestion.map(str::to_string),
+                at: now_rfc3339(),
+            },
+        );
+    }
+
     /// Record a single translation polygo just wrote.
     pub fn record(
         &mut self,
@@ -247,6 +315,7 @@ impl Lock {
     ) {
         let rec = self.keys.entry(unit.key.clone()).or_default();
         rec.source = hash(&unit.source);
+        rec.review.remove(locale);
         rec.locales.insert(
             locale.to_string(),
             LocaleRecord {

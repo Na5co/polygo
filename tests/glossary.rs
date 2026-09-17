@@ -100,7 +100,12 @@ fn glossary_enforced_end_to_end() {
         .arg("translate")
         .output()
         .unwrap();
-    assert!(!out.status.success());
+    assert_eq!(
+        out.status.code(),
+        Some(3),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
     let err = String::from_utf8_lossy(&out.stderr);
     assert!(err.contains("login") && err.contains("glossary"), "{err}");
     let de = fs::read_to_string(dir.path().join("locales/de.json")).unwrap_or_default();

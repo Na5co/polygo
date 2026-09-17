@@ -20,8 +20,9 @@ pub struct Options {
     pub batch_size: usize,
     pub jobs: usize,
     pub dry_run: bool,
-    /// Called with (locale, key, text) after each translation is applied.
     pub verbose: bool,
+    /// Also retry keys that were quarantined on a previous run.
+    pub retry_review: bool,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -30,6 +31,8 @@ pub struct Report {
     pub batches: usize,
     pub per_locale: BTreeMap<String, usize>,
     pub planned: BTreeMap<String, Vec<String>>,
+    /// (locale, key, reason) for everything quarantined this run.
+    pub review: Vec<(String, String, String)>,
 }
 
 pub fn translate(
@@ -59,7 +62,7 @@ pub fn translate(
 
     let mut report = Report::default();
     for locale in &locales {
-        let work = status.work(locale);
+        let work = status.work_with(locale, opts.retry_review);
         report.planned.insert(locale.clone(), work.clone());
     }
     if opts.dry_run {
@@ -68,6 +71,7 @@ pub fn translate(
 
     let mut ws = Workspace::open(root, cfg)?;
     let glossary = crate::glossary::load(root, cfg)?;
+    let _ = &glossary;
     let batch_size = opts.batch_size.max(1);
     let jobs = opts.jobs.max(1);
 
@@ -109,7 +113,7 @@ pub fn translate(
         let queue = Mutex::new(batches);
         type Msg = (
             usize,
-            Result<Vec<crate::provider::Translation>>,
+            Result<crate::provider::Outcome>,
             mpsc::SyncSender<()>,
         );
         let (tx, rx) = mpsc::channel::<Msg>();
@@ -137,13 +141,10 @@ pub fn translate(
             // Apply results as they arrive; persist after every batch, then ack.
             for _ in 0..total {
                 let (i, result, ack) = rx.recv().context("provider worker died")?;
-                let translations =
+                let outcome =
                     result.with_context(|| format!("{locale}: batch {}/{total} failed", i + 1))?;
-                for t in translations {
+                for t in outcome.translations {
                     let u = by_key[t.key.as_str()];
-                    if !glossary.satisfied(locale, &u.source, &t.text) {
-                        anyhow::bail!("{locale}: `{}` ignores the glossary: {}", u.key, t.text);
-                    }
                     ws.set(cfg, &t.key, locale, &t.text)?;
                     lock.record(u, locale, &t.text, provider.name(), provider.model());
                     if opts.verbose {
@@ -151,6 +152,13 @@ pub fn translate(
                     }
                     report.translated += 1;
                     *report.per_locale.entry(locale.clone()).or_default() += 1;
+                }
+                for r in outcome.review {
+                    let u = by_key[r.key.as_str()];
+                    lock.quarantine(u, locale, &r.reason, r.suggestion.as_deref());
+                    report
+                        .review
+                        .push((locale.clone(), r.key.clone(), r.reason.clone()));
                 }
                 ws.flush()?;
                 lock.save(&lock_path)?;
@@ -169,10 +177,10 @@ pub fn translate(
 }
 
 fn translate_with_retry(
-    provider: &(dyn Provider + Sync),
+    provider: &dyn Provider,
     batch: &[Request],
     ctx: &Ctx,
-) -> Result<Vec<crate::provider::Translation>> {
+) -> Result<crate::provider::Outcome> {
     let mut last = None;
     for attempt in 0..3u32 {
         match provider.translate(batch, ctx) {

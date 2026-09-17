@@ -1,9 +1,6 @@
 //! Ollama `/api/chat` with structured (JSON-schema) output and thinking disabled.
 
-use super::{
-    Ctx, Provider, Request, Translation, parse_translations_json, post_json, response_schema,
-    system_prompt, user_prompt,
-};
+use super::{Ctx, Provider, post_json, response_schema};
 use anyhow::{Context as _, Result};
 
 pub struct Ollama {
@@ -40,10 +37,7 @@ impl Provider for Ollama {
         &self.model
     }
 
-    fn translate(&self, batch: &[Request], ctx: &Ctx) -> Result<Vec<Translation>> {
-        if batch.is_empty() {
-            return Ok(vec![]);
-        }
+    fn complete(&self, system: &str, user: &str, _ctx: &Ctx) -> Result<String> {
         let body = serde_json::json!({
             "model": self.model,
             "stream": false,
@@ -51,17 +45,12 @@ impl Provider for Ollama {
             "format": response_schema(),
             "options": { "temperature": 0.2 },
             "messages": [
-                { "role": "system", "content": system_prompt(ctx) },
-                { "role": "user", "content": user_prompt(batch, ctx) }
+                { "role": "system", "content": system },
+                { "role": "user", "content": user }
             ]
         });
-        let debug = std::env::var("POLYGO_DEBUG_PROMPT").is_ok();
-        if debug {
-            eprintln!(
-                "--- system ---\n{}\n--- user ---\n{}",
-                system_prompt(ctx),
-                user_prompt(batch, ctx)
-            );
+        if std::env::var("POLYGO_DEBUG_PROMPT").is_ok() {
+            eprintln!("--- system ---\n{system}\n--- user ---\n{user}");
         }
         let resp =
             post_json(&format!("{}/api/chat", self.base_url), &[], &body).with_context(|| {
@@ -70,11 +59,13 @@ impl Provider for Ollama {
                     self.base_url, self.model
                 )
             })?;
-        let content = resp["message"]["content"].as_str().unwrap_or("");
-        if debug {
+        let content = resp["message"]["content"]
+            .as_str()
+            .unwrap_or("")
+            .to_string();
+        if std::env::var("POLYGO_DEBUG_PROMPT").is_ok() {
             eprintln!("--- response ---\n{content}");
         }
-        let wanted: Vec<&str> = batch.iter().map(|r| r.key.as_str()).collect();
-        parse_translations_json(content, &wanted)
+        Ok(content)
     }
 }

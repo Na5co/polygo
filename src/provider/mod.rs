@@ -39,18 +39,197 @@ pub struct Translation {
     pub text: String,
 }
 
-pub trait Provider {
+/// A key the model could not translate acceptably even after one repair round.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Review {
+    pub key: String,
+    pub reason: String,
+    /// The model's last attempt, if it produced anything for this key.
+    pub suggestion: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct Outcome {
+    pub translations: Vec<Translation>,
+    pub review: Vec<Review>,
+}
+
+pub trait Provider: Sync {
     fn name(&self) -> &str;
     fn model(&self) -> &str;
-    fn translate(&self, batch: &[Request], ctx: &Ctx) -> Result<Vec<Translation>>;
+    /// One raw model call. Backends only implement this; prompting, parsing, repair
+    /// and quarantine live in [`run`] so every backend behaves identically.
+    fn complete(&self, system: &str, user: &str, ctx: &Ctx) -> Result<String>;
+
+    fn translate(&self, batch: &[Request], ctx: &Ctx) -> Result<Outcome> {
+        run(self, batch, ctx)
+    }
+}
+
+/// Prompt → parse → validate → one repair round → quarantine what is still wrong.
+pub fn run<P: Provider + ?Sized>(provider: &P, batch: &[Request], ctx: &Ctx) -> Result<Outcome> {
+    if batch.is_empty() {
+        return Ok(Outcome::default());
+    }
+    let system = system_prompt(ctx);
+    let raw = provider.complete(&system, &user_prompt(batch, ctx), ctx)?;
+    let wanted: Vec<&str> = batch.iter().map(|r| r.key.as_str()).collect();
+    let mut found = parse_translations_lenient(&raw, &wanted);
+    let mut problems = validate(batch, ctx, &found, &[]);
+
+    if !problems.is_empty() {
+        // Repair round: only the problem keys, with what went wrong spelled out.
+        let retry: Vec<Request> = batch
+            .iter()
+            .filter(|r| problems.iter().any(|(k, _)| k == &r.key))
+            .cloned()
+            .collect();
+        let mut note = String::from("Your previous reply had problems:\n");
+        for (k, why) in &problems {
+            note.push_str(&format!("- {k}: {why}\n"));
+        }
+        note.push_str(
+            "If a string is correctly left identical to the source in the target language, return it again unchanged. \
+Otherwise fix the listed problems and reply with the JSON only.\n\n",
+        );
+        let user = format!("{note}{}", user_prompt(&retry, ctx));
+        let raw2 = provider.complete(&system, &user, ctx)?;
+        let retry_wanted: Vec<&str> = retry.iter().map(|r| r.key.as_str()).collect();
+        let repaired = parse_translations_lenient(&raw2, &retry_wanted);
+        // Identical-to-source is accepted once the model confirms it on the second ask.
+        let confirmed: Vec<String> = problems
+            .iter()
+            .filter(|(_, why)| why.starts_with("identical"))
+            .map(|(k, _)| k.clone())
+            .collect();
+        for t in repaired {
+            found.retain(|f| f.key != t.key);
+            found.push(t);
+        }
+        problems = validate(&retry, ctx, &found, &confirmed);
+    }
+
+    let mut outcome = Outcome::default();
+    for r in batch {
+        match problems.iter().find(|(k, _)| k == &r.key) {
+            Some((_, why)) => outcome.review.push(Review {
+                key: r.key.clone(),
+                reason: why.clone(),
+                suggestion: found
+                    .iter()
+                    .find(|t| t.key == r.key)
+                    .map(|t| t.text.clone()),
+            }),
+            None => {
+                if let Some(t) = found.iter().find(|t| t.key == r.key) {
+                    outcome.translations.push(t.clone());
+                }
+            }
+        }
+    }
+    Ok(outcome)
+}
+
+/// Problems with the current `found` set for `batch`: missing keys, empty output,
+/// glossary/do-not-translate violations, and (unless in `confirmed`) source echoes.
+fn validate(
+    batch: &[Request],
+    ctx: &Ctx,
+    found: &[Translation],
+    confirmed: &[String],
+) -> Vec<(String, String)> {
+    let mut out = Vec::new();
+    for r in batch {
+        let Some(t) = found.iter().find(|t| t.key == r.key) else {
+            out.push((r.key.clone(), "missing from the reply".into()));
+            continue;
+        };
+        if t.text.trim().is_empty() {
+            out.push((r.key.clone(), "empty translation".into()));
+            continue;
+        }
+        let src_lower = r.source.to_lowercase();
+        let tr_lower = t.text.to_lowercase();
+        for term in &ctx.do_not_translate {
+            if src_lower.contains(&term.to_lowercase()) && !t.text.contains(term.as_str()) {
+                out.push((
+                    r.key.clone(),
+                    format!("glossary: `{term}` must stay untranslated"),
+                ));
+            }
+        }
+        for (term, required) in &ctx.glossary {
+            if src_lower.contains(&term.to_lowercase())
+                && !tr_lower.contains(&required.to_lowercase())
+            {
+                out.push((
+                    r.key.clone(),
+                    format!("glossary: `{term}` must be translated as `{required}`"),
+                ));
+            }
+        }
+        if out.iter().any(|(k, _)| k == &r.key) {
+            continue;
+        }
+        let same_language = ctx.source_locale.split(['-', '_']).next()
+            == ctx.target_locale.split(['-', '_']).next();
+        let has_letters = r.source.chars().any(|c| c.is_alphabetic());
+        if !same_language
+            && has_letters
+            && t.text.trim() == r.source.trim()
+            && !confirmed.contains(&r.key)
+        {
+            out.push((
+                r.key.clone(),
+                "identical to the source — translate it or confirm it must stay".into(),
+            ));
+        }
+    }
+    out
+}
+
+/// Like [`parse_translations_json`] but never fails: returns whatever keys were found.
+pub fn parse_translations_lenient(raw: &str, wanted: &[&str]) -> Vec<Translation> {
+    let Some(json) = extract_json_object(raw) else {
+        return vec![];
+    };
+    let Ok(value) = serde_json::from_str::<serde_json::Value>(json) else {
+        return vec![];
+    };
+    let mut found: Vec<(String, String)> = Vec::new();
+    if let Some(items) = value.get("translations").and_then(|v| v.as_array()) {
+        for it in items {
+            if let Ok(item) = serde_json::from_value::<Item>(it.clone()) {
+                found.push((item.key, item.translation));
+            }
+        }
+    } else if let Some(obj) = value.as_object() {
+        for (k, v) in obj {
+            if let Some(t) = v.as_str() {
+                found.push((k.clone(), t.to_string()));
+            }
+        }
+    }
+    wanted
+        .iter()
+        .filter_map(|key| {
+            found
+                .iter()
+                .find(|(k, _)| k == key)
+                .map(|(_, text)| Translation {
+                    key: (*key).to_string(),
+                    text: text.clone(),
+                })
+        })
+        .collect()
 }
 
 /// Build a provider from config. API keys come from the environment:
 /// `POLYGO_API_KEY` first, then `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`.
-pub fn from_config(cfg: &crate::config::Provider) -> Result<Box<dyn Provider + Sync>> {
+pub fn from_config(cfg: &crate::config::Provider) -> Result<Box<dyn Provider>> {
     let model = cfg.model.clone();
     Ok(match cfg.kind.as_str() {
-        "mock" => Box::new(mock::Mock::default()),
+        "mock" => Box::new(mock::Mock),
         "ollama" => Box::new(ollama::Ollama::new(
             cfg.base_url.clone(),
             model.as_deref().unwrap_or("qwen3:8b"),
@@ -194,7 +373,7 @@ pub fn user_prompt(batch: &[Request], ctx: &Ctx) -> String {
     );
     for (i, r) in batch.iter().enumerate() {
         s.push_str(&format!(
-            "### {} key: {}\nsource: {}\n",
+            "### {} key: {}\nsource ({src}): {}\n",
             i + 1,
             r.key,
             r.source

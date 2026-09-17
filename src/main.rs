@@ -34,6 +34,9 @@ enum Commands {
         /// Print every translation as it is written.
         #[arg(short, long)]
         verbose: bool,
+        /// Also retry keys quarantined as needs-review on a previous run.
+        #[arg(long)]
+        retry_review: bool,
     },
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
     Check,
@@ -62,7 +65,16 @@ fn main() {
             jobs,
             dry_run,
             verbose,
-        } => translate(&cli.root, locale, batch_size, jobs, dry_run, verbose),
+            retry_review,
+        } => translate(
+            &cli.root,
+            locale,
+            batch_size,
+            jobs,
+            dry_run,
+            verbose,
+            retry_review,
+        ),
         Commands::Check => todo_cmd("check"),
         Commands::Status { json } => status(&cli.root, json),
         Commands::Review => todo_cmd("review"),
@@ -86,6 +98,7 @@ fn translate(
     jobs: Option<usize>,
     dry_run: bool,
     verbose: bool,
+    retry_review: bool,
 ) -> Result<()> {
     let cfg = Config::load(root)?;
     let provider = polygo::provider::from_config(&cfg.provider)?;
@@ -95,6 +108,7 @@ fn translate(
         jobs: jobs.unwrap_or(cfg.jobs),
         dry_run,
         verbose,
+        retry_review,
     };
     let report = polygo::engine::translate(root, &cfg, provider.as_ref(), &opts)?;
     if dry_run {
@@ -119,6 +133,16 @@ fn translate(
         for (l, n) in &report.per_locale {
             println!("  {l:<8} {n}");
         }
+    }
+    if !report.review.is_empty() {
+        eprintln!(
+            "{} string(s) need review (not written; see polygo.lock, retry with --retry-review):",
+            report.review.len()
+        );
+        for (l, k, why) in &report.review {
+            eprintln!("  {l}  {k}  —  {why}");
+        }
+        std::process::exit(3);
     }
     Ok(())
 }

@@ -23,10 +23,10 @@ fn req(key: &str, source: &str) -> Request {
 
 #[test]
 fn provider_mock_is_deterministic_and_reversible() {
-    let p = Mock::default();
+    let p = Mock;
     let batch = vec![req("save", "Save"), req("hello", "Hello, %@!")];
-    let a = p.translate(&batch, &ctx("de")).unwrap();
-    let b = p.translate(&batch, &ctx("de")).unwrap();
+    let a = p.translate(&batch, &ctx("de")).unwrap().translations;
+    let b = p.translate(&batch, &ctx("de")).unwrap().translations;
     assert_eq!(a, b);
     assert_eq!(a.len(), 2);
     assert_eq!(a[0].key, "save");
@@ -38,32 +38,30 @@ fn provider_mock_is_deterministic_and_reversible() {
         Mock::reverse(&a[1].text),
         Some(("de".to_string(), "Hello, %@!".to_string()))
     );
-    assert_ne!(p.translate(&batch, &ctx("fr")).unwrap()[0].text, a[0].text);
+    assert_ne!(
+        p.translate(&batch, &ctx("fr")).unwrap().translations[0].text,
+        a[0].text
+    );
     assert_eq!(p.name(), "mock");
 }
 
 #[test]
 fn provider_mock_handles_empty_batch_and_preserves_order() {
-    let p = Mock::default();
-    assert!(p.translate(&[], &ctx("de")).unwrap().is_empty());
+    let p = Mock;
+    assert!(
+        p.translate(&[], &ctx("de"))
+            .unwrap()
+            .translations
+            .is_empty()
+    );
     let batch: Vec<Request> = (0..50)
         .map(|i| req(&format!("k{i}"), &format!("Text {i}")))
         .collect();
-    let out = p.translate(&batch, &ctx("ja")).unwrap();
+    let out = p.translate(&batch, &ctx("ja")).unwrap().translations;
     assert_eq!(
         out.iter().map(|t| t.key.as_str()).collect::<Vec<_>>(),
         batch.iter().map(|r| r.key.as_str()).collect::<Vec<_>>()
     );
-}
-
-#[test]
-fn provider_mock_can_fail_on_demand_for_resume_tests() {
-    let p = Mock {
-        fail_on_key: Some("boom".into()),
-    };
-    let batch = vec![req("ok", "Fine"), req("boom", "Explode")];
-    assert!(p.translate(&batch, &ctx("de")).is_err());
-    assert!(p.translate(&batch[..1], &ctx("de")).is_ok());
 }
 
 #[test]
@@ -110,6 +108,8 @@ fn provider_ollama_smoke() {
         req("save", "Save"),
     ];
     let out = p.translate(&batch, &ctx("de")).unwrap();
+    assert!(out.review.is_empty(), "{:?}", out.review);
+    let out = out.translations;
     assert_eq!(out.len(), 2);
     assert!(
         out[0].text.contains("%@") && out[0].text.contains("%lld"),

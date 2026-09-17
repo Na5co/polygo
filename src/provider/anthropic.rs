@@ -1,9 +1,6 @@
 //! Anthropic Messages API.
 
-use super::{
-    Ctx, Provider, Request, Translation, parse_translations_json, post_json, system_prompt,
-    user_prompt,
-};
+use super::{Ctx, Provider, post_json};
 use anyhow::{Context as _, Result, bail};
 
 pub struct Anthropic {
@@ -34,10 +31,7 @@ impl Provider for Anthropic {
         &self.model
     }
 
-    fn translate(&self, batch: &[Request], ctx: &Ctx) -> Result<Vec<Translation>> {
-        if batch.is_empty() {
-            return Ok(vec![]);
-        }
+    fn complete(&self, system: &str, user: &str, _ctx: &Ctx) -> Result<String> {
         let Some(key) = &self.api_key else {
             bail!("anthropic provider needs ANTHROPIC_API_KEY (or POLYGO_API_KEY)");
         };
@@ -45,8 +39,8 @@ impl Provider for Anthropic {
             "model": self.model,
             "max_tokens": 4096,
             "temperature": 0.2,
-            "system": system_prompt(ctx),
-            "messages": [ { "role": "user", "content": user_prompt(batch, ctx) } ]
+            "system": system,
+            "messages": [ { "role": "user", "content": user } ]
         });
         let resp = post_json(
             &format!("{}/v1/messages", self.base_url),
@@ -57,7 +51,7 @@ impl Provider for Anthropic {
             &body,
         )
         .context("anthropic messages API")?;
-        let content = resp["content"]
+        Ok(resp["content"]
             .as_array()
             .map(|parts| {
                 parts
@@ -66,8 +60,6 @@ impl Provider for Anthropic {
                     .collect::<Vec<_>>()
                     .join("")
             })
-            .unwrap_or_default();
-        let wanted: Vec<&str> = batch.iter().map(|r| r.key.as_str()).collect();
-        parse_translations_json(&content, &wanted)
+            .unwrap_or_default())
     }
 }
