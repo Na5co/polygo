@@ -109,6 +109,41 @@ Otherwise fix the listed problems and reply with the JSON only.\n\n",
         problems = validate(&retry, ctx, &found, &confirmed);
     }
 
+    // Strings that still echo the source after the repair round *and* were shown code
+    // context get one plain ask: code often contains the English string as an identifier,
+    // which small models read as "keep it in English". Without the snippet they translate.
+    let echoes: Vec<Request> = batch
+        .iter()
+        .filter(|r| {
+            (r.context.is_some() || !r.examples.is_empty())
+                && found
+                    .iter()
+                    .any(|t| t.key == r.key && t.text.trim() == r.source.trim())
+        })
+        .map(|r| Request {
+            context: None,
+            examples: vec![],
+            ..r.clone()
+        })
+        .collect();
+    if !echoes.is_empty() {
+        let raw3 = provider.complete(&system, &user_prompt(&echoes, ctx), ctx)?;
+        let wanted3: Vec<&str> = echoes.iter().map(|r| r.key.as_str()).collect();
+        for t in parse_translations_lenient(&raw3, &wanted3) {
+            let src = &echoes.iter().find(|r| r.key == t.key).unwrap().source;
+            if t.text.trim() != src.trim() && !t.text.trim().is_empty() {
+                found.retain(|f| f.key != t.key);
+                found.push(t);
+            }
+        }
+        problems = validate(
+            batch,
+            ctx,
+            &found,
+            &batch.iter().map(|r| r.key.clone()).collect::<Vec<_>>(),
+        );
+    }
+
     let mut outcome = Outcome::default();
     for r in batch {
         match problems.iter().find(|(k, _)| k == &r.key) {
@@ -271,7 +306,8 @@ from {src} into {dst}. Every \"translation\" value MUST be written in {dst}; cop
 Rules: keep every placeholder exactly as written ({hint}); keep inline markup and HTML tags; match the tone and \
 terminology of the examples when given; be as short and natural as a native {dst} app would; never add explanations. \
 Any \"used in\" code shown is reference only, to tell a button from a heading — translate ONLY the source string, \
-never the code or the other strings around it.\n\
+never the code or the other strings around it. Code identifiers often equal the English string; that is not a reason \
+to keep it in English — user-facing text is translated unless it is a brand or proper noun.\n\
 Respond with JSON only, one item per input key, in the same order:\n\
 {\"translations\":[{\"key\":\"<key>\",\"translation\":\"<{dst} text>\"}]}";
 

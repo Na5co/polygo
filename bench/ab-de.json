@@ -4,9 +4,9 @@
  "judge": "gemma4",
  "n": 60,
  "context_wins": 10,
- "nocontext_wins": 10,
- "ties": 40,
- "identical": 27,
+ "nocontext_wins": 8,
+ "ties": 42,
+ "identical": 29,
  "results": [
   {
    "key": "Locked icon alert title",
@@ -72,8 +72,8 @@
    "key": "Move Up",
    "source": "Move Up",
    "human": "Hochbewegen",
-   "context": "Nach oben bewegen",
-   "nocontext": "Nach oben verschieben",
+   "context": "Nach Oben bewegen",
+   "nocontext": "Oben verschieben",
    "verdict": "nocontext",
    "votes": [
     "B",
@@ -176,11 +176,11 @@
    "key": "No updates available message 31",
    "source": "I… uhh… one sec I lost it",
    "human": "Ich… Hm… Eine Sekunde, ich hab's gleich",
-   "context": "Ich… äh… ein Sekunde, ich hab es verloren",
+   "context": "Ich… äh… ein Moment, ich hab es verloren",
    "nocontext": "I… uhh… ein Moment, ich hab es verloren",
-   "verdict": "tie",
+   "verdict": "context",
    "votes": [
-    "B",
+    "A",
     "B"
    ]
   },
@@ -229,12 +229,8 @@
    "source": "I swear it was here somewhere… one sec",
    "human": "Wir schwören, dass es hier irgendwo war… Eine Sekunde...",
    "context": "Ich schwöre, es war irgendwo hier… ein Moment",
-   "nocontext": "Ich schwöre, es war hier irgendwo… ein Moment",
-   "verdict": "nocontext",
-   "votes": [
-    "B",
-    "A"
-   ]
+   "nocontext": "Ich schwöre, es war irgendwo hier… ein Moment",
+   "verdict": "same"
   },
   {
    "key": "Allow radial menu customization",
@@ -312,7 +308,7 @@
    "key": "Apply trigger delay on middle-click",
    "source": "Apply trigger delay on middle-click",
    "human": "Verzögerung bei mittlerem Klick",
-   "context": "Aktivierungsverzögerung bei Mittelklick anwenden",
+   "context": "Aktivierungsverzögerung bei mittlerem Klick anwenden",
    "nocontext": "Triggerverzögerung bei mittlerem Klick anwenden",
    "verdict": "tie",
    "votes": [
@@ -332,12 +328,12 @@
    "key": "Move Left",
    "source": "Move Left",
    "human": "Nach Links bewegen",
-   "context": "Nach links bewegen",
-   "nocontext": "Nach links verschieben",
-   "verdict": "nocontext",
+   "context": "Nach Links bewegen",
+   "nocontext": "Links verschieben",
+   "verdict": "tie",
    "votes": [
     "B",
-    "A"
+    "B"
    ]
   },
   {
@@ -604,13 +600,9 @@
    "key": "This will reset all radial menu actions to their default configuration.",
    "source": "This will reset all radial menu actions to their default configuration.",
    "human": "This will reset all radial menu actions to their default configuration.",
-   "context": "Dies setzt alle Radialmenüaktionen auf ihre Standardkonfiguration zurück.",
-   "nocontext": "Dies wird alle radialen Menüaktionen in ihre Standardkonfiguration zurücksetzen.",
-   "verdict": "context",
-   "votes": [
-    "A",
-    "B"
-   ]
+   "context": "Dies setzt alle radialen Menüaktionen auf ihre Standardkonfiguration zurück.",
+   "nocontext": "Dies setzt alle radialen Menüaktionen auf ihre Standardkonfiguration zurück.",
+   "verdict": "same"
   },
   {
    "key": "Quarters",
