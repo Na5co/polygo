@@ -1,9 +1,9 @@
 //! G5.4: the Action's script, dry-run in a fixture git repo, produces the expected diff.
+#![cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 use std::fs;
 use std::process::Command;
 
 #[test]
-#[cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 fn action_dry_run_produces_expected_diff() {
     let dir = tempfile::tempdir().unwrap();
     let root = dir.path();

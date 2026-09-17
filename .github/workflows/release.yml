@@ -12,7 +12,7 @@ jobs:
         include:
           - { target: aarch64-apple-darwin,      os: macos-latest,   asset: aarch64-darwin }
           - { target: x86_64-apple-darwin,       os: macos-latest,   asset: x86_64-darwin }
-          - { target: x86_64-unknown-linux-musl, os: ubuntu-latest,  asset: x86_64-linux }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-latest,  asset: x86_64-linux, cross: true }
           - { target: aarch64-unknown-linux-musl, os: ubuntu-latest, asset: aarch64-linux, cross: true }
           - { target: x86_64-pc-windows-msvc,    os: windows-latest, asset: x86_64-windows }
     runs-on: ${{ matrix.os }}

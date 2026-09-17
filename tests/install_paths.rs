@@ -1,9 +1,9 @@
 //! G6.2: install artifacts are consistent with the release layout and syntactically valid.
+#![cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 use std::fs;
 use std::process::Command;
 
 #[test]
-#[cfg(unix)] // runs the shell scripts; the Action itself only runs on ubuntu
 fn install_scripts_are_valid_and_consistent() {
     let root = env!("CARGO_MANIFEST_DIR");
     // install.sh is POSIX sh and parses.
