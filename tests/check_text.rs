@@ -70,3 +70,64 @@ fn check_length_identity() {
     // Untranslated markup-only strings are fine.
     assert!(kinds("<br/>", "<br/>", "fr", 2.5).is_empty());
 }
+
+#[test]
+fn fragment_flags_source_words_left_in_non_latin_translations() {
+    use polygo::check::text::untranslated_fragment;
+    let f = |s: &str, t: &str| untranslated_fragment(s, t, &[]);
+    assert_eq!(
+        f("Welcome back, %@!", "%@さん、ようこそ back!"),
+        Some(vec!["back".to_string()])
+    );
+    assert_eq!(
+        f("Delete %lld photos?", "Удалить %lld photos?"),
+        Some(vec!["photos".to_string()])
+    );
+    // Clean translations, loanwords, acronyms, brand names and mixed case pass.
+    assert_eq!(f("Welcome back, %@!", "おかえりなさい、%@さん！"), None);
+    assert_eq!(f("Send email", "Отправить email"), None);
+    assert_eq!(f("Open in iOS", "iOSで開く"), None);
+    assert_eq!(f("Sign in with GitHub", "GitHubでサインイン"), None);
+    assert_eq!(f("Save as PDF", "PDFとして保存"), None);
+    // Latin-script targets are never judged (German keeps "Tab" legitimately).
+    assert_eq!(f("Close tab", "Tab schließen"), None);
+    assert_eq!(f("Close the tab now", "Close the tab jetzt"), None);
+    // Allowed terms (glossary / do-not-translate) are skipped, even multi-word.
+    assert_eq!(
+        untranslated_fragment(
+            "Open Google Drive folder",
+            "Google Drive フォルダを開く",
+            &[]
+        ),
+        None
+    );
+    assert_eq!(
+        untranslated_fragment(
+            "Use dark mode",
+            "dark mode を使用してください",
+            &["dark mode".to_string()]
+        ),
+        None
+    );
+    assert_eq!(
+        untranslated_fragment("Use dark mode", "dark mode を使用してください", &[]),
+        Some(vec!["mode".to_string()])
+    );
+}
+
+#[test]
+fn check_text_reports_fragment_as_warning() {
+    use polygo::check::text::{Severity, check_text};
+    let f = check_text(
+        "Welcome back, %@!",
+        "%@さん、ようこそ back!",
+        "en",
+        "ja",
+        2.5,
+    );
+    assert!(
+        f.iter()
+            .any(|x| x.code == "fragment" && x.severity == Severity::Warning),
+        "{f:?}"
+    );
+}

@@ -12,6 +12,8 @@
 //! - `POLYGO_MOCK_ECHO_KEY=k`      reply with the source text for key `k`
 //! - `POLYGO_MOCK_DUMP=path`       append every user prompt received (for prompt tests)
 //! - `POLYGO_MOCK_KEY_ECHO_ONCE`   on the first call, reply with the key instead of a translation
+//! - `POLYGO_MOCK_FRAGMENT=k`      reply in Japanese script but leave the source's last word for key `k`
+//! - `POLYGO_MOCK_FRAGMENT_ONCE`   like FRAGMENT but only on the first call
 
 use super::{Ctx, Provider};
 use anyhow::Result;
@@ -65,6 +67,11 @@ impl Provider for Mock {
         let log = env("POLYGO_MOCK_LOG");
         let drop_key = env("POLYGO_MOCK_DROP_KEY");
         let echo_key = env("POLYGO_MOCK_ECHO_KEY");
+        let fragment_key = env("POLYGO_MOCK_FRAGMENT").or_else(|| {
+            (call == 1)
+                .then(|| env("POLYGO_MOCK_FRAGMENT_ONCE"))
+                .flatten()
+        });
         let ignore_glossary = env("POLYGO_MOCK_IGNORE_GLOSSARY").is_some();
 
         let mut items = Vec::new();
@@ -87,6 +94,9 @@ impl Provider for Mock {
             }
             let text = if echo_key.as_deref() == Some(key.as_str()) {
                 source.clone()
+            } else if fragment_key.as_deref() == Some(key.as_str()) {
+                let last = source.split_whitespace().last().unwrap_or("");
+                format!("ようこそ、こんにちは {last}")
             } else if call == 1 && env("POLYGO_MOCK_KEY_ECHO_ONCE").is_some() {
                 key.clone()
             } else {

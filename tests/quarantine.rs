@@ -197,3 +197,52 @@ fn key_echo_is_repaired_not_written() {
         "repair must replace the key echo:\n{de}"
     );
 }
+
+#[test]
+fn untranslated_fragment_is_repaired_then_quarantined() {
+    // Repaired on the second ask → written normally.
+    let dir = tempfile::tempdir().unwrap();
+    project(dir.path());
+    let out = polygo()
+        .current_dir(dir.path())
+        .env("POLYGO_MOCK_FRAGMENT_ONCE", "k2")
+        .env("POLYGO_NO_BACKOFF", "1")
+        .arg("translate")
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let de = fs::read_to_string(dir.path().join("locales/de.json")).unwrap();
+    assert!(de.contains("\"k2\": \"⟦de⟧ Second string\""), "{de}");
+
+    // Still leaving `string` untranslated after the repair round → quarantined, exit 3.
+    let dir = tempfile::tempdir().unwrap();
+    project(dir.path());
+    let out = polygo()
+        .current_dir(dir.path())
+        .env("POLYGO_MOCK_FRAGMENT", "k2")
+        .env("POLYGO_NO_BACKOFF", "1")
+        .arg("translate")
+        .output()
+        .unwrap();
+    assert_eq!(
+        out.status.code(),
+        Some(3),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let err = String::from_utf8_lossy(&out.stderr);
+    assert!(
+        err.contains("k2") && err.contains("left untranslated: `string`"),
+        "{err}"
+    );
+    let de = fs::read_to_string(dir.path().join("locales/de.json")).unwrap();
+    assert!(
+        !de.contains("こんにちは"),
+        "fragment must not be written:\n{de}"
+    );
+    assert!(de.contains("\"k1\"") && de.contains("\"k3\""), "{de}");
+}

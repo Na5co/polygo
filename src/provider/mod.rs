@@ -222,6 +222,27 @@ fn validate(
             ));
             continue;
         }
+        let mut allowed: Vec<String> = ctx.do_not_translate.clone();
+        allowed.extend(ctx.glossary.iter().map(|(_, v)| v.clone()));
+        // One stray word in a long sentence is a `check` warning, not a reason to
+        // bounce the whole string; two words, or one in a short string, is.
+        let word_count = t.text.split_whitespace().count();
+        if let Some(words) = crate::check::text::untranslated_fragment(&r.source, &t.text, &allowed)
+            && (words.len() >= 2 || word_count <= 6)
+        {
+            out.push((
+                r.key.clone(),
+                format!(
+                    "left untranslated: {} — translate every word into the target language",
+                    words
+                        .iter()
+                        .map(|w| format!("`{w}`"))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ),
+            ));
+            continue;
+        }
         let same_language = ctx.source_locale.split(['-', '_']).next()
             == ctx.target_locale.split(['-', '_']).next();
         let has_letters = r.source.chars().any(|c| c.is_alphabetic());
