@@ -409,6 +409,11 @@ fn main() {
 
 fn translate(root: &Path, args: TranslateArgs) -> Result<()> {
     let cfg = Config::load(root)?;
+    if cfg.target_locales.is_empty() {
+        anyhow::bail!(
+            "no target locales in polygo.toml: `polygo add de fr ja` to say which languages to translate into"
+        );
+    }
     if std::env::var("POLYGO_HTTP_TIMEOUT").is_err() {
         // SAFETY: single-threaded at this point; workers are spawned later.
         unsafe { std::env::set_var("POLYGO_HTTP_TIMEOUT", cfg.provider.timeout_secs.to_string()) };
@@ -693,14 +698,27 @@ fn edit_locales(root: &Path, locales: &[String], add: bool) -> Result<()> {
             if !cfg.target_locales.contains(l) {
                 cfg.target_locales.push(l.clone());
             }
+        } else if !cfg.target_locales.contains(l) {
+            eprintln!("note: {l} was not a target locale");
         } else {
             cfg.target_locales.retain(|x| x != l);
         }
     }
-    std::fs::write(root.join(polygo::config::FILE_NAME), cfg.to_toml())?;
-    println!("target_locales = [{}]", cfg.target_locales.join(", "));
+    Config::edit(root, |doc| {
+        Config::set_target_locales(doc, &cfg.target_locales)
+    })?;
+    println!(
+        "target_locales = [{}]",
+        cfg.target_locales
+            .iter()
+            .map(|l| format!("{l:?}"))
+            .collect::<Vec<_>>()
+            .join(", ")
+    );
     if add {
         println!("next: `polygo translate`");
+    } else if cfg.target_locales.is_empty() {
+        println!("no target locales left: `polygo add <locale>` to add some");
     }
     Ok(())
 }
@@ -833,11 +851,19 @@ fn init(root: &Path, force: bool) -> Result<()> {
             f.path.display()
         );
     }
-    println!(
-        "next: `polygo doctor` (checks {} {} is ready), then `polygo translate`",
-        cfg.provider.kind,
-        cfg.model_name()
-    );
+    if cfg.target_locales.is_empty() {
+        println!(
+            "no target locales yet: `polygo add de fr ja` (BCP-47 tags), then `polygo doctor` (checks {} {} is ready) and `polygo translate`",
+            cfg.provider.kind,
+            cfg.model_name()
+        );
+    } else {
+        println!(
+            "next: `polygo doctor` (checks {} {} is ready), then `polygo translate`",
+            cfg.provider.kind,
+            cfg.model_name()
+        );
+    }
     Ok(())
 }
 
