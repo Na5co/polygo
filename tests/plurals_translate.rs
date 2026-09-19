@@ -292,3 +292,69 @@ fn po_msgid_plural_written_into_msgstr_slots() {
     let out = run(root, &["translate"]);
     assert!(String::from_utf8_lossy(&out.stdout).contains("nothing to translate"));
 }
+
+#[test]
+fn i18next_plural_suffixes_written_per_cldr_category() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("locales")).unwrap();
+    fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"title\": \"Photos\",\n  \"album\": {\n    \"photos_one\": \"{{count}} photo\",\n    \"photos_other\": \"{{count}} photos\",\n    \"subtitle\": \"Shared album\"\n  },\n  \"step_one\": \"First step\",\n  \"items_other\": \"{{count}} item(s)\"\n}\n",
+    )
+    .unwrap();
+    // Polish already has `one` from a human; few/many/other must be filled in.
+    fs::write(
+        root.join("locales/pl.json"),
+        "{\n  \"album\": {\n    \"photos_one\": \"{{count}} zdjęcie\"\n  }\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"pl\", \"de\", \"ja\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = run(root, &["translate", "--dry-run"]);
+    ok(&out);
+    let plan = String::from_utf8_lossy(&out.stdout);
+    assert!(plan.contains("album.photos#plural.few"), "{plan}");
+    assert!(!plan.contains("album.photos_one"), "{plan}");
+    // `step_one` has no `_other` sibling: an ordinary key. `items_other` alone is an
+    // opt-out (i18next uses it for every count): also ordinary.
+    assert!(plan.contains("  step_one\n"), "{plan}");
+    assert!(plan.contains("  items_other\n"), "{plan}");
+
+    ok(&run(root, &["translate"]));
+    let pl = fs::read_to_string(root.join("locales/pl.json")).unwrap();
+    assert_eq!(
+        pl,
+        "{\n  \"title\": \"⟦pl⟧ Photos\",\n  \"album\": {\n    \"photos_one\": \"{{count}} zdjęcie\",\n    \"photos_few\": \"⟦pl⟧ {{count}} photos\",\n    \"photos_many\": \"⟦pl⟧ {{count}} photos\",\n    \"photos_other\": \"⟦pl⟧ {{count}} photos\",\n    \"subtitle\": \"⟦pl⟧ Shared album\"\n  },\n  \"step_one\": \"⟦pl⟧ First step\",\n  \"items_other\": \"⟦pl⟧ {{count}} item(s)\"\n}\n"
+    );
+    let de = fs::read_to_string(root.join("locales/de.json")).unwrap();
+    assert!(
+        de.contains("\"photos_one\": \"⟦de⟧ {{count}} photo\""),
+        "{de}"
+    );
+    assert!(
+        de.contains("\"photos_other\": \"⟦de⟧ {{count}} photos\""),
+        "{de}"
+    );
+    assert!(!de.contains("photos_few"), "{de}");
+    // Japanese has no plural distinction: only `_other`.
+    let ja = fs::read_to_string(root.join("locales/ja.json")).unwrap();
+    assert!(
+        ja.contains("\"photos_other\": \"⟦ja⟧ {{count}} photos\""),
+        "{ja}"
+    );
+    assert!(!ja.contains("photos_one"), "{ja}");
+
+    ok(&run(root, &["check"]));
+    let out = run(root, &["translate"]);
+    assert!(String::from_utf8_lossy(&out.stdout).contains("nothing to translate"));
+    let out = run(root, &["status"]);
+    let status = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        status.contains("pl       new: 0  stale: 0  untranslated: 0  edited: 1  up-to-date: 7"),
+        "{status}"
+    );
+}

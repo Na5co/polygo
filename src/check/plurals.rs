@@ -181,21 +181,34 @@ fn case_keys(body: &str) -> Vec<String> {
     keys
 }
 
-const I18NEXT_SUFFIXES: [&str; 6] = ["zero", "one", "two", "few", "many", "other"];
+pub const I18NEXT_SUFFIXES: [&str; 6] = ["zero", "one", "two", "few", "many", "other"];
+
+/// `item_few` → `("item", "few")` when the suffix is an i18next plural category.
+pub fn i18next_split(key: &str) -> Option<(&str, &str)> {
+    let (base, suffix) = key.rsplit_once('_')?;
+    (!base.is_empty() && I18NEXT_SUFFIXES.contains(&suffix)).then_some((base, suffix))
+}
 
 /// Group i18next plural keys: `item_one`, `item_other` → `item: [one, other]`.
 pub fn i18next_groups(keys: &[String]) -> BTreeMap<String, Vec<String>> {
     let mut groups: BTreeMap<String, Vec<String>> = BTreeMap::new();
     for k in keys {
-        if let Some((base, suffix)) = k.rsplit_once('_')
-            && I18NEXT_SUFFIXES.contains(&suffix)
-        {
+        if let Some((base, suffix)) = i18next_split(k) {
             groups
                 .entry(base.to_string())
                 .or_default()
                 .push(suffix.to_string());
         }
     }
+    groups
+}
+
+/// The groups in a *source* file that are real plurals: `_other` plus at least one
+/// more category. `step_one` without `step_other` is an ordinary key, and a lone
+/// `items_other` is i18next's way of opting out of plural forms (used for every count).
+pub fn i18next_plural_groups(keys: &[String]) -> BTreeMap<String, Vec<String>> {
+    let mut groups = i18next_groups(keys);
+    groups.retain(|_, cats| cats.len() > 1 && cats.iter().any(|c| c == "other"));
     groups
 }
 

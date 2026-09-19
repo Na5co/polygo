@@ -582,7 +582,12 @@ impl Workspace {
                         })
                     }
                 };
-                entry.values.insert(local_key.to_string(), text.to_string());
+                // `key#plural.few` is stored as i18next's `key_few`.
+                let json_key = match plural {
+                    Some((base, cat)) => format!("{base}_{cat}"),
+                    None => local_key.to_string(),
+                };
+                entry.values.insert(json_key, text.to_string());
                 entry.dirty = true;
             }
             Loaded::Arb {

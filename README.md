@@ -75,7 +75,7 @@ error   Localizable.xcstrings  pm.card.expires.format  [pl]  placeholders: missi
 |---|---|---|
 | `.xcstrings` | iOS / macOS (Xcode 15+) | one catalog with every locale; plural variations and `%#@var@` substitutions translated per CLDR category |
 | `strings.xml` | Android | `res/values/` plus `res/values-<locale>/`; `<plurals>` translated per quantity |
-| `.json` (i18next) | React / web | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys |
+| `.json` (i18next) | React / web | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys; `_one`/`_other` groups get every suffix the locale needs |
 | `.arb` | Flutter | `l10n.yaml` pointing at `lib/l10n/app_<locale>.arb`; ICU plurals and `@metadata` |
 | `.po` | gettext (Django, Rails, Python, PHP) | `locale/<locale>/LC_MESSAGES/*.po` or flat `<locale>.po`; `msgid_plural` filled per `Plural-Forms` slot |
 | `.resx` / `.resw` | .NET / WinUI | `Name.<locale>.resx` or `<locale>/Resources.resw` |
@@ -88,7 +88,7 @@ Every writer round-trips byte for byte: parse then serialize gives back the orig
 |---|---|
 | **Knows what changed** | `polygo.lock` stores a hash of every source string per locale. Change the English and only that string is translated again. Edit a translation by hand and it is marked `edited` and never overwritten. |
 | **Reads your code** | Before translating "Open" it finds `Button("Open")` in `LibraryView.swift` and tells the model this is a menu item, not a verb. The most similar strings you already translated ride along so terms stay consistent. In a blind A/B judged by a second model this context won 9 to 5, rest tied. |
-| **Does plurals properly** | `%lld photos` becomes four strings for Polish (one, few, many, other) and one for Japanese. Each form is requested with a concrete count so the model picks the right inflection, then written into the format's own plural structure. |
+| **Does plurals properly** | `%lld photos` becomes four strings for Polish (one, few, many, other) and one for Japanese. Each form is requested with a concrete count so the model picks the right inflection, then written into the format's own plural structure: `.xcstrings` variations, Android `<plurals>`, gettext `msgstr[n]`, i18next `_few`/`_many` keys. |
 | **Checks the output** | Placeholders (`%@`, `%1$s`, `{count}`, `{{name}}`, `%(name)s`, `{0}`, ICU plural blocks) have to survive. CLDR plural categories have to be complete. Empty, identical, oversized and half-translated strings (`ようこそ back!`) are flagged. Anything the model gets wrong twice is quarantined as `needs-review` and not written to your files. |
 | **Gets a second opinion** | `polygo audit --locale bg` asks a different model to score each translation 1 to 5 with a reason. Structural checks can't see a wrong word; this can. `--fix` re-translates the flagged ones and leaves human edits alone. |
 | **Remembers** | Translations a human wrote or approved go into `~/.config/polygo/memory.toml`. The next project that has "Cancel" gets it back without a model call. `polygo memory` shows what is stored. |

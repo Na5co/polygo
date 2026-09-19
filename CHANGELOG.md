@@ -2,6 +2,13 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- i18next JSON plurals are translated per CLDR category: `photos_one` / `photos_other` in `en.json` produces `photos_one`, `photos_few`, `photos_many`, `photos_other` for Polish and only `photos_other` for Japanese, written in CLDR order next to the group. Previously only the source's own suffixes were written and `polygo check` then failed on polygo's own output for Slavic, Arabic and other multi-form locales.
+- `check` no longer treats `step_one` + `step_two` (no `_other`) or a lone `items_other` as a plural group.
+- `polygo add`, `remove` and `use` edit `polygo.toml` in place: comments and formatting survive, `target_locales` stays on one line.
+- `init` in a project with no target locales, and `translate` with an empty `target_locales`, now say to run `polygo add <locale>` instead of reporting everything up to date.
+
 ## 0.1.1
 
 - `polygo extract`: pull UI text out of JSX, HTML in template literals and .html/.vue/.svelte into `locales/en.json`. `--rewrite` replaces the strings in .ts/.tsx/.js/.jsx with `t("key")` calls and generates `src/i18n.ts`. Sentences with inline markup are extracted whole. `[extract] ignore` / `ignore_paths`, `--ignore`, `--ignore-path`.

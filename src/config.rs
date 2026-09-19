@@ -144,6 +144,38 @@ impl Config {
         toml::to_string_pretty(self).expect("config is serializable")
     }
 
+    /// Edit `polygo.toml` in place: comments, key order and formatting the user put in
+    /// the file survive, only what `f` touches changes.
+    pub fn edit(root: &Path, f: impl FnOnce(&mut toml_edit::DocumentMut)) -> Result<()> {
+        let path = root.join(FILE_NAME);
+        let text = std::fs::read_to_string(&path).with_context(|| {
+            format!("no {} in {} (run `polygo init`)", FILE_NAME, root.display())
+        })?;
+        let mut doc: toml_edit::DocumentMut = text.parse().context("invalid polygo.toml")?;
+        f(&mut doc);
+        std::fs::write(&path, doc.to_string())
+            .with_context(|| format!("writing {}", path.display()))
+    }
+
+    /// Set `target_locales` in a parsed document: one line, the way `init` writes it,
+    /// keeping any comment the user left on that line.
+    pub fn set_target_locales(doc: &mut toml_edit::DocumentMut, locales: &[String]) {
+        let arr = match doc.get_mut("target_locales").and_then(|i| i.as_array_mut()) {
+            Some(existing) => {
+                existing.clear();
+                existing
+            }
+            None => {
+                doc["target_locales"] = toml_edit::value(toml_edit::Array::new());
+                doc["target_locales"].as_array_mut().expect("just set")
+            }
+        };
+        for l in locales {
+            arr.push(l.as_str());
+        }
+        arr.fmt();
+    }
+
     pub fn model_name(&self) -> String {
         self.provider
             .model

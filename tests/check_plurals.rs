@@ -1,7 +1,8 @@
 //! G3.2: CLDR plural completeness per locale, across xcstrings variations, Android
 //! <plurals>, ICU inline plurals and i18next `_one/_other` key suffixes.
 use polygo::check::plurals::{
-    android_plurals, i18next_groups, icu_cases, missing, required, xcstrings_plurals,
+    android_plurals, i18next_groups, i18next_plural_groups, icu_cases, missing, required,
+    xcstrings_plurals,
 };
 use std::fs;
 use std::path::PathBuf;
@@ -86,6 +87,21 @@ fn check_plurals_icu_and_i18next_shapes() {
     assert_eq!(groups["day"], ["one", "other", "few"]);
     assert_eq!(groups["x"], ["zero"]);
     assert!(!groups.contains_key("plain"));
+    // Source side: only groups with `_other` and a second form are plurals. `step_one` +
+    // `step_two` are wizard steps, `x_zero` alone is nothing, `items_other` alone is an
+    // opt-out.
+    let strict = i18next_plural_groups(
+        &[
+            "item_one",
+            "item_other",
+            "step_one",
+            "step_two",
+            "x_zero",
+            "items_other",
+        ]
+        .map(String::from),
+    );
+    assert_eq!(strict.keys().collect::<Vec<_>>(), ["item"]);
 }
 
 #[test]

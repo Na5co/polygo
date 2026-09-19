@@ -98,9 +98,16 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
         }
         Format::Json => {
             let doc = formats::json::parse(&text)?;
+            let keys: Vec<String> = doc.entries.iter().map(|e| e.key()).collect();
+            let plurals = crate::check::plurals::i18next_plural_groups(&keys);
+            let is_plural_member = |key: &str| {
+                crate::check::plurals::i18next_split(key)
+                    .is_some_and(|(base, _)| plurals.contains_key(base))
+            };
             let mut units: Vec<Unit> = doc
                 .entries
                 .iter()
+                .filter(|e| !is_plural_member(&e.key()))
                 .map(|e| Unit {
                     key: e.key(),
                     source: e.text(),
@@ -113,6 +120,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                 let doc = formats::json::parse(text)?;
                 Ok(doc.entries.iter().map(|e| (e.key(), e.text())).collect())
             })?;
+            units.extend(json_plural_units(root, cfg, spec, &doc, &plurals)?);
             Ok(units)
         }
     }
@@ -253,6 +261,59 @@ fn android_plural_units(
             &forms,
             &targets,
         ));
+    }
+    Ok(out)
+}
+
+/// i18next `key_one` / `key_other` groups become one unit per CLDR category the target
+/// needs (`key#plural.few` …), written back as `key_few`.
+fn json_plural_units(
+    root: &Path,
+    cfg: &Config,
+    spec: &FileSpec,
+    source: &formats::json::Document,
+    groups: &BTreeMap<String, Vec<String>>,
+) -> Result<Vec<Unit>> {
+    if groups.is_empty() {
+        return Ok(vec![]);
+    }
+    let values_of = |doc: &formats::json::Document| -> BTreeMap<String, String> {
+        doc.entries.iter().map(|e| (e.key(), e.text())).collect()
+    };
+    let source_values = values_of(source);
+    let docs = locale_docs(root, cfg, spec, formats::json::parse)?;
+    let locale_values: BTreeMap<&String, BTreeMap<String, String>> =
+        docs.iter().map(|(l, d)| (l, values_of(d))).collect();
+    let forms_of = |values: &BTreeMap<String, String>, base: &str| -> BTreeMap<String, String> {
+        crate::check::plurals::I18NEXT_SUFFIXES
+            .iter()
+            .filter_map(|c| {
+                values
+                    .get(&format!("{base}_{c}"))
+                    .filter(|v| !v.is_empty())
+                    .map(|v| ((*c).to_string(), v.clone()))
+            })
+            .collect()
+    };
+    let mut out = Vec::new();
+    for base in groups.keys() {
+        let forms = forms_of(&source_values, base);
+        let targets: BTreeMap<String, (Vec<String>, BTreeMap<String, String>)> = cfg
+            .target_locales
+            .iter()
+            .map(|l| {
+                let need = crate::check::plurals::required(l)
+                    .iter()
+                    .map(|s| (*s).to_string())
+                    .collect();
+                let have = locale_values
+                    .get(l)
+                    .map(|v| forms_of(v, base))
+                    .unwrap_or_default();
+                (l.clone(), (need, have))
+            })
+            .collect();
+        out.extend(crate::core::plural_units(base, None, &forms, &targets));
     }
     Ok(out)
 }

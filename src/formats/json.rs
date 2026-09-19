@@ -361,6 +361,32 @@ pub fn build_locale_tree(
             Value::Object(map) => {
                 let mut out = serde_json::Map::new();
                 for (k, v) in map {
+                    if let Some(base) = plural_group(map, k) {
+                        // An i18next plural group is emitted whole, in CLDR order, where
+                        // its first member sits: the source's own forms plus the ones
+                        // this locale needs and the source language lacks (`_few`).
+                        if out.keys().any(|o| plural_group(map, o) == Some(base)) {
+                            continue;
+                        }
+                        for cat in crate::check::plurals::I18NEXT_SUFFIXES {
+                            let name = format!("{base}_{cat}");
+                            path.push(name.clone());
+                            let ex = existing.and_then(|e| e.get(&name));
+                            let built = match map.get(&name) {
+                                Some(v) => go(v, ex, path, values),
+                                None => values
+                                    .get(&path.join("."))
+                                    .cloned()
+                                    .or_else(|| ex.and_then(Value::as_str).map(str::to_string))
+                                    .map(Value::String),
+                            };
+                            path.pop();
+                            if let Some(b) = built {
+                                out.insert(name, b);
+                            }
+                        }
+                        continue;
+                    }
                     path.push(k.clone());
                     let ex = existing.and_then(|e| e.get(k));
                     if let Some(built) = go(v, ex, path, values) {
@@ -410,4 +436,23 @@ pub fn build_locale_tree(
     }
     go(source, existing, &mut Vec::new(), values)
         .unwrap_or(serde_json::Value::Object(Default::default()))
+}
+
+/// The base name of the real i18next plural group (`base_one`/`base_other`…) that
+/// `key` belongs to, if any.
+fn plural_group<'a>(
+    map: &'a serde_json::Map<String, serde_json::Value>,
+    key: &'a str,
+) -> Option<&'a str> {
+    use crate::check::plurals::i18next_split;
+    let (base, _) = i18next_split(key)?;
+    let mut n = 0;
+    let mut other = false;
+    for (b, c) in map.keys().filter_map(|k| i18next_split(k)) {
+        if b == base {
+            n += 1;
+            other |= c == "other";
+        }
+    }
+    (n > 1 && other).then_some(base)
 }

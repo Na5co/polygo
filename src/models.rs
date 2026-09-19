@@ -238,9 +238,27 @@ pub fn use_model(root: &Path, args: &UseArgs, out: &mut dyn Write) -> Result<Pro
     let path = root.join(crate::config::FILE_NAME);
     let mut wrote_project = false;
     if path.exists() {
-        let mut cfg = Config::load(root)?;
-        cfg.provider = provider.clone();
-        std::fs::write(&path, cfg.to_toml())?;
+        Config::load(root)?; // fail early on an unreadable file
+        Config::edit(root, |doc| {
+            if !doc.contains_table("provider") {
+                doc["provider"] = toml_edit::Item::Table(toml_edit::Table::new());
+            }
+            let t = &mut doc["provider"];
+            t["kind"] = toml_edit::value(provider.kind.as_str());
+            match &provider.model {
+                Some(m) => t["model"] = toml_edit::value(m.as_str()),
+                None => {
+                    t.as_table_mut().map(|t| t.remove("model"));
+                }
+            }
+            match &provider.base_url {
+                Some(b) => t["base_url"] = toml_edit::value(b.as_str()),
+                None => {
+                    t.as_table_mut().map(|t| t.remove("base_url"));
+                }
+            }
+            t["timeout_secs"] = toml_edit::value(provider.timeout_secs as i64);
+        })?;
         writeln!(
             out,
             "{}: provider = {} · model = {}{}",
