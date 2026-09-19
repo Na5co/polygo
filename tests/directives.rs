@@ -131,3 +131,69 @@ fn skip_and_max_are_enforced_end_to_end() {
     );
     assert!(!text.contains("⟦de⟧ ACME"), "{text}");
 }
+
+#[test]
+fn keys_skip_patterns_in_polygo_toml() {
+    // i18next JSON has no comment field for `polygo:skip`; `[keys] skip` covers it (and
+    // every other format) with globs over the key.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("locales")).unwrap();
+    fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"title\": \"Photos\",\n  \"debug\": {\n    \"trace\": \"trace on\",\n    \"level\": \"level {{n}}\"\n  },\n  \"internal_id\": \"ID\",\n  \"logs_one\": \"{{count}} log\",\n  \"logs_other\": \"{{count}} logs\",\n  \"photos_one\": \"{{count}} photo\",\n  \"photos_other\": \"{{count}} photos\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"pl\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[keys]\nskip = [\"debug.*\", \"internal_*\", \"logs\"]\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = run(root, &["status"]);
+    let status = String::from_utf8_lossy(&out.stdout);
+    // title + 4 Polish forms of photos; debug.*, internal_id and the logs group are out.
+    assert!(status.contains("5 units"), "{status}");
+    assert!(
+        status.contains("4 key(s) skipped by [keys] skip"),
+        "{status}"
+    );
+    let out = run(root, &["translate", "--dry-run"]);
+    let plan = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        plan.contains("title") && plan.contains("photos#plural.few"),
+        "{plan}"
+    );
+    assert!(
+        !plan.contains("debug") && !plan.contains("internal") && !plan.contains("logs"),
+        "{plan}"
+    );
+    let out = run(root, &["translate"]);
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let pl = fs::read_to_string(root.join("locales/pl.json")).unwrap();
+    assert!(pl.contains("\"title\": \"⟦pl⟧ Photos\""), "{pl}");
+    assert!(!pl.contains("debug") && !pl.contains("logs_"), "{pl}");
+    // A skipped plural group is not a `check` error either, even though pl lacks its forms.
+    let out = run(root, &["check"]);
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stdout)
+    );
+    // A bad glob is a clear error, not a silent no-match.
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"pl\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[keys]\nskip = [\"debug.[\"]\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = run(root, &["status"]);
+    assert!(!out.status.success());
+    assert!(
+        String::from_utf8_lossy(&out.stderr).contains("[keys] skip"),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+}

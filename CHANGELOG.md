@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `[keys] skip = ["debug.*", "internal_*"]` in `polygo.toml`: globs over the key that translate, status and check leave alone, for i18next JSON (no comment field for `polygo:skip`) and for whole families of keys in any format. `status` reports how many keys were skipped.
 - i18next JSON plurals are translated per CLDR category: `photos_one` / `photos_other` in `en.json` produces `photos_one`, `photos_few`, `photos_many`, `photos_other` for Polish and only `photos_other` for Japanese, written in CLDR order next to the group. Previously only the source's own suffixes were written and `polygo check` then failed on polygo's own output for Slavic, Arabic and other multi-form locales.
 - `check` no longer treats `step_one` + `step_two` (no `_other`) or a lone `items_other` as a plural group.
 - `polygo add`, `remove` and `use` edit `polygo.toml` in place: comments and formatting survive, `target_locales` stays on one line.

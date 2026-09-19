@@ -37,6 +37,51 @@ pub struct Config {
     /// `polygo extract` settings.
     #[serde(default, skip_serializing_if = "Extract::is_default")]
     pub extract: Extract,
+    /// `[keys]`: which keys polygo leaves alone.
+    #[serde(default, skip_serializing_if = "Keys::is_default")]
+    pub keys: Keys,
+}
+
+/// `[keys]` in polygo.toml.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
+pub struct Keys {
+    /// Globs over the key: `["debug.*", "internal_*", "legal.terms"]`. Matching keys are
+    /// never translated, counted or checked, like `polygo:skip` in a comment, for formats
+    /// that have no comment field (i18next JSON) or when there are many. `*` also
+    /// crosses dots; with several `[[files]]`, `path/to/file.json:key` targets one file.
+    #[serde(default)]
+    pub skip: Vec<String>,
+}
+
+impl Keys {
+    fn is_default(&self) -> bool {
+        *self == Keys::default()
+    }
+}
+
+/// Compiled `[keys] skip`.
+#[derive(Debug, Clone)]
+pub struct KeySkip {
+    set: globset::GlobSet,
+}
+
+impl KeySkip {
+    pub fn is_empty(&self) -> bool {
+        self.set.is_empty()
+    }
+
+    /// `key` is the key within `file` (plural suffixes `#plural.few` / `#var` ignored).
+    pub fn matches(&self, file: &Path, key: &str) -> bool {
+        if self.set.is_empty() {
+            return false;
+        }
+        let base = key.split('#').next().unwrap_or(key);
+        self.set.is_match(base)
+            || self.set.is_match(format!(
+                "{}:{base}",
+                file.display().to_string().replace('\\', "/")
+            ))
+    }
 }
 
 /// `[extract]` in polygo.toml.
@@ -174,6 +219,19 @@ impl Config {
             arr.push(l.as_str());
         }
         arr.fmt();
+    }
+
+    pub fn key_skip(&self) -> Result<KeySkip> {
+        let mut b = globset::GlobSetBuilder::new();
+        for g in &self.keys.skip {
+            b.add(
+                globset::Glob::new(g)
+                    .with_context(|| format!("[keys] skip: bad glob {g:?} in polygo.toml"))?,
+            );
+        }
+        Ok(KeySkip {
+            set: b.build().context("[keys] skip")?,
+        })
     }
 
     pub fn model_name(&self) -> String {

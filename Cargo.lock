@@ -635,6 +635,7 @@ dependencies = [
  "anyhow",
  "blake3",
  "clap",
+ "globset",
  "ignore",
  "quick-xml",
  "serde",

@@ -893,7 +893,12 @@ fn status(root: &Path, json: bool, markdown: bool) -> Result<()> {
         return Ok(());
     }
 
-    println!("{} units · source {}", units.len(), cfg.source_locale);
+    let skipped = polygo::project::skipped_keys(root, &cfg)?;
+    print!("{} units · source {}", units.len(), cfg.source_locale);
+    if !skipped.is_empty() {
+        print!(" · {} key(s) skipped by [keys] skip", skipped.len());
+    }
+    println!();
     for l in &locales {
         let parts: Vec<String> = State::ALL
             .iter()
