@@ -72,7 +72,7 @@ A translation that violates the glossary is sent back once for repair, then quar
 
 A sorted TOML file, meant to be committed. For every key × locale it stores the blake3 hash of the source text the translation was made from, the provider and model, a timestamp, and: for quarantined strings: the reason.
 
-States shown by `polygo status`:
+States shown by `polygo status` (`--keys` lists the keys in each state, with the reason for `needs-review`):
 
 | state | meaning |
 |---|---|

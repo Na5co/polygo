@@ -64,6 +64,13 @@ enum Commands {
     /// Show new / changed / stale / untranslated counts per locale.
     #[command(after_help = STATUS_EXAMPLES)]
     Status {
+        /// Only these locales (comma-separated).
+        #[arg(long, value_delimiter = ',')]
+        locale: Option<Vec<String>>,
+        /// List the keys behind each count (everything except up-to-date), with the
+        /// reason for needs-review ones. With --json, adds a `keys` map per locale.
+        #[arg(short = 'k', long)]
+        keys: bool,
         /// Machine-readable output.
         #[arg(long)]
         json: bool,
@@ -245,6 +252,8 @@ Codes: placeholders · plural · empty · identical · length · fragment";
 const STATUS_EXAMPLES: &str = "\
 Examples:
   polygo status            counts per locale: new, stale, untranslated, edited, needs-review, up-to-date
+  polygo status --keys     also list the keys behind each count, with the reason for needs-review
+  polygo status -k --locale pl   one locale
   polygo status --json     same as JSON, e.g. for a dashboard or a pre-push hook
   polygo status --markdown coverage table with flags, for a README or a PR comment";
 
@@ -346,7 +355,12 @@ fn main() {
             strict,
             fix,
         } => check(&cli.root, locale, json, strict, fix),
-        Commands::Status { json, markdown } => status(&cli.root, json, markdown),
+        Commands::Status {
+            locale,
+            keys,
+            json,
+            markdown,
+        } => status(&cli.root, locale, keys, json, markdown),
         Commands::Review { port, open } => polygo::review::serve(&cli.root, port, open),
         Commands::Add { locales } => edit_locales(&cli.root, &locales, true),
         Commands::Remove { locales } => edit_locales(&cli.root, &locales, false),
@@ -867,12 +881,44 @@ fn init(root: &Path, force: bool) -> Result<()> {
     Ok(())
 }
 
-fn status(root: &Path, json: bool, markdown: bool) -> Result<()> {
+fn status(
+    root: &Path,
+    only: Option<Vec<String>>,
+    keys: bool,
+    json: bool,
+    markdown: bool,
+) -> Result<()> {
     let cfg = Config::load(root)?;
     let units = polygo::project::load_units(root, &cfg)?;
     let lock = Lock::load(&root.join(polygo::lockfile::FILE_NAME))?;
-    let locales: Vec<&str> = cfg.target_locales.iter().map(String::as_str).collect();
+    if let Some(only) = &only {
+        for l in only {
+            if !cfg.target_locales.contains(l) {
+                anyhow::bail!(
+                    "locale `{l}` is not in target_locales ({})",
+                    cfg.target_locales.join(", ")
+                );
+            }
+        }
+    }
+    let locales: Vec<&str> = only
+        .as_ref()
+        .unwrap_or(&cfg.target_locales)
+        .iter()
+        .map(String::as_str)
+        .collect();
     let status = lock.status(&units, &locales);
+    // Why a key is quarantined, for the listing.
+    let reason = |key: &str, locale: &str| -> Option<String> {
+        lock.keys
+            .get(key)
+            .and_then(|r| r.review.get(locale))
+            .map(|n| n.reason.clone())
+    };
+    let listed: Vec<State> = State::ALL
+        .into_iter()
+        .filter(|s| *s != State::UpToDate)
+        .collect();
 
     if markdown {
         print!("{}", polygo::coverage::markdown(&units, &locales, &status));
@@ -885,6 +931,26 @@ fn status(root: &Path, json: bool, markdown: bool) -> Result<()> {
             let mut m = serde_json::Map::new();
             for s in State::ALL {
                 m.insert(s.label().replace('-', "_"), status.count(l, s).into());
+            }
+            if keys {
+                let mut by_state = serde_json::Map::new();
+                for s in listed.iter().copied() {
+                    let ks = status.keys(l, s);
+                    if ks.is_empty() {
+                        continue;
+                    }
+                    let items: Vec<serde_json::Value> = ks
+                        .iter()
+                        .map(|k| match reason(k, l) {
+                            Some(r) if s == State::NeedsReview => {
+                                serde_json::json!({ "key": k, "reason": r })
+                            }
+                            _ => serde_json::Value::String(k.clone()),
+                        })
+                        .collect();
+                    by_state.insert(s.label().replace('-', "_"), items.into());
+                }
+                m.insert("keys".into(), by_state.into());
             }
             per.insert((*l).to_string(), m.into());
         }
@@ -905,6 +971,27 @@ fn status(root: &Path, json: bool, markdown: bool) -> Result<()> {
             .map(|s| format!("{}: {}", s.label(), status.count(l, *s)))
             .collect();
         println!("  {l:<8} {}", parts.join("  "));
+        if !keys {
+            continue;
+        }
+        for s in listed.iter().copied() {
+            for k in status.keys(l, s) {
+                let shown: String = k.chars().take(70).collect::<String>().replace('\n', "⏎");
+                match reason(&k, l) {
+                    Some(r) if s == State::NeedsReview => {
+                        println!("    {:<13} {shown}  ·  {r}", s.label());
+                    }
+                    _ => println!("    {:<13} {shown}", s.label()),
+                }
+            }
+        }
+    }
+    if keys
+        && locales
+            .iter()
+            .all(|l| listed.iter().all(|s| status.count(l, *s) == 0))
+    {
+        println!("  everything is up to date");
     }
     Ok(())
 }
