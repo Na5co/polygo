@@ -21,7 +21,9 @@ Nested objects become dotted keys (`settings.title`); arrays of strings are inde
 
 ## Plurals
 
-i18next v4 suffixes: `key_one`, `key_other`, `key_zero`, `key_few`, `key_many`: are translated as ordinary strings, and `polygo check` verifies that each plural group in a locale has every category that language needs (`plural` error when `pl` has only `_one`/`_other`, for instance). Locales that only need `other` are not asked for more.
+i18next v4 suffixes (`key_one`, `key_other`, plus `key_zero`, `key_two`, `key_few`, `key_many`) are translated per CLDR category: an English `photos_one` / `photos_other` becomes `photos_one`, `photos_few`, `photos_many`, `photos_other` in `pl.json` and just `photos_other` in `ja.json`. Each form is requested with a concrete count and written into the group in CLDR order. In `polygo status` and `polygo.lock` the forms appear as `photos#plural.few`.
+
+A group is a plural only when it has `_other` and at least one more form: `step_one` next to `step_two` (no `_other`) stays an ordinary key, and a lone `items_other` is i18next's opt-out (one string for every count) and is also left as is. `polygo check` reports a `plural` error when a locale file is missing a category its language needs.
 
 ## Placeholders
 

@@ -192,7 +192,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     continue;
                 };
                 let source = formats::json::parse(&std::fs::read_to_string(&path)?)?;
-                let source_groups = plurals::i18next_groups(
+                let source_groups = plurals::i18next_plural_groups(
                     &source.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                 );
                 for locale in &locales {
