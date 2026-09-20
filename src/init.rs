@@ -6,7 +6,7 @@
 //! target locales from what already exists.
 
 use crate::config::{Config, FileSpec, Format};
-use anyhow::{Result, bail};
+use anyhow::{Context as _, Result, bail};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
@@ -25,6 +25,66 @@ const SKIP_DIRS: &[&str] = &[
     ".gradle",
     "out",
 ];
+
+pub const SUPPORTED_LAYOUTS: &str = "\
+polygo works with string files your app already has. None of these were found:
+  iOS/macOS   *.xcstrings                (Xcode: File > New > String Catalog)
+  Android     res/values/strings.xml
+  Flutter     l10n.yaml + lib/l10n/app_en.arb
+  Web         locales/en.json            (i18next, vue-i18n, next-intl)
+  gettext     locale/en/LC_MESSAGES/*.po or *.po
+  .NET        *.resx / *.resw
+";
+
+/// Config for `polygo check` without a polygo.toml: `target` is a directory (scanned like
+/// `init`) or one string file (placed by climbing a few parent directories until the layout
+/// is recognised, since `res/values/strings.xml` needs `res/` as the root and
+/// `locales/en.json` its parent). Returns the config and the root its paths are relative to.
+pub fn detect_for_check(target: &Path) -> Result<(Config, PathBuf)> {
+    let target =
+        std::path::absolute(target).with_context(|| format!("resolving {}", target.display()))?;
+    if target.is_dir() {
+        let cfg = detect(&target)?;
+        return Ok((cfg, target));
+    }
+    if !target.is_file() {
+        bail!("{} does not exist", target.display());
+    }
+    let mut root = target.parent().map(Path::to_path_buf);
+    for _ in 0..4 {
+        let Some(r) = root.clone() else { break };
+        if let Ok(mut cfg) = detect(&r) {
+            let rel = target.strip_prefix(&r).unwrap_or(&target);
+            let rel = PathBuf::from(rel.to_string_lossy().replace('\\', "/"));
+            // The file itself, or (for per-locale formats) the source file of the layout
+            // one of its translations belongs to.
+            if let Some(spec) = cfg.files.iter().find(|f| f.path == rel).cloned() {
+                cfg.files = vec![spec];
+                return Ok((cfg, r));
+            }
+            if let Some(spec) = cfg
+                .files
+                .iter()
+                .find(|f| {
+                    f.locale_path.as_deref().is_some_and(|t| {
+                        cfg.target_locales
+                            .iter()
+                            .any(|l| crate::project::locale_file(t, l) == rel.to_string_lossy())
+                    })
+                })
+                .cloned()
+            {
+                cfg.files = vec![spec];
+                return Ok((cfg, r));
+            }
+        }
+        root = r.parent().map(Path::to_path_buf);
+    }
+    bail!(
+        "cannot tell what {} is\n\n{SUPPORTED_LAYOUTS}",
+        target.display()
+    );
+}
 
 pub fn detect(root: &Path) -> Result<Config> {
     let files = walk(root);
@@ -89,10 +149,7 @@ pub fn detect(root: &Path) -> Result<Config> {
         specs.push(FileSpec {
             format: Format::Android,
             path: rel.clone(),
-            locale_path: Some(format!(
-                "{}/values-{{android_locale}}/strings.xml",
-                res_dir.display()
-            )),
+            locale_path: Some(under(res_dir, "values-{android_locale}/strings.xml")),
         });
     }
 
@@ -140,7 +197,7 @@ pub fn detect(root: &Path) -> Result<Config> {
             specs.push(FileSpec {
                 format: Format::Arb,
                 path: dir.join(format!("{prefix}{src_loc}.arb")),
-                locale_path: Some(format!("{}/{prefix}{{locale}}.arb", dir.display())),
+                locale_path: Some(under(&dir, &format!("{prefix}{{locale}}.arb"))),
             });
         }
     }
@@ -182,10 +239,7 @@ pub fn detect(root: &Path) -> Result<Config> {
                 .join(&src_loc)
                 .join("LC_MESSAGES")
                 .join(format!("{domain}.po")),
-            locale_path: Some(format!(
-                "{}/{{locale}}/LC_MESSAGES/{domain}.po",
-                base.display()
-            )),
+            locale_path: Some(under(&base, &format!("{{locale}}/LC_MESSAGES/{domain}.po"))),
         });
         for l in &locales {
             if *l != src_loc {
@@ -199,7 +253,7 @@ pub fn detect(root: &Path) -> Result<Config> {
         specs.push(FileSpec {
             format: Format::Po,
             path: dir.join(format!("{src_loc}.po")),
-            locale_path: Some(format!("{}/{{locale}}.po", dir.display())),
+            locale_path: Some(under(&dir, "{locale}.po")),
         });
         for l in &locales {
             if *l != src_loc {
@@ -268,7 +322,7 @@ pub fn detect(root: &Path) -> Result<Config> {
         specs.push(FileSpec {
             format: Format::Resx,
             path: parent.join(&src_loc).join(&file),
-            locale_path: Some(format!("{}/{{locale}}/{file}", parent.display())),
+            locale_path: Some(under(&parent, &format!("{{locale}}/{file}"))),
         });
         for l in &locales {
             if *l != src_loc {
@@ -320,7 +374,7 @@ pub fn detect(root: &Path) -> Result<Config> {
             specs.push(FileSpec {
                 format: Format::Json,
                 path: parent.join(&src_loc).join(format!("{ns}.json")),
-                locale_path: Some(format!("{}/{{locale}}/{ns}.json", parent.display())),
+                locale_path: Some(under(&parent, &format!("{{locale}}/{ns}.json"))),
             });
         }
         for l in locales.keys() {
@@ -356,7 +410,7 @@ pub fn detect(root: &Path) -> Result<Config> {
         specs.push(FileSpec {
             format: Format::Json,
             path: dir.join(format!("{src_loc}.json")),
-            locale_path: Some(format!("{}/{{locale}}.json", dir.display())),
+            locale_path: Some(under(&dir, "{locale}.json")),
         });
         for l in &locales {
             if *l != src_loc {
@@ -368,14 +422,7 @@ pub fn detect(root: &Path) -> Result<Config> {
 
     if specs.is_empty() {
         bail!(
-            "no localization files found under {}\n\n\
-polygo translates string files your app already has. None of these were found:\n\
-  iOS/macOS   *.xcstrings                (Xcode: File > New > String Catalog)\n\
-  Android     res/values/strings.xml\n\
-  Flutter     l10n.yaml + lib/l10n/app_en.arb\n\
-  Web         locales/en.json            (i18next, vue-i18n, next-intl)\n\
-  gettext     locale/en/LC_MESSAGES/*.po or *.po\n\
-  .NET        *.resx / *.resw\n\n\
+            "no localization files found under {}\n\n{SUPPORTED_LAYOUTS}\n\
 If the app's text still lives in code, move it into one of these first (your\n\
 framework's i18n guide covers this), then run `polygo init` again.",
             root.display()
@@ -405,6 +452,16 @@ framework's i18n guide covers this), then run `polygo init` again.",
         extract: Default::default(),
         keys: Default::default(),
     })
+}
+
+/// `dir/rest`, or just `rest` when the layout sits at the project root (running `init` or
+/// `check` inside `res/` or `locales/` must not produce `/values-de/strings.xml`).
+fn under(dir: &Path, rest: &str) -> String {
+    if dir.as_os_str().is_empty() {
+        rest.to_string()
+    } else {
+        format!("{}/{rest}", dir.display())
+    }
 }
 
 fn walk(root: &Path) -> Vec<PathBuf> {

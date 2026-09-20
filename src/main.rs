@@ -48,6 +48,9 @@ enum Commands {
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
     #[command(after_help = CHECK_EXAMPLES)]
     Check {
+        /// A string file or a project directory to check without polygo.toml
+        /// (format and locales are detected).
+        path: Option<PathBuf>,
         /// Only these locales (comma-separated).
         #[arg(long, value_delimiter = ',')]
         locale: Option<Vec<String>>,
@@ -245,6 +248,8 @@ Model-made translations that a human later edits are never touched by --fix.";
 const CHECK_EXAMPLES: &str = "\
 Examples:
   polygo check                      placeholders, plural categories, empty/identical/length
+  polygo check Localizable.xcstrings   one file, no polygo.toml needed
+  polygo check app/src/main/res     a directory: format and locales are detected
   polygo check --strict             warnings (length, identical) also fail → exit 1
   polygo check --json | jq .findings
   polygo check --fix                re-translate the failing keys, then check again
@@ -360,11 +365,12 @@ fn main() {
             },
         ),
         Commands::Check {
+            path,
             locale,
             json,
             strict,
             fix,
-        } => check(&cli.root, locale, json, strict, fix),
+        } => check(&cli.root, path, locale, json, strict, fix),
         Commands::Status {
             locale,
             keys,
@@ -627,12 +633,42 @@ fn audit(root: &Path, args: AuditArgs) -> Result<()> {
 
 fn check(
     root: &Path,
+    path: Option<PathBuf>,
     locale: Option<Vec<String>>,
     json: bool,
     strict: bool,
     fix: bool,
 ) -> Result<()> {
-    let cfg = Config::load(root)?;
+    // With polygo.toml: the configured project. Without: whatever `path` (or the current
+    // directory) turns out to be, so `polygo check Localizable.xcstrings` just works.
+    let (cfg, root) = match (&path, root.join(polygo::config::FILE_NAME).exists()) {
+        (None, true) => (Config::load(root)?, root.to_path_buf()),
+        (target, _) => {
+            if fix {
+                anyhow::bail!(
+                    "--fix re-translates with the model from polygo.toml; run `polygo init` in the project first"
+                );
+            }
+            let (cfg, r) = polygo::init::detect_for_check(target.as_deref().unwrap_or(root))
+                .map_err(|e| match target {
+                    None => e.context("no polygo.toml here and nothing to check"),
+                    Some(_) => e,
+                })?;
+            if !json {
+                let what = if cfg.files.len() == 1 && target.as_ref().is_some_and(|t| t.is_file()) {
+                    cfg.files[0].path.display().to_string()
+                } else {
+                    format!("{} detected file(s)", cfg.files.len())
+                };
+                eprintln!(
+                    "no polygo.toml: checking {what} · locales [{}] · `polygo init` makes this permanent",
+                    cfg.target_locales.join(", ")
+                );
+            }
+            (cfg, r)
+        }
+    };
+    let root = root.as_path();
     let opts = polygo::check::run::Options {
         locales: locale.clone(),
         length_ratio: cfg.length_ratio,

@@ -149,7 +149,7 @@ so point it only at a collector you trust with your strings.
 | `polygo use <model> [--base-url] [--api-key] [--global] [--no-pull]` | pull an Ollama model or set an API provider, writes `[provider]` |
 | `polygo doctor [--json]` | config parses, files load, provider reachable, model pulled; each failure names its fix |
 | `polygo translate [--locale de,fr] [--dry-run] [-v] [--retry-review] [--no-context]` | translate new and changed strings; exit 3 if some were quarantined |
-| `polygo check [--json] [--strict] [--fix]` | placeholders, plurals, lengths, untranslated fragments; `--fix` re-translates the failures |
+| `polygo check [PATH] [--locale L] [--json] [--strict] [--fix]` | placeholders, plurals, lengths, untranslated fragments. `PATH` (a string file or a directory) needs no `polygo.toml`: format and locales are detected. `--fix` re-translates the failures (configured project only) |
 | `polygo audit [--locale] [--judge gemma4] [--threshold 3] [--fix] [--json]` | a second model grades translations 1 to 5 with reasons; exit 1 when anything is flagged |
 | `polygo pseudo [--locale en-XA]` | write a pseudo-locale to catch hardcoded strings and truncation |
 | `polygo memory [--forget]` | cross-project translation memory |

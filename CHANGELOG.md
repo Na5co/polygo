@@ -2,6 +2,11 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- `polygo check <file-or-directory>` works without `polygo.toml`: the format and locales are detected (a single `res/values/strings.xml` or `locales/en.json` is placed by looking at its parent directories), every validator runs, and the note printed says what was checked. Plain `polygo check` in a project with no config does the same for the current directory. `--fix` still needs a configured project. The ten-second "does my existing localization have bugs?" path, no model involved.
+- `init` (and `check`) inside the layout directory itself (`cd res && polygo init`) no longer writes absolute `locale_path` templates.
+
 ## 0.1.2 — 2026-09-20
 
 - Release pipeline is back: `scripts/release.sh <version>` bumps, checks, commits and tags; pushing the tag builds five binaries, `SHA256SUMS`, the Homebrew formula (`scripts/formula.sh`, which now installs shell completions) and the GitHub release, and publishes to crates.io and the tap when the secrets exist. CI runs fmt/clippy/tests on every PR. See `docs/dev/RELEASING.md`.

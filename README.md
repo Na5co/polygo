@@ -12,7 +12,15 @@ curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
 
 <sub>or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows](https://github.com/Na5co/polygo/releases). Local models need [Ollama](https://ollama.com); or bring an API key.</sub>
 
-## Thirty seconds
+## Ten seconds: is my localization broken?
+
+```sh
+polygo check Localizable.xcstrings     # or app/src/main/res, or locales/
+```
+
+No config, no model, no network. It detects the format and the locales and reports every placeholder that went missing in a translation, every plural form Polish or Arabic needs and doesn't have, every string left half in English. Exit 1 if anything is wrong, so it drops straight into CI.
+
+## Thirty seconds: translate
 
 ```sh
 cd your-app
@@ -36,14 +44,14 @@ Works with `.xcstrings`, Android `strings.xml`, Flutter ARB, i18next JSON, gette
 
 ## Proof
 
-`polygo check` on the DuckDuckGo macOS browser's shipped catalog, unmodified:
+`polygo check` on the DuckDuckGo macOS browser's shipped catalog, unmodified (`git clone` it and run `polygo check DuckDuckGo/Localizable.xcstrings` yourself):
 
 ```
 error   Localizable.xcstrings  open.in                  [fr]  placeholders: missing %1$@
 error   Localizable.xcstrings  permission.popup.title   [it]  placeholders: missing %#@…@
 error   Localizable.xcstrings  fire.dialog.history.count [pl] placeholders: missing %#@…@
 …
-12 error(s), 380 warning(s)
+12 error(s), 379 warning(s)
 ```
 
 Across DuckDuckGo and Ice Cubes: 32 placeholder bugs and 44 missing Slavic plural forms, all in production. Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md).
