@@ -1,7 +1,7 @@
 //! Anthropic Messages API.
 
-use super::{Ctx, Provider, Reply, Usage, post_json};
-use anyhow::{Context as _, Result, bail};
+use super::{Ctx, HttpError, Provider, Reply, Usage, fatal, post_json};
+use anyhow::Result;
 
 pub struct Anthropic {
     base_url: String,
@@ -22,6 +22,39 @@ impl Anthropic {
     }
 }
 
+impl Anthropic {
+    fn key_fix(&self) -> String {
+        format!(
+            "export ANTHROPIC_API_KEY=… (or POLYGO_API_KEY), or `polygo use anthropic/{} --api-key …` to store one",
+            self.model
+        )
+    }
+
+    fn explain(&self, e: HttpError) -> anyhow::Error {
+        let said = e
+            .server_says()
+            .map(|m| format!(" ({m})"))
+            .unwrap_or_default();
+        match &e {
+            HttpError::Unreachable(_) => fatal(
+                format!("nothing is answering at {}", self.base_url),
+                "check the network and base_url in polygo.toml · `polygo doctor` checks everything",
+            ),
+            HttpError::Status {
+                code: 401 | 403, ..
+            } => fatal(
+                format!("{} rejected the API key{said}", self.base_url),
+                self.key_fix(),
+            ),
+            HttpError::Status { code: 404, .. } => fatal(
+                format!("{} has no model `{}`{said}", self.base_url, self.model),
+                "check the model name (`polygo models` lists common ones)",
+            ),
+            _ => anyhow::Error::new(e).context("anthropic messages API"),
+        }
+    }
+}
+
 impl Provider for Anthropic {
     fn name(&self) -> &str {
         "anthropic"
@@ -33,7 +66,10 @@ impl Provider for Anthropic {
 
     fn complete(&self, system: &str, user: &str, _ctx: &Ctx) -> Result<Reply> {
         let Some(key) = &self.api_key else {
-            bail!("anthropic provider needs ANTHROPIC_API_KEY (or POLYGO_API_KEY)");
+            return Err(fatal(
+                "anthropic needs an API key and none is set",
+                self.key_fix(),
+            ));
         };
         let body = serde_json::json!({
             "model": self.model,
@@ -50,7 +86,7 @@ impl Provider for Anthropic {
             ],
             &body,
         )
-        .context("anthropic messages API")?;
+        .map_err(|e| self.explain(e))?;
         let text = resp["content"]
             .as_array()
             .map(|parts| {

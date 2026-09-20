@@ -24,6 +24,8 @@ pub struct Report {
     pub findings: Vec<Finding>,
     pub errors: usize,
     pub warnings: usize,
+    /// Translations that were looked at (unit × locale with a value).
+    pub checked: usize,
 }
 
 impl Report {
@@ -74,6 +76,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
             let Some(t) = u.translations.get(locale) else {
                 continue;
             };
+            report.checked += 1;
             if let Some(max) = crate::core::directives(u.comment.as_deref()).max_chars
                 && t.chars().count() > max
             {

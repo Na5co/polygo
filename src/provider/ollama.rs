@@ -1,7 +1,7 @@
 //! Ollama `/api/chat` with structured (JSON-schema) output and thinking disabled.
 
-use super::{Ctx, Provider, Reply, Usage, post_json, response_schema};
-use anyhow::{Context as _, Result};
+use super::{Ctx, HttpError, Provider, Reply, Usage, fatal, post_json, response_schema};
+use anyhow::Result;
 
 pub struct Ollama {
     base_url: String,
@@ -31,6 +31,41 @@ impl Ollama {
 impl Ollama {
     pub fn base_url(&self) -> String {
         self.base_url.clone()
+    }
+
+    /// Say what to do, not what the socket said.
+    fn explain(&self, e: HttpError) -> anyhow::Error {
+        match &e {
+            HttpError::Unreachable(_) => fatal(
+                format!("ollama is not running at {}", self.base_url),
+                if self.base_url.starts_with("http://127.0.0.1")
+                    || self.base_url.contains("localhost")
+                {
+                    "start it with `ollama serve` (or open the Ollama app); not installed? https://ollama.com or `brew install ollama` · `polygo doctor` checks everything".to_string()
+                } else {
+                    format!(
+                        "check that Ollama is up at {} (base_url in polygo.toml / OLLAMA_HOST) · `polygo doctor` checks everything",
+                        self.base_url
+                    )
+                },
+            ),
+            HttpError::Status { code: 404, .. } => fatal(
+                format!(
+                    "ollama has no model `{}`{}",
+                    self.model,
+                    e.server_says()
+                        .map(|m| format!(" ({m})"))
+                        .unwrap_or_default()
+                ),
+                format!(
+                    "`polygo use {}` pulls it · `polygo models` lists the options",
+                    self.model
+                ),
+            ),
+            _ => {
+                anyhow::Error::new(e).context(format!("ollama {} ({})", self.model, self.base_url))
+            }
+        }
     }
 }
 
@@ -69,13 +104,8 @@ impl Provider for Ollama {
         if std::env::var("POLYGO_DEBUG_PROMPT").is_ok() {
             eprintln!("--- system ---\n{system}\n--- user ---\n{user}");
         }
-        let resp =
-            post_json(&format!("{}/api/chat", self.base_url), &[], &body).with_context(|| {
-                format!(
-                    "ollama ({}): is `ollama serve` running and `{}` pulled?",
-                    self.base_url, self.model
-                )
-            })?;
+        let resp = post_json(&format!("{}/api/chat", self.base_url), &[], &body)
+            .map_err(|e| self.explain(e))?;
         let content = resp["message"]["content"]
             .as_str()
             .unwrap_or("")

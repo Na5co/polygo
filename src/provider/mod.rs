@@ -738,26 +738,128 @@ fn extract_json_object(raw: &str) -> Option<&str> {
     None
 }
 
+/// A failure that retrying will not fix: the server is not there, the key is wrong,
+/// the model does not exist. Printed as the problem plus the fix, like `doctor`.
+#[derive(Debug)]
+pub struct Fatal {
+    pub what: String,
+    pub fix: String,
+}
+
+impl std::fmt::Display for Fatal {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}\n  fix: {}", self.what, self.fix)
+    }
+}
+
+impl std::error::Error for Fatal {}
+
+pub fn fatal(what: impl Into<String>, fix: impl Into<String>) -> anyhow::Error {
+    Fatal {
+        what: what.into(),
+        fix: fix.into(),
+    }
+    .into()
+}
+
+/// Anywhere in the chain: the engine does not retry these and prints them as they are.
+pub fn is_fatal(e: &anyhow::Error) -> bool {
+    e.chain().any(|c| c.is::<Fatal>())
+}
+
+/// What went wrong with an HTTP call, for providers to turn into a `Fatal` or a retry.
+#[derive(Debug)]
+pub enum HttpError {
+    /// TCP/DNS level: nothing is listening, or the host does not resolve.
+    Unreachable(String),
+    /// Non-2xx reply; the body is what the server said (truncated).
+    Status { code: u16, body: String },
+    /// Timeout, bad JSON, anything else worth one more try.
+    Other(anyhow::Error),
+}
+
+impl std::fmt::Display for HttpError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            HttpError::Unreachable(e) => write!(f, "{e}"),
+            HttpError::Status { code, body } if body.is_empty() => write!(f, "http status {code}"),
+            HttpError::Status { code, body } => write!(f, "http status {code}: {body}"),
+            HttpError::Other(e) => write!(f, "{e:#}"),
+        }
+    }
+}
+
+impl std::error::Error for HttpError {}
+
+impl HttpError {
+    /// A short quote of the server's own error text, if any.
+    pub fn server_says(&self) -> Option<String> {
+        let HttpError::Status { body, .. } = self else {
+            return None;
+        };
+        let msg = serde_json::from_str::<serde_json::Value>(body)
+            .ok()
+            .and_then(|v| {
+                v.pointer("/error/message")
+                    .or_else(|| v.get("error"))
+                    .or_else(|| v.get("message"))
+                    .and_then(|m| m.as_str().map(str::to_string))
+            })
+            .unwrap_or_else(|| body.clone());
+        // First sentence, at most 120 chars: enough to see why, not the whole essay.
+        let msg = msg.trim();
+        let msg = msg.split_once(". ").map_or(msg, |(first, _)| first);
+        (!msg.is_empty()).then(|| msg.chars().take(120).collect())
+    }
+}
+
 /// Shared HTTP POST-JSON helper with a generous timeout for local models.
 pub(crate) fn post_json(
     url: &str,
     headers: &[(&str, &str)],
     body: &serde_json::Value,
-) -> Result<serde_json::Value> {
+) -> std::result::Result<serde_json::Value, HttpError> {
     let secs = std::env::var("POLYGO_HTTP_TIMEOUT")
         .ok()
         .and_then(|v| v.parse().ok())
         .unwrap_or(300);
     let agent = ureq::Agent::config_builder()
         .timeout_global(Some(std::time::Duration::from_secs(secs)))
+        .http_status_as_error(false)
         .build()
         .new_agent();
     let mut req = agent.post(url);
     for (k, v) in headers {
         req = req.header(*k, *v);
     }
-    let mut resp = req.send_json(body).with_context(|| format!("POST {url}"))?;
+    let mut resp = req.send_json(body).map_err(|e| match &e {
+        ureq::Error::ConnectionFailed | ureq::Error::HostNotFound => {
+            HttpError::Unreachable(format!("cannot reach {url}: {e}"))
+        }
+        ureq::Error::Io(io)
+            if matches!(
+                io.kind(),
+                std::io::ErrorKind::ConnectionRefused
+                    | std::io::ErrorKind::ConnectionReset
+                    | std::io::ErrorKind::NotFound
+            ) =>
+        {
+            HttpError::Unreachable(format!("cannot reach {url}: {io}"))
+        }
+        _ => HttpError::Other(anyhow::Error::new(e).context(format!("POST {url}"))),
+    })?;
+    let code = resp.status().as_u16();
+    if !(200..300).contains(&code) {
+        let body = resp
+            .body_mut()
+            .read_to_string()
+            .unwrap_or_default()
+            .chars()
+            .take(2000)
+            .collect();
+        return Err(HttpError::Status { code, body });
+    }
     resp.body_mut()
         .read_json::<serde_json::Value>()
-        .context("reading response JSON")
+        .map_err(|e| HttpError::Other(anyhow::Error::new(e).context("reading response JSON")))
 }
