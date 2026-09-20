@@ -1,25 +1,25 @@
 # r/iOSProgramming
 
-**Title:** I made a CLI that translates .xcstrings catalogs with a local model and checks every %@ and plural. Free, MIT.
+**Title:** I built a CLI that translates .xcstrings catalogs with a local model and checks every %@ and plural. Free, MIT.
 
 **Body:**
 
-I got tired of choosing between a $149/month translation SaaS and pasting my string catalog into a chat window, so I wrote a small Rust CLI for it.
+I didn't want to pay $149/month for Lokalise for a small app, and pasting the catalog into ChatGPT and merging it back by hand got old fast. So I wrote a small Rust CLI.
 
-`polygo init` finds your `.xcstrings`, `polygo translate` fills in the missing locales, `polygo check` fails if a `%@`, `%lld` or `%#@var@` went missing or a locale lacks a plural category Xcode will complain about at runtime.
+    polygo init
+    polygo translate
+    polygo check
 
-Things I cared about:
+It writes back in Xcode's exact format, so git diff shows only the new strings. A lockfile remembers what it wrote, so your hand edits are never overwritten.
 
-- It writes back in Xcode's exact style (two-space indent, `"key" : value`, Xcode's key order), so `git diff` shows only the strings that changed.
-- It reads your Swift code. Before translating "Open" it finds `Button("Open")` and tells the model it's a menu item, and attaches similar strings you already translated so terms stay consistent.
-- Human edits are never overwritten. A lockfile tracks what it wrote.
-- Plural variations (including `%#@var@` substitutions) are translated one CLDR category at a time, so Polish gets its few/many forms and Japanese just gets other.
-- Default model runs on Ollama, so nothing leaves the machine. Any OpenAI-compatible or Anthropic endpoint works if you prefer a bigger model.
+A few things I'm happy with:
 
-Running `polygo check` on public catalogs was interesting: DuckDuckGo's macOS browser ships `Ouvrir dans % @` (space inside the placeholder) in five locales, and Ice Cubes is missing the few/many forms in Polish and Ukrainian for 44 strings.
+- It reads your Swift code first. "Open" inside Button("Open") gets translated as a menu item, not a verb.
+- Plurals are done per language: Polish gets one/few/many/other, Japanese gets one form.
+- check catches broken placeholders and missing plural forms. Run on DuckDuckGo's shipped catalog it found 12 errors, including "Ouvrir dans % @".
 
-Not done yet: device variations are left alone.
+Runs on Ollama, nothing leaves your machine. Any OpenAI or Anthropic key works too.
 
-Free, MIT, no account, no telemetry: https://github.com/Na5co/polygo
+https://github.com/Na5co/polygo
 
-Question for people shipping in more languages than me: do you keep translations in the catalog and let Xcode manage state, or export .xliff and round-trip? Which of the two should the docs lead with?
+Question for people shipping more languages than me: do you keep translations in the catalog, or export xliff and round-trip?
