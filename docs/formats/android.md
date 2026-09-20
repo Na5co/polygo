@@ -17,7 +17,7 @@ locale_path = "app/src/main/res/values-{android_locale}/strings.xml"
 
 ## Plurals
 
-`<plurals>` are translated per quantity the target locale needs (`one`/`other` for German; `one`/`few`/`many`/`other` for Russian and Polish), each as its own unit (`imported#plural.few`). Missing `<item quantity="...">` elements are appended to an existing block in the file's indentation; a missing block is created before `</resources>`. Human-translated quantities are kept. `<string-array>` items are preserved but not translated.
+`<plurals>` are translated per quantity the target locale needs (`one`/`other` for German; `one`/`few`/`many`/`other` for Russian and Polish), each as its own unit (`imported#plural.few`). Missing `<item quantity="...">` elements are appended to an existing block in the file's indentation; a missing block is created before `</resources>`. Human-translated quantities are kept. `<string-array>` items are translated one by one (`sort_modes#array.0`, `#array.1`, …); the model sees the item's position and the whole list so the entries stay parallel. A missing array in a locale file is created from the source items and overwritten as translations land, and a shorter one is padded first, so the array is never left shorter than the original (Android arrays are positional). `translatable="false"` arrays are skipped.
 
 `polygo check` validates every `<plurals>` in every locale against the CLDR category table (`plural` error when a locale lacks a required quantity).
 

@@ -523,6 +523,88 @@ impl Document {
         }
     }
 
+    /// Set item `idx` of a `<string-array>`. A missing block is created, and a block
+    /// shorter than `source_items` is padded from the source first, so the array is
+    /// never left shorter than the original (Android arrays are positional).
+    pub fn set_array_item(&mut self, name: &str, idx: usize, text: &str, source_items: &[String]) {
+        let indent = self.detect_indent();
+        let i = match self
+            .entries
+            .iter()
+            .position(|e| e.kind == Kind::StringArray && e.name == name)
+        {
+            Some(i) => i,
+            None => {
+                let item_indent = format!("{indent}{indent}");
+                let mut block = format!("{indent}<string-array name=\"{}\">\n", escape_attr(name));
+                let mut values = Vec::new();
+                for item in source_items {
+                    let enc = encode(item);
+                    let line = format!("{item_indent}<item>{enc}</item>\n");
+                    let start = block.len();
+                    let content_start = start + item_indent.len() + "<item>".len();
+                    values.push(Value {
+                        raw: enc.clone(),
+                        quantity: None,
+                        span: Some(content_start..content_start + enc.len()),
+                        element: start..start + line.len() - 1,
+                        edited: None,
+                    });
+                    block.push_str(&line);
+                }
+                block.push_str(&format!("{indent}</string-array>\n"));
+                let at = self.before_resources_end();
+                self.splice_in(at, &block);
+                for v in &mut values {
+                    if let Some(sp) = &mut v.span {
+                        sp.start += at;
+                        sp.end += at;
+                    }
+                    v.element.start += at;
+                    v.element.end += at;
+                }
+                self.entries.push(Entry {
+                    kind: Kind::StringArray,
+                    name: name.to_string(),
+                    translatable: true,
+                    comment: None,
+                    values,
+                });
+                self.entries.len() - 1
+            }
+        };
+        // Pad a short block from the source, copying the last item's indentation.
+        while self.entries[i].values.len() <= idx {
+            let n = self.entries[i].values.len();
+            let src = source_items.get(n).cloned().unwrap_or_default();
+            let last_end = self.entries[i]
+                .values
+                .last()
+                .map(|v| v.element.end)
+                .unwrap_or_else(|| self.before_resources_end());
+            let line_start = self.text[..last_end]
+                .rfind('\n')
+                .map(|p| p + 1)
+                .unwrap_or(0);
+            let item_indent: String = self.text[line_start..]
+                .chars()
+                .take_while(|c| c.is_whitespace() && *c != '\n')
+                .collect();
+            let enc = encode(&src);
+            let element = format!("\n{item_indent}<item>{enc}</item>");
+            self.splice_in(last_end, &element);
+            let content_start = last_end + element.len() - enc.len() - "</item>".len();
+            self.entries[i].values.push(Value {
+                raw: enc.clone(),
+                quantity: None,
+                span: Some(content_start..content_start + enc.len()),
+                element: last_end..last_end + element.len(),
+                edited: None,
+            });
+        }
+        self.set_text(i, idx, text);
+    }
+
     /// Byte offset at the start of the `</resources>` line (or end of text).
     fn before_resources_end(&self) -> usize {
         let close = self.text.rfind("</resources>").unwrap_or(self.text.len());
@@ -564,6 +646,15 @@ impl Document {
         }
         "    ".to_string()
     }
+}
+
+/// Decoded items of the `<string-array>` named `name` (empty if absent).
+pub fn array_items(doc: &Document, name: &str) -> Vec<String> {
+    doc.entries
+        .iter()
+        .find(|e| e.kind == Kind::StringArray && e.name == name)
+        .map(|e| e.values.iter().map(Value::text).collect())
+        .unwrap_or_default()
 }
 
 /// A fresh, empty resources file in the conventional Android style.

@@ -30,6 +30,8 @@ class Polygo < Formula
 
   def install
     bin.install "polygo"
+    # From the first release after 0.1.1 (`polygo completions` exists), also:
+    # generate_completions_from_executable(bin/"polygo", "completions")
   end
 
   test do
