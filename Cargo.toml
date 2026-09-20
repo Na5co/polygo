@@ -31,6 +31,7 @@ aho-corasick = "1"
 anyhow = "1"
 blake3 = "1"
 clap = { version = "4", features = ["derive"] }
+clap_complete = "4"
 ignore = "0.4"
 quick-xml = "0.37"
 serde = { version = "1", features = ["derive"] }

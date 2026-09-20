@@ -157,3 +157,26 @@ fn init_with_no_targets_points_at_add() {
     assert!(stdout.contains("no target locales yet"), "{stdout}");
     assert!(stdout.contains("polygo add"), "{stdout}");
 }
+
+#[test]
+fn completions_print_a_script_for_each_shell() {
+    for (shell, marker) in [
+        ("zsh", "#compdef polygo"),
+        ("bash", "complete -F _polygo"),
+        ("fish", "complete -c polygo"),
+    ] {
+        let out = std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+            .args(["completions", shell])
+            .output()
+            .unwrap();
+        assert!(out.status.success(), "{shell}");
+        let script = String::from_utf8_lossy(&out.stdout);
+        assert!(script.contains(marker), "{shell}: {script}");
+        assert!(script.contains("translate"), "{shell}");
+    }
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+        .args(["completions", "tcsh"])
+        .output()
+        .unwrap();
+    assert!(!out.status.success());
+}

@@ -358,3 +358,73 @@ fn i18next_plural_suffixes_written_per_cldr_category() {
         "{status}"
     );
 }
+
+#[test]
+fn android_string_arrays_translated_per_item() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("res/values")).unwrap();
+    fs::create_dir_all(root.join("res/values-ru")).unwrap();
+    fs::create_dir_all(root.join("res/values-fr")).unwrap();
+    fs::write(
+        root.join("res/values/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"open\">Open</string>\n    <!-- Sort menu, same order as the spinner -->\n    <string-array name=\"sort_modes\">\n        <item>Newest first</item>\n        <item>Oldest first</item>\n        <item>By name</item>\n    </string-array>\n    <string-array name=\"country_codes\" translatable=\"false\">\n        <item>DE</item>\n        <item>FR</item>\n    </string-array>\n</resources>\n",
+    )
+    .unwrap();
+    // Russian: a human already translated the whole array.
+    fs::write(
+        root.join("res/values-ru/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string-array name=\"sort_modes\">\n        <item>Сначала новые</item>\n        <item>Сначала старые</item>\n        <item>По имени</item>\n    </string-array>\n</resources>\n",
+    )
+    .unwrap();
+    // French: only the first two items exist; the third must be appended, not lost.
+    fs::write(
+        root.join("res/values-fr/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string-array name=\"sort_modes\">\n        <item>Plus récents d\\'abord</item>\n        <item>Plus anciens d\\'abord</item>\n    </string-array>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"ru\", \"fr\", \"de\"]\n\n[[files]]\nformat = \"android\"\npath = \"res/values/strings.xml\"\nlocale_path = \"res/values-{android_locale}/strings.xml\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = run(root, &["translate", "--dry-run"]);
+    ok(&out);
+    let plan = String::from_utf8_lossy(&out.stdout);
+    assert!(plan.contains("sort_modes#array.0"), "{plan}");
+    assert!(!plan.contains("country_codes"), "{plan}");
+    // Russian is fully human-translated: only `open` is planned.
+    assert!(plan.contains("ru       1 to translate"), "{plan}");
+    assert!(plan.contains("fr       2 to translate"), "{plan}");
+    assert!(plan.contains("de       4 to translate"), "{plan}");
+
+    ok(&run(root, &["translate"]));
+    let ru = fs::read_to_string(root.join("res/values-ru/strings.xml")).unwrap();
+    assert!(ru.contains("<item>Сначала новые</item>"), "{ru}");
+    assert!(!ru.contains("⟦ru⟧ Newest"), "{ru}");
+    let fr = fs::read_to_string(root.join("res/values-fr/strings.xml")).unwrap();
+    assert!(
+        fr.contains("        <item>Plus anciens d\\'abord</item>\n        <item>⟦fr⟧ By name</item>\n    </string-array>\n"),
+        "{fr}"
+    );
+    let de = fs::read_to_string(root.join("res/values-de/strings.xml")).unwrap();
+    assert!(
+        de.contains("    <string-array name=\"sort_modes\">\n        <item>⟦de⟧ Newest first</item>\n        <item>⟦de⟧ Oldest first</item>\n        <item>⟦de⟧ By name</item>\n    </string-array>\n"),
+        "{de}"
+    );
+    assert!(!de.contains("country_codes"), "{de}");
+    for f in [&ru, &fr, &de] {
+        let parsed = polygo::formats::android::parse(f).unwrap();
+        assert_eq!(polygo::formats::android::serialize(&parsed), **f);
+    }
+    ok(&run(root, &["check"]));
+    let out = run(root, &["translate"]);
+    assert!(String::from_utf8_lossy(&out.stdout).contains("nothing to translate"));
+    let out = run(root, &["status"]);
+    let status = String::from_utf8_lossy(&out.stdout);
+    assert!(status.contains("4 units"), "{status}");
+    assert!(
+        status.contains("ru       new: 0  stale: 0  untranslated: 0  edited: 3  up-to-date: 1"),
+        "{status}"
+    );
+}

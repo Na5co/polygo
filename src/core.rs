@@ -51,9 +51,69 @@ pub fn split_plural(key: &str) -> Option<(&str, &str)> {
     Some((base, cat))
 }
 
-/// The key without a plural suffix (for code-usage lookup and display).
+// ---- string-array items ----------------------------------------------------------------
+//
+// An Android `<string-array>` is one unit per item, keyed `<name>#array.<index>`, so
+// each item is translated, checked and tracked on its own while the array keeps its order.
+
+pub const ARRAY_SEP: &str = "#array.";
+
+pub fn array_key(name: &str, index: usize) -> String {
+    format!("{name}{ARRAY_SEP}{index}")
+}
+
+/// `("name", 2)` for `name#array.2`.
+pub fn split_array(key: &str) -> Option<(&str, usize)> {
+    let (base, idx) = key.rsplit_once(ARRAY_SEP)?;
+    Some((base, idx.parse().ok()?))
+}
+
+/// One unit per array item. `targets`: locale → that locale's existing items.
+pub fn array_units(
+    name: &str,
+    comment: Option<&str>,
+    items: &[String],
+    targets: &BTreeMap<String, Vec<String>>,
+) -> Vec<Unit> {
+    let list: Vec<String> = items
+        .iter()
+        .enumerate()
+        .map(|(i, t)| format!("{}. {t:?}", i + 1))
+        .collect();
+    items
+        .iter()
+        .enumerate()
+        .map(|(i, text)| {
+            let mut note = format!(
+                "Item {} of {} in the list {name:?}; the items are shown together in this order, so keep them parallel in form. Full list: {}.",
+                i + 1,
+                items.len(),
+                list.join(", ")
+            );
+            if let Some(c) = comment {
+                note = format!("{c} · {note}");
+            }
+            Unit {
+                key: array_key(name, i),
+                source: text.clone(),
+                comment: Some(note),
+                translations: targets
+                    .iter()
+                    .filter_map(|(l, have)| have.get(i).map(|v| (l.clone(), v.clone())))
+                    .filter(|(_, v)| !v.is_empty())
+                    .collect(),
+                locales: None,
+            }
+        })
+        .collect()
+}
+
+/// The key without a plural or array suffix (for code-usage lookup and display).
 pub fn base_key(key: &str) -> &str {
-    split_plural(key).map_or(key, |(b, _)| b)
+    split_plural(key)
+        .map(|(b, _)| b)
+        .or_else(|| split_array(key).map(|(b, _)| b))
+        .unwrap_or(key)
 }
 
 /// What a category means, for the model: with a concrete count, because "few" vs
