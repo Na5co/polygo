@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- Release pipeline is back: `scripts/release.sh <version>` bumps, checks, commits and tags; pushing the tag builds five binaries, `SHA256SUMS`, the Homebrew formula (`scripts/formula.sh`, which now installs shell completions) and the GitHub release, and publishes to crates.io and the tap when the secrets exist. CI runs fmt/clippy/tests on every PR. See `docs/dev/RELEASING.md`.
 - Failures that retrying cannot fix stop the run at once with the problem and the fix on two lines, the way `doctor` reports: Ollama not running (`ollama serve`), model not pulled (`polygo use <model>`), no or rejected API key (which env var, or `polygo use … --api-key`), unknown model at an API endpoint. Timeouts, 429 and 5xx are still retried three times. Previously every one of these went through three backoff rounds and ended in a chain of socket errors.
 - `check` says what it looked at: `check: ok (42 translation(s) in 3 locale(s))`, or `nothing to check yet … polygo translate first` on a fresh project.
 - `polygo status --keys` (`-k`) lists the keys behind each count, with the quarantine reason for `needs-review` ones; `--json` gains a `keys` map per locale. `status --locale de` narrows it.

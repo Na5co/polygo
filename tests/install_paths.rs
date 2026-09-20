@@ -18,8 +18,8 @@ fn install_scripts_are_valid_and_consistent() {
     );
     let sh = fs::read_to_string(format!("{root}/install.sh")).unwrap();
     assert!(sh.contains("polygo-$tag-$arch-$os.tar.gz"));
-    // Homebrew formula covers the four Unix assets with the same naming.
-    let rb = fs::read_to_string(format!("{root}/packaging/homebrew/polygo.rb")).unwrap();
+    // The generated Homebrew formula covers the four Unix assets with the same naming.
+    let rb = fs::read_to_string(format!("{root}/scripts/formula.sh")).unwrap();
     for asset in [
         "aarch64-darwin",
         "x86_64-darwin",
