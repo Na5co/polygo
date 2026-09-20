@@ -1,0 +1,31 @@
+# Lean on purpose: one Linux runner, cached. macOS/Windows are covered by the release
+# build. Public repository, so none of this counts against Actions minutes.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+      - name: Binary size budget (< 15 MB) and cold start
+        run: |
+          cargo build --release
+          size=$(wc -c < target/release/polygo); echo "release binary: $size bytes"
+          [ "$size" -lt 15728640 ]
+          time target/release/polygo --help > /dev/null

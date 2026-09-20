@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- Release pipeline is back: `scripts/release.sh <version>` bumps, checks, commits and tags; pushing the tag builds five binaries, `SHA256SUMS`, the Homebrew formula (`scripts/formula.sh`, which now installs shell completions) and the GitHub release, and publishes to crates.io and the tap when the secrets exist. CI runs fmt/clippy/tests on every PR. See `docs/dev/RELEASING.md`.
 - `polygo status --keys` (`-k`) lists the keys behind each count, with the quarantine reason for `needs-review` ones; `--json` gains a `keys` map per locale. `status --locale de` narrows it.
 - `[keys] skip = ["debug.*", "internal_*"]` in `polygo.toml`: globs over the key that translate, status and check leave alone, for i18next JSON (no comment field for `polygo:skip`) and for whole families of keys in any format. `status` reports how many keys were skipped.
 - Android `<string-array>` items are translated, one unit per item (`sort_modes#array.0`), with the whole list in the prompt so the items stay parallel. A missing array in a locale file is created from the source and filled item by item; a short one is padded before the new item lands, so an array is never left shorter than the original. `translatable="false"` arrays are skipped as before.

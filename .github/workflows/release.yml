@@ -1,0 +1,137 @@
+# Tag v0.1.2 (scripts/release.sh does the bump + tag) and push it: five binaries,
+# SHA256SUMS and a GitHub release. crates.io and the Homebrew tap are updated only when
+# the matching secret exists (CARGO_REGISTRY_TOKEN, TAP_GITHUB_TOKEN); without them
+# those jobs are skipped and the steps are printed for doing by hand.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: aarch64-apple-darwin,       os: macos-latest,   asset: aarch64-darwin }
+          - { target: x86_64-apple-darwin,        os: macos-latest,   asset: x86_64-darwin }
+          - { target: x86_64-unknown-linux-musl,  os: ubuntu-latest,  asset: x86_64-linux,  cross: true }
+          - { target: aarch64-unknown-linux-musl, os: ubuntu-latest,  asset: aarch64-linux, cross: true }
+          - { target: x86_64-pc-windows-msvc,     os: windows-latest, asset: x86_64-windows }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+      - name: Install cross
+        if: ${{ matrix.cross }}
+        run: cargo install cross --locked
+      - name: Build
+        shell: bash
+        run: |
+          if [ "${{ matrix.cross }}" = "true" ]; then cross build --release --locked --target ${{ matrix.target }};
+          else cargo build --release --locked --target ${{ matrix.target }}; fi
+      - name: Package
+        shell: bash
+        run: |
+          set -euo pipefail
+          v="${GITHUB_REF_NAME}"
+          bin=target/${{ matrix.target }}/release/polygo; [ -f "$bin.exe" ] && bin="$bin.exe"
+          size=$(wc -c < "$bin"); echo "size: $size"; [ "$size" -lt 15728640 ]
+          mkdir -p dist/pkg && cp "$bin" dist/pkg/ && cp README.md LICENSE CHANGELOG.md dist/pkg/
+          if [[ "${{ matrix.target }}" == *windows* ]]; then
+            (cd dist/pkg && 7z a "../polygo-${v}-${{ matrix.asset }}.zip" .)
+          else
+            tar -C dist/pkg -czf "dist/polygo-${v}-${{ matrix.asset }}.tar.gz" .
+          fi
+          ls -la dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: dist/polygo-*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      formula: ${{ steps.formula.outputs.path }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums and Homebrew formula
+        id: formula
+        run: |
+          cd dist && sha256sum polygo-* > SHA256SUMS && cd ..
+          v="${GITHUB_REF_NAME#v}"
+          scripts/formula.sh "$v" dist/SHA256SUMS > dist/polygo.rb
+          echo "path=dist/polygo.rb" >> "$GITHUB_OUTPUT"
+          cat dist/SHA256SUMS dist/polygo.rb
+      - name: Release notes from CHANGELOG.md
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          # The section for this version, without its heading.
+          awk -v v="$v" '/^## /{p = ($2 == v)} p && !/^## /' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "See CHANGELOG.md." > notes.md
+          cat notes.md
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/polygo-*
+            dist/SHA256SUMS
+            dist/polygo.rb
+          body_path: notes.md
+          prerelease: ${{ contains(github.ref_name, '-') }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: formula
+          path: dist/polygo.rb
+
+  crates-io:
+    needs: release
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref_name, '-') }}
+    env:
+      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: cargo publish
+        run: |
+          if [ -z "$CARGO_REGISTRY_TOKEN" ]; then
+            echo "::notice::CARGO_REGISTRY_TOKEN is not set; run \`cargo publish\` by hand."
+            exit 0
+          fi
+          cargo publish --locked
+
+  homebrew-tap:
+    needs: release
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref_name, '-') }}
+    env:
+      TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: formula
+      - name: Push formula to Na5co/homebrew-tap
+        run: |
+          if [ -z "$TAP_GITHUB_TOKEN" ]; then
+            echo "::notice::TAP_GITHUB_TOKEN is not set; copy polygo.rb from the release assets into Na5co/homebrew-tap/Formula/ by hand."
+            exit 0
+          fi
+          git clone "https://x-access-token:${TAP_GITHUB_TOKEN}@github.com/Na5co/homebrew-tap.git" tap
+          mkdir -p tap/Formula && cp polygo.rb tap/Formula/polygo.rb
+          cd tap
+          git config user.name "polygo-release" && git config user.email "polygo-release@users.noreply.github.com"
+          git add Formula/polygo.rb
+          git commit -m "polygo ${GITHUB_REF_NAME}" || { echo "formula unchanged"; exit 0; }
+          git push

@@ -8,7 +8,7 @@
 - `polygo add <locale>...` / `polygo remove <locale>...`: edit `target_locales` in `polygo.toml` without touching files.
 - `polygo extract`: pull UI text out of web markup (JSX/TSX, HTML in template literals, `.html`/`.vue`/`.svelte`) into `locales/en.json`, with file:line for every string. For projects that have no string files yet.
 - `polygo doctor`: run it first: it checks the config, loads every file, pings the provider and confirms the model is pulled, printing the fix for whatever fails.
-- [CI](../action/README.md): the GitHub Action.
+- [CI](../action/README.md): the GitHub Action. [Releasing](dev/RELEASING.md): how a version ships.
 - [Re-recording the demo](../scripts/demo.sh)
 
 ## Formats
