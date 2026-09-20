@@ -39,6 +39,9 @@ format = "android"       # xcstrings | android | json | arb | po | resx
 path = "app/src/main/res/values/strings.xml"
 locale_path = "app/src/main/res/values-{android_locale}/strings.xml"
 
+[keys]
+skip = ["debug.*", "internal_*"]   # never translated, counted or checked (globs over the key)
+
 [provider]
 kind = "ollama"          # ollama | openai | anthropic | mock
 model = "qwen3:8b"
@@ -49,6 +52,8 @@ timeout_secs = 300
 `locale_path` templates accept `{locale}` (as written in `target_locales`, e.g. `pt-BR`) and `{android_locale}` (Android resource qualifier, `pt-rBR`). `xcstrings` has no `locale_path`: one catalog holds every locale.
 
 When several `[[files]]` are configured, lockfile keys are prefixed with the file path (`app/src/main/res/values/strings.xml:welcome`).
+
+`[keys] skip` takes globs over the key (`*` also crosses dots, so `debug.*` covers `debug.net.trace`); with several `[[files]]`, `locales/en/admin.json:*` targets one file. A skipped plural group takes all its forms with it. `polygo status` says how many keys the patterns removed. For formats with a comment field there is also the per-key directive below.
 
 Developer comments can carry per-key directives: `polygo:skip` (never translate, not counted), `polygo:max=20` (translations longer than 20 characters are a `check` error and are bounced back to the model), `polygo:context=...` (plain text for the model: the whole comment is sent anyway). They work in every format that has a comment field (`.xcstrings` comment, `<!-- -->` before an Android element, `@key.description` in ARB, `#.` in .po, `<comment>` in .resx).
 
@@ -67,7 +72,7 @@ A translation that violates the glossary is sent back once for repair, then quar
 
 A sorted TOML file, meant to be committed. For every key × locale it stores the blake3 hash of the source text the translation was made from, the provider and model, a timestamp, and: for quarantined strings: the reason.
 
-States shown by `polygo status`:
+States shown by `polygo status` (`--keys` lists the keys in each state, with the reason for `needs-review`):
 
 | state | meaning |
 |---|---|

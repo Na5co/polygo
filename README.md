@@ -99,7 +99,7 @@ Every writer round-trips byte for byte: parse then serialize gives back the orig
 - **CI.** `polygo check --json --strict` in a pipeline, or the [GitHub Action](action/README.md) that opens a PR with new translations on every push, coverage table included.
 - **Review is local.** `polygo review` serves a page on `127.0.0.1` to approve or reject pending translations. Approvals are recorded as human.
 - **Pseudo-localization.** `polygo pseudo` writes `[Šáṽé çĥáñĝéš ~~~~]` for every string as `en-XA`. Run the app in that locale to spot hardcoded text and truncation.
-- **Per-key control from the code.** `polygo:skip` and `polygo:max=20` in a developer comment are respected by translate and check.
+- **Per-key control.** `polygo:skip` and `polygo:max=20` in a developer comment are respected by translate and check; `[keys] skip = ["debug.*"]` in `polygo.toml` does the same by glob, for i18next JSON and anything else without comments.
 
 </details>
 
@@ -208,7 +208,7 @@ do_not_translate = ["Polygo", "GitHub"]
 | `polygo audit [--locale] [--judge gemma4] [--threshold 3] [--fix] [--json]` | a second model grades translations 1 to 5 with reasons; exit 1 when anything is flagged |
 | `polygo pseudo [--locale en-XA]` | write a pseudo-locale to catch hardcoded strings and truncation |
 | `polygo memory [--forget]` | cross-project translation memory |
-| `polygo status [--json] [--markdown]` | counts per locale; `--markdown` is a coverage table for a README or PR |
+| `polygo status [--keys] [--locale L] [--json] [--markdown]` | counts per locale; `--keys` lists the keys behind them; `--markdown` is a coverage table for a README or PR |
 | `polygo review [--port 4133] [--open]` | local page to approve or reject quarantined translations |
 
 ## FAQ
