@@ -71,4 +71,3 @@ cargo test                  # offline, about 10 s
 scripts/demo.sh             # re-record the GIF
 ```
 
-MIT, Atanas Angelov
