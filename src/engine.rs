@@ -285,8 +285,13 @@ pub fn translate(
             // Apply results as they arrive; persist after every batch, then ack.
             for _ in 0..total {
                 let (i, result, ack) = rx.recv().context("provider worker died")?;
-                let outcome =
-                    result.with_context(|| format!("{locale}: batch {}/{total} failed", i + 1))?;
+                let outcome = result.map_err(|e| {
+                    if crate::provider::is_fatal(&e) {
+                        e
+                    } else {
+                        e.context(format!("{locale}: batch {}/{total} failed", i + 1))
+                    }
+                })?;
                 for t in outcome.translations {
                     let u = by_key[t.key.as_str()];
                     ws.set(cfg, &t.key, locale, &t.text)?;
@@ -362,6 +367,7 @@ fn translate_with_retry(
     for attempt in 0..3u32 {
         match provider.translate(batch, ctx) {
             Ok(t) => return Ok(t),
+            Err(e) if crate::provider::is_fatal(&e) => return Err(e),
             Err(e) => {
                 if attempt < 2 && !std::env::var("POLYGO_NO_BACKOFF").is_ok_and(|v| v == "1") {
                     std::thread::sleep(std::time::Duration::from_millis(500 * 2u64.pow(attempt)));

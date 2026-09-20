@@ -662,8 +662,17 @@ fn check(
 
     if json {
         println!("{}", serde_json::to_string_pretty(&report)?);
+    } else if report.findings.is_empty() && report.checked == 0 {
+        println!(
+            "check: nothing to check yet (no translations in {}); `polygo translate` first",
+            locale.unwrap_or(cfg.target_locales.clone()).join(", ")
+        );
     } else if report.findings.is_empty() {
-        println!("check: ok");
+        println!(
+            "check: ok ({} translation(s) in {} locale(s))",
+            report.checked,
+            locale.map_or(cfg.target_locales.len(), |l| l.len())
+        );
     } else {
         for f in &report.findings {
             let key: String = f

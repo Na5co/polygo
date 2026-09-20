@@ -1,8 +1,8 @@
 //! Any OpenAI-compatible `/v1/chat/completions` endpoint (OpenAI, llama.cpp server,
 //! vLLM, LM Studio, OpenRouter, ...).
 
-use super::{Ctx, Provider, Reply, Usage, post_json, response_schema};
-use anyhow::{Context as _, Result};
+use super::{Ctx, HttpError, Provider, Reply, Usage, fatal, post_json, response_schema};
+use anyhow::Result;
 
 pub struct OpenAiCompatible {
     base_url: String,
@@ -19,6 +19,47 @@ impl OpenAiCompatible {
                 .to_string(),
             model: model.to_string(),
             api_key,
+        }
+    }
+}
+
+impl OpenAiCompatible {
+    fn explain(&self, e: HttpError) -> anyhow::Error {
+        let said = e
+            .server_says()
+            .map(|m| format!(" ({m})"))
+            .unwrap_or_default();
+        let key_fix = format!(
+            "export OPENAI_API_KEY=… (or POLYGO_API_KEY), or `polygo use openai/{} --api-key …` to store one",
+            self.model
+        );
+        match &e {
+            HttpError::Unreachable(_) => fatal(
+                format!("nothing is answering at {}", self.base_url),
+                if self.base_url.contains("127.0.0.1") || self.base_url.contains("localhost") {
+                    "start the local server (llama.cpp, vLLM, LM Studio…) or fix base_url in polygo.toml · `polygo doctor` checks everything".to_string()
+                } else {
+                    "check the network and base_url in polygo.toml · `polygo doctor` checks everything".to_string()
+                },
+            ),
+            HttpError::Status {
+                code: 401 | 403, ..
+            } if self.api_key.is_none() => fatal(
+                format!("{} wants an API key and none is set", self.base_url),
+                key_fix,
+            ),
+            HttpError::Status {
+                code: 401 | 403, ..
+            } => fatal(
+                format!("{} rejected the API key{said}", self.base_url),
+                key_fix,
+            ),
+            HttpError::Status { code: 404, .. } => fatal(
+                format!("{} has no model `{}`{said}", self.base_url, self.model),
+                "check the model name (`polygo models` lists common ones) or base_url in polygo.toml",
+            ),
+            _ => anyhow::Error::new(e)
+                .context(format!("openai-compatible endpoint {}", self.base_url)),
         }
     }
 }
@@ -62,7 +103,7 @@ impl Provider for OpenAiCompatible {
             &headers,
             &body,
         )
-        .with_context(|| format!("openai-compatible endpoint {}", self.base_url))?;
+        .map_err(|e| self.explain(e))?;
         let text = resp["choices"][0]["message"]["content"]
             .as_str()
             .unwrap_or("")
