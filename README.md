@@ -12,7 +12,7 @@ For solo developers and small teams shipping an iOS, Android, Flutter, web or .N
 curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
 ```
 
-<sub>Or `brew install na5co/tap/polygo` · `cargo binstall polygo` · `cargo install polygo` · [Windows zip](https://github.com/Na5co/polygo/releases). Local models run through [Ollama](https://ollama.com) (`brew install ollama`); no Ollama? `polygo use openai/gpt-4o-mini --api-key ...` works the same way.</sub>
+<sub>Or `brew install na5co/tap/polygo` · `cargo binstall polygo` · `cargo install polygo` · [Windows zip](https://github.com/Na5co/polygo/releases). `polygo completions zsh` (or bash, fish) prints a completion script. Local models run through [Ollama](https://ollama.com) (`brew install ollama`); no Ollama? `polygo use openai/gpt-4o-mini --api-key ...` works the same way.</sub>
 
 ## Thirty seconds
 
@@ -74,7 +74,7 @@ error   Localizable.xcstrings  pm.card.expires.format  [pl]  placeholders: missi
 | Format | Used by | What `init` looks for |
 |---|---|---|
 | `.xcstrings` | iOS / macOS (Xcode 15+) | one catalog with every locale; plural variations and `%#@var@` substitutions translated per CLDR category |
-| `strings.xml` | Android | `res/values/` plus `res/values-<locale>/`; `<plurals>` translated per quantity |
+| `strings.xml` | Android | `res/values/` plus `res/values-<locale>/`; `<plurals>` translated per quantity, `<string-array>` per item |
 | `.json` (i18next) | React / web | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys; `_one`/`_other` groups get every suffix the locale needs |
 | `.arb` | Flutter | `l10n.yaml` pointing at `lib/l10n/app_<locale>.arb`; ICU plurals and `@metadata` |
 | `.po` | gettext (Django, Rails, Python, PHP) | `locale/<locale>/LC_MESSAGES/*.po` or flat `<locale>.po`; `msgid_plural` filled per `Plural-Forms` slot |

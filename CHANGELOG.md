@@ -6,6 +6,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 - `polygo status --keys` (`-k`) lists the keys behind each count, with the quarantine reason for `needs-review` ones; `--json` gains a `keys` map per locale. `status --locale de` narrows it.
 - `[keys] skip = ["debug.*", "internal_*"]` in `polygo.toml`: globs over the key that translate, status and check leave alone, for i18next JSON (no comment field for `polygo:skip`) and for whole families of keys in any format. `status` reports how many keys were skipped.
+- Android `<string-array>` items are translated, one unit per item (`sort_modes#array.0`), with the whole list in the prompt so the items stay parallel. A missing array in a locale file is created from the source and filled item by item; a short one is padded before the new item lands, so an array is never left shorter than the original. `translatable="false"` arrays are skipped as before.
+- `polygo completions <shell>` prints a completion script for bash, zsh, fish, elvish or PowerShell.
 - i18next JSON plurals are translated per CLDR category: `photos_one` / `photos_other` in `en.json` produces `photos_one`, `photos_few`, `photos_many`, `photos_other` for Polish and only `photos_other` for Japanese, written in CLDR order next to the group. Previously only the source's own suffixes were written and `polygo check` then failed on polygo's own output for Slavic, Arabic and other multi-form locales.
 - `check` no longer treats `step_one` + `step_two` (no `_other`) or a lone `items_other` as a plural group.
 - `polygo add`, `remove` and `use` edit `polygo.toml` in place: comments and formatting survive, `target_locales` stays on one line.
@@ -45,6 +47,6 @@ First release.
 
 ### Known limitations
 
-- `.xcstrings` device variations and Android `<string-array>` items are preserved but not translated.
+- `.xcstrings` device variations are preserved but not translated. (Android `<string-array>` items: see Unreleased above.)
 - ICU plural messages inside JSON/ARB strings are translated as a whole; `check` validates their structure but not whether the translation added the categories the locale needs.
 - An 8B local model gets some Slavic inflections wrong (live test: 8/8 Polish, 6/8 Russian plural forms); use a larger model for those.

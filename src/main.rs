@@ -175,6 +175,9 @@ enum Commands {
         #[arg(long)]
         force: bool,
     },
+    /// Print a shell completion script (bash, zsh, fish, elvish, powershell).
+    #[command(after_help = COMPLETIONS_EXAMPLES)]
+    Completions { shell: clap_complete::Shell },
 }
 
 #[derive(clap::Args)]
@@ -316,6 +319,13 @@ Examples:
   polygo doctor            config parses, files load, Ollama reachable, model pulled
   polygo doctor --json     the same as JSON (exit 1 when anything fails)";
 
+const COMPLETIONS_EXAMPLES: &str = "\
+Examples:
+  polygo completions zsh > ~/.zfunc/_polygo          # then `fpath+=~/.zfunc; autoload -Uz compinit; compinit` in .zshrc
+  polygo completions bash > ~/.local/share/bash-completion/completions/polygo
+  polygo completions fish > ~/.config/fish/completions/polygo.fish
+  echo 'polygo completions powershell | Out-String | Invoke-Expression' >> $PROFILE";
+
 const INIT_EXAMPLES: &str = "\
 Examples:
   polygo init              detect .xcstrings / Android / i18next / ARB / .po / .resx layouts
@@ -414,6 +424,11 @@ fn main() {
             }
         }
         Commands::Init { force } => init(&cli.root, force),
+        Commands::Completions { shell } => {
+            use clap::CommandFactory;
+            clap_complete::generate(shell, &mut Cli::command(), "polygo", &mut std::io::stdout());
+            Ok(())
+        }
     };
     if let Err(e) = result {
         eprintln!("polygo: {e:#}");

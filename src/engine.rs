@@ -382,6 +382,7 @@ enum Loaded {
         dirty: bool,
     },
     Android {
+        source: formats::android::Document,
         template: String,
         locales: BTreeMap<String, (PathBuf, formats::android::Document, bool)>,
     },
@@ -457,6 +458,7 @@ impl Workspace {
                 dirty: false,
             },
             Format::Android => Loaded::Android {
+                source: formats::android::parse(&text)?,
                 template: spec.locale_path.clone().context(
                     "android files need locale_path (e.g. res/values-{android_locale}/strings.xml)",
                 )?,
@@ -516,6 +518,7 @@ impl Workspace {
     fn set(&mut self, cfg: &Config, key: &str, locale: &str, text: &str) -> Result<()> {
         let (idx, local_key) = project::split_key(cfg, key);
         let plural = crate::core::split_plural(local_key);
+        let array = crate::core::split_array(local_key);
         let root = self.root.clone();
         match &mut self.files[idx] {
             Loaded::Xcstrings { doc, dirty, .. } => {
@@ -535,7 +538,11 @@ impl Workspace {
                 }
                 *dirty = true;
             }
-            Loaded::Android { template, locales } => {
+            Loaded::Android {
+                source,
+                template,
+                locales,
+            } => {
                 let entry = match locales.get_mut(locale) {
                     Some(e) => e,
                     None => {
@@ -550,9 +557,13 @@ impl Workspace {
                             .or_insert((path, doc, false))
                     }
                 };
-                match plural {
-                    Some((base, cat)) => entry.1.set_plural_item(base, cat, text),
-                    None => match entry.1.index_of(local_key) {
+                match (plural, array) {
+                    (Some((base, cat)), _) => entry.1.set_plural_item(base, cat, text),
+                    (None, Some((base, idx))) => {
+                        let items = formats::android::array_items(source, base);
+                        entry.1.set_array_item(base, idx, text, &items);
+                    }
+                    (None, None) => match entry.1.index_of(local_key) {
                         Some(i) => entry.1.set_text(i, 0, text),
                         None => entry.1.insert_string(local_key, text),
                     },

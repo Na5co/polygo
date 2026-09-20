@@ -93,6 +93,7 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                     .collect())
             })?;
             units.extend(android_plural_units(root, cfg, spec, &doc)?);
+            units.extend(android_array_units(root, cfg, spec, &doc)?);
             Ok(units)
         }
         Format::Arb => {
@@ -339,6 +340,34 @@ fn json_plural_units(
             })
             .collect();
         out.extend(crate::core::plural_units(base, None, &forms, &targets));
+    }
+    Ok(out)
+}
+
+fn android_array_units(
+    root: &Path,
+    cfg: &Config,
+    spec: &FileSpec,
+    source: &formats::android::Document,
+) -> Result<Vec<Unit>> {
+    let docs = locale_docs(root, cfg, spec, formats::android::parse)?;
+    let mut out = Vec::new();
+    for e in source
+        .entries
+        .iter()
+        .filter(|e| e.translatable && e.kind == formats::android::Kind::StringArray)
+    {
+        let items: Vec<String> = e.values.iter().map(|v| v.text()).collect();
+        let targets: BTreeMap<String, Vec<String>> = docs
+            .iter()
+            .map(|(l, d)| (l.clone(), formats::android::array_items(d, &e.name)))
+            .collect();
+        out.extend(crate::core::array_units(
+            &e.name,
+            e.comment.as_deref(),
+            &items,
+            &targets,
+        ));
     }
     Ok(out)
 }
