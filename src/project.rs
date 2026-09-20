@@ -10,7 +10,19 @@ use std::path::Path;
 /// Units from all files, keyed as `<file index>:<key>` internally is unnecessary:
 /// keys are namespaced by the file path so two files can share a key name.
 pub fn load_units(root: &Path, cfg: &Config) -> Result<Vec<Unit>> {
+    Ok(load_units_split(root, cfg)?.0)
+}
+
+/// The keys `[keys] skip` removed, for `status` to report.
+pub fn skipped_keys(root: &Path, cfg: &Config) -> Result<Vec<String>> {
+    Ok(load_units_split(root, cfg)?.1)
+}
+
+/// `(units kept, keys removed by [keys] skip)`.
+fn load_units_split(root: &Path, cfg: &Config) -> Result<(Vec<Unit>, Vec<String>)> {
+    let skip = cfg.key_skip()?;
     let mut all = Vec::new();
+    let mut skipped = Vec::new();
     for (i, spec) in cfg.files.iter().enumerate() {
         let prefix = if cfg.files.len() > 1 {
             format!("{}:", spec.path.display())
@@ -21,12 +33,25 @@ pub fn load_units(root: &Path, cfg: &Config) -> Result<Vec<Unit>> {
             .with_context(|| format!("files[{i}] {}", spec.path.display()))?;
         // `polygo:skip` in the developer comment removes the key entirely.
         units.retain(|u| !crate::core::directives(u.comment.as_deref()).skip);
+        // So does a matching `[keys] skip` glob (plural forms go with their base key).
+        if !skip.is_empty() {
+            units.retain(|u| {
+                let keep = !skip.matches(&spec.path, &u.key);
+                if !keep {
+                    let base = crate::core::base_key(&u.key).to_string();
+                    if !skipped.contains(&base) {
+                        skipped.push(base);
+                    }
+                }
+                keep
+            });
+        }
         for u in &mut units {
             u.key = format!("{prefix}{}", u.key);
         }
         all.extend(units);
     }
-    Ok(all)
+    Ok((all, skipped))
 }
 
 fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Unit>> {

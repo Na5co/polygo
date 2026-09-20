@@ -65,6 +65,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         .clone()
         .unwrap_or_else(|| cfg.target_locales.clone());
     let units = project::load_units(root, cfg)?;
+    let skip = cfg.key_skip()?;
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
     // Per-unit text + placeholder checks on every existing translation.
@@ -148,7 +149,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
             Format::Xcstrings => {
                 let doc = formats::xcstrings::parse(&std::fs::read_to_string(&path)?)?;
                 for (key, locale, cats) in plurals::xcstrings_plurals(&doc) {
-                    if !locales.contains(&locale) {
+                    if !locales.contains(&locale) || skip.matches(&spec.path, &key) {
                         continue;
                     }
                     let missing = plurals::missing(&locale, &cats);
@@ -176,6 +177,9 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     let doc = formats::android::parse(&std::fs::read_to_string(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
                     for (name, cats) in plurals::android_plurals(&doc) {
+                        if skip.matches(&spec.path, &name) {
+                            continue;
+                        }
                         let missing = plurals::missing(locale, &cats);
                         if !missing.is_empty() {
                             report.push(Finding {
@@ -209,6 +213,9 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         &doc.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                     );
                     for base in source_groups.keys() {
+                        if skip.matches(&spec.path, base) {
+                            continue;
+                        }
                         let cats = groups.get(base).cloned().unwrap_or_default();
                         let missing = plurals::missing(locale, &cats);
                         if !missing.is_empty() {

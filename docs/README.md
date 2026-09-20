@@ -1,5 +1,6 @@
 # polygo docs
 
+- [Extracting strings from web apps](extract.md), [FAQ and comparison](faq.md), [Which model](models.md)
 - [Per-format notes](#formats): what `init` detects, how plurals and placeholders are handled, what is preserved byte-for-byte.
 - [`polygo.toml` reference](#polygotoml)
 - [Lockfile](#polygolock): how polygo knows what changed.
@@ -39,6 +40,9 @@ format = "android"       # xcstrings | android | json | arb | po | resx
 path = "app/src/main/res/values/strings.xml"
 locale_path = "app/src/main/res/values-{android_locale}/strings.xml"
 
+[keys]
+skip = ["debug.*", "internal_*"]   # never translated, counted or checked (globs over the key)
+
 [provider]
 kind = "ollama"          # ollama | openai | anthropic | mock
 model = "qwen3:8b"
@@ -49,6 +53,8 @@ timeout_secs = 300
 `locale_path` templates accept `{locale}` (as written in `target_locales`, e.g. `pt-BR`) and `{android_locale}` (Android resource qualifier, `pt-rBR`). `xcstrings` has no `locale_path`: one catalog holds every locale.
 
 When several `[[files]]` are configured, lockfile keys are prefixed with the file path (`app/src/main/res/values/strings.xml:welcome`).
+
+`[keys] skip` takes globs over the key (`*` also crosses dots, so `debug.*` covers `debug.net.trace`); with several `[[files]]`, `locales/en/admin.json:*` targets one file. A skipped plural group takes all its forms with it. `polygo status` says how many keys the patterns removed. For formats with a comment field there is also the per-key directive below.
 
 Developer comments can carry per-key directives: `polygo:skip` (never translate, not counted), `polygo:max=20` (translations longer than 20 characters are a `check` error and are bounced back to the model), `polygo:context=...` (plain text for the model: the whole comment is sent anyway). They work in every format that has a comment field (`.xcstrings` comment, `<!-- -->` before an Android element, `@key.description` in ARB, `#.` in .po, `<comment>` in .resx).
 
@@ -67,7 +73,7 @@ A translation that violates the glossary is sent back once for repair, then quar
 
 A sorted TOML file, meant to be committed. For every key × locale it stores the blake3 hash of the source text the translation was made from, the provider and model, a timestamp, and: for quarantined strings: the reason.
 
-States shown by `polygo status`:
+States shown by `polygo status` (`--keys` lists the keys in each state, with the reason for `needs-review`):
 
 | state | meaning |
 |---|---|
@@ -131,3 +137,45 @@ so point it only at a collector you trust with your strings.
 ## How it was built
 
 [`docs/dev/GAUNTLET.md`](dev/GAUNTLET.md) is the build log: every feature as a gate with an acceptance command, the A/B and kill-test results, and what broke along the way. `bench/` holds the A/B and kill-test data.
+
+## Commands
+
+| | |
+|---|---|
+| `polygo init` | detect project type and locales, write `polygo.toml` |
+| `polygo add <locale>...` / `polygo remove` | edit `target_locales` |
+| `polygo extract [--dry-run] [--rewrite] [--ignore WORD] [--ignore-path GLOB] [--json]` | pull UI text out of web markup into an i18next catalog; `--rewrite` swaps in `t("key")` calls |
+| `polygo models` | local models with sizes and notes, marks pulled (`+`) and active (`*`), API options |
+| `polygo use <model> [--base-url] [--api-key] [--global] [--no-pull]` | pull an Ollama model or set an API provider, writes `[provider]` |
+| `polygo doctor [--json]` | config parses, files load, provider reachable, model pulled; each failure names its fix |
+| `polygo translate [--locale de,fr] [--dry-run] [-v] [--retry-review] [--no-context]` | translate new and changed strings; exit 3 if some were quarantined |
+| `polygo check [--json] [--strict] [--fix]` | placeholders, plurals, lengths, untranslated fragments; `--fix` re-translates the failures |
+| `polygo audit [--locale] [--judge gemma4] [--threshold 3] [--fix] [--json]` | a second model grades translations 1 to 5 with reasons; exit 1 when anything is flagged |
+| `polygo pseudo [--locale en-XA]` | write a pseudo-locale to catch hardcoded strings and truncation |
+| `polygo memory [--forget]` | cross-project translation memory |
+| `polygo status [--keys] [--locale L] [--json] [--markdown]` | counts per locale; `--keys` lists the keys behind them; `--markdown` is a coverage table for a README or PR |
+| `polygo review [--port 4133] [--open]` | local page to approve or reject quarantined translations |
+
+## Privacy
+
+- **No telemetry, no analytics, no update checks.** The only network request polygo makes is the translation call to the provider in your `polygo.toml`. With the default Ollama provider that is `127.0.0.1:11434`. The one opt-in exception: set `PHOENIX_COLLECTOR_ENDPOINT` and prompts and replies are also exported as traces to that address, for your own [Phoenix](docs/README.md#tracing-with-phoenix) instance.
+- `check`, `status`, `review` and `init` never touch the network. `translate --dry-run` lists what would be sent and sends nothing. The test suite makes no network calls.
+- `polygo review` binds to `127.0.0.1` only and rejects requests whose `Host` header is not localhost.
+- Nothing is written outside your repo (`polygo.toml`, `polygo.lock`, your string files) except `~/.config/polygo/` when you ask for it with `--global` or `--api-key`.
+- One static binary, about 4 MB, no runtime dependencies. Built on GitHub Actions; every release ships a `SHA256SUMS`.
+- API keys come from `POLYGO_API_KEY`, `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`, or `~/.config/polygo/credentials.toml` (mode 0600; the environment wins). They are only sent to the `base_url` you configured.
+
+<details>
+<summary>Verify it yourself on macOS</summary>
+
+Block every connection except the local Ollama port and translate anyway:
+
+```sh
+cat > offline.sb <<'SB'
+(version 1) (allow default) (deny network*) (allow network* (remote ip "localhost:11434"))
+SB
+sandbox-exec -f offline.sb polygo translate
+# translated 2 string(s) in 1 batch(es) with ollama (qwen3:8b)
+```
+
+</details>
