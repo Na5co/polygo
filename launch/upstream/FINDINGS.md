@@ -17,8 +17,21 @@ and NewPipe ones below were verified by hand against the source string.
 | element-hq/element-android | 133 | 175 | 28 | not yet reported |
 | f-droid/fdroidclient | 2 | 1 | 2 | not yet reported |
 | AntennaPod/AntennaPod | 0 | 69 | 0 | plurals only |
+| calcom/cal.com | 219 | 0 | 22 | PR calcom/cal.diy#30213 (10 renames) |
+| umami-software/umami | 40 | 0 | 20 | PR umami-software/umami#4556 (5 fixes) |
+| AppFlowy-IO/AppFlowy | 70 | 0 | 18 | PR AppFlowy-IO/AppFlowy#9035 (14 renames) |
+| open-webui/open-webui | 82 | 0 | 30 | PR open-webui/open-webui#30324 (25 fixes) |
+| Lissy93/dashy | 26 | 0 | 12 | PR lissy93/dashy#2353 (1 fix) |
+| formbricks/formbricks | 119 | 4 | 14 | branch pushed; repo blocks fork PRs via API |
+| louislam/uptime-kuma | 181 | 0 | 40 | Weblate; not reported |
+| TryGhost/Ghost | 16 | 0 | 5 | not reported |
+| ToolJet/ToolJet | 57 | 0 | 12 | not reported |
+| ether/etherpad-lite | 5 | 0 | 5 | translatewiki; not reported |
+| homarr-labs/homarr | 36 | 0 | 8 | Crowdin; not reported |
+| Infisical/infisical | 4 | 0 | 2 | not reported |
+| LiveContainer/LiveContainer | 2 | 0 | 1 | Crowdin; not reported |
 
-Totals: 208 broken placeholders and 575 incomplete plural sets across 9 apps.
+Totals across 23 apps: about 1,000 broken placeholders and 580 incomplete plural sets. Two polygo false positives were found and fixed on the way (Arabic dual forms may omit the count; an empty source value with a natural-language key).
 
 Most Android projects take translations from Weblate, Crowdin or Transifex, not
 from PRs to `strings.xml`. For those, file an issue (or fix on the platform);
