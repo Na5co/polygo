@@ -19,15 +19,19 @@ pub enum Encoding {
 pub fn decode_file(bytes: &[u8]) -> Result<(String, Encoding)> {
     if bytes.starts_with(&[0xFF, 0xFE]) {
         let units: Vec<u16> = bytes[2..]
-            .chunks_exact(2)
-            .map(|c| u16::from_le_bytes([c[0], c[1]]))
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|c| u16::from_le_bytes(*c))
             .collect();
         return Ok((String::from_utf16(&units)?, Encoding::Utf16Le));
     }
     if bytes.starts_with(&[0xFE, 0xFF]) {
         let units: Vec<u16> = bytes[2..]
-            .chunks_exact(2)
-            .map(|c| u16::from_be_bytes([c[0], c[1]]))
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|c| u16::from_be_bytes(*c))
             .collect();
         return Ok((String::from_utf16(&units)?, Encoding::Utf16Be));
     }
