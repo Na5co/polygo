@@ -73,6 +73,16 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         .unwrap_or_else(|| cfg.target_locales.clone());
     let units = project::load_units(root, cfg)?;
     let skip = cfg.key_skip()?;
+    // `polygo:skip` in a developer comment, for the format-level checks below that read
+    // files directly (units already exclude these keys).
+    let directive_skip: std::collections::BTreeSet<(usize, String)> =
+        project::directive_skipped_keys(root, cfg)?
+            .into_iter()
+            .collect();
+    let skipped = |idx: usize, spec: &crate::config::FileSpec, key: &str| {
+        skip.matches(&spec.path, key)
+            || directive_skip.contains(&(idx, key.split('#').next().unwrap_or(key).to_string()))
+    };
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
     let mut locator = crate::check::locate::Locator::new(root);
@@ -156,7 +166,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     }
 
     // Format-level plural structures.
-    for spec in &cfg.files {
+    for (idx, spec) in cfg.files.iter().enumerate() {
         let path = root.join(&spec.path);
         match spec.format {
             Format::Xcstrings => {
@@ -164,7 +174,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 // Xcode's own bookkeeping: a unit marked needs_review / stale, or a key
                 // whose extractionState is stale (no longer found in the code).
                 for (key, locale, state) in xcstrings_states(&doc, &cfg.source_locale) {
-                    if skip.matches(&spec.path, &key)
+                    if skipped(idx, spec, &key)
                         || (!locale.is_empty() && !locales.contains(&locale))
                     {
                         continue;
@@ -190,7 +200,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     });
                 }
                 for (key, locale, cats) in plurals::xcstrings_plurals(&doc) {
-                    if !locales.contains(&locale) || skip.matches(&spec.path, &key) {
+                    if !locales.contains(&locale) || skipped(idx, spec, &key) {
                         continue;
                     }
                     let missing = plurals::missing(&locale, &cats);
@@ -216,7 +226,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     |doc: &formats::android::Document| -> Vec<(String, &'static str, String)> {
                         let mut out = Vec::new();
                         for e in &doc.entries {
-                            if !e.translatable || skip.matches(&spec.path, &e.name) {
+                            if !e.translatable || skipped(idx, spec, &e.name) {
                                 continue;
                             }
                             for v in &e.values {
@@ -264,7 +274,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         });
                     }
                     for (name, cats) in plurals::android_plurals(&doc) {
-                        if skip.matches(&spec.path, &name) {
+                        if skipped(idx, spec, &name) {
                             continue;
                         }
                         let missing = plurals::missing(locale, &cats);
@@ -302,7 +312,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         &doc.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                     );
                     for base in source_groups.keys() {
-                        if skip.matches(&spec.path, base) {
+                        if skipped(idx, spec, base) {
                             continue;
                         }
                         let cats = groups.get(base).cloned().unwrap_or_default();
@@ -344,7 +354,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 }
                 let ltext = crate::formats::read_text(&lp)?;
                 for key in keys_of(spec.format, &ltext)? {
-                    if source_keys.contains(&key) || skip.matches(&spec.path, &key) {
+                    if source_keys.contains(&key) || skipped(idx, spec, &key) {
                         continue;
                     }
                     // `photos_few` next to a source `photos_one`/`photos_other` is a
@@ -375,7 +385,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         .filter(|e| e.fuzzy && !e.msgid.is_empty())
                     {
                         let key = e.key();
-                        if skip.matches(&spec.path, &key) {
+                        if skipped(idx, spec, &key) {
                             continue;
                         }
                         let (file, line) = locator.locate(spec, &key, locale);

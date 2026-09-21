@@ -18,6 +18,20 @@ pub fn skipped_keys(root: &Path, cfg: &Config) -> Result<Vec<String>> {
     Ok(load_units_split(root, cfg)?.1)
 }
 
+/// Keys (within their file, unprefixed) whose developer comment says `polygo:skip`, so
+/// checks that read files directly rather than units can leave them alone too.
+pub fn directive_skipped_keys(root: &Path, cfg: &Config) -> Result<Vec<(usize, String)>> {
+    let mut out = Vec::new();
+    for (i, spec) in cfg.files.iter().enumerate() {
+        for u in load_file_units(root, cfg, spec)? {
+            if crate::core::directives(u.comment.as_deref()).skip {
+                out.push((i, crate::core::base_key(&u.key).to_string()));
+            }
+        }
+    }
+    Ok(out)
+}
+
 /// `(units kept, keys removed by [keys] skip)`.
 fn load_units_split(root: &Path, cfg: &Config) -> Result<(Vec<Unit>, Vec<String>)> {
     let skip = cfg.key_skip()?;

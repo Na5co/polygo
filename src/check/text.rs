@@ -480,12 +480,10 @@ pub fn punctuation_dropped(source: &str, translation: &str) -> Option<String> {
         ':', '.', '!', '?', '…', ';', ',', '。', '！', '？', '：', '、', '،', '؟', '।', '॥',
         '\u{FF0C}', '"', '\'', '”', '’', '»', ')', ']', '}', '>', '*', '_', '~',
     ];
+    // A source ending in a placeholder (`Total: %d`) or a word never gets here: only the
+    // marks below count.
     let last_src = source.chars().rev().find(|c| !c.is_whitespace())?;
     if !SOURCE_MARKS.contains(&last_src) {
-        return None;
-    }
-    // A placeholder at the end (`Total: %d`) is a value, not a sentence.
-    if source.trim_end().ends_with(['}', ')', '@', 'd', 's', 'f']) {
         return None;
     }
     // Short labels like "OK." are not sentences worth policing.
