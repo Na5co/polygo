@@ -47,27 +47,7 @@ enum Commands {
     },
     /// Validate placeholders, plurals and lengths; non-zero exit on problems.
     #[command(after_help = CHECK_EXAMPLES)]
-    Check {
-        /// A string file or a project directory to check without polygo.toml
-        /// (format and locales are detected).
-        path: Option<PathBuf>,
-        /// Only these locales (comma-separated).
-        #[arg(long, value_delimiter = ',')]
-        locale: Option<Vec<String>>,
-        /// Machine-readable output.
-        #[arg(long)]
-        json: bool,
-        /// GitHub Actions output: one `::error file=…::` annotation per finding, and a
-        /// table in the job summary when GITHUB_STEP_SUMMARY is set.
-        #[arg(long, conflicts_with = "json")]
-        github: bool,
-        /// Treat warnings as errors.
-        #[arg(long)]
-        strict: bool,
-        /// Re-translate keys with errors, then check again.
-        #[arg(long)]
-        fix: bool,
-    },
+    Check(CheckArgs),
     /// Show new / changed / stale / untranslated counts per locale.
     #[command(after_help = STATUS_EXAMPLES)]
     Status {
@@ -215,6 +195,32 @@ struct TranslateArgs {
     yes: bool,
 }
 
+#[derive(clap::Args)]
+struct CheckArgs {
+    /// A string file or a project directory to check without polygo.toml
+    /// (format and locales are detected).
+    path: Option<PathBuf>,
+    /// Only these locales (comma-separated).
+    #[arg(long, value_delimiter = ',')]
+    locale: Option<Vec<String>>,
+    /// Machine-readable output.
+    #[arg(long)]
+    json: bool,
+    /// GitHub Actions output: one `::error file=…::` annotation per finding, and a
+    /// table in the job summary when GITHUB_STEP_SUMMARY is set.
+    #[arg(long, conflicts_with = "json")]
+    github: bool,
+    /// Treat warnings as errors.
+    #[arg(long)]
+    strict: bool,
+    /// Print every finding; by default a code with more than 20 shows 20 and a count.
+    #[arg(long)]
+    all: bool,
+    /// Re-translate keys with errors, then check again.
+    #[arg(long)]
+    fix: bool,
+}
+
 const EXAMPLES: &str = "\
 Examples:
   polygo init                     detect the project and write polygo.toml
@@ -259,6 +265,7 @@ Examples:
   polygo check Localizable.xcstrings   one file, no polygo.toml needed
   polygo check app/src/main/res     a directory: format and locales are detected
   polygo check --strict             warnings (length, identical) also fail → exit 1
+  polygo check --all                every finding, not the first 20 per code
   polygo check --json | jq .findings
   polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --fix                re-translate the failing keys, then check again
@@ -374,14 +381,7 @@ fn main() {
                 fix,
             },
         ),
-        Commands::Check {
-            path,
-            locale,
-            json,
-            github,
-            strict,
-            fix,
-        } => check(&cli.root, path, locale, json, github, strict, fix),
+        Commands::Check(args) => check(&cli.root, args),
         Commands::Status {
             locale,
             keys,
@@ -645,15 +645,16 @@ fn audit(root: &Path, args: AuditArgs) -> Result<()> {
     Ok(())
 }
 
-fn check(
-    root: &Path,
-    path: Option<PathBuf>,
-    locale: Option<Vec<String>>,
-    json: bool,
-    github: bool,
-    strict: bool,
-    fix: bool,
-) -> Result<()> {
+fn check(root: &Path, args: CheckArgs) -> Result<()> {
+    let CheckArgs {
+        path,
+        locale,
+        json,
+        github,
+        strict,
+        all,
+        fix,
+    } = args;
     // With polygo.toml: the configured project. Without: whatever `path` (or the project
     // root) turns out to be, so `polygo check Localizable.xcstrings` just works. A path is
     // relative to the root (`-C`), like every other path polygo takes.
@@ -754,7 +755,16 @@ fn check(
             locale.map_or(cfg.target_locales.len(), |l| l.len())
         );
     } else {
+        // One code can dominate (a catalog with 3,000 strings Xcode marks needs_review):
+        // show the first 20 of each code and say how many more, unless --all.
+        const SHOWN: usize = 20;
+        let mut seen: std::collections::BTreeMap<&str, usize> = Default::default();
         for f in &report.findings {
+            let n = seen.entry(f.code).or_default();
+            *n += 1;
+            if !all && *n > SHOWN {
+                continue;
+            }
             let key: String = f
                 .key
                 .chars()
@@ -768,6 +778,17 @@ fn check(
             println!(
                 "{:<7} {at}  {}  [{}]  {}: {}",
                 f.severity, key, f.locale, f.code, f.message
+            );
+        }
+        let hidden: Vec<String> = seen
+            .iter()
+            .filter(|(_, n)| !all && **n > SHOWN)
+            .map(|(code, n)| format!("{} more {code}", n - SHOWN))
+            .collect();
+        if !hidden.is_empty() {
+            println!(
+                "… {} (first {SHOWN} of each shown; --all lists every one, --json has them all)",
+                hidden.join(", ")
             );
         }
         println!("{} error(s), {} warning(s)", report.errors, report.warnings);
