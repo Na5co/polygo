@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.3 — 2026-09-21
 
 - `check` findings carry the file a fix goes in and the line of the key: `locales/de.json:12` in the text output, `line=` in `--github` annotations (they now land on the exact line of the PR), `"line"` in `--json`. For `.xcstrings` the line is the locale's entry inside the key. Per-locale formats now name the locale file, not the source file.
 - New checks: `markup` (error: a `<b>`, `</a>` or `<br>` the source has and the translation lacks, or the reverse), `whitespace` (warning: leading/trailing space or newline dropped or added), `punctuation` (warning: the source ends with `:` `.` `!` `?` `…` and the translation ends with a letter; any script's marks pass), and for Android `escape` (error: unescaped `'`, or a leading `@`/`?` that is not a resource reference, both of which fail `aapt`; warning: a stray unbalanced `"`, which Android silently drops from the text). On the DuckDuckGo macOS catalog these add 26 real warnings; on 3,756 strings from five Android apps, 0 false positives and 3 shipped stray quotes.
