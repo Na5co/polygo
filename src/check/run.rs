@@ -107,7 +107,9 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     ),
                 ));
             }
-            if let Some(m) = placeholders::compare(&u.source, t) {
+            if !crate::core::plural_form_may_omit_count(&u.key)
+                && let Some(m) = placeholders::compare(&u.source, t)
+            {
                 found.push(("placeholders", "error", m.to_string()));
             }
             // A translation polygo wrote and confirmed (recorded in the lockfile) is not
