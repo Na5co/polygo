@@ -5,7 +5,9 @@ use std::process::Command;
 
 fn polygo(root: &std::path::Path) -> Command {
     let mut c = Command::new(env!("CARGO_BIN_EXE_polygo"));
-    c.current_dir(root).env("POLYGO_NO_BACKOFF", "1");
+    c.current_dir(root)
+        .env("POLYGO_NO_BACKOFF", "1")
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"));
     c
 }
 
