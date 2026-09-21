@@ -281,3 +281,33 @@ fn init_ignores_monorepo_packages_and_non_locale_json() {
     assert!(!polygo::init::is_locale("cli") && !polygo::init::is_locale("mcp"));
     assert!(polygo::init::is_locale("fil") && polygo::init::is_locale("pt-BR"));
 }
+
+#[test]
+fn init_inside_the_layout_dir_keeps_paths_relative() {
+    // `cd res && polygo init` used to write locale_path = "/values-{android_locale}/…".
+    let dir = tempfile::tempdir().unwrap();
+    let res = dir.path();
+    std::fs::create_dir_all(res.join("values")).unwrap();
+    std::fs::create_dir_all(res.join("values-de")).unwrap();
+    std::fs::write(
+        res.join("values/strings.xml"),
+        "<resources><string name=\"a\">A</string></resources>",
+    )
+    .unwrap();
+    std::fs::write(
+        res.join("values-de/strings.xml"),
+        "<resources><string name=\"a\">A</string></resources>",
+    )
+    .unwrap();
+    let cfg = polygo::init::detect(res).unwrap();
+    assert_eq!(cfg.files[0].path.to_str().unwrap(), "values/strings.xml");
+    assert_eq!(
+        cfg.files[0].locale_path.as_deref(),
+        Some("values-{android_locale}/strings.xml")
+    );
+    let loc = tempfile::tempdir().unwrap();
+    std::fs::write(loc.path().join("en.json"), "{\"a\":\"A\"}").unwrap();
+    std::fs::write(loc.path().join("fr.json"), "{\"a\":\"A\"}").unwrap();
+    let cfg = polygo::init::detect(loc.path()).unwrap();
+    assert_eq!(cfg.files[0].locale_path.as_deref(), Some("{locale}.json"));
+}
