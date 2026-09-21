@@ -40,7 +40,10 @@ fn check_length_identity() {
             "de",
             2.5
         ),
-        [("length".to_string(), Severity::Warning)]
+        [
+            ("punctuation".to_string(), Severity::Warning),
+            ("length".to_string(), Severity::Warning)
+        ]
     );
 
     // Empty translation is an error.
@@ -172,4 +175,66 @@ fn fragment_ignores_entities_handles_paths_and_hyphenated_code() {
         ),
         Some(vec!["check".to_string()])
     );
+}
+
+#[test]
+fn markup_whitespace_and_punctuation() {
+    use polygo::check::text::{edge_whitespace_mismatch, markup_mismatch, punctuation_dropped};
+    // Markup: a dropped closing tag, an added tag, attributes ignored, `a < b` not a tag.
+    assert_eq!(
+        markup_mismatch("Press <b>Save</b>", "Drücke <b>Speichern"),
+        Some("missing </b>".into())
+    );
+    assert_eq!(
+        markup_mismatch(
+            "See <a href=\"x\">docs</a>",
+            "Siehe <a href=\"y\" target=\"_blank\">Doku</a>"
+        ),
+        None
+    );
+    assert_eq!(
+        markup_mismatch("Plain", "<i>Kursiv</i>"),
+        Some("unexpected </i>, <i>".into())
+    );
+    assert_eq!(markup_mismatch("a < b and c > d", "a < b und c > d"), None);
+    assert_eq!(markup_mismatch("Line<br/>break", "Zeilen<br>umbruch"), None);
+    assert_eq!(
+        kinds("Press <b>Save</b>", "Drücke <b>Speichern", "de", 2.5),
+        [("markup".to_string(), Severity::Error)]
+    );
+
+    // Edges: a trailing space or newline that vanished, or appeared.
+    assert_eq!(
+        edge_whitespace_mismatch("Name: ", "Name:"),
+        Some("trailing \"\" vs \"␠\" in the source".into())
+    );
+    assert_eq!(
+        edge_whitespace_mismatch("Done\n", "Fertig"),
+        Some("trailing \"\" vs \"\\n\" in the source".into())
+    );
+    assert_eq!(
+        edge_whitespace_mismatch("Done", " Fertig"),
+        Some("leading \"␠\" vs \"\" in the source".into())
+    );
+    assert_eq!(edge_whitespace_mismatch(" Both ", " Beide "), None);
+    assert_eq!(edge_whitespace_mismatch("Done", "Fertig"), None);
+
+    // Punctuation: dropped ellipsis/colon/full stop; other scripts' marks and quotes pass;
+    // short labels and placeholder endings are ignored.
+    assert!(punctuation_dropped("Settings…", "Ajustes").is_some());
+    assert!(punctuation_dropped("Enter your password:", "Passwort eingeben").is_some());
+    assert!(
+        punctuation_dropped(
+            "This cannot be undone.",
+            "Das kann nicht rückgängig gemacht werden"
+        )
+        .is_some()
+    );
+    assert!(punctuation_dropped("This cannot be undone.", "これは元に戻せません。").is_none());
+    assert!(punctuation_dropped("Are you sure?", "هل أنت متأكد؟").is_none());
+    assert!(punctuation_dropped("Delete it?", "Löschen?").is_none());
+    assert!(punctuation_dropped("OK.", "OK").is_none());
+    assert!(punctuation_dropped("Total: %d", "Gesamt: %d").is_none());
+    assert!(punctuation_dropped("Save changes", "Änderungen speichern").is_none());
+    assert!(punctuation_dropped("He said \"go.\"", "Er sagte „geh.“").is_none());
 }

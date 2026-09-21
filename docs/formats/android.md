@@ -28,3 +28,7 @@ Java `String.format` families: `%s`, `%d`, `%1$s`, `%2$d`, `%.1f`, `%%`, plus `{
 ## What is preserved
 
 The parser records the byte span of every translatable value and serialization replays the original file, splicing in only the edited values. Comments, attribute order, blank lines, CDATA, entity encoding and indentation survive untouched. Verified on the AntennaPod, NewPipe, DuckDuckGo, F-Droid and Thunderbird catalogs.
+
+## Escapes
+
+`polygo check` reports what `aapt` rejects at build time and what it silently mangles: an unescaped apostrophe (`Don't` must be `Don\'t`, or the whole value wrapped in `"…"`) and a leading `@` or `?` that is not a `@string/name`-style reference are errors; a stray unbalanced `"` is a warning, because Android drops it from the displayed text without complaint (DuckDuckGo and NewPipe both ship one). Quotes inside tag attributes and CDATA are left alone. The source file is checked too.

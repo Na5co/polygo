@@ -264,7 +264,7 @@ Examples:
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
-Codes: placeholders · plural · empty · identical · length · fragment";
+Codes: placeholders · plural · markup · escape (Android) · empty · identical · length · fragment · whitespace · punctuation";
 
 const STATUS_EXAMPLES: &str = "\
 Examples:
@@ -760,9 +760,13 @@ fn check(
                 .take(60)
                 .collect::<String>()
                 .replace('\n', "⏎");
+            let at = match f.line {
+                Some(l) => format!("{}:{l}", f.file),
+                None => f.file.clone(),
+            };
             println!(
-                "{:<7} {}  {}  [{}]  {}: {}",
-                f.severity, f.file, key, f.locale, f.code, f.message
+                "{:<7} {at}  {}  [{}]  {}: {}",
+                f.severity, key, f.locale, f.code, f.message
             );
         }
         println!("{} error(s), {} warning(s)", report.errors, report.warnings);
