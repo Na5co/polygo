@@ -44,6 +44,8 @@ fn release_assets_match_every_consumer() {
     ] {
         assert!(formula.contains(a), "formula.sh lacks {a}");
     }
+    // The moving major tag (v0) must not trigger a release build of its own.
+    assert!(release.contains("tags: [\"v[0-9]+.[0-9]+.[0-9]+*\"]"), "{release}");
     // Size budget wherever a release binary is produced.
     assert!(release.contains("15728640"));
     assert!(read(".github/workflows/ci.yml").contains("15728640"));

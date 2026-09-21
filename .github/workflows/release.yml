@@ -5,7 +5,8 @@
 name: release
 on:
   push:
-    tags: ["v*"]
+    # v0.1.3, v0.2.0-rc.1: not the moving major tag v0 that the Action is pinned to.
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
 permissions:
   contents: write
 jobs:
