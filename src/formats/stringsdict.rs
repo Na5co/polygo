@@ -33,16 +33,22 @@ pub struct Document {
 /// A plist node, just enough of it.
 #[derive(Debug, Clone)]
 enum Node {
-    Dict(Vec<(String, Node, usize)>),
+    Dict(Vec<Pair>),
     Text(String),
     Other,
 }
+
+/// `(key, value, line of the key)`.
+type Pair = (String, Node, usize);
+
+/// A dict being read: pairs so far, the key waiting for its value, that key's line.
+type Open = (Vec<Pair>, Option<String>, usize);
 
 fn parse_plist(text: &str) -> Result<Node> {
     let mut reader = Reader::from_str(text);
     reader.config_mut().trim_text(true);
     // Stack of open dicts: (pairs so far, pending key, line of pending key).
-    let mut stack: Vec<(Vec<(String, Node, usize)>, Option<String>, usize)> = Vec::new();
+    let mut stack: Vec<Open> = Vec::new();
     let mut root: Option<Node> = None;
     let mut in_key = false;
     let mut in_string = false;
