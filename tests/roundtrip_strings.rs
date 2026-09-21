@@ -131,3 +131,160 @@ fn strings_files_end_to_end() {
         "{s}"
     );
 }
+
+#[test]
+fn stringsdict_plurals_are_checked_per_locale() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    let app = root.join("App");
+    for l in ["en", "de", "pl", "ru"] {
+        fs::create_dir_all(app.join(format!("{l}.lproj"))).unwrap();
+        fs::write(
+            app.join(format!("{l}.lproj/Localizable.strings")),
+            "\"ok\" = \"OK\";\n",
+        )
+        .unwrap();
+    }
+    let dict = |forms: &str, total_forms: &str| {
+        format!(
+            r#"<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>%d files</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@files@</string>
+		<key>files</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+{forms}
+		</dict>
+	</dict>
+	<key>results</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1$#@position@</string>
+		<key>position</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%d of %2$#@total@</string>
+		</dict>
+		<key>total</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+{total_forms}
+		</dict>
+	</dict>
+</dict>
+</plist>
+"#
+        )
+    };
+    let f = |cat: &str, s: &str| format!("\t\t\t<key>{cat}</key>\n\t\t\t<string>{s}</string>");
+    fs::write(
+        app.join("en.lproj/PluralAware.stringsdict"),
+        dict(
+            &[f("one", "%d file"), f("other", "%d files")].join("\n"),
+            &[f("one", "%d match"), f("other", "%d matches")].join("\n"),
+        ),
+    )
+    .unwrap();
+    // German: `one` without the number is fine; `total` uses its own position %2$d.
+    fs::write(
+        app.join("de.lproj/PluralAware.stringsdict"),
+        dict(
+            &[f("one", "Eine Datei"), f("other", "%d Dateien")].join("\n"),
+            &[f("one", "%2$d Treffer"), f("other", "%2$d Treffer")].join("\n"),
+        ),
+    )
+    .unwrap();
+    // Polish: few/many missing.
+    fs::write(
+        app.join("pl.lproj/PluralAware.stringsdict"),
+        dict(
+            &[f("one", "%d plik"), f("other", "%d plików")].join("\n"),
+            &[
+                f("one", "%d wynik"),
+                f("few", "%d wyniki"),
+                f("many", "%d wyników"),
+                f("other", "%d wyniku"),
+            ]
+            .join("\n"),
+        ),
+    )
+    .unwrap();
+    // Russian: `one` also covers 21, 31: leaving the number out is a bug.
+    fs::write(
+        app.join("ru.lproj/PluralAware.stringsdict"),
+        dict(
+            &[
+                f("one", "Один файл"),
+                f("few", "%d файла"),
+                f("many", "%d файлов"),
+                f("other", "%d файла"),
+            ]
+            .join("\n"),
+            &[
+                f("one", "%d совпадение"),
+                f("few", "%d совпадения"),
+                f("many", "%d совпадений"),
+                f("other", "%d совпадения"),
+            ]
+            .join("\n"),
+        ),
+    )
+    .unwrap();
+    let out = run(root, &["check", "App", "--json"]);
+    let v: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
+    let dict_findings: Vec<(String, String, String, String)> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|f| f["file"].as_str().unwrap().ends_with(".stringsdict"))
+        .map(|f| {
+            (
+                f["locale"].as_str().unwrap().to_string(),
+                f["key"].as_str().unwrap().to_string(),
+                f["code"].as_str().unwrap().to_string(),
+                f["message"].as_str().unwrap().to_string(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        dict_findings,
+        [
+            (
+                "pl".to_string(),
+                "%d files#files".to_string(),
+                "plural".to_string(),
+                "missing plural form(s) few, many".to_string()
+            ),
+            (
+                "ru".to_string(),
+                "%d files#files.one".to_string(),
+                "placeholders".to_string(),
+                "missing %1$d".to_string()
+            ),
+        ],
+        "{}",
+        String::from_utf8_lossy(&out.stdout)
+    );
+    let pl = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["locale"] == "pl")
+        .unwrap();
+    assert_eq!(pl["file"], "App/pl.lproj/PluralAware.stringsdict");
+    assert_eq!(pl["line"], 4);
+}

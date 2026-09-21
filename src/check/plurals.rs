@@ -261,3 +261,141 @@ pub fn android_plurals(doc: &crate::formats::android::Document) -> Vec<(String, 
         })
         .collect()
 }
+
+/// In the `zero`, `one` and `two` forms the count is a known number, so "Ein Mitglied"
+/// for `%d member` is a translation choice, not a bug: unless the language's `one` also
+/// covers 21, 31, 101 (East Slavic, Serbo-Croatian, Baltic), where the number must show.
+pub fn count_optional(locale: &str, category: &str) -> bool {
+    if !matches!(category, "zero" | "one" | "two") {
+        return false;
+    }
+    let lang = locale
+        .split(['-', '_'])
+        .next()
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    !matches!(
+        lang.as_str(),
+        "ru" | "uk" | "be" | "hr" | "sr" | "bs" | "sh" | "lt" | "lv" | "prg"
+    )
+}
+
+/// The text without its numeric printf placeholders (`%d`, `%1$lld`, `%u`…), so two
+/// plural forms can be compared on everything but the count.
+pub fn strip_count(text: &str) -> String {
+    let b = text.as_bytes();
+    let mut out = String::with_capacity(text.len());
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == b'%' {
+            if b.get(i + 1) == Some(&b'%') {
+                out.push_str("%%");
+                i += 2;
+                continue;
+            }
+            // `%arg`: the substituted count in a String Catalog substitution form.
+            if b[i..].starts_with(b"%arg") {
+                i += 4;
+                continue;
+            }
+            // %[N$][flags][width][.prec][length]conv
+            let mut j = i + 1;
+            while j < b.len() && b[j].is_ascii_digit() {
+                j += 1;
+            }
+            if j < b.len() && b[j] == b'$' {
+                j += 1;
+            } else {
+                j = i + 1;
+            }
+            while j < b.len() && matches!(b[j], b'-' | b'+' | b' ' | b'#' | b'0' | b'\'') {
+                j += 1;
+            }
+            while j < b.len() && (b[j].is_ascii_digit() || b[j] == b'.') {
+                j += 1;
+            }
+            while j < b.len() && matches!(b[j], b'l' | b'h' | b'z' | b'q' | b'j' | b't' | b'L') {
+                j += 1;
+            }
+            if j < b.len() && matches!(b[j], b'd' | b'i' | b'u' | b'x' | b'X' | b'o') {
+                i = j + 1;
+                continue;
+            }
+        }
+        let c = text[i..].chars().next().unwrap();
+        out.push(c);
+        i += c.len_utf8();
+    }
+    out
+}
+
+/// Argument position of `var` in a `.stringsdict` format key: `%2$#@seconds@` says 2,
+/// otherwise the variable's order among the `%#@…@` references.
+pub fn stringsdict_position(format: &str, var: &str) -> usize {
+    let needle = format!("#@{var}@");
+    let Some(at) = format.find(&needle) else {
+        return 1;
+    };
+    // Explicit `%N$` right before `#@`.
+    let before = &format[..at];
+    if let Some(p) = before.rfind('%') {
+        let mid = &before[p + 1..];
+        if let Some(n) = mid.strip_suffix('$').and_then(|d| d.parse::<usize>().ok()) {
+            return n;
+        }
+    }
+    before.matches("#@").count() + 1
+}
+
+/// Renumber unnumbered printf specs in a `.stringsdict` form to the variable's own
+/// argument: inside a variable, `%d` means that variable's value.
+pub fn renumber(form: &str, pos: usize) -> String {
+    let b = form.as_bytes();
+    let mut out = String::with_capacity(form.len() + 4);
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == b'%' {
+            if b.get(i + 1) == Some(&b'%') {
+                out.push_str("%%");
+                i += 2;
+                continue;
+            }
+            let mut j = i + 1;
+            while j < b.len() && b[j].is_ascii_digit() {
+                j += 1;
+            }
+            let numbered = j > i + 1 && b.get(j) == Some(&b'$');
+            out.push('%');
+            if !numbered && j < b.len() && b[j] != b'#' {
+                out.push_str(&format!("{pos}$"));
+            }
+            i += 1;
+            continue;
+        }
+        let c = form[i..].chars().next().unwrap();
+        out.push(c);
+        i += c.len_utf8();
+    }
+    out
+}
+
+/// Compare two plural forms' placeholders, knowing which category they are. In `zero`,
+/// `one`, `two`: an exact-count language may leave the number out or put it in
+/// (`count_optional`); a language whose `one` also covers 21, 31 must keep the number, so
+/// only an added count is fine there (English "one member" → Russian "%d участник").
+pub fn compare_forms(
+    locale: &str,
+    category: &str,
+    source: &str,
+    translation: &str,
+) -> Option<crate::check::placeholders::Mismatch> {
+    use crate::check::placeholders::compare;
+    if count_optional(locale, category) {
+        return compare(&strip_count(source), &strip_count(translation));
+    }
+    if matches!(category, "zero" | "one" | "two") && strip_count(source) == source {
+        // The source form has no count; the translation adding one is right.
+        return compare(source, &strip_count(translation));
+    }
+    compare(source, translation)
+}

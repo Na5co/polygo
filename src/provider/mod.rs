@@ -352,9 +352,13 @@ fn validate(
             ));
             continue;
         }
-        if !crate::core::plural_form_may_omit_count(&r.key)
-            && let Some(m) = crate::check::placeholders::compare(&r.source, &t.text)
-        {
+        let mismatch = match crate::core::split_plural(&r.key) {
+            Some((_, cat)) => {
+                crate::check::plurals::compare_forms(&ctx.target_locale, cat, &r.source, &t.text)
+            }
+            None => crate::check::placeholders::compare(&r.source, &t.text),
+        };
+        if let Some(m) = mismatch {
             out.push((
                 r.key.clone(),
                 format!(
