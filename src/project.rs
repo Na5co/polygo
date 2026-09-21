@@ -158,7 +158,13 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
                 .filter(|e| !is_plural_member(&e.key()))
                 .map(|e| Unit {
                     key: e.key(),
-                    source: e.text(),
+                    // i18next convention: the key is the English sentence and the value in
+                    // the source file may be left empty.
+                    source: if e.text().is_empty() {
+                        e.key()
+                    } else {
+                        e.text()
+                    },
                     comment: None,
                     translations: BTreeMap::new(),
                     locales: None,

@@ -118,3 +118,39 @@ fn rejects_non_object_root_and_bad_json() {
     assert!(json::parse("{\"a\": }").is_err());
     assert!(json::parse("{\"a\": \"b\"} trailing").is_err());
 }
+
+#[test]
+fn empty_source_value_means_the_key_is_the_text() {
+    // Open WebUI / Ghost style: "Deleted {{name}}": "" in en.json.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    std::fs::create_dir_all(root.join("locales")).unwrap();
+    std::fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"Deleted {{name}}\": \"\",\n  \"Save\": \"\"\n}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"Deleted {{name}}\": \"{{name}} gelöscht\",\n  \"Save\": \"Speichern\"\n}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+        .current_dir(root)
+        .arg("check")
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stdout)
+    );
+    let cfg = polygo::config::Config::load(root).unwrap();
+    let units = polygo::project::load_units(root, &cfg).unwrap();
+    assert_eq!(units[0].source, "Deleted {{name}}");
+}
