@@ -85,7 +85,11 @@ pub fn translate(
         for locale in &locales {
             for key in status.keys(locale, crate::lockfile::State::Edited) {
                 let u = by_key[key.as_str()];
-                if let Some(t) = u.translations.get(locale) {
+                // A hand-written translation is worth remembering only if it is sound: a
+                // broken placeholder would otherwise come back verbatim in every project.
+                if let Some(t) = u.translations.get(locale)
+                    && crate::check::placeholders::compare(&u.source, t).is_none()
+                {
                     mem.learn(locale, &u.source, t, "human");
                 }
             }
@@ -112,12 +116,18 @@ pub fn translate(
 
     let mut ws = Workspace::open(root, cfg)?;
     let glossary = crate::glossary::load(root, cfg)?;
-    if let Some(mem) = &memory {
+    // Keys forced through (`check --fix`, `audit --fix`) are here because what they have is
+    // wrong; the memory may hold exactly that, so they always go to the model.
+    if let Some(mem) = &memory
+        && opts.force_keys.is_none()
+    {
         for locale in &locales {
             let mut reused = Vec::new();
             for key in report.planned.get(locale).cloned().unwrap_or_default() {
                 let u = by_key[key.as_str()];
-                if let Some(t) = mem.recall(locale, &u.source) {
+                if let Some(t) = mem.recall(locale, &u.source)
+                    && crate::check::placeholders::compare(&u.source, t).is_none()
+                {
                     ws.set(cfg, &key, locale, t)?;
                     lock.record(u, locale, t, "memory", "human");
                     if opts.verbose {

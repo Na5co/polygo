@@ -3,8 +3,11 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
-fn polygo() -> Command {
-    Command::new(env!("CARGO_BIN_EXE_polygo"))
+fn polygo(root: &Path) -> Command {
+    let mut c = Command::new(env!("CARGO_BIN_EXE_polygo"));
+    c.current_dir(root)
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"));
+    c
 }
 
 fn json_project(root: &Path) {
@@ -33,7 +36,7 @@ fn check_exit_codes() {
     json_project(root);
 
     // Clean project → 0.
-    let out = polygo().current_dir(root).arg("check").output().unwrap();
+    let out = polygo(root).arg("check").output().unwrap();
     assert_eq!(
         out.status.code(),
         Some(0),
@@ -47,7 +50,7 @@ fn check_exit_codes() {
         "{\n  \"hello\": \"Hallo, {name}!\",\n  \"items_one\": \"{{count}} Element\",\n  \"ok\": \"OK\",\n  \"bye\": \"Goodbye\"\n}\n",
     )
     .unwrap();
-    let out = polygo().current_dir(root).arg("check").output().unwrap();
+    let out = polygo(root).arg("check").output().unwrap();
     assert_eq!(out.status.code(), Some(1));
     let text = String::from_utf8_lossy(&out.stdout);
     assert!(
@@ -58,11 +61,7 @@ fn check_exit_codes() {
     assert!(text.contains("bye") && text.contains("identical"), "{text}");
 
     // JSON output carries severity per finding.
-    let out = polygo()
-        .current_dir(root)
-        .args(["check", "--json"])
-        .output()
-        .unwrap();
+    let out = polygo(root).args(["check", "--json"]).output().unwrap();
     let v: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
     let findings = v["findings"].as_array().unwrap();
     assert!(
@@ -85,18 +84,11 @@ fn check_exit_codes() {
     )
     .unwrap();
     assert_eq!(
-        polygo()
-            .current_dir(root)
-            .arg("check")
-            .output()
-            .unwrap()
-            .status
-            .code(),
+        polygo(root).arg("check").output().unwrap().status.code(),
         Some(0)
     );
     assert_eq!(
-        polygo()
-            .current_dir(root)
+        polygo(root)
             .args(["check", "--strict"])
             .output()
             .unwrap()
@@ -112,8 +104,7 @@ fn check_exit_codes() {
     )
     .unwrap();
     let log = root.join("mock.log");
-    let out = polygo()
-        .current_dir(root)
+    let out = polygo(root)
         .env("POLYGO_MOCK_LOG", &log)
         .args(["check", "--fix"])
         .output()
@@ -138,13 +129,7 @@ fn check_exit_codes() {
         "untouched keys stay:\n{de}"
     );
     assert_eq!(
-        polygo()
-            .current_dir(root)
-            .arg("check")
-            .output()
-            .unwrap()
-            .status
-            .code(),
+        polygo(root).arg("check").output().unwrap().status.code(),
         Some(0)
     );
 }
@@ -193,11 +178,7 @@ fn check_finds_xcstrings_plural_and_android_gaps() {
         "source_locale = \"en\"\ntarget_locales = [\"ru\"]\n\n[[files]]\nformat = \"xcstrings\"\npath = \"Localizable.xcstrings\"\n\n[provider]\nkind = \"mock\"\n",
     )
     .unwrap();
-    let out = polygo()
-        .current_dir(root)
-        .args(["check", "--json"])
-        .output()
-        .unwrap();
+    let out = polygo(root).args(["check", "--json"]).output().unwrap();
     assert_eq!(out.status.code(), Some(1));
     let v: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
     let findings = v["findings"].as_array().unwrap();

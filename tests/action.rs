@@ -53,6 +53,8 @@ fn action_dry_run_produces_expected_diff() {
         .current_dir(root)
         .arg(script)
         .env("POLYGO_BIN", env!("CARGO_BIN_EXE_polygo"))
+        // The developer's own translation memory must not answer for the mock.
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"))
         .env("DRY_RUN", "1")
         .env("GITHUB_OUTPUT", root.join("gh_output.txt"))
         .output()

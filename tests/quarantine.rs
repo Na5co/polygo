@@ -4,8 +4,11 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
-fn polygo() -> Command {
-    Command::new(env!("CARGO_BIN_EXE_polygo"))
+fn polygo(root: &Path) -> Command {
+    let mut c = Command::new(env!("CARGO_BIN_EXE_polygo"));
+    c.current_dir(root)
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"));
+    c
 }
 
 fn project(root: &Path) {
@@ -27,8 +30,7 @@ fn malformed_output_is_quarantined() {
     // 1. Garbage on the first call, valid on the repair call → everything recovered.
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_MALFORMED_ONCE", "1")
         .arg("translate")
         .output()
@@ -46,8 +48,7 @@ fn malformed_output_is_quarantined() {
     // 2. One key is always missing from the output → that key is quarantined, the rest written.
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_DROP_KEY", "k2")
         .arg("translate")
         .output()
@@ -69,8 +70,7 @@ fn malformed_output_is_quarantined() {
     let lock = fs::read_to_string(dir.path().join("polygo.lock")).unwrap();
     assert!(lock.contains("[keys.k2.review.de]"), "{lock}");
 
-    let status = polygo()
-        .current_dir(dir.path())
+    let status = polygo(dir.path())
         .args(["status", "--json"])
         .output()
         .unwrap();
@@ -80,8 +80,7 @@ fn malformed_output_is_quarantined() {
 
     // A plain re-run leaves quarantined keys alone (no provider call for them)...
     let log = dir.path().join("mock.log");
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_LOG", &log)
         .arg("translate")
         .output()
@@ -93,8 +92,7 @@ fn malformed_output_is_quarantined() {
     );
     assert!(!log.exists(), "must not retry quarantined keys by default");
     // ...and --retry-review tries again; with a now-healthy provider it succeeds.
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .args(["translate", "--retry-review"])
         .output()
         .unwrap();
@@ -114,8 +112,7 @@ fn malformed_output_is_quarantined() {
     // 3. Permanently broken provider → all quarantined, nothing written, no crash.
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_MALFORMED", "1")
         .arg("translate")
         .output()
@@ -140,8 +137,7 @@ fn identical_to_source_is_confirmed_by_a_second_ask_not_quarantined() {
     )
     .unwrap();
     let log = dir.path().join("mock.log");
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_ECHO_KEY", "ok")
         .env("POLYGO_MOCK_LOG", &log)
         .arg("translate")
@@ -180,8 +176,7 @@ fn key_echo_is_repaired_not_written() {
         "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
     )
     .unwrap();
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_KEY_ECHO_ONCE", "1")
         .arg("translate")
         .output()
@@ -203,8 +198,7 @@ fn untranslated_fragment_is_repaired_then_quarantined() {
     // Repaired on the second ask → written normally.
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_FRAGMENT_ONCE", "k2")
         .env("POLYGO_NO_BACKOFF", "1")
         .arg("translate")
@@ -221,8 +215,7 @@ fn untranslated_fragment_is_repaired_then_quarantined() {
     // Still leaving `string` untranslated after the repair round → quarantined, exit 3.
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_FRAGMENT", "k2")
         .env("POLYGO_NO_BACKOFF", "1")
         .arg("translate")
@@ -255,8 +248,7 @@ fn broken_placeholder_is_repaired_then_quarantined() {
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
     fs::write(dir.path().join("locales/en.json"), src).unwrap();
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_BREAK_PLACEHOLDER_ONCE", "k2")
         .env("POLYGO_NO_BACKOFF", "1")
         .arg("translate")
@@ -273,8 +265,7 @@ fn broken_placeholder_is_repaired_then_quarantined() {
     let dir = tempfile::tempdir().unwrap();
     project(dir.path());
     fs::write(dir.path().join("locales/en.json"), src).unwrap();
-    let out = polygo()
-        .current_dir(dir.path())
+    let out = polygo(dir.path())
         .env("POLYGO_MOCK_BREAK_PLACEHOLDER", "k2")
         .env("POLYGO_NO_BACKOFF", "1")
         .arg("translate")

@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- Translation memory no longer learns a hand-edited translation whose placeholders do not match the source, and never answers for keys that `check --fix` / `audit --fix` are re-translating (it could hold exactly the broken text). Found by isolating the test suite from the developer's own memory file.
 - `polygo.toml` typos are pointed out: `batch_szie = 5` prints `unknown key \`batch_szie\` (did you mean \`batch_size\`?)` instead of silently doing nothing, and a misspelled required key (`target_locale`) is named in the parse error. Warnings, not errors, so an older polygo still reads a newer file.
 - First `polygo translate` with an Ollama model that is not pulled offers to pull it right there (`[Y/n]`); `--yes` for scripts. Without a terminal it says the two ways to pull.
 - GitHub Action `mode: check`: validates the repository's translations on every pull request with no model and no secrets, one annotation per finding on the file, a table in the job summary, job fails on errors (`strict: "true"` for warnings too), `path:` for repos without `polygo.toml`. Outputs `errors` / `warnings`.

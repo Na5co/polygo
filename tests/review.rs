@@ -64,6 +64,7 @@ fn review_roundtrip() {
     // Produce machine translations, then quarantine one key so both kinds of items exist.
     let out = Command::new(env!("CARGO_BIN_EXE_polygo"))
         .current_dir(root)
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"))
         .arg("translate")
         .output()
         .unwrap();
@@ -73,6 +74,7 @@ fn review_roundtrip() {
     let port = free_port();
     let child = Command::new(env!("CARGO_BIN_EXE_polygo"))
         .current_dir(root)
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"))
         .args(["review", "--port", &port.to_string()])
         .stdout(Stdio::null())
         .stderr(Stdio::null())

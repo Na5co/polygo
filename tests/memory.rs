@@ -114,3 +114,46 @@ fn human_translations_are_learned_and_reused_across_projects() {
             .contains("Save")
     );
 }
+
+#[test]
+fn broken_hand_edits_are_not_learned_and_fix_never_reuses_memory() {
+    let cfg = tempfile::tempdir().unwrap();
+    // Project A: a human "translated" the string but dropped the placeholder.
+    let a = tempfile::tempdir().unwrap();
+    project(
+        a.path(),
+        "{\n  \"hello\": \"Hello, {{name}}!\"\n}\n",
+        Some("{\n  \"hello\": \"Hallo, {name}!\"\n}\n"),
+    );
+    let out = polygo(a.path(), cfg.path()).arg("status").output().unwrap();
+    assert!(String::from_utf8_lossy(&out.stdout).contains("edited: 1"));
+    // translate learns human edits; this one must be skipped.
+    assert!(polygo(a.path(), cfg.path()).arg("translate").output().unwrap().status.success());
+    let mem = std::fs::read_to_string(cfg.path().join("memory.toml")).unwrap_or_default();
+    assert!(!mem.contains("Hallo, {name}!"), "broken edit was learned:\n{mem}");
+
+    // check --fix on that project re-translates with the model (mock), not from memory,
+    // and the result passes.
+    let out = polygo(a.path(), cfg.path())
+        .args(["check", "--fix"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stdout));
+    let de = std::fs::read_to_string(a.path().join("locales/de.json")).unwrap();
+    assert!(de.contains("⟦de⟧ Hello, {{name}}!"), "{de}");
+
+    // Even a sound-looking memory entry is bypassed for forced keys: seed one by hand.
+    std::fs::write(
+        cfg.path().join("memory.toml"),
+        "[locales.de.\"Hello, {{name}}!\"]\ntext = \"Servus, {{name}}!\"\nby = \"human\"\n",
+    )
+    .unwrap();
+    std::fs::write(a.path().join("locales/de.json"), "{\n  \"hello\": \"Hallo, {name}!\"\n}\n").unwrap();
+    let out = polygo(a.path(), cfg.path())
+        .args(["check", "--fix"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(0), "{}", String::from_utf8_lossy(&out.stdout));
+    let de = std::fs::read_to_string(a.path().join("locales/de.json")).unwrap();
+    assert!(de.contains("⟦de⟧ Hello, {{name}}!"), "memory answered a forced key:\n{de}");
+}
