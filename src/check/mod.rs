@@ -1,5 +1,6 @@
 //! `polygo check`: validators that run over every translation.
 
+pub mod github;
 pub mod placeholders;
 pub mod plurals;
 pub mod run;

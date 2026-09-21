@@ -4,6 +4,10 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- GitHub Action `mode: check`: validates the repository's translations on every pull request with no model and no secrets, one annotation per finding on the file, a table in the job summary, job fails on errors (`strict: "true"` for warnings too), `path:` for repos without `polygo.toml`. Outputs `errors` / `warnings`.
+- `polygo check --github` prints GitHub workflow-command annotations and writes the job summary when `GITHUB_STEP_SUMMARY` is set, for any CI on GitHub.
+- The `v0` tag the Action docs pointed at (`Na5co/polygo/action@v0`) did not exist; it does now and moves with every 0.x release.
+- Pre-commit snippet in `action/README.md`.
 - `polygo check <file-or-directory>` works without `polygo.toml`: the format and locales are detected (a single `res/values/strings.xml` or `locales/en.json` is placed by looking at its parent directories), every validator runs, and the note printed says what was checked. Plain `polygo check` in a project with no config does the same for the current directory. `--fix` still needs a configured project. The ten-second "does my existing localization have bugs?" path, no model involved.
 - `init` (and `check`) inside the layout directory itself (`cd res && polygo init`) no longer writes absolute `locale_path` templates.
 

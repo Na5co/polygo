@@ -1,9 +1,18 @@
-name: polygo translate
-description: Translate new or changed strings with polygo and open a pull request with the result.
+name: polygo
+description: "Check localization files for broken placeholders and missing plural forms (mode: check), or translate new strings and open a pull request (mode: translate)."
 branding:
   icon: globe
   color: blue
 inputs:
+  mode:
+    description: '"check" validates existing translations and fails the job on errors (no model, no secrets); "translate" runs polygo translate and opens a PR'
+    default: translate
+  path:
+    description: "mode: check only. A string file or directory to check without polygo.toml (format and locales detected). Empty: the configured project."
+    default: ""
+  strict:
+    description: "mode: check only. Warnings (length, identical) fail the job too."
+    default: "false"
   version:
     description: polygo release to install (tag), or "latest"
     default: latest
@@ -24,11 +33,17 @@ inputs:
     default: ${{ github.token }}
 outputs:
   changed:
-    description: "true when translations changed"
+    description: "translate: true when translations changed"
     value: ${{ steps.run.outputs.changed }}
   coverage:
-    description: "Markdown coverage table (polygo status --markdown)"
+    description: "translate: Markdown coverage table (polygo status --markdown)"
     value: ${{ steps.run.outputs.coverage }}
+  errors:
+    description: "check: number of errors"
+    value: ${{ steps.check.outputs.errors }}
+  warnings:
+    description: "check: number of warnings"
+    value: ${{ steps.check.outputs.warnings }}
 runs:
   using: composite
   steps:
@@ -45,8 +60,18 @@ runs:
         url="https://github.com/Na5co/polygo/releases/download/${v}/polygo-${v}-${arch}-${os}.tar.gz"
         mkdir -p "$RUNNER_TEMP/polygo" && curl -fsSL "$url" | tar -xz -C "$RUNNER_TEMP/polygo"
         echo "$RUNNER_TEMP/polygo" >> "$GITHUB_PATH"
+    - name: Check
+      id: check
+      if: ${{ inputs.mode == 'check' }}
+      shell: bash
+      env:
+        POLYGO_PATH: ${{ inputs.path }}
+        POLYGO_LOCALES: ${{ inputs.locales }}
+        POLYGO_STRICT: ${{ inputs.strict == 'true' && '1' || '0' }}
+      run: bash "${{ github.action_path }}/check.sh"
     - name: Translate
       id: run
+      if: ${{ inputs.mode != 'check' }}
       shell: bash
       env:
         POLYGO_LOCALES: ${{ inputs.locales }}
@@ -54,7 +79,7 @@ runs:
         DRY_RUN: ${{ inputs.pr == 'true' && '1' || '0' }}
       run: bash "${{ github.action_path }}/run.sh"
     - name: Open pull request
-      if: ${{ inputs.pr == 'true' && steps.run.outputs.changed == 'true' }}
+      if: ${{ inputs.mode != 'check' && inputs.pr == 'true' && steps.run.outputs.changed == 'true' }}
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ inputs.token }}

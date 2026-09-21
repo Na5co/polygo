@@ -40,7 +40,7 @@ Works with `.xcstrings`, Android `strings.xml`, Flutter ARB, i18next JSON, gette
 - **Plurals done per language.** Polish gets `one`, `few`, `many`, `other`; Japanese gets one form. Written into `.xcstrings` variations, `<plurals>`, `msgstr[n]`.
 - **Checks the model can't talk its way past.** Placeholders, CLDR plural sets, empty, identical, half-translated (`ようこそ back!`). Wrong twice and it's quarantined, not written.
 - **A second opinion.** `polygo audit` has a different model grade each translation 1 to 5 with a reason. `--fix` redoes the flagged ones.
-- **Runs in CI.** `polygo check --strict`, or the [GitHub Action](action/README.md) that opens a PR with new translations and a coverage table.
+- **Runs in CI.** The [GitHub Action](action/README.md) in `mode: check` annotates every broken string on the pull request and fails the build, no secrets needed; in `mode: translate` it opens a PR with new translations and a coverage table. `polygo check --github` does the annotations from any workflow; a pre-commit snippet is in the same page.
 
 ## Proof
 
