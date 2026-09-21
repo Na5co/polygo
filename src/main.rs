@@ -653,14 +653,28 @@ fn check(
     strict: bool,
     fix: bool,
 ) -> Result<()> {
-    // With polygo.toml: the configured project. Without: whatever `path` (or the current
-    // directory) turns out to be, so `polygo check Localizable.xcstrings` just works.
-    let (cfg, root) = match (&path, root.join(polygo::config::FILE_NAME).exists()) {
+    // With polygo.toml: the configured project. Without: whatever `path` (or the project
+    // root) turns out to be, so `polygo check Localizable.xcstrings` just works. A path is
+    // relative to the root (`-C`), like every other path polygo takes.
+    let has_config = root.join(polygo::config::FILE_NAME).exists();
+    let path = path.map(|p| if p.is_absolute() { p } else { root.join(p) });
+    let (cfg, root) = match (&path, has_config) {
         (None, true) => (Config::load(root)?, root.to_path_buf()),
         (target, _) => {
             if fix {
-                anyhow::bail!(
+                anyhow::bail!(if has_config {
+                    "--fix works on the configured project: run `polygo check --fix` without a path"
+                } else {
                     "--fix re-translates with the model from polygo.toml; run `polygo init` in the project first"
+                });
+            }
+            if has_config && !json && !github {
+                eprintln!(
+                    "note: checking {} on its own; polygo.toml settings ([keys] skip, length_ratio) do not apply",
+                    target
+                        .as_ref()
+                        .expect("has_config implies a path")
+                        .display()
                 );
             }
             let (cfg, r) = polygo::init::detect_for_check(target.as_deref().unwrap_or(root))
@@ -683,10 +697,11 @@ fn check(
         }
     };
     // Findings name files relative to the checked root; make them relative to where the
-    // user is (so GitHub annotations land on `locales/en.json`, not `en.json`).
+    // user is (so GitHub annotations land on `locales/en.json`, not `en.json`), or absolute
+    // when the checked tree is somewhere else entirely.
     let prefix = path.as_ref().and_then(|_| {
         let here = std::path::absolute(".").ok()?;
-        let rel = root.strip_prefix(&here).ok()?;
+        let rel = root.strip_prefix(&here).unwrap_or(&root);
         (!rel.as_os_str().is_empty()).then(|| rel.to_string_lossy().replace('\\', "/"))
     });
     let root = root.as_path();

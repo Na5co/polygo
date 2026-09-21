@@ -37,9 +37,13 @@ git commit -q -m "polygo $v"
 git tag -a "v$v" -m "polygo $v"
 # `Na5co/polygo/action@v0` follows the latest 0.x (skip for pre-releases).
 major="v${v%%.*}"
-[[ "$v" == *-* ]] || git tag -f "$major" "v$v" >/dev/null
-echo
-echo "tagged v$v${major:+ (and moved $major)}. Review:   git show --stat HEAD"
-echo "Publish:              git push --follow-tags && git push -f origin $major"
+if [[ "$v" == *-* ]]; then
+  echo; echo "tagged v$v (pre-release: $major left alone). Review:   git show --stat HEAD"
+  echo "Publish:              git push --follow-tags"
+else
+  git tag -f "$major" "v$v" >/dev/null
+  echo; echo "tagged v$v and moved $major. Review:   git show --stat HEAD"
+  echo "Publish:              git push --follow-tags && git push -f origin $major"
+fi
 echo "release.yml builds the binaries, SHA256SUMS, the GitHub release and the formula;"
 echo "cargo publish and the Homebrew tap run when CARGO_REGISTRY_TOKEN / TAP_GITHUB_TOKEN are set."

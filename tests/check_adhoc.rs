@@ -146,3 +146,92 @@ fn check_i18next_locales_dir_and_the_unhelpful_cases() {
         "{err}"
     );
 }
+
+#[test]
+fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
+    let dir = tempfile::tempdir().unwrap();
+    let app = dir.path().join("app");
+    fs::create_dir_all(app.join("locales")).unwrap();
+    fs::write(
+        app.join("locales/en.json"),
+        "{\n  \"greet\": \"Hi {{name}}\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        app.join("locales/de.json"),
+        "{\n  \"greet\": \"Hallo {{nome}}\"\n}\n",
+    )
+    .unwrap();
+    // -C app, path relative to it (used to be resolved against the cwd).
+    let out = Command::new(env!("CARGO_BIN_EXE_polygo"))
+        .current_dir(dir.path())
+        .args(["-C", "app", "check", "locales", "--json"])
+        .output()
+        .unwrap();
+    assert_eq!(
+        out.status.code(),
+        Some(1),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let v: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(v["findings"][0]["file"], "app/locales/en.json");
+    // A tree outside the cwd: the file is reported by an absolute path, not `en.json`.
+    let elsewhere = dir.path().join("elsewhere");
+    fs::create_dir_all(&elsewhere).unwrap();
+    let (_, out, _) = check(
+        &elsewhere,
+        &[app.join("locales").to_str().unwrap(), "--json"],
+    );
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let file = v["findings"][0]["file"].as_str().unwrap();
+    assert!(
+        file.ends_with("/app/locales/en.json") && file.starts_with('/'),
+        "{file}"
+    );
+    // --strict --github: the warning becomes an error in the annotation AND the totals.
+    fs::write(
+        app.join("locales/en.json"),
+        "{\n  \"greet\": \"Welcome back, {{name}}\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        app.join("locales/de.json"),
+        "{\n  \"greet\": \"Welcome back, {{name}}\"\n}\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(&app, &["locales", "--github", "--strict"]);
+    assert_eq!(code, 1);
+    assert!(
+        out.contains("::error file=locales/en.json,title=polygo identical [de]"),
+        "{out}"
+    );
+    assert!(
+        out.contains("polygo check: 1 error(s), 0 warning(s)"),
+        "{out}"
+    );
+    let (code, out, _) = check(&app, &["locales", "--github"]);
+    assert_eq!(code, 0);
+    assert!(
+        out.contains("::warning file=") && out.contains("0 error(s), 1 warning(s)"),
+        "{out}"
+    );
+    // Inside a configured project a path is a note, not a silent config bypass, and
+    // --fix says the right thing.
+    fs::write(
+        app.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let (_, _, err) = check(&app, &["locales"]);
+    assert!(
+        err.contains("polygo.toml settings ([keys] skip, length_ratio) do not apply"),
+        "{err}"
+    );
+    let (code, _, err) = check(&app, &["locales", "--fix"]);
+    assert_eq!(code, 1);
+    assert!(
+        err.contains("run `polygo check --fix` without a path"),
+        "{err}"
+    );
+}
