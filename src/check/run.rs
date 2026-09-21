@@ -160,7 +160,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         let path = root.join(&spec.path);
         match spec.format {
             Format::Xcstrings => {
-                let doc = formats::xcstrings::parse(&std::fs::read_to_string(&path)?)?;
+                let doc = formats::xcstrings::parse(&crate::formats::read_text(&path)?)?;
                 // Xcode's own bookkeeping: a unit marked needs_review / stale, or a key
                 // whose extractionState is stale (no longer found in the code).
                 for (key, locale, state) in xcstrings_states(&doc, &cfg.source_locale) {
@@ -227,7 +227,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         }
                         out
                     };
-                let source = formats::android::parse(&std::fs::read_to_string(&path)?)
+                let source = formats::android::parse(&crate::formats::read_text(&path)?)
                     .with_context(|| format!("parsing {}", path.display()))?;
                 for (name, severity, m) in escapes(&source) {
                     let (file, line) = locator.locate(spec, &name, &cfg.source_locale);
@@ -249,7 +249,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     if !lp.exists() {
                         continue;
                     }
-                    let doc = formats::android::parse(&std::fs::read_to_string(&lp)?)
+                    let doc = formats::android::parse(&crate::formats::read_text(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
                     for (name, severity, m) in escapes(&doc) {
                         let (file, line) = locator.locate(spec, &name, locale);
@@ -287,7 +287,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 let Some(template) = &spec.locale_path else {
                     continue;
                 };
-                let source = formats::json::parse(&std::fs::read_to_string(&path)?)?;
+                let source = formats::json::parse(&crate::formats::read_text(&path)?)?;
                 let source_groups = plurals::i18next_plural_groups(
                     &source.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                 );
@@ -296,7 +296,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     if !lp.exists() {
                         continue;
                     }
-                    let doc = formats::json::parse(&std::fs::read_to_string(&lp)?)
+                    let doc = formats::json::parse(&crate::formats::read_text(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
                     let groups = plurals::i18next_groups(
                         &doc.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
@@ -330,19 +330,19 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                 }
             }
-            Format::Arb | Format::Po | Format::Resx => {}
+            Format::Arb | Format::Po | Format::Resx | Format::Strings => {}
         }
         // Keys a locale file has and the source does not: dead translations that
         // accumulate forever. And gettext's fuzzy flag, which ships as untranslated.
         if let Some(template) = &spec.locale_path {
-            let text = std::fs::read_to_string(&path)?;
+            let text = crate::formats::read_text(&path)?;
             let source_keys = keys_of(spec.format, &text)?;
             for locale in &locales {
                 let lp = root.join(project::locale_file(template, locale));
                 if !lp.exists() {
                     continue;
                 }
-                let ltext = std::fs::read_to_string(&lp)?;
+                let ltext = crate::formats::read_text(&lp)?;
                 for key in keys_of(spec.format, &ltext)? {
                     if source_keys.contains(&key) || skip.matches(&spec.path, &key) {
                         continue;
@@ -495,6 +495,11 @@ fn keys_of(format: Format, text: &str) -> Result<std::collections::BTreeSet<Stri
             .collect(),
         Format::Resx => formats::resx::values(&formats::resx::parse(text)?)
             .into_keys()
+            .collect(),
+        Format::Strings => formats::strings::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.key.clone())
             .collect(),
         Format::Xcstrings => Default::default(),
     })

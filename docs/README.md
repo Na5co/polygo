@@ -17,6 +17,7 @@
 | Page | Ecosystem |
 |---|---|
 | [formats/xcstrings.md](formats/xcstrings.md) | iOS / macOS string catalogs |
+| [formats/strings.md](formats/strings.md) | legacy iOS / macOS `.strings` |
 | [formats/android.md](formats/android.md) | Android `strings.xml` |
 | [formats/json.md](formats/json.md) | i18next / React / web JSON |
 | [formats/arb.md](formats/arb.md) | Flutter ARB |
@@ -36,7 +37,7 @@ context_tokens = 600     # approximate context budget per string
 glossary = "glossary.toml"
 
 [[files]]                # repeat per file
-format = "android"       # xcstrings | android | json | arb | po | resx
+format = "android"       # xcstrings | strings | android | json | arb | po | resx
 path = "app/src/main/res/values/strings.xml"
 locale_path = "app/src/main/res/values-{android_locale}/strings.xml"
 

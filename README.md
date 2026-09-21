@@ -43,7 +43,7 @@ Or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows zip](ht
 ## `polygo check`
 
 ```sh
-polygo check Localizable.xcstrings      # a file
+polygo check Localizable.xcstrings      # a file (.xcstrings, .strings, strings.xml, .json, .arb, .po, .resx)
 polygo check app/src/main/res           # a folder: format and locales are detected
 polygo check                            # the project, once polygo.toml exists
 ```
@@ -90,6 +90,7 @@ Any other CI: `polygo check --github`. Pre-commit: `entry: polygo check` ([snipp
 | boringnotch | 3,374 strings Xcode marks `needs_review`, shipped |
 | NewPipe, DuckDuckGo Android | stray `"` that Android silently drops from the UI |
 | Penpot | 4 `#, fuzzy` entries gettext shows in English |
+| Signal iOS | French strings with literal `<strong>` tags the English source doesn't have |
 
 Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
 
@@ -158,6 +159,7 @@ The same [GitHub Action](action/README.md) in `mode: translate` opens a PR with 
 | | Format | Used by | What `init` finds |
 |:-:|---|---|---|
 | 🍎 | `.xcstrings` | iOS, macOS | one catalog with every locale; `%#@var@` substitutions |
+| 🍎 | `.strings` | iOS, macOS (legacy) | `<locale>.lproj/Localizable.strings`, UTF-16 kept as is |
 | 🤖 | `strings.xml` | Android | `res/values-*/`; `<plurals>` per quantity, `<string-array>` per item |
 | 🌐 | `.json` | React, Vue, i18next | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys |
 | 🐦 | `.arb` | Flutter | `l10n.yaml` + `lib/l10n/app_<locale>.arb`, ICU plurals |

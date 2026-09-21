@@ -29,6 +29,7 @@ const SKIP_DIRS: &[&str] = &[
 pub const SUPPORTED_LAYOUTS: &str = "\
 polygo works with string files your app already has. None of these were found:
   iOS/macOS   *.xcstrings                (Xcode: File > New > String Catalog)
+              <locale>.lproj/*.strings
   Android     res/values/strings.xml
   Flutter     l10n.yaml + lib/l10n/app_en.arb
   Web         locales/en.json            (i18next, vue-i18n, next-intl)
@@ -124,6 +125,69 @@ pub fn detect(root: &Path) -> Result<Config> {
                 locale_path: None,
             });
         }
+    }
+
+    // Legacy Apple `.strings`: `<dir>/<locale>.lproj/<Name>.strings`, one spec per Name.
+    // A String Catalog for the same name wins (Xcode migrates .strings into it).
+    let catalog_names: BTreeSet<String> = specs
+        .iter()
+        .filter(|s| s.format == Format::Xcstrings)
+        .filter_map(|s| s.path.file_stem().map(|n| n.to_string_lossy().into_owned()))
+        .collect();
+    let mut lproj: BTreeMap<(PathBuf, String), BTreeSet<String>> = BTreeMap::new(); // (dir, Name) → locales
+    for rel in files
+        .iter()
+        .filter(|p| p.extension().is_some_and(|e| e == "strings"))
+    {
+        let Some(lp) = rel.parent() else { continue };
+        let Some(lp_name) = lp.file_name().and_then(|n| n.to_str()) else {
+            continue;
+        };
+        let Some(locale) = lp_name.strip_suffix(".lproj") else {
+            continue;
+        };
+        if rel
+            .components()
+            .any(|c| c.as_os_str().to_string_lossy().ends_with(".xcloc"))
+        {
+            continue;
+        }
+        let name = rel.file_stem().unwrap().to_string_lossy().into_owned();
+        if catalog_names.contains(&name) {
+            continue;
+        }
+        lproj
+            .entry((lp.parent().unwrap_or(Path::new("")).to_path_buf(), name))
+            .or_default()
+            .insert(locale.to_string());
+    }
+    for ((dir, name), locales) in lproj {
+        // English source: `en.lproj`, else `Base.lproj` (Xcode's development language).
+        let src_dir = ["en", "Base", "en-US", "en-GB"]
+            .into_iter()
+            .find(|l| locales.contains(*l))
+            .map(str::to_string)
+            .or_else(|| source.clone().filter(|s| locales.contains(s)));
+        let Some(src_dir) = src_dir else { continue };
+        specs.push(FileSpec {
+            format: Format::Strings,
+            path: dir
+                .join(format!("{src_dir}.lproj"))
+                .join(format!("{name}.strings")),
+            locale_path: Some(under(&dir, &format!("{{locale}}.lproj/{name}.strings"))),
+        });
+        for l in &locales {
+            if *l != src_dir && l != "Base" {
+                targets.insert(l.clone());
+            }
+        }
+        source.get_or_insert_with(|| {
+            if src_dir == "Base" {
+                "en".into()
+            } else {
+                src_dir.clone()
+            }
+        });
     }
 
     // Android resource directories.

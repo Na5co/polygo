@@ -57,7 +57,7 @@ fn load_units_split(root: &Path, cfg: &Config) -> Result<(Vec<Unit>, Vec<String>
 fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Unit>> {
     let path = root.join(&spec.path);
     let text =
-        std::fs::read_to_string(&path).with_context(|| format!("reading {}", path.display()))?;
+        crate::formats::read_text(&path).with_context(|| format!("reading {}", path.display()))?;
     match spec.format {
         Format::Xcstrings => {
             let doc = formats::xcstrings::parse(&text)?;
@@ -122,6 +122,14 @@ fn load_file_units(root: &Path, cfg: &Config, spec: &FileSpec) -> Result<Vec<Uni
             })?;
             Ok(units)
         }
+        Format::Strings => {
+            let doc = formats::strings::parse(&text)?;
+            let mut units = formats::strings::units(&doc);
+            attach_locale_files(root, cfg, spec, &mut units, |text| {
+                Ok(formats::strings::values(&formats::strings::parse(text)?))
+            })?;
+            Ok(units)
+        }
         Format::Json => {
             let doc = formats::json::parse(&text)?;
             let keys: Vec<String> = doc.entries.iter().map(|e| e.key()).collect();
@@ -169,7 +177,7 @@ fn attach_locale_files(
         if !path.exists() {
             continue;
         }
-        let text = std::fs::read_to_string(&path)
+        let text = crate::formats::read_text(&path)
             .with_context(|| format!("reading {}", path.display()))?;
         let values = read(&text).with_context(|| format!("parsing {}", path.display()))?;
         for u in units.iter_mut() {
@@ -230,7 +238,7 @@ fn locale_docs<T>(
         if !path.exists() {
             continue;
         }
-        let text = std::fs::read_to_string(&path)
+        let text = crate::formats::read_text(&path)
             .with_context(|| format!("reading {}", path.display()))?;
         out.insert(
             locale.clone(),
