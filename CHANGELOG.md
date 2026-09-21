@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.5 — 2026-09-22
 
 - `polygo check --sarif` prints SARIF 2.1.0 with a rule per code and stable fingerprints; the Action's `sarif: "true"` uploads it to GitHub code scanning (Security tab, new/fixed history on PRs). The baseline applies to it like every other output.
 - `inconsistent` (warning): the same short source term translated two ways in one locale (`Settings` → `Réglages` in 3 keys, `Paramètres` in 1); the minority gets the warning with the counts. Untranslated copies do not vote, case and inflection (`aucun`/`aucune`) are the same word, a tie is a choice. Ice Cubes: 45 across 12,761 translations.
