@@ -57,6 +57,10 @@ enum Commands {
         /// Machine-readable output.
         #[arg(long)]
         json: bool,
+        /// GitHub Actions output: one `::error file=…::` annotation per finding, and a
+        /// table in the job summary when GITHUB_STEP_SUMMARY is set.
+        #[arg(long, conflicts_with = "json")]
+        github: bool,
         /// Treat warnings as errors.
         #[arg(long)]
         strict: bool,
@@ -252,6 +256,7 @@ Examples:
   polygo check app/src/main/res     a directory: format and locales are detected
   polygo check --strict             warnings (length, identical) also fail → exit 1
   polygo check --json | jq .findings
+  polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
@@ -368,9 +373,10 @@ fn main() {
             path,
             locale,
             json,
+            github,
             strict,
             fix,
-        } => check(&cli.root, path, locale, json, strict, fix),
+        } => check(&cli.root, path, locale, json, github, strict, fix),
         Commands::Status {
             locale,
             keys,
@@ -636,6 +642,7 @@ fn check(
     path: Option<PathBuf>,
     locale: Option<Vec<String>>,
     json: bool,
+    github: bool,
     strict: bool,
     fix: bool,
 ) -> Result<()> {
@@ -654,7 +661,7 @@ fn check(
                     None => e.context("no polygo.toml here and nothing to check"),
                     Some(_) => e,
                 })?;
-            if !json {
+            if !json && !github {
                 let what = if cfg.files.len() == 1 && target.as_ref().is_some_and(|t| t.is_file()) {
                     cfg.files[0].path.display().to_string()
                 } else {
@@ -668,12 +675,24 @@ fn check(
             (cfg, r)
         }
     };
+    // Findings name files relative to the checked root; make them relative to where the
+    // user is (so GitHub annotations land on `locales/en.json`, not `en.json`).
+    let prefix = path.as_ref().and_then(|_| {
+        let here = std::path::absolute(".").ok()?;
+        let rel = root.strip_prefix(&here).ok()?;
+        (!rel.as_os_str().is_empty()).then(|| rel.to_string_lossy().replace('\\', "/"))
+    });
     let root = root.as_path();
     let opts = polygo::check::run::Options {
         locales: locale.clone(),
         length_ratio: cfg.length_ratio,
     };
     let mut report = polygo::check::run::run(root, &cfg, &opts)?;
+    if let Some(prefix) = &prefix {
+        for f in &mut report.findings {
+            f.file = format!("{prefix}/{}", f.file);
+        }
+    }
 
     if fix && report.errors > 0 {
         let keys = report.error_keys();
@@ -698,6 +717,8 @@ fn check(
 
     if json {
         println!("{}", serde_json::to_string_pretty(&report)?);
+    } else if github {
+        polygo::check::github::print(&report, strict)?;
     } else if report.findings.is_empty() && report.checked == 0 {
         println!(
             "check: nothing to check yet (no translations in {}); `polygo translate` first",

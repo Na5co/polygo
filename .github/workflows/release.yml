@@ -94,6 +94,12 @@ jobs:
         with:
           name: formula
           path: dist/polygo.rb
+      - name: Move the major tag (Na5co/polygo/action@v0)
+        if: ${{ !contains(github.ref_name, '-') }}
+        run: |
+          major="${GITHUB_REF_NAME%%.*}"
+          git tag -f "$major" "$GITHUB_REF_NAME"
+          git push -f origin "$major"
 
   crates-io:
     needs: release
