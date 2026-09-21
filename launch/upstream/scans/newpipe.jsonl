@@ -1,0 +1,81 @@
+{"repo": "TeamNewPipe/NewPipe", "path": "app/src/main/res", "errors": 80, "warnings": 1083}
+{"file": "res/values-bs/strings.xml", "line": 746, "key": "sign_in_confirm_not_bot_error", "locale": "bs", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-bs/strings.xml", "line": 746, "key": "sign_in_confirm_not_bot_error", "locale": "bs", "code": "placeholders", "severity": "error", "message": "missing %2$s"}
+{"file": "res/values-ckb/strings.xml", "line": 19, "key": "did_you_mean", "locale": "ckb", "code": "placeholders", "severity": "error", "message": "missing %1$s; unexpected $s"}
+{"file": "res/values-ckb/strings.xml", "line": 692, "key": "progressive_load_interval_summary", "locale": "ckb", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/values-cs/strings.xml", "line": 470, "key": "days", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 641, "key": "deleted_downloads_toast", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 646, "key": "download_finished_notification", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 482, "key": "feed_group_dialog_selection_count", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 465, "key": "hours", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 422, "key": "listening", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 460, "key": "minutes", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 697, "key": "new_streams", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 813, "key": "replies", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 452, "key": "seconds", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 126, "key": "subscribers", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 138, "key": "videos", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 132, "key": "views", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 416, "key": "watching", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-es/strings.xml", "line": 850, "key": "sign_in_confirm_not_bot_error", "locale": "es", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-es/strings.xml", "line": 850, "key": "sign_in_confirm_not_bot_error", "locale": "es", "code": "placeholders", "severity": "error", "message": "missing %2$s"}
+{"file": "res/values-eu/strings.xml", "line": 829, "key": "sign_in_confirm_not_bot_error", "locale": "eu", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-eu/strings.xml", "line": 829, "key": "sign_in_confirm_not_bot_error", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %2$s"}
+{"file": "res/values-fi/strings.xml", "line": 307, "key": "import_soundcloud_instructions_hint", "locale": "fi", "code": "markup", "severity": "error", "message": "unexpected <sinun>"}
+{"file": "res/values-in/strings.xml", "line": 831, "key": "sign_in_confirm_not_bot_error", "locale": "in", "code": "markup", "severity": "error", "message": "unexpected </a>"}
+{"file": "res/values-ka/strings.xml", "line": 791, "key": "sign_in_confirm_not_bot_error", "locale": "ka", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-ka/strings.xml", "line": 791, "key": "sign_in_confirm_not_bot_error", "locale": "ka", "code": "placeholders", "severity": "error", "message": "missing %2$s"}
+{"file": "res/values-lt/strings.xml", "line": 429, "key": "days", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 643, "key": "deleted_downloads_toast", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 648, "key": "download_finished_notification", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 580, "key": "feed_group_dialog_selection_count", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 588, "key": "hours", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 260, "key": "listening", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 434, "key": "minutes", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 686, "key": "new_streams", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 824, "key": "replies", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 439, "key": "seconds", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 87, "key": "subscribers", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 92, "key": "videos", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 144, "key": "views", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 266, "key": "watching", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-pl/strings.xml", "line": 499, "key": "days", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-pl/strings.xml", "line": 504, "key": "hours", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-pl/strings.xml", "line": 427, "key": "listening", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-pl/strings.xml", "line": 509, "key": "minutes", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-pl/strings.xml", "line": 456, "key": "seconds", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 475, "key": "days", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 480, "key": "hours", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 429, "key": "listening", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 485, "key": "minutes", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 166, "key": "new_streams", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 458, "key": "seconds", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 148, "key": "subscribers", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 154, "key": "views", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 423, "key": "watching", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-sk/strings.xml", "line": 470, "key": "days", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 636, "key": "deleted_downloads_toast", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 641, "key": "download_finished_notification", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 482, "key": "feed_group_dialog_selection_count", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 465, "key": "hours", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 423, "key": "listening", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 460, "key": "minutes", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 691, "key": "new_streams", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 813, "key": "replies", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 455, "key": "seconds", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 145, "key": "subscribers", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 158, "key": "videos", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 417, "key": "watching", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sr/strings.xml", "line": 862, "key": "sign_in_confirm_not_bot_error", "locale": "sr", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-sr/strings.xml", "line": 862, "key": "sign_in_confirm_not_bot_error", "locale": "sr", "code": "placeholders", "severity": "error", "message": "missing %2$s"}
+{"file": "res/values-uk/strings.xml", "line": 451, "key": "days", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 456, "key": "hours", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 422, "key": "listening", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 461, "key": "minutes", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 466, "key": "seconds", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 179, "key": "subscribers", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 184, "key": "videos", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 199, "key": "views", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-uk/strings.xml", "line": 416, "key": "watching", "locale": "uk", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-vi/strings.xml", "line": 836, "key": "export_subscriptions#plural.other", "locale": "vi", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-vi/strings.xml", "line": 335, "key": "import_soundcloud_instructions_hint", "locale": "vi", "code": "markup", "severity": "error", "message": "unexpected <id>"}

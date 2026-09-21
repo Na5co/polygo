@@ -1,0 +1,5 @@
+{"repo": "f-droid/fdroidclient", "path": "app/src/main/res", "errors": 4, "warnings": 1414}
+{"file": "res/values-cs/strings.xml", "line": 230, "key": "repo_num_apps_text", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-he/strings.xml", "line": 235, "key": "repo_num_apps_text#plural.many", "locale": "he", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-iw/strings.xml", "line": 235, "key": "repo_num_apps_text#plural.many", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-sq/strings.xml", "line": 337, "key": "about_text", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}

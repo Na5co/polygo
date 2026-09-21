@@ -1,0 +1,14 @@
+{"repo": "mastodon/mastodon-ios", "path": "MastodonSDK/Sources/MastodonLocalization/Resources/Localizable.xcstrings", "errors": 13, "warnings": 28541}
+{"file": "App/Localizable.xcstrings", "line": 29142, "key": "Common.Controls.Actions.ShareUser", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 44385, "key": "Common.Controls.Keyboard.Timeline.ToggleFavorite", "locale": "sq", "code": "placeholders", "severity": "error", "message": "unexpected {name}"}
+{"file": "App/Localizable.xcstrings", "line": 44696, "key": "Common.Controls.Keyboard.Timeline.ToggleReblog", "locale": "sq", "code": "placeholders", "severity": "error", "message": "unexpected {name}"}
+{"file": "App/Localizable.xcstrings", "line": 69267, "key": "Common.Controls.Status.UserReblogged", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 69578, "key": "Common.Controls.Status.UserRepliedTo", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 131406, "key": "Scene.Compose.Poll.OptionNumber", "locale": "sq", "code": "placeholders", "severity": "error", "message": "unexpected %2$d"}
+{"file": "App/Localizable.xcstrings", "line": 137011, "key": "Scene.Compose.ReplyingToUser", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 189216, "key": "Scene.Notification.NotificationDescription.RelationshipSeverance#followersCount#plural.other", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$f"}
+{"file": "App/Localizable.xcstrings", "line": 189216, "key": "Scene.Notification.NotificationDescription.RelationshipSeverance#followingCount#plural.other", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$f; unexpected %1$d"}
+{"file": "App/Localizable.xcstrings", "line": 246142, "key": "Scene.Search.Recommend.HashTag.PeopleTalking", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 274755, "key": "Scene.Settings.Overview.Logout", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$@"}
+{"file": "App/Localizable.xcstrings", "line": 114711, "key": "plural.filtered_notification_banner.subtitle#plural.other", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "App/Localizable.xcstrings", "line": 115772, "key": "plural.people_talking#plural.other", "locale": "sq", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
