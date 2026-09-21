@@ -75,6 +75,8 @@ Ten seconds, no setup. It reads the string files your app already has and report
 
 It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines.
 
+**Adopting it on an old catalog:** `polygo check --write-baseline` accepts everything it finds today into `polygo-baseline.json` (commit it). From then on `check` reports and fails only on *new* findings, and tells you when a known one got fixed so you can prune the file. `--no-baseline` shows the whole picture.
+
 **In CI** — one annotation per finding on the PR's Files tab, a table in the job summary, no secrets:
 
 ```yaml

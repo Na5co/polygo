@@ -520,3 +520,81 @@ fn seven_more_bug_classes() {
         "{out}"
     );
 }
+
+#[test]
+fn baseline_hides_known_findings_and_fails_only_on_new_ones() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("locales")).unwrap();
+    fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"a\": \"Hello {{name}}\",\n  \"b\": \"Settings\",\n  \"c\": \"Save\"\n}\n",
+    )
+    .unwrap();
+    // Two problems today: a placeholder error and an identical warning.
+    fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{nome}}\",\n  \"b\": \"Settings\",\n  \"c\": \"Speichern\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let (code, _, _) = check(root, &[]);
+    assert_eq!(code, 1);
+    let (code, out, _) = check(root, &["--write-baseline"]);
+    assert_eq!(code, 0, "{out}");
+    assert!(out.contains("with 2 finding(s)"), "{out}");
+    let b: serde_json::Value =
+        serde_json::from_str(&fs::read_to_string(root.join("polygo-baseline.json")).unwrap())
+            .unwrap();
+    assert_eq!(b["findings"].as_array().unwrap().len(), 2);
+    assert_eq!(b["findings"][0]["code"], "placeholders");
+    assert!(
+        b["findings"][0].get("line").is_none(),
+        "lines must not be pinned"
+    );
+
+    // Same state: clean run, exit 0, the baseline line says what is hidden.
+    let (code, out, _) = check(root, &[]);
+    assert_eq!(code, 0, "{out}");
+    assert!(out.contains("check: ok"), "{out}");
+    assert!(
+        out.contains("baseline: 2 known finding(s) not shown"),
+        "{out}"
+    );
+    let (code, _, _) = check(root, &["--no-baseline"]);
+    assert_eq!(code, 1);
+
+    // A new regression is reported and fails; the old ones stay hidden.
+    fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{nome}}\",\n  \"b\": \"Settings\",\n  \"c\": \"Speichern {{x}}\"\n}\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(root, &[]);
+    assert_eq!(code, 1, "{out}");
+    assert!(out.contains("  c  [de]  placeholders:"), "{out}");
+    assert!(!out.contains("  a  [de]  placeholders:"), "{out}");
+    assert!(out.contains("1 error(s), 0 warning(s)"), "{out}");
+    let (_, out, _) = check(root, &["--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    assert_eq!(v["findings"].as_array().unwrap().len(), 1);
+    assert_eq!(v["baseline"]["known"], 2);
+    assert_eq!(v["baseline"]["stale"], 0);
+
+    // Fixing a known one makes its entry stale, which the output says.
+    fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{name}}\",\n  \"b\": \"Settings\",\n  \"c\": \"Speichern\"\n}\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(root, &[]);
+    assert_eq!(code, 0, "{out}");
+    assert!(
+        out.contains("1 known finding(s) not shown, 1 entry no longer match (fixed?)"),
+        "{out}"
+    );
+}

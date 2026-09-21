@@ -28,6 +28,9 @@ Outputs: `errors`, `warnings`.
 Any CI, not just this Action: `polygo check --github` prints the same annotations, and
 `polygo check --json` / `--strict` work everywhere.
 
+Existing project with hundreds of warnings? Run `polygo check --write-baseline` once and
+commit `polygo-baseline.json`: the Action then fails only on findings that are new.
+
 ## `mode: translate` — translate on push and open a PR
 
 ```yaml
