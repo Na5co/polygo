@@ -392,3 +392,37 @@ fn orphans_fuzzy_states_and_coverage() {
         "{out}"
     );
 }
+
+#[test]
+fn text_output_groups_a_dominating_code() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    let en: String = (1..=25)
+        .map(|i| format!("  \"k{i}\": \"Settings page {i}\""))
+        .collect::<Vec<_>>()
+        .join(",\n");
+    fs::write(
+        dir.path().join("locales/en.json"),
+        format!("{{\n{en}\n}}\n"),
+    )
+    .unwrap();
+    fs::copy(
+        dir.path().join("locales/en.json"),
+        dir.path().join("locales/de.json"),
+    )
+    .unwrap();
+    let (code, out, _) = check(dir.path(), &["locales"]);
+    assert_eq!(code, 0);
+    assert_eq!(out.matches("identical:").count(), 20, "{out}");
+    assert!(
+        out.contains("… 5 more identical (first 20 of each shown; --all lists every one"),
+        "{out}"
+    );
+    assert!(out.contains("0 error(s), 25 warning(s)"), "{out}");
+    let (_, out, _) = check(dir.path(), &["locales", "--all"]);
+    assert_eq!(out.matches("identical:").count(), 25, "{out}");
+    assert!(!out.contains("more identical"), "{out}");
+    let (_, out, _) = check(dir.path(), &["locales", "--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    assert_eq!(v["findings"].as_array().unwrap().len(), 25);
+}
