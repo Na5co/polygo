@@ -293,3 +293,102 @@ fn android_escapes_that_break_or_bend_the_build() {
             .contains("unescaped apostrophe")
     );
 }
+
+#[test]
+fn orphans_fuzzy_states_and_coverage() {
+    let dir = tempfile::tempdir().unwrap();
+    // i18next: an orphan key, a plural form the locale needs (not an orphan), a missing key.
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    fs::write(
+        dir.path().join("locales/en.json"),
+        "{\n  \"title\": \"Photos\",\n  \"photos_one\": \"{{count}} photo\",\n  \"photos_other\": \"{{count}} photos\",\n  \"later\": \"Later\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("locales/pl.json"),
+        "{\n  \"title\": \"Zdjęcia\",\n  \"photos_one\": \"{{count}} zdjęcie\",\n  \"photos_few\": \"{{count}} zdjęcia\",\n  \"photos_many\": \"{{count}} zdjęć\",\n  \"photos_other\": \"{{count}} zdjęcia\",\n  \"old_button\": \"Stary\"\n}\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(dir.path(), &["locales"]);
+    assert_eq!(code, 0, "{out}");
+    assert!(
+        out.contains("warning locales/pl.json:7  old_button  [pl]  orphan: not in the source file"),
+        "{out}"
+    );
+    assert!(
+        !out.contains("photos_few"),
+        "plural form flagged as orphan:\n{out}"
+    );
+    assert!(out.contains("coverage: pl 83% (1 of 6 missing)"), "{out}");
+    let (_, out, _) = check(dir.path(), &["locales", "--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    assert_eq!(v["coverage"]["pl"], serde_json::json!([5, 6]));
+
+    // gettext: fuzzy.
+    let po = dir.path().join("locale");
+    fs::create_dir_all(&po).unwrap();
+    fs::write(
+        po.join("en.po"),
+        "msgid \"\"\nmsgstr \"\"\n\"Language: en\\n\"\n\nmsgid \"Save\"\nmsgstr \"\"\n\nmsgid \"Open\"\nmsgstr \"\"\n",
+    )
+    .unwrap();
+    fs::write(
+        po.join("de.po"),
+        "msgid \"\"\nmsgstr \"\"\n\"Language: de\\n\"\n\n#, fuzzy\nmsgid \"Save\"\nmsgstr \"Speichern\"\n\nmsgid \"Open\"\nmsgstr \"Öffnen\"\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(dir.path(), &["locale"]);
+    assert_eq!(code, 0, "{out}");
+    assert!(
+        out.contains("warning locale/de.po:6  Save  [de]  fuzzy: marked fuzzy"),
+        "{out}"
+    );
+    assert!(!out.contains("coverage:"), "fully covered:\n{out}");
+
+    // xcstrings: needs_review and a stale key.
+    let xc = dir.path().join("App");
+    fs::create_dir_all(&xc).unwrap();
+    fs::write(
+        xc.join("Localizable.xcstrings"),
+        r#"{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Open" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Öffnen"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichern"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
+"#,
+    )
+    .unwrap();
+    let (_, out, _) = check(dir.path(), &["App/Localizable.xcstrings"]);
+    assert!(
+        out.contains(
+            "App/Localizable.xcstrings:6  Open  [de]  state: marked `needs_review` in Xcode"
+        ),
+        "{out}"
+    );
+    assert!(
+        out.contains("App/Localizable.xcstrings:14  Save  [en]  state: extractionState is stale"),
+        "{out}"
+    );
+}

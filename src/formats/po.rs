@@ -19,6 +19,8 @@ pub struct Entry {
     pub msgstr: String,
     /// `#.` extracted comments and `#:` references, joined.
     pub comment: Option<String>,
+    /// `#, fuzzy`: gettext treats the msgstr as untranslated at runtime.
+    pub fuzzy: bool,
     /// Span of the singular msgstr value region (from its first quote to the end of its last line).
     msgstr_span: Range<usize>,
     edited: Option<String>,
@@ -60,10 +62,13 @@ pub fn parse(text: &str) -> Result<Document> {
         // Collect comments.
         let mut comments: Vec<String> = Vec::new();
         let mut obsolete = false;
+        let mut fuzzy = false;
         while i < n && lines[i].1.starts_with('#') {
             let l = lines[i].1;
             if l.starts_with("#~") {
                 obsolete = true;
+            } else if let Some(f) = l.strip_prefix("#,") {
+                fuzzy |= f.split(',').any(|x| x.trim() == "fuzzy");
             } else if let Some(c) = l.strip_prefix("#.") {
                 comments.push(c.trim().to_string());
             } else if let Some(r) = l.strip_prefix("#:") {
@@ -147,6 +152,7 @@ pub fn parse(text: &str) -> Result<Document> {
             } else {
                 Some(comments.join(" · "))
             },
+            fuzzy,
             msgstr_span: span,
             edited: None,
             is_plural,
@@ -294,6 +300,7 @@ impl Document {
             plural: None,
             msgstr: msgstr.to_string(),
             comment: comment.map(str::to_string),
+            fuzzy: false,
             msgstr_span: value_start..value_end,
             edited: None,
             is_plural: false,
@@ -516,6 +523,7 @@ impl Document {
             msgid: msgid.to_string(),
             plural: Some(msgid_plural.to_string()),
             msgstr: String::new(),
+            fuzzy: false,
             comment: comment.map(str::to_string),
             msgstr_span: span0,
             edited: None,

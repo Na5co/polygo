@@ -31,6 +31,8 @@ pub struct Report {
     pub warnings: usize,
     /// Translations that were looked at (unit × locale with a value).
     pub checked: usize,
+    /// locale → (translated, applicable units): what `status` would say is missing.
+    pub coverage: BTreeMap<String, (usize, usize)>,
 }
 
 impl Report {
@@ -74,6 +76,14 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
     let mut locator = crate::check::locate::Locator::new(root);
+    for locale in &locales {
+        let total = units.iter().filter(|u| u.applies_to(locale)).count();
+        let done = units
+            .iter()
+            .filter(|u| u.applies_to(locale) && u.translations.contains_key(locale))
+            .count();
+        report.coverage.insert(locale.clone(), (done, total));
+    }
 
     // Per-unit text + placeholder checks on every existing translation. `(code, severity,
     // message)` are collected first and located once, since locating reads the file.
@@ -151,6 +161,34 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         match spec.format {
             Format::Xcstrings => {
                 let doc = formats::xcstrings::parse(&std::fs::read_to_string(&path)?)?;
+                // Xcode's own bookkeeping: a unit marked needs_review / stale, or a key
+                // whose extractionState is stale (no longer found in the code).
+                for (key, locale, state) in xcstrings_states(&doc, &cfg.source_locale) {
+                    if skip.matches(&spec.path, &key)
+                        || (!locale.is_empty() && !locales.contains(&locale))
+                    {
+                        continue;
+                    }
+                    let (file, line) = locator.locate(spec, &key, &locale);
+                    let (locale, message) = if locale.is_empty() {
+                        (
+                            cfg.source_locale.clone(),
+                            "extractionState is stale: Xcode no longer finds this key in the code"
+                                .to_string(),
+                        )
+                    } else {
+                        (locale, format!("marked `{state}` in Xcode, shipped as is"))
+                    };
+                    report.push(Finding {
+                        file,
+                        line,
+                        key,
+                        locale,
+                        code: "state",
+                        severity: "warning",
+                        message,
+                    });
+                }
                 for (key, locale, cats) in plurals::xcstrings_plurals(&doc) {
                     if !locales.contains(&locale) || skip.matches(&spec.path, &key) {
                         continue;
@@ -294,6 +332,66 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
             }
             Format::Arb | Format::Po | Format::Resx => {}
         }
+        // Keys a locale file has and the source does not: dead translations that
+        // accumulate forever. And gettext's fuzzy flag, which ships as untranslated.
+        if let Some(template) = &spec.locale_path {
+            let text = std::fs::read_to_string(&path)?;
+            let source_keys = keys_of(spec.format, &text)?;
+            for locale in &locales {
+                let lp = root.join(project::locale_file(template, locale));
+                if !lp.exists() {
+                    continue;
+                }
+                let ltext = std::fs::read_to_string(&lp)?;
+                for key in keys_of(spec.format, &ltext)? {
+                    if source_keys.contains(&key) || skip.matches(&spec.path, &key) {
+                        continue;
+                    }
+                    // `photos_few` next to a source `photos_one`/`photos_other` is a
+                    // plural form the locale needs, not an orphan.
+                    if spec.format == Format::Json
+                        && let Some((base, _)) = plurals::i18next_split(&key)
+                        && source_keys.contains(&format!("{base}_other"))
+                    {
+                        continue;
+                    }
+                    let (file, line) = locator.locate(spec, &key, locale);
+                    report.push(Finding {
+                        file,
+                        line,
+                        key,
+                        locale: locale.clone(),
+                        code: "orphan",
+                        severity: "warning",
+                        message: "not in the source file: delete it, or restore the source key"
+                            .into(),
+                    });
+                }
+                if spec.format == Format::Po {
+                    let doc = formats::po::parse(&ltext)?;
+                    for e in doc
+                        .entries
+                        .iter()
+                        .filter(|e| e.fuzzy && !e.msgid.is_empty())
+                    {
+                        let key = e.key();
+                        if skip.matches(&spec.path, &key) {
+                            continue;
+                        }
+                        let (file, line) = locator.locate(spec, &key, locale);
+                        report.push(Finding {
+                            file,
+                            line,
+                            key,
+                            locale: locale.clone(),
+                            code: "fuzzy",
+                            severity: "warning",
+                            message: "marked fuzzy: gettext shows the source text instead; review it and drop the flag".into(),
+                        });
+                    }
+                }
+            }
+        }
     }
     report.findings.sort_by(|a, b| {
         (&a.file, &a.locale, &a.key, a.code).cmp(&(&b.file, &b.locale, &b.key, b.code))
@@ -371,4 +469,75 @@ fn is_android_reference(t: &str) -> bool {
         && name
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '.')
+}
+
+/// Every key a file defines, for the orphan check.
+fn keys_of(format: Format, text: &str) -> Result<std::collections::BTreeSet<String>> {
+    Ok(match format {
+        Format::Json => formats::json::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.key())
+            .collect(),
+        Format::Android => formats::android::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.name.clone())
+            .collect(),
+        Format::Arb => formats::arb::values(&formats::arb::parse(text)?)
+            .into_keys()
+            .collect(),
+        Format::Po => formats::po::parse(text)?
+            .entries
+            .iter()
+            .filter(|e| !e.msgid.is_empty())
+            .map(|e| e.key())
+            .collect(),
+        Format::Resx => formats::resx::values(&formats::resx::parse(text)?)
+            .into_keys()
+            .collect(),
+        Format::Xcstrings => Default::default(),
+    })
+}
+
+/// `(key, locale, state)` for every string unit in a target locale whose state is not
+/// `translated`, and `(key, "", "stale")` for keys with `extractionState = stale`.
+fn xcstrings_states(
+    doc: &formats::xcstrings::Document,
+    source_locale: &str,
+) -> Vec<(String, String, String)> {
+    let mut out = Vec::new();
+    let Some(strings) = doc.root.get("strings").and_then(|v| v.as_object()) else {
+        return out;
+    };
+    for (key, entry) in strings {
+        if entry.get("extractionState").and_then(|v| v.as_str()) == Some("stale") {
+            out.push((key.clone(), String::new(), "stale".into()));
+        }
+        let Some(locs) = entry.get("localizations").and_then(|v| v.as_object()) else {
+            continue;
+        };
+        for (locale, l) in locs {
+            if locale == source_locale {
+                continue;
+            }
+            let mut states = Vec::new();
+            if let Some(s) = l.pointer("/stringUnit/state").and_then(|v| v.as_str()) {
+                states.push(s);
+            }
+            if let Some(p) = l.pointer("/variations/plural").and_then(|v| v.as_object()) {
+                states.extend(
+                    p.values()
+                        .filter_map(|c| c.pointer("/stringUnit/state").and_then(|v| v.as_str())),
+                );
+            }
+            if let Some(s) = states
+                .into_iter()
+                .find(|s| matches!(*s, "needs_review" | "stale" | "new"))
+            {
+                out.push((key.clone(), locale.clone(), s.to_string()));
+            }
+        }
+    }
+    out
 }
