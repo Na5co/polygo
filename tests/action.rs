@@ -162,11 +162,13 @@ fn action_check_mode_annotates_and_fails_on_errors() {
     let stdout = String::from_utf8_lossy(&out.stdout);
     // One annotation per finding, on the file, with key and locale in the title.
     assert!(
-        stdout.contains("::error file=locales/en.json,title=polygo placeholders [de]::greet: "),
+        stdout.contains(
+            "::error file=locales/de.json,line=2,title=polygo placeholders [de]::greet: "
+        ),
         "{stdout}"
     );
     assert!(
-        stdout.contains("::warning file=locales/en.json,title=polygo identical [de]::ok: "),
+        stdout.contains("::warning file=locales/de.json,line=3,title=polygo identical [de]::ok: "),
         "{stdout}"
     );
     assert!(
@@ -180,7 +182,7 @@ fn action_check_mode_annotates_and_fails_on_errors() {
         "{md}"
     );
     assert!(
-        md.contains("| ❌ | `locales/en.json` | `greet` | de | placeholders: "),
+        md.contains("| ❌ | `locales/de.json:2` | `greet` | de | placeholders: "),
         "{md}"
     );
     let o = fs::read_to_string(&outputs).unwrap();
@@ -194,7 +196,7 @@ fn action_check_mode_annotates_and_fails_on_errors() {
     assert_eq!(out.status.code(), Some(1));
     assert!(
         String::from_utf8_lossy(&out.stdout)
-            .contains("::error file=locales/en.json,title=polygo identical [de]")
+            .contains("::error file=locales/de.json,line=3,title=polygo identical [de]")
     );
 
     // Fixed: exit 0, green summary.

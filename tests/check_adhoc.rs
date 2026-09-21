@@ -175,7 +175,8 @@ fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
         String::from_utf8_lossy(&out.stderr)
     );
     let v: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
-    assert_eq!(v["findings"][0]["file"], "app/locales/en.json");
+    assert_eq!(v["findings"][0]["file"], "app/locales/de.json");
+    assert_eq!(v["findings"][0]["line"], 2);
     // A tree outside the cwd: the file is reported by an absolute path, not `en.json`.
     let elsewhere = dir.path().join("elsewhere");
     fs::create_dir_all(&elsewhere).unwrap();
@@ -186,7 +187,7 @@ fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
     let v: serde_json::Value = serde_json::from_str(&out).unwrap();
     let file = v["findings"][0]["file"].as_str().unwrap();
     assert!(
-        file.ends_with("/app/locales/en.json") && file.starts_with('/'),
+        file.ends_with("/app/locales/de.json") && file.starts_with('/'),
         "{file}"
     );
     // --strict --github: the warning becomes an error in the annotation AND the totals.
@@ -203,7 +204,7 @@ fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
     let (code, out, _) = check(&app, &["locales", "--github", "--strict"]);
     assert_eq!(code, 1);
     assert!(
-        out.contains("::error file=locales/en.json,title=polygo identical [de]"),
+        out.contains("::error file=locales/de.json,line=2,title=polygo identical [de]"),
         "{out}"
     );
     assert!(
@@ -233,5 +234,62 @@ fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
     assert!(
         err.contains("run `polygo check --fix` without a path"),
         "{err}"
+    );
+}
+
+#[test]
+fn android_escapes_that_break_or_bend_the_build() {
+    let dir = tempfile::tempdir().unwrap();
+    let res = dir.path().join("res");
+    fs::create_dir_all(res.join("values")).unwrap();
+    fs::create_dir_all(res.join("values-de")).unwrap();
+    fs::write(
+        res.join("values/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"a\">Don\\'t panic</string>\n    <string name=\"b\">\"Quoted 'apostrophe' is fine\"</string>\n    <string name=\"c\">Stray quote\"</string>\n    <string name=\"d\">Quotes in <a href='x' title=\"y\">tag attributes</a> pass</string>\n    <string name=\"e\"><![CDATA[Don't touch 'CDATA']]></string>\n    <string name=\"f\">@string/other</string>\n    <string-array name=\"g\">\n        <item>? really</item>\n        <item>fine</item>\n    </string-array>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(
+        res.join("values-de/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"a\">Keine Panik, das geht schon</string>\n    <string name=\"b\">Geht's? Nein</string>\n</resources>\n",
+    )
+    .unwrap();
+    let (code, out, err) = check(dir.path(), &["res", "--json"]);
+    assert_eq!(code, 1, "{out}{err}");
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let escapes: Vec<(String, String, String, u64)> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|f| f["code"] == "escape")
+        .map(|f| {
+            (
+                f["key"].as_str().unwrap().to_string(),
+                f["locale"].as_str().unwrap().to_string(),
+                f["severity"].as_str().unwrap().to_string(),
+                f["line"].as_u64().unwrap(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        escapes,
+        [
+            ("b".into(), "de".into(), "error".into(), 4), // Geht's in the German file
+            ("c".into(), "en".into(), "warning".into(), 5),
+            ("g".into(), "en".into(), "error".into(), 9),
+        ],
+        "{out}"
+    );
+    let unescaped = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["key"] == "b" && f["locale"] == "de")
+        .unwrap();
+    assert_eq!(unescaped["file"], "res/values-de/strings.xml");
+    assert!(
+        unescaped["message"]
+            .as_str()
+            .unwrap()
+            .contains("unescaped apostrophe")
     );
 }

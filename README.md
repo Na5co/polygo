@@ -38,7 +38,7 @@ Works with `.xcstrings`, Android `strings.xml`, Flutter ARB, i18next JSON, gette
 - **Only the diff you meant.** Writes into your existing files byte for byte. A lockfile records every source string, so editing one English string re-translates one string, and hand edits are never overwritten.
 - **Context from your code.** Before translating "Open" it finds `Button("Open")` and tells the model it's a menu item, and attaches similar strings you already translated. In a blind test judged by a second model this won 9 to 5.
 - **Plurals done per language.** Polish gets `one`, `few`, `many`, `other`; Japanese gets one form. Written into `.xcstrings` variations, `<plurals>`, `msgstr[n]`.
-- **Checks the model can't talk its way past.** Placeholders, CLDR plural sets, empty, identical, half-translated (`ようこそ back!`). Wrong twice and it's quarantined, not written.
+- **Checks the model can't talk its way past.** Placeholders, CLDR plural sets, markup tags, empty, identical, half-translated (`ようこそ back!`), dropped trailing `:`/`…`/space, Android escapes that fail `aapt`. Every finding has a file and line. Wrong twice and it's quarantined, not written.
 - **A second opinion.** `polygo audit` has a different model grade each translation 1 to 5 with a reason. `--fix` redoes the flagged ones.
 - **Runs in CI.** The [GitHub Action](action/README.md) in `mode: check` annotates every broken string on the pull request and fails the build, no secrets needed; in `mode: translate` it opens a PR with new translations and a coverage table. `polygo check --github` does the annotations from any workflow; a pre-commit snippet is in the same page.
 
@@ -51,7 +51,7 @@ error   Localizable.xcstrings  open.in                  [fr]  placeholders: miss
 error   Localizable.xcstrings  permission.popup.title   [it]  placeholders: missing %#@…@
 error   Localizable.xcstrings  fire.dialog.history.count [pl] placeholders: missing %#@…@
 …
-12 error(s), 379 warning(s)
+12 error(s), 405 warning(s)
 ```
 
 Across DuckDuckGo and Ice Cubes: 32 placeholder bugs and 44 missing Slavic plural forms, all in production. Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md).

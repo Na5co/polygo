@@ -11,7 +11,12 @@ use std::path::Path;
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub struct Finding {
+    /// The file a fix would be made in: the locale file for per-locale formats, the
+    /// catalog for `.xcstrings`.
     pub file: String,
+    /// Line of the key in `file`, when it could be found there.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line: Option<usize>,
     pub key: String,
     pub locale: String,
     pub code: &'static str,
@@ -68,39 +73,32 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     let skip = cfg.key_skip()?;
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
-    // Per-unit text + placeholder checks on every existing translation.
+    let mut locator = crate::check::locate::Locator::new(root);
+
+    // Per-unit text + placeholder checks on every existing translation. `(code, severity,
+    // message)` are collected first and located once, since locating reads the file.
     for u in &units {
-        let (idx, _) = project::split_key(cfg, &u.key);
-        let file = cfg.files[idx].path.display().to_string();
+        let (idx, local_key) = project::split_key(cfg, &u.key);
         for locale in &locales {
             let Some(t) = u.translations.get(locale) else {
                 continue;
             };
             report.checked += 1;
+            let mut found: Vec<(&'static str, &'static str, String)> = Vec::new();
             if let Some(max) = crate::core::directives(u.comment.as_deref()).max_chars
                 && t.chars().count() > max
             {
-                report.push(Finding {
-                    file: file.clone(),
-                    key: u.key.clone(),
-                    locale: locale.clone(),
-                    code: "length",
-                    severity: "error",
-                    message: format!(
+                found.push((
+                    "length",
+                    "error",
+                    format!(
                         "{} chars, but the key allows at most {max} (polygo:max)",
                         t.chars().count()
                     ),
-                });
+                ));
             }
             if let Some(m) = placeholders::compare(&u.source, t) {
-                report.push(Finding {
-                    file: file.clone(),
-                    key: u.key.clone(),
-                    locale: locale.clone(),
-                    code: "placeholders",
-                    severity: "error",
-                    message: m.to_string(),
-                });
+                found.push(("placeholders", "error", m.to_string()));
             }
             // A translation polygo wrote and confirmed (recorded in the lockfile) is not
             // re-flagged as identical: the model was asked twice and kept it.
@@ -113,37 +111,42 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 if f.code == "identical" && confirmed {
                     continue;
                 }
-                report.push(Finding {
-                    file: file.clone(),
-                    key: u.key.clone(),
-                    locale: locale.clone(),
-                    code: f.code,
-                    severity: match f.severity {
-                        text::Severity::Error => "error",
-                        text::Severity::Warning => "warning",
-                    },
-                    message: f.message,
-                });
+                let sev = match f.severity {
+                    text::Severity::Error => "error",
+                    text::Severity::Warning => "warning",
+                };
+                found.push((f.code, sev, f.message));
             }
             for (arg, cats) in plurals::icu_cases(t) {
                 let missing = plurals::missing(locale, &cats);
                 if !missing.is_empty() {
-                    report.push(Finding {
-                        file: file.clone(),
-                        key: u.key.clone(),
-                        locale: locale.clone(),
-                        code: "plural",
-                        severity: "error",
-                        message: format!("ICU plural `{arg}` is missing {}", missing.join(", ")),
-                    });
+                    found.push((
+                        "plural",
+                        "error",
+                        format!("ICU plural `{arg}` is missing {}", missing.join(", ")),
+                    ));
                 }
+            }
+            if found.is_empty() {
+                continue;
+            }
+            let (file, line) = locator.locate(&cfg.files[idx], local_key, locale);
+            for (code, severity, message) in found {
+                report.push(Finding {
+                    file: file.clone(),
+                    line,
+                    key: u.key.clone(),
+                    locale: locale.clone(),
+                    code,
+                    severity,
+                    message,
+                });
             }
         }
     }
 
     // Format-level plural structures.
     for spec in &cfg.files {
-        let file = spec.path.display().to_string();
         let path = root.join(&spec.path);
         match spec.format {
             Format::Xcstrings => {
@@ -154,8 +157,10 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                     let missing = plurals::missing(&locale, &cats);
                     if !missing.is_empty() {
+                        let (file, line) = locator.locate(spec, &key, &locale);
                         report.push(Finding {
-                            file: file.clone(),
+                            file,
+                            line,
                             key,
                             locale,
                             code: "plural",
@@ -166,6 +171,38 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 }
             }
             Format::Android => {
+                // What aapt rejects at build time: an apostrophe or a double quote that
+                // is not escaped, a leading @ or ? (a resource reference). The source
+                // file breaks the build exactly like a translation does.
+                let escapes =
+                    |doc: &formats::android::Document| -> Vec<(String, &'static str, String)> {
+                        let mut out = Vec::new();
+                        for e in &doc.entries {
+                            if !e.translatable || skip.matches(&spec.path, &e.name) {
+                                continue;
+                            }
+                            for v in &e.values {
+                                if let Some((sev, m)) = android_escape_problem(&v.raw) {
+                                    out.push((e.name.clone(), sev, m));
+                                }
+                            }
+                        }
+                        out
+                    };
+                let source = formats::android::parse(&std::fs::read_to_string(&path)?)
+                    .with_context(|| format!("parsing {}", path.display()))?;
+                for (name, severity, m) in escapes(&source) {
+                    let (file, line) = locator.locate(spec, &name, &cfg.source_locale);
+                    report.push(Finding {
+                        file,
+                        line,
+                        key: name,
+                        locale: cfg.source_locale.clone(),
+                        code: "escape",
+                        severity,
+                        message: m,
+                    });
+                }
                 let Some(template) = &spec.locale_path else {
                     continue;
                 };
@@ -176,14 +213,28 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                     let doc = formats::android::parse(&std::fs::read_to_string(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
+                    for (name, severity, m) in escapes(&doc) {
+                        let (file, line) = locator.locate(spec, &name, locale);
+                        report.push(Finding {
+                            file,
+                            line,
+                            key: name,
+                            locale: locale.clone(),
+                            code: "escape",
+                            severity,
+                            message: m,
+                        });
+                    }
                     for (name, cats) in plurals::android_plurals(&doc) {
                         if skip.matches(&spec.path, &name) {
                             continue;
                         }
                         let missing = plurals::missing(locale, &cats);
                         if !missing.is_empty() {
+                            let (file, line) = locator.locate(spec, &name, locale);
                             report.push(Finding {
-                                file: file.clone(),
+                                file,
+                                line,
                                 key: name,
                                 locale: locale.clone(),
                                 code: "plural",
@@ -219,8 +270,11 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         let cats = groups.get(base).cloned().unwrap_or_default();
                         let missing = plurals::missing(locale, &cats);
                         if !missing.is_empty() {
+                            let (file, line) =
+                                locator.locate(spec, &format!("{base}_other"), locale);
                             report.push(Finding {
-                                file: file.clone(),
+                                file,
+                                line,
                                 key: base.clone(),
                                 locale: locale.clone(),
                                 code: "plural",
@@ -245,4 +299,76 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         (&a.file, &a.locale, &a.key, a.code).cmp(&(&b.file, &b.locale, &b.key, b.code))
     });
     Ok(report)
+}
+
+/// Android resource strings that `aapt` refuses: an unescaped `'` (must be `\'` or the
+/// whole value wrapped in `"…"`), an unescaped `"` in an unquoted value, or a value
+/// starting with `@` / `?`, which is read as a resource reference. Tags, CDATA and
+/// entities are left alone.
+pub fn android_escape_problem(raw: &str) -> Option<(&'static str, String)> {
+    let t = raw.trim();
+    if t.starts_with("<![CDATA[") {
+        return None;
+    }
+    // `@string/name`, `?attr/name`, `@android:string/ok` are references and fine; any
+    // other leading @ or ? makes aapt look for a resource that does not exist.
+    if (t.starts_with('@') || t.starts_with('?')) && !is_android_reference(t) {
+        return Some((
+            "error",
+            format!(
+                "starts with `{}`: Android reads that as a resource reference; write `\\{}`",
+                &t[..1],
+                &t[..1]
+            ),
+        ));
+    }
+    let quoted = t.len() >= 2 && t.starts_with('"') && t.ends_with('"');
+    if quoted {
+        return None;
+    }
+    let b = t.as_bytes();
+    let mut i = 0;
+    let mut in_tag = false;
+    let mut dq = 0;
+    while i < b.len() {
+        match b[i] {
+            b'\\' => i += 1,
+            b'<' => in_tag = true,
+            b'>' => in_tag = false,
+            b'\'' if !in_tag => {
+                return Some((
+                    "error",
+                    "unescaped apostrophe: Android needs `\\'` (or wrap the whole string in double quotes)"
+                        .into(),
+                ));
+            }
+            b'"' if !in_tag => dq += 1,
+            _ => {}
+        }
+        i += 1;
+    }
+    // An unescaped " toggles whitespace mode and is dropped from the text; a stray one
+    // silently disappears from the UI (DuckDuckGo and NewPipe both ship one).
+    if dq % 2 == 1 {
+        return Some((
+            "warning",
+            "stray double quote: Android drops it from the text; escape it as `\\\"`".into(),
+        ));
+    }
+    None
+}
+
+fn is_android_reference(t: &str) -> bool {
+    let body = &t[1..];
+    let body = body.strip_prefix('+').unwrap_or(body);
+    let (pkg_type, name) = match body.split_once('/') {
+        Some(x) => x,
+        None => return false,
+    };
+    let ty = pkg_type.rsplit(':').next().unwrap_or(pkg_type);
+    !name.is_empty()
+        && ty.chars().all(|c| c.is_ascii_lowercase())
+        && name
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '.')
 }

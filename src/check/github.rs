@@ -37,9 +37,10 @@ pub fn print(report: &Report, strict: bool) -> Result<()> {
     for f in &report.findings {
         let sev = f.severity;
         let key: String = f.key.chars().take(80).collect();
+        let line = f.line.map(|l| format!(",line={l}")).unwrap_or_default();
         writeln!(
             out,
-            "::{sev} file={},title={}::{}",
+            "::{sev} file={}{line},title={}::{}",
             prop(&f.file),
             prop(&format!("polygo {} [{}]", f.code, f.locale)),
             msg(&format!("{key}: {}", f.message))
@@ -85,7 +86,10 @@ pub fn summary(report: &Report) -> String {
                 } else {
                     "⚠️"
                 },
-                cell(&f.file),
+                match f.line {
+                    Some(l) => format!("{}:{l}", cell(&f.file)),
+                    None => cell(&f.file),
+                },
                 cell(&key),
                 f.locale,
                 f.code,

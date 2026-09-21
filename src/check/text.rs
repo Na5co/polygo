@@ -64,6 +64,27 @@ pub fn check_text(
             ),
         });
     }
+    if let Some(m) = markup_mismatch(src, tr) {
+        out.push(Finding {
+            code: "markup",
+            severity: Severity::Error,
+            message: m,
+        });
+    }
+    if let Some(m) = edge_whitespace_mismatch(source, translation) {
+        out.push(Finding {
+            code: "whitespace",
+            severity: Severity::Warning,
+            message: m,
+        });
+    }
+    if let Some(m) = punctuation_dropped(src, tr) {
+        out.push(Finding {
+            code: "punctuation",
+            severity: Severity::Warning,
+            message: m,
+        });
+    }
     let s = src.chars().count() as f64;
     let t = tr.chars().count() as f64;
     let slack = SLACK as f64;
@@ -325,3 +346,157 @@ const LOANWORDS: &[&str] = &[
     "dark",
     "light",
 ];
+
+// ---- markup ---------------------------------------------------------------------------------
+
+/// Tags in order: `b`, `/b`, `br` (self-closing collapses to its name). Attributes are
+/// ignored: `<a href="…">` and `<a href="…" target="_blank">` are the same tag. Only
+/// `<name …>` with a letter first counts, so `a < b` is not a tag.
+fn tags(text: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut rest = text;
+    while let Some(i) = rest.find('<') {
+        rest = &rest[i + 1..];
+        let (closing, body) = match rest.strip_prefix('/') {
+            Some(b) => (true, b),
+            None => (false, rest),
+        };
+        let name: String = body
+            .chars()
+            .take_while(|c| c.is_ascii_alphanumeric() || *c == ':' || *c == '-' || *c == '_')
+            .collect();
+        if name.is_empty() || !name.chars().next().is_some_and(|c| c.is_ascii_alphabetic()) {
+            continue;
+        }
+        let Some(end) = body.find('>') else { break };
+        if body[..end].contains('<') {
+            continue;
+        }
+        out.push(if closing {
+            format!("/{}", name.to_ascii_lowercase())
+        } else {
+            name.to_ascii_lowercase()
+        });
+        rest = &body[end + 1..];
+    }
+    out
+}
+
+/// Every tag of the source must appear in the translation the same number of times.
+/// A dropped `</b>` or `<a href>` breaks rendering in every UI framework.
+pub fn markup_mismatch(source: &str, translation: &str) -> Option<String> {
+    let (s, t) = (tags(source), tags(translation));
+    if s.is_empty() && t.is_empty() {
+        return None;
+    }
+    fn count(v: &[String]) -> std::collections::BTreeMap<&str, i32> {
+        let mut m = std::collections::BTreeMap::new();
+        for x in v {
+            *m.entry(x.as_str()).or_default() += 1;
+        }
+        m
+    }
+    let (sc, tc) = (count(&s), count(&t));
+    let mut missing = Vec::new();
+    let mut extra = Vec::new();
+    for (k, n) in &sc {
+        let d = n - tc.get(k).copied().unwrap_or(0);
+        if d > 0 {
+            missing.push(format!("<{k}>"));
+        }
+    }
+    for (k, n) in &tc {
+        let d = n - sc.get(k).copied().unwrap_or(0);
+        if d > 0 {
+            extra.push(format!("<{k}>"));
+        }
+    }
+    if missing.is_empty() && extra.is_empty() {
+        return None;
+    }
+    let mut parts = Vec::new();
+    if !missing.is_empty() {
+        parts.push(format!("missing {}", missing.join(", ")));
+    }
+    if !extra.is_empty() {
+        parts.push(format!("unexpected {}", extra.join(", ")));
+    }
+    Some(parts.join("; "))
+}
+
+// ---- edges ----------------------------------------------------------------------------------
+
+fn edge(text: &str) -> (String, String) {
+    let lead: String = text.chars().take_while(|c| c.is_whitespace()).collect();
+    let trail: String = text
+        .chars()
+        .rev()
+        .take_while(|c| c.is_whitespace())
+        .collect::<Vec<_>>()
+        .into_iter()
+        .rev()
+        .collect();
+    (lead, trail)
+}
+
+fn show_ws(s: &str) -> String {
+    s.replace(' ', "␠")
+        .replace('\n', "\\n")
+        .replace('\t', "\\t")
+}
+
+/// Leading/trailing whitespace that the source has and the translation lacks, or the
+/// other way round: strings glued together in the UI lose their space, or a trailing
+/// newline goes missing.
+pub fn edge_whitespace_mismatch(source: &str, translation: &str) -> Option<String> {
+    if source.trim().is_empty() || translation.trim().is_empty() {
+        return None;
+    }
+    let (sl, st) = edge(source);
+    let (tl, tt) = edge(translation);
+    let mut parts = Vec::new();
+    if sl != tl {
+        parts.push(format!(
+            "leading \"{}\" vs \"{}\" in the source",
+            show_ws(&tl),
+            show_ws(&sl)
+        ));
+    }
+    if st != tt {
+        parts.push(format!(
+            "trailing \"{}\" vs \"{}\" in the source",
+            show_ws(&tt),
+            show_ws(&st)
+        ));
+    }
+    (!parts.is_empty()).then(|| parts.join("; "))
+}
+
+/// The source ends with sentence punctuation and the translation ends with none at all.
+/// Any script's terminal mark counts, so `。`, `؟`, `।` and a closing quote/bracket pass.
+pub fn punctuation_dropped(source: &str, translation: &str) -> Option<String> {
+    const SOURCE_MARKS: &[char] = &[':', '.', '!', '?', '…'];
+    const ANY_MARK: &[char] = &[
+        ':', '.', '!', '?', '…', ';', ',', '。', '！', '？', '：', '、', '،', '؟', '।', '॥',
+        '\u{FF0C}', '"', '\'', '”', '’', '»', ')', ']', '}', '>', '*', '_', '~',
+    ];
+    let last_src = source.chars().rev().find(|c| !c.is_whitespace())?;
+    if !SOURCE_MARKS.contains(&last_src) {
+        return None;
+    }
+    // A placeholder at the end (`Total: %d`) is a value, not a sentence.
+    if source.trim_end().ends_with(['}', ')', '@', 'd', 's', 'f']) {
+        return None;
+    }
+    // Short labels like "OK." are not sentences worth policing.
+    if source.chars().filter(|c| c.is_alphabetic()).count() < 4 {
+        return None;
+    }
+    let last_tr = translation.chars().rev().find(|c| !c.is_whitespace())?;
+    if ANY_MARK.contains(&last_tr) || !last_tr.is_alphanumeric() {
+        return None;
+    }
+    Some(format!(
+        "source ends with `{last_src}`, translation with `{last_tr}`"
+    ))
+}
