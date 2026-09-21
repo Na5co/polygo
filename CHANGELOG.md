@@ -2,6 +2,10 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- Seven more bug classes in `check`. Errors: `duplicate` (the same key twice in one file; the last one wins silently), `array` (an Android `<string-array>` with a different item count than the source: `IndexOutOfBounds` at runtime), unnumbered Android format arguments (`%s of %s` is an `aapt` error unless `formatted="false"`), `glossary` (`glossary.toml` is now enforced by `check`, not only by `translate`). Warnings: `encoding` (mojibake like `Ã©`, `â€™`: a file saved in the wrong encoding), `invisible` (zero-width space, mid-string BOM, U+2028/9, bidi embedding controls, C0 controls; ZWNJ/ZWJ/LRM/RLM are left alone), `link` (a URL or email address in the source that the translation changed or dropped), `brackets` (a pair the source keeps balanced and the translation does not; guillemets excluded, German reverses them), `entities` (`&amp;amp;`). Across 11 String Catalogs, 5 Android apps, Signal iOS and two gettext projects: three genuine bracket findings, nothing else.
+
 ## 0.1.4 — 2026-09-21
 
 - Apple `.strings` (legacy iOS/macOS, `en.lproj/Localizable.strings`) is a supported format: `init` detects `*.lproj` layouts (one spec per file name, `en` or `Base` as source, a same-name `.xcstrings` wins), `check` runs every validator with lines, `translate` writes new keys in source order with the source comment. UTF-16 files (with BOM) are read and written back as UTF-16. Signal iOS: 14,652 translations checked in 0.08 s; two French strings carry `<strong>` tags the English does not. `.stringsdict` is not read yet.

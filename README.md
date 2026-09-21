@@ -64,6 +64,14 @@ Ten seconds, no setup. It reads the string files your app already has and report
 | `orphan` | warning | a key the locale file has and the source no longer does |
 | `state` / `fuzzy` | warning | marked `needs_review` in Xcode or `#, fuzzy` in gettext, shipped anyway |
 | `length` | warning | 2.5× the source, or a `polygo:max=20` comment exceeded |
+| `duplicate` | error | the same key twice in one file; the last one wins silently |
+| `array` | error | an Android `<string-array>` with more or fewer items than the source |
+| `glossary` | error | a `glossary.toml` term translated, or not rendered as required |
+| `encoding` | warning | `Ã©`, `â€™`: a file saved in the wrong encoding |
+| `invisible` | warning | zero-width space, mid-string BOM, bidi controls, control characters |
+| `link` | warning | a URL or email in the source that the translation changed or dropped |
+| `brackets` | warning | `(` opened and never closed, when the source keeps it balanced |
+| `entities` | warning | `&amp;amp;`: an entity escaped twice |
 
 It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines.
 
