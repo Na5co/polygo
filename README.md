@@ -1,81 +1,193 @@
-![polygo translating an Xcode string catalog with a local model, then checking placeholders](docs/demo.gif)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/img/logo-dark.svg">
+    <img src="docs/img/logo-light.svg" width="300" alt="polygo">
+  </picture>
+</p>
 
-# polygo
+<p align="center">
+  <b>A linter for your app's translations.</b><br>
+  The placeholder that went missing in French, the plural form Polish needs, the <code>&lt;/b&gt;</code> a translator dropped:<br>
+  <code>polygo check</code> finds them in milliseconds, with a file and line, no config, no model.<br>
+  <sub>Strings missing? It translates them too, with a local model. One 4 MB binary. No account, no server, no telemetry.</sub>
+</p>
 
-**Lokalise for one person.** A 4 MB CLI that translates your app's strings with a local model, remembers what changed, and refuses to write a translation with a broken placeholder or a missing plural.
+<p align="center">
+  <a href="https://crates.io/crates/polygo"><img src="https://img.shields.io/crates/v/polygo?style=flat-square&color=8250df" alt="crates.io"></a>
+  <a href="https://github.com/Na5co/polygo/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Na5co/polygo/ci.yml?style=flat-square&label=ci" alt="ci"></a>
+  <a href="https://github.com/Na5co/polygo/releases"><img src="https://img.shields.io/github/v/release/Na5co/polygo?style=flat-square&label=release" alt="release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
+</p>
 
-[![crates.io](https://img.shields.io/crates/v/polygo)](https://crates.io/crates/polygo) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/img/check-dark.svg">
+    <img src="docs/img/check-light.svg" width="900" alt="polygo check on DuckDuckGo's shipped macOS string catalog: 12 errors, 473 warnings, 0.11 s">
+  </picture>
+</p>
+
+<p align="center"><i>Real output on DuckDuckGo's shipped macOS catalog, unmodified. Clone it and run this yourself.</i></p>
+
+<br>
+
+## Install
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
 ```
 
-<sub>or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows](https://github.com/Na5co/polygo/releases). Local models need [Ollama](https://ollama.com); or bring an API key.</sub>
+Or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows zip](https://github.com/Na5co/polygo/releases). Then `polygo completions zsh` for tab completion.
 
-## Ten seconds: is my localization broken?
+<br>
+
+## `polygo check`
 
 ```sh
-polygo check Localizable.xcstrings     # or app/src/main/res, or locales/
+polygo check Localizable.xcstrings      # a file
+polygo check app/src/main/res           # a folder: format and locales are detected
+polygo check                            # the project, once polygo.toml exists
 ```
 
-No config, no model, no network. It detects the format and the locales and reports every placeholder that went missing in a translation, every plural form Polish or Arabic needs and doesn't have, every string left half in English. Exit 1 if anything is wrong, so it drops straight into CI.
+Ten seconds, no setup. It reads the string files your app already has and reports what a user would eventually notice — every finding with the **file and line** where the fix goes:
 
-## Thirty seconds: translate
+| code | severity | what it catches |
+|---|:-:|---|
+| `placeholders` | error | `%1$@`, `{{name}}`, `%(count)s`, `{0}`, `{n, plural, …}` missing, added, retyped or reordered |
+| `plural` | error | a CLDR form the locale needs and doesn't have: `few`/`many` for Polish, six for Arabic; ICU, `.xcstrings`, `<plurals>`, `msgstr[n]`, i18next `_few` |
+| `markup` | error | `<b>`, `</a>`, `<br>` the source has and the translation lacks, or the reverse |
+| `escape` | error | Android: unescaped `'`, or a leading `@`/`?` that `aapt` reads as a resource reference |
+| `empty` | error | a translation that is blank |
+| `identical` | warning | the translation is the English text |
+| `fragment` | warning | half translated: `ようこそ back!` |
+| `punctuation` | warning | `Settings…` became `Ajustes`; a trailing `:` or `.` dropped |
+| `whitespace` | warning | a leading/trailing space or newline lost (strings glued together in the UI) |
+| `orphan` | warning | a key the locale file has and the source no longer does |
+| `state` / `fuzzy` | warning | marked `needs_review` in Xcode or `#, fuzzy` in gettext, shipped anyway |
+| `length` | warning | 2.5× the source, or a `polygo:max=20` comment exceeded |
+
+It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines.
+
+**In CI** — one annotation per finding on the PR's Files tab, a table in the job summary, no secrets:
+
+```yaml
+- uses: Na5co/polygo/action@v0
+  with:
+    mode: check
+```
+
+Any other CI: `polygo check --github`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
+
+<br>
+
+## Found in the wild
+
+`polygo check` on shipped, production catalogs, unmodified:
+
+| App | Found |
+|---|---|
+| DuckDuckGo macOS | 12 placeholder bugs: `Ouvrir dans % @` (a space inside `%@`), a dropped `%5$d`, mangled `%#@var@` |
+| Ice Cubes | 44 missing Slavic plural forms; a Ukrainian string reading "ключа DeepL API key" |
+| boringnotch | 3,374 strings Xcode marks `needs_review`, shipped |
+| NewPipe, DuckDuckGo Android | stray `"` that Android silently drops from the UI |
+| Penpot | 4 `#, fuzzy` entries gettext shows in English |
+
+Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
+
+<br>
+
+## Then: translate what's missing
 
 ```sh
 cd your-app
 polygo init          # finds your string files, writes polygo.toml
-polygo use gemma4    # picks a model (pulls it through Ollama, or openai/... with a key)
+polygo use gemma4    # pulls a model through Ollama, or openai/… with a key
 polygo translate     # new and changed strings, into every target locale
-polygo check         # placeholders, plurals, lengths; exit 1 on errors
+polygo check         # the same checks, on what the model just wrote
 git diff             # look it over, commit
 ```
 
-Works with `.xcstrings`, Android `strings.xml`, Flutter ARB, i18next JSON, gettext `.po` and .NET `.resx`. No string files yet? `polygo extract --rewrite` pulls the text out of your web markup and swaps in `t("key")` calls ([how](docs/extract.md)).
+<table>
+<tr>
+<td valign="top">
 
-## What you get
+**🔒 Only the diff you meant**<br>
+Writes into your existing files byte for byte. A lockfile remembers every source string, so changing one English string re-translates one string. Hand edits are never overwritten.
 
-- **Only the diff you meant.** Writes into your existing files byte for byte. A lockfile records every source string, so editing one English string re-translates one string, and hand edits are never overwritten.
-- **Context from your code.** Before translating "Open" it finds `Button("Open")` and tells the model it's a menu item, and attaches similar strings you already translated. In a blind test judged by a second model this won 9 to 5.
-- **Plurals done per language.** Polish gets `one`, `few`, `many`, `other`; Japanese gets one form. Written into `.xcstrings` variations, `<plurals>`, `msgstr[n]`.
-- **Checks the model can't talk its way past.** Placeholders, CLDR plural sets, markup tags, empty, identical, half-translated (`ようこそ back!`), dropped trailing `:`/`…`/space, Android escapes that fail `aapt`. Every finding has a file and line. Wrong twice and it's quarantined, not written.
-- **A second opinion.** `polygo audit` has a different model grade each translation 1 to 5 with a reason. `--fix` redoes the flagged ones.
-- **Runs in CI.** The [GitHub Action](action/README.md) in `mode: check` annotates every broken string on the pull request and fails the build, no secrets needed; in `mode: translate` it opens a PR with new translations and a coverage table. `polygo check --github` does the annotations from any workflow; a pre-commit snippet is in the same page.
+</td>
+<td valign="top">
 
-## Proof
+**🧠 Context from your code**<br>
+Before translating "Open" it finds `Button("Open")` in your source and tells the model it's a menu item, plus the closest strings you already translated. Blind-judged by a second model: 9 to 5.
 
-`polygo check` on the DuckDuckGo macOS browser's shipped catalog, unmodified (`git clone` it and run `polygo check DuckDuckGo/Localizable.xcstrings` yourself):
+</td>
+</tr>
+<tr>
+<td valign="top">
 
-```
-error   Localizable.xcstrings  open.in                  [fr]  placeholders: missing %1$@
-error   Localizable.xcstrings  permission.popup.title   [it]  placeholders: missing %#@…@
-error   Localizable.xcstrings  fire.dialog.history.count [pl] placeholders: missing %#@…@
-…
-12 error(s), 405 warning(s)
-```
+**🔢 Plurals per language**<br>
+Polish gets `one` `few` `many` `other`, Japanese gets one form, each asked for with a concrete count. Written into `.xcstrings` variations, `<plurals>`, `msgstr[n]`, i18next `_few` keys.
 
-Across DuckDuckGo and Ice Cubes: 32 placeholder bugs and 44 missing Slavic plural forms, all in production. Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md).
+</td>
+<td valign="top">
+
+**🚫 The model can't talk past `check`**<br>
+Every reply is validated before it's written. Wrong twice and the string is quarantined as `needs-review`, not shipped. `polygo review` is a local page to approve or reject.
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+**🧑‍⚖️ A second opinion**<br>
+`polygo audit` has a *different* model grade each translation 1–5 with a reason. `--fix` redoes the flagged ones and leaves human edits alone.
+
+</td>
+<td valign="top">
+
+**🤖 Translate in CI**<br>
+The same [GitHub Action](action/README.md) in `mode: translate` opens a PR with new translations and a coverage table on every push.
+
+</td>
+</tr>
+</table>
+
+<br>
+
+## Formats
+
+| | Format | Used by | What `init` finds |
+|:-:|---|---|---|
+| 🍎 | `.xcstrings` | iOS, macOS | one catalog with every locale; `%#@var@` substitutions |
+| 🤖 | `strings.xml` | Android | `res/values-*/`; `<plurals>` per quantity, `<string-array>` per item |
+| 🌐 | `.json` | React, Vue, i18next | `locales/<locale>.json` or `locales/<locale>/<ns>.json`, nested keys |
+| 🐦 | `.arb` | Flutter | `l10n.yaml` + `lib/l10n/app_<locale>.arb`, ICU plurals |
+| 🐍 | `.po` | Django, Rails, PHP, gettext | `locale/<l>/LC_MESSAGES/*.po` or flat; `msgid_plural` per `Plural-Forms` |
+| 🪟 | `.resx` `.resw` | .NET, WinUI | `Name.<locale>.resx`, `<locale>/Resources.resw` |
+
+Every writer round-trips byte for byte, tested on 35 real files from DuckDuckGo, Ice Cubes, Grafana, Django, NewPipe and Penpot, so a translation never hides under a reformatting diff. No string files yet? `polygo extract --rewrite` pulls the text out of your web markup and swaps in `t("key")` calls ([how](docs/extract.md)).
+
+<br>
 
 ## Which model
 
 | | Size | Good for |
 |---|---|---|
-| `qwen3:8b` (default) | 5 GB | UI strings into major languages |
+| `qwen3:8b` <sub>default</sub> | 5 GB | UI strings into major languages, on any laptop |
 | `gemma4` | 9.6 GB | Smaller languages, Slavic plurals, anything a customer reads |
-| `openai/…`, `anthropic/…` | API | The same, without a local GPU |
+| `openai/…` `anthropic/…` | API | The same, without a local GPU |
 
-`polygo models` lists them; `polygo use <model>` switches. Honest numbers and the tradeoffs are in [docs/models.md](docs/models.md).
+`polygo models` lists them, `polygo use <model>` switches. Honest numbers in [docs/models.md](docs/models.md).
+
+<br>
 
 ## Privacy
 
-No telemetry, no account, no server. The only network request is the translation call to the provider in your `polygo.toml`; with Ollama that's `127.0.0.1`. `check`, `status`, `init` and `review` never touch the network. [How to verify it yourself.](docs/README.md#privacy)
+No telemetry, no account, no server. The only network request is the translation call to the provider in your `polygo.toml`; with Ollama that is `127.0.0.1`. `check`, `status`, `init` and `review` never touch the network at all. [Verify it yourself with `sandbox-exec`.](docs/README.md#privacy)
+
+<br>
 
 ## More
 
-[Configuration and commands](docs/README.md) · [Per-format notes](docs/formats/) · [Extracting strings from web apps](docs/extract.md) · [FAQ and comparison with Lokalise, Crowdin, Weblate](docs/faq.md) · [How it was built](docs/dev/GAUNTLET.md)
+[Commands and `polygo.toml`](docs/README.md) · [Per-format notes](docs/formats/) · [GitHub Action and pre-commit](action/README.md) · [Extracting strings from web apps](docs/extract.md) · [FAQ, compared with Lokalise / Crowdin / Weblate](docs/faq.md) · [How it was built](docs/dev/GAUNTLET.md)
 
-```sh
-cargo test                  # offline, about 10 s
-scripts/demo.sh             # re-record the GIF
-```
-
+<p align="center"><i>MIT · <code>cargo test</code> runs offline in about 10 s</i></p>
