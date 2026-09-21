@@ -264,7 +264,8 @@ Examples:
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
-Codes: placeholders · plural · markup · escape (Android) · empty · identical · length · fragment · whitespace · punctuation";
+Codes: placeholders · plural · markup · escape (Android) · empty · identical · length · fragment · whitespace · punctuation ·
+       orphan · fuzzy (.po) · state (.xcstrings)";
 
 const STATUS_EXAMPLES: &str = "\
 Examples:
@@ -771,6 +772,9 @@ fn check(
         }
         println!("{} error(s), {} warning(s)", report.errors, report.warnings);
     }
+    if !json && !github {
+        print_coverage(&report);
+    }
     let failed = report.errors > 0 || (strict && report.warnings > 0);
     if failed {
         std::process::exit(1);
@@ -1101,4 +1105,34 @@ fn status(
         println!("  everything is up to date");
     }
     Ok(())
+}
+
+/// One line when a locale is not fully translated; silence when everything is.
+fn print_coverage(report: &polygo::check::run::Report) {
+    let mut gaps: Vec<(&String, usize, usize)> = report
+        .coverage
+        .iter()
+        .filter(|(_, (done, total))| done < total)
+        .map(|(l, (done, total))| (l, *done, *total))
+        .collect();
+    if gaps.is_empty() {
+        return;
+    }
+    // Worst first, at most six named: a 40-locale catalog must stay one line.
+    gaps.sort_by_key(|(l, d, t)| (d * 100 / (*t).max(1), (*l).clone()));
+    let shown: Vec<String> = gaps
+        .iter()
+        .take(6)
+        .map(|(l, d, t)| format!("{l} {}% ({} of {t} missing)", d * 100 / (*t).max(1), t - d))
+        .collect();
+    let more = gaps.len().saturating_sub(6);
+    println!(
+        "coverage: {}{} · `polygo status --keys` lists them",
+        shown.join(" · "),
+        if more > 0 {
+            format!(" · {more} more locale(s)")
+        } else {
+            String::new()
+        }
+    );
 }

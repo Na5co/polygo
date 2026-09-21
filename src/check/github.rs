@@ -103,6 +103,30 @@ pub fn summary(report: &Report) -> String {
             ));
         }
     }
+    let mut gaps: Vec<(&String, usize, usize)> = report
+        .coverage
+        .iter()
+        .filter(|(_, (d, t))| d < t)
+        .map(|(l, (d, t))| (l, *d, *t))
+        .collect();
+    if !gaps.is_empty() {
+        gaps.sort_by_key(|(l, d, t)| (d * 100 / (*t).max(1), (*l).clone()));
+        let shown: Vec<String> = gaps
+            .iter()
+            .take(10)
+            .map(|(l, d, t)| format!("`{l}` {}% ({} missing)", d * 100 / (*t).max(1), t - d))
+            .collect();
+        let more = gaps.len().saturating_sub(10);
+        s.push_str(&format!(
+            "\nCoverage: {}{}.\n",
+            shown.join(", "),
+            if more > 0 {
+                format!(", {more} more")
+            } else {
+                String::new()
+            }
+        ));
+    }
     s.push_str("\n<sub>[polygo](https://github.com/Na5co/polygo) · runs in milliseconds, no model needed.</sub>\n");
     s
 }
