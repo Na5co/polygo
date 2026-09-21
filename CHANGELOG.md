@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.4 — 2026-09-21
 
 - Apple `.strings` (legacy iOS/macOS, `en.lproj/Localizable.strings`) is a supported format: `init` detects `*.lproj` layouts (one spec per file name, `en` or `Base` as source, a same-name `.xcstrings` wins), `check` runs every validator with lines, `translate` writes new keys in source order with the source comment. UTF-16 files (with BOM) are read and written back as UTF-16. Signal iOS: 14,652 translations checked in 0.08 s; two French strings carry `<strong>` tags the English does not. `.stringsdict` is not read yet.
 - `init` writes `target_locales` on one line, like `add` does.
