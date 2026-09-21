@@ -57,6 +57,8 @@ pub struct Entry {
     pub name: String,
     /// `translatable="false"` marks strings that must never be translated.
     pub translatable: bool,
+    /// `formatted="false"`: the value is not a format string, so unnumbered `%` are fine.
+    pub formatted: bool,
     /// The `<!-- comment -->` immediately preceding the element, trimmed.
     pub comment: Option<String>,
     pub values: Vec<Value>,
@@ -120,6 +122,7 @@ pub fn parse(text: &str) -> Result<Document> {
                             kind: Kind::String,
                             name,
                             translatable,
+                            formatted: is_formatted(&e),
                             comment,
                             values: vec![Value {
                                 raw: text[content_start..content_end].to_string(),
@@ -142,6 +145,7 @@ pub fn parse(text: &str) -> Result<Document> {
                             kind,
                             name,
                             translatable,
+                            formatted: is_formatted(&e),
                             comment,
                             values,
                         });
@@ -163,6 +167,7 @@ pub fn parse(text: &str) -> Result<Document> {
                         kind: Kind::String,
                         name,
                         translatable,
+                        formatted: is_formatted(&e),
                         comment,
                         values: vec![Value {
                             raw: String::new(),
@@ -261,6 +266,10 @@ fn name_and_translatable(e: &BytesStart) -> Result<(String, bool)> {
     let name = attr(e, b"name")?.context("resource element without name=")?;
     let translatable = attr(e, b"translatable")?.as_deref() != Some("false");
     Ok((name, translatable))
+}
+
+fn is_formatted(e: &BytesStart) -> bool {
+    attr(e, b"formatted").ok().flatten().as_deref() != Some("false")
 }
 
 pub fn serialize(doc: &Document) -> String {
@@ -431,6 +440,7 @@ impl Document {
             kind: Kind::String,
             name: name.to_string(),
             translatable: true,
+            formatted: true,
             comment: None,
             values: vec![Value {
                 raw: encode(text),
@@ -510,6 +520,7 @@ impl Document {
                     kind: Kind::Plurals,
                     name: name.to_string(),
                     translatable: true,
+                    formatted: true,
                     comment: None,
                     values: vec![Value {
                         raw: encode(text),
@@ -567,6 +578,7 @@ impl Document {
                     kind: Kind::StringArray,
                     name: name.to_string(),
                     translatable: true,
+                    formatted: true,
                     comment: None,
                     values,
                 });

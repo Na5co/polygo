@@ -271,8 +271,9 @@ Examples:
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
-Codes: placeholders · plural · markup · escape (Android) · empty · identical · length · fragment · whitespace · punctuation ·
-       orphan · fuzzy (.po) · state (.xcstrings)";
+Codes: placeholders · plural · markup · escape · array (Android) · duplicate · glossary · empty · identical ·
+       length · fragment · whitespace · punctuation · orphan · fuzzy (.po) · state (.xcstrings) ·
+       encoding · invisible · link · brackets · entities";
 
 const STATUS_EXAMPLES: &str = "\
 Examples:

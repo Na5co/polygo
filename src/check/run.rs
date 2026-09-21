@@ -86,6 +86,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
     let mut locator = crate::check::locate::Locator::new(root);
+    let glossary = crate::glossary::load(root, cfg)?;
     for locale in &locales {
         let total = units.iter().filter(|u| u.applies_to(locale)).count();
         let done = units
@@ -148,6 +149,24 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         format!("ICU plural `{arg}` is missing {}", missing.join(", ")),
                     ));
                 }
+            }
+            for v in glossary.violations(locale, &u.source, t) {
+                found.push(("glossary", "error", v));
+            }
+            if let Some(m) = crate::check::content::mojibake(t) {
+                found.push(("encoding", "warning", m));
+            }
+            if let Some(m) = crate::check::content::invisible(t) {
+                found.push(("invisible", "warning", m));
+            }
+            if let Some(m) = crate::check::content::link_mismatch(&u.source, t) {
+                found.push(("link", "warning", m));
+            }
+            if let Some(m) = crate::check::content::unbalanced(&u.source, t) {
+                found.push(("brackets", "warning", m));
+            }
+            if let Some(m) = crate::check::content::double_escaped(t) {
+                found.push(("entities", "warning", m));
             }
             if found.is_empty() {
                 continue;
@@ -224,35 +243,53 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 // What aapt rejects at build time: an apostrophe or a double quote that
                 // is not escaped, a leading @ or ? (a resource reference). The source
                 // file breaks the build exactly like a translation does.
-                let escapes =
-                    |doc: &formats::android::Document| -> Vec<(String, &'static str, String)> {
-                        let mut out = Vec::new();
-                        for e in &doc.entries {
-                            if !e.translatable || skipped(idx, spec, &e.name) {
-                                continue;
+                let escapes = |doc: &formats::android::Document| -> Vec<(
+                    String,
+                    &'static str,
+                    &'static str,
+                    String,
+                )> {
+                    let mut out = Vec::new();
+                    for e in &doc.entries {
+                        if !e.translatable || skipped(idx, spec, &e.name) {
+                            continue;
+                        }
+                        for v in &e.values {
+                            if let Some((sev, m)) = android_escape_problem(&v.raw) {
+                                out.push((e.name.clone(), "escape", sev, m));
                             }
-                            for v in &e.values {
-                                if let Some((sev, m)) = android_escape_problem(&v.raw) {
-                                    out.push((e.name.clone(), sev, m));
-                                }
+                            if e.formatted
+                                && let Some(m) =
+                                    crate::check::content::android_unnumbered_args(&v.text())
+                            {
+                                out.push((e.name.clone(), "placeholders", "error", m));
                             }
                         }
-                        out
-                    };
+                    }
+                    out
+                };
                 let source = formats::android::parse(&crate::formats::read_text(&path)?)
                     .with_context(|| format!("parsing {}", path.display()))?;
-                for (name, severity, m) in escapes(&source) {
+                for (name, code, severity, m) in escapes(&source) {
                     let (file, line) = locator.locate(spec, &name, &cfg.source_locale);
                     report.push(Finding {
                         file,
                         line,
                         key: name,
                         locale: cfg.source_locale.clone(),
-                        code: "escape",
+                        code,
                         severity,
                         message: m,
                     });
                 }
+                let array_len = |doc: &formats::android::Document| -> BTreeMap<String, usize> {
+                    doc.entries
+                        .iter()
+                        .filter(|e| e.kind == formats::android::Kind::StringArray)
+                        .map(|e| (e.name.clone(), e.values.len()))
+                        .collect()
+                };
+                let source_arrays = array_len(&source);
                 let Some(template) = &spec.locale_path else {
                     continue;
                 };
@@ -263,17 +300,38 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                     let doc = formats::android::parse(&crate::formats::read_text(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
-                    for (name, severity, m) in escapes(&doc) {
+                    for (name, code, severity, m) in escapes(&doc) {
                         let (file, line) = locator.locate(spec, &name, locale);
                         report.push(Finding {
                             file,
                             line,
                             key: name,
                             locale: locale.clone(),
-                            code: "escape",
+                            code,
                             severity,
                             message: m,
                         });
+                    }
+                    // Arrays are positional: a shorter one is an IndexOutOfBounds at
+                    // runtime, a longer one shows items the source never had.
+                    for (name, n) in array_len(&doc) {
+                        if skipped(idx, spec, &name) {
+                            continue;
+                        }
+                        if let Some(&src_n) = source_arrays.get(&name)
+                            && src_n != n
+                        {
+                            let (file, line) = locator.locate(spec, &name, locale);
+                            report.push(Finding {
+                                file,
+                                line,
+                                key: name,
+                                locale: locale.clone(),
+                                code: "array",
+                                severity: "error",
+                                message: format!("{n} item(s) vs {src_n} in the source"),
+                            });
+                        }
                     }
                     for (name, cats) in plurals::android_plurals(&doc) {
                         if skipped(idx, spec, &name) {
@@ -344,10 +402,27 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
             }
             Format::Arb | Format::Po | Format::Resx | Format::Strings => {}
         }
+        // The same key twice in one file: the last one wins silently, whichever the
+        // translator meant.
+        let text = crate::formats::read_text(&path)?;
+        for key in duplicate_keys(spec.format, &text)? {
+            if skipped(idx, spec, &key) {
+                continue;
+            }
+            let (file, line) = locator.locate(spec, &key, &cfg.source_locale);
+            report.push(Finding {
+                file,
+                line,
+                key,
+                locale: cfg.source_locale.clone(),
+                code: "duplicate",
+                severity: "error",
+                message: "key appears more than once in this file".into(),
+            });
+        }
         // Keys a locale file has and the source does not: dead translations that
         // accumulate forever. And gettext's fuzzy flag, which ships as untranslated.
         if let Some(template) = &spec.locale_path {
-            let text = crate::formats::read_text(&path)?;
             let source_keys = keys_of(spec.format, &text)?;
             for locale in &locales {
                 let lp = root.join(project::locale_file(template, locale));
@@ -355,6 +430,21 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     continue;
                 }
                 let ltext = crate::formats::read_text(&lp)?;
+                for key in duplicate_keys(spec.format, &ltext)? {
+                    if skipped(idx, spec, &key) {
+                        continue;
+                    }
+                    let (file, line) = locator.locate(spec, &key, locale);
+                    report.push(Finding {
+                        file,
+                        line,
+                        key,
+                        locale: locale.clone(),
+                        code: "duplicate",
+                        severity: "error",
+                        message: "key appears more than once in this file".into(),
+                    });
+                }
                 for key in keys_of(spec.format, &ltext)? {
                     if source_keys.contains(&key) || skipped(idx, spec, &key) {
                         continue;
@@ -557,4 +647,51 @@ fn xcstrings_states(
         }
     }
     out
+}
+
+/// Keys defined more than once in one file, in first-seen order.
+fn duplicate_keys(format: Format, text: &str) -> Result<Vec<String>> {
+    let all: Vec<String> = match format {
+        Format::Json | Format::Arb => formats::json::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.key())
+            .collect(),
+        // A string and a plurals may share a name (different resource types).
+        Format::Android => formats::android::parse(text)?
+            .entries
+            .iter()
+            .map(|e| format!("{:?}\u{0}{}", e.kind, e.name))
+            .collect(),
+        Format::Po => formats::po::parse(text)?
+            .entries
+            .iter()
+            .filter(|e| !e.msgid.is_empty())
+            .map(|e| e.key())
+            .collect(),
+        Format::Resx => formats::resx::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.name.clone())
+            .collect(),
+        Format::Strings => formats::strings::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.key.clone())
+            .collect(),
+        // serde_json keeps the last of duplicate keys; a String Catalog written by Xcode
+        // never has them.
+        Format::Xcstrings => vec![],
+    };
+    let mut seen = std::collections::BTreeSet::new();
+    let mut dups = Vec::new();
+    for k in all {
+        if !seen.insert(k.clone()) && !dups.contains(&k) {
+            dups.push(k);
+        }
+    }
+    Ok(dups
+        .into_iter()
+        .map(|k| k.rsplit('\u{0}').next().unwrap_or(&k).to_string())
+        .collect())
 }

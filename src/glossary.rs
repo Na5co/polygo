@@ -30,6 +30,29 @@ impl Glossary {
             .unwrap_or_default()
     }
 
+    /// One message per glossary rule the translation breaks.
+    pub fn violations(&self, locale: &str, source: &str, translation: &str) -> Vec<String> {
+        let src = source.to_lowercase();
+        let mut out = Vec::new();
+        for term in &self.do_not_translate {
+            if src.contains(&term.to_lowercase()) && !translation.contains(term.as_str()) {
+                out.push(format!("`{term}` must stay untranslated"));
+            }
+        }
+        if let Some(map) = self.terms.get(locale) {
+            for (term, required) in map {
+                if src.contains(&term.to_lowercase())
+                    && !translation
+                        .to_lowercase()
+                        .contains(&required.to_lowercase())
+                {
+                    out.push(format!("`{term}` must be rendered as `{required}`"));
+                }
+            }
+        }
+        out
+    }
+
     /// True when every glossary term present in `source` has its required translation
     /// in `translation`, and every do-not-translate term survived verbatim.
     pub fn satisfied(&self, locale: &str, source: &str, translation: &str) -> bool {

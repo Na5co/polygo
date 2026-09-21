@@ -426,3 +426,97 @@ fn text_output_groups_a_dominating_code() {
     let v: serde_json::Value = serde_json::from_str(&out).unwrap();
     assert_eq!(v["findings"].as_array().unwrap().len(), 25);
 }
+
+#[test]
+fn seven_more_bug_classes() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    // Android: array length, unnumbered args, duplicate key.
+    let res = root.join("res");
+    fs::create_dir_all(res.join("values")).unwrap();
+    fs::create_dir_all(res.join("values-de")).unwrap();
+    fs::write(
+        res.join("values/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"both\">%1$s of %2$s</string>\n    <string name=\"raw\" formatted=\"false\">%s %s</string>\n    <string-array name=\"sort\">\n        <item>Newest</item>\n        <item>Oldest</item>\n        <item>Name</item>\n    </string-array>\n    <string name=\"dup\">One</string>\n    <string name=\"dup\">Two</string>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(
+        res.join("values-de/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"both\">%s von %s</string>\n    <string-array name=\"sort\">\n        <item>Neueste</item>\n        <item>Älteste</item>\n    </string-array>\n</resources>\n",
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["res", "--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let codes = |v: &serde_json::Value, key: &str, locale: &str| -> Vec<String> {
+        v["findings"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|f| f["key"] == key && f["locale"] == locale)
+            .map(|f| f["code"].as_str().unwrap().to_string())
+            .collect()
+    };
+    assert!(
+        codes(&v, "both", "de").contains(&"placeholders".into()),
+        "{out}"
+    );
+    assert!(
+        codes(&v, "raw", "en").is_empty(),
+        "formatted=false must pass:\n{out}"
+    );
+    assert_eq!(codes(&v, "sort", "de"), ["array"], "{out}");
+    assert_eq!(codes(&v, "dup", "en"), ["duplicate"], "{out}");
+    let dup = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["code"] == "duplicate")
+        .unwrap();
+    assert_eq!(dup["message"], "key appears more than once in this file");
+
+    // JSON: mojibake, invisible, link, brackets, entities, glossary.
+    fs::create_dir_all(root.join("locales")).unwrap();
+    fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"cafe\": \"Café open\",\n  \"zw\": \"Zero width\",\n  \"help\": \"See https://a.io/help now\",\n  \"paren\": \"Save (all)\",\n  \"amp\": \"Terms &amp; conditions\",\n  \"brand\": \"Sign in to Polygo\",\n  \"fine\": \"All good\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"cafe\": \"CafÃ© offen\",\n  \"zw\": \"Null\\u200bbreit\",\n  \"help\": \"Siehe https://a.io/hilfe jetzt\",\n  \"paren\": \"Alles speichern (alle\",\n  \"amp\": \"AGB &amp;amp; Bedingungen\",\n  \"brand\": \"Bei Poligo anmelden\",\n  \"fine\": \"Alles gut\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("glossary.toml"),
+        "do_not_translate = [\"Polygo\"]\n\n[terms.de]\n\"Sign in\" = \"Anmelden\"\n",
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    assert_eq!(codes(&v, "cafe", "de"), ["encoding"], "{out}");
+    assert_eq!(codes(&v, "zw", "de"), ["invisible"], "{out}");
+    assert_eq!(codes(&v, "help", "de"), ["link"], "{out}");
+    assert_eq!(codes(&v, "paren", "de"), ["brackets"], "{out}");
+    assert_eq!(codes(&v, "amp", "de"), ["entities"], "{out}");
+    assert_eq!(codes(&v, "brand", "de"), ["glossary"], "{out}");
+    assert!(codes(&v, "fine", "de").is_empty(), "{out}");
+    let g = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["code"] == "glossary")
+        .unwrap();
+    assert_eq!(g["message"], "`Polygo` must stay untranslated");
+    assert_eq!(g["severity"], "error");
+    let (code, out, _) = check(root, &[]);
+    assert_eq!(code, 1, "{out}");
+    assert!(
+        out.contains("looks like text saved in the wrong encoding (`Ã©`)"),
+        "{out}"
+    );
+}
