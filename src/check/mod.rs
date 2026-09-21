@@ -7,4 +7,5 @@ pub mod locate;
 pub mod placeholders;
 pub mod plurals;
 pub mod run;
+pub mod sarif;
 pub mod text;

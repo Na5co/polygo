@@ -723,3 +723,64 @@ fn polygo_ignore_directive_in_a_comment() {
         ["identical", "length"]
     );
 }
+
+#[test]
+fn sarif_output_is_well_formed() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    fs::write(
+        dir.path().join("locales/en.json"),
+        "{\n  \"a\": \"Hi {{name}}\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{nome}}\"\n}\n",
+    )
+    .unwrap();
+    let (code, out, err) = check(dir.path(), &["locales", "--sarif"]);
+    assert_eq!(code, 1);
+    assert!(
+        err.is_empty(),
+        "sarif must be the only stdout/stderr content: {err}"
+    );
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    assert_eq!(v["version"], "2.1.0");
+    let run = &v["runs"][0];
+    assert_eq!(run["tool"]["driver"]["name"], "polygo");
+    assert!(run["tool"]["driver"]["rules"].as_array().unwrap().len() >= 20);
+    let r = &run["results"][0];
+    assert_eq!(r["ruleId"], "polygo/placeholders");
+    assert_eq!(r["level"], "error");
+    assert_eq!(
+        r["locations"][0]["physicalLocation"]["artifactLocation"]["uri"],
+        "locales/de.json"
+    );
+    assert_eq!(
+        r["locations"][0]["physicalLocation"]["region"]["startLine"],
+        2
+    );
+    assert_eq!(
+        r["partialFingerprints"]["polygo/v1"],
+        "locales/de.json:a:de:placeholders"
+    );
+    assert!(
+        r["message"]["text"]
+            .as_str()
+            .unwrap()
+            .starts_with("a [de]: missing {{name}}")
+    );
+    // The Action's check.sh writes it next to the annotations when asked.
+    let sarif = dir.path().join("out.sarif");
+    let out = Command::new("bash")
+        .arg(concat!(env!("CARGO_MANIFEST_DIR"), "/action/check.sh"))
+        .current_dir(dir.path())
+        .env("POLYGO_BIN", env!("CARGO_BIN_EXE_polygo"))
+        .env("POLYGO_PATH", "locales")
+        .env("POLYGO_SARIF", &sarif)
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(1));
+    let v: serde_json::Value = serde_json::from_str(&fs::read_to_string(&sarif).unwrap()).unwrap();
+    assert_eq!(v["runs"][0]["results"].as_array().unwrap().len(), 1);
+}

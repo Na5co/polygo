@@ -86,7 +86,7 @@ It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings 
     mode: check
 ```
 
-Any other CI: `polygo check --github`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
+`sarif: "true"` also files them in GitHub's Security tab with new/fixed history. Any other CI: `polygo check --github` or `--sarif`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
 
 <br>
 

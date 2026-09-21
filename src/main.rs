@@ -210,6 +210,9 @@ struct CheckArgs {
     /// table in the job summary when GITHUB_STEP_SUMMARY is set.
     #[arg(long, conflicts_with = "json")]
     github: bool,
+    /// SARIF 2.1.0 on stdout, for GitHub code scanning (upload-sarif) and other tools.
+    #[arg(long, conflicts_with_all = ["json", "github"])]
+    sarif: bool,
     /// Treat warnings as errors.
     #[arg(long)]
     strict: bool,
@@ -277,6 +280,7 @@ Examples:
   polygo check --no-baseline        report everything, baseline or not
   polygo check --json | jq .findings
   polygo check --github             annotations + job summary in a GitHub Actions step
+  polygo check --sarif > polygo.sarif   for GitHub code scanning (upload-sarif) or any SARIF viewer
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
@@ -666,6 +670,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         all,
         write_baseline,
         no_baseline,
+        sarif,
         fix,
     } = args;
     // With polygo.toml: the configured project. Without: whatever `path` (or the project
@@ -683,7 +688,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
                     "--fix re-translates with the model from polygo.toml; run `polygo init` in the project first"
                 });
             }
-            if has_config && !json && !github {
+            if has_config && !json && !github && !sarif {
                 eprintln!(
                     "note: checking {} on its own; polygo.toml settings ([keys] skip, length_ratio) do not apply",
                     target
@@ -697,7 +702,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
                     None => e.context("no polygo.toml here and nothing to check"),
                     Some(_) => e,
                 })?;
-            if !json && !github {
+            if !json && !github && !sarif {
                 let what = if cfg.files.len() == 1 && target.as_ref().is_some_and(|t| t.is_file()) {
                     cfg.files[0].path.display().to_string()
                 } else {
@@ -756,7 +761,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     // shown nor counted.
     if write_baseline {
         let n = polygo::check::baseline::write(root, &report)?;
-        if !json {
+        if !json && !sarif {
             println!(
                 "wrote {} with {n} finding(s); `polygo check` now reports only new ones (commit it; --no-baseline shows all)",
                 root.join(polygo::check::baseline::FILE_NAME).display()
@@ -771,7 +776,12 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
             .map(|b| polygo::check::baseline::apply(&mut report, &b))
     };
 
-    if json {
+    if sarif {
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&polygo::check::sarif::render(&report, strict))?
+        );
+    } else if json {
         let mut v = serde_json::to_value(&report)?;
         if let Some(a) = &applied {
             v["baseline"] = serde_json::json!({ "known": a.known, "stale": a.stale });
@@ -829,11 +839,12 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         }
         println!("{} error(s), {} warning(s)", report.errors, report.warnings);
     }
-    if !json && !github {
+    if !json && !github && !sarif {
         print_coverage(&report);
     }
     if let Some(a) = &applied
         && !json
+        && !sarif
         && (a.known > 0 || a.stale > 0)
     {
         println!(

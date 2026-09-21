@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `polygo check --sarif` prints SARIF 2.1.0 with a rule per code and stable fingerprints; the Action's `sarif: "true"` uploads it to GitHub code scanning (Security tab, new/fixed history on PRs). The baseline applies to it like every other output.
 - `inconsistent` (warning): the same short source term translated two ways in one locale (`Settings` → `Réglages` in 3 keys, `Paramètres` in 1); the minority gets the warning with the counts. Untranslated copies do not vote, case and inflection (`aucun`/`aucune`) are the same word, a tie is a choice. Ice Cubes: 45 across 12,761 translations.
 - Per-code ignores: `polygo:ignore=identical,length` in a developer comment, or `[keys] ignore = { "legal.*" = ["length"] }` in `polygo.toml`, keep `check` quiet about those codes for those keys without hiding the key from everything the way `skip` does.
 - `.stringsdict` is checked: every `NSStringPluralRuleType` variable needs the locale's CLDR categories, each form keeps the source form's placeholders (an unnumbered `%d` inside a variable is that variable's argument, so `%d` vs `%2$d` agree; nested `%2$#@total@` references resolve), a missing variable is an error, a key the locale lacks is a warning. Any file name in the source `.lproj` (Signal: `PluralAware.stringsdict`).

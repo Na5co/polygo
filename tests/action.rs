@@ -228,6 +228,8 @@ fn action_yml_has_a_check_mode() {
         "mode:",
         "path:",
         "strict:",
+        "sarif:",
+        "upload-sarif",
         "check.sh",
         "inputs.mode == 'check'",
         "errors:",

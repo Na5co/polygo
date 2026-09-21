@@ -18,10 +18,13 @@ jobs:
           mode: check
           # path: app/src/main/res     # a file or directory when there is no polygo.toml
           # strict: "true"             # warnings (length, identical) fail too
+          # sarif: "true"              # also upload to code scanning (needs security-events: write)
 ```
 
 Every finding is a GitHub annotation on the file in the pull request, the job summary gets a
-table, and the job fails on any error: a placeholder that went missing in a translation, a
+table, and the job fails on any error. With `sarif: "true"` (and `permissions:
+security-events: write`) the findings also go to **code scanning**: the Security tab, with
+new / fixed / still-open history across commits, like CodeQL. Every finding is one of: a placeholder that went missing in a translation, a
 plural form Polish or Arabic needs and doesn't have, a string left half in English.
 Outputs: `errors`, `warnings`.
 
