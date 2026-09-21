@@ -75,10 +75,9 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     let skip = cfg.key_skip()?;
     // `polygo:skip` in a developer comment, for the format-level checks below that read
     // files directly (units already exclude these keys).
+    let (directive_skipped, directive_ignores) = project::directive_rules(root, cfg)?;
     let directive_skip: std::collections::BTreeSet<(usize, String)> =
-        project::directive_skipped_keys(root, cfg)?
-            .into_iter()
-            .collect();
+        directive_skipped.into_iter().collect();
     let skipped = |idx: usize, spec: &crate::config::FileSpec, key: &str| {
         skip.matches(&spec.path, key)
             || directive_skip.contains(&(idx, key.split('#').next().unwrap_or(key).to_string()))
@@ -185,6 +184,77 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     code,
                     severity,
                     message,
+                });
+            }
+        }
+    }
+
+    // The same short source text translated two ways in one locale ("Cancel" →
+    // "Abbrechen" here, "Abbruch" there): the minority gets the warning.
+    for locale in &locales {
+        let mut by_source: BTreeMap<&str, Vec<(&crate::core::Unit, &str)>> = BTreeMap::new();
+        for u in &units {
+            if crate::core::split_plural(&u.key).is_some() || !u.applies_to(locale) {
+                continue;
+            }
+            let Some(t) = u.translations.get(locale) else {
+                continue;
+            };
+            let src = u.source.trim();
+            // UI terms only: a few words, no placeholders or markup, not a sentence.
+            let words = src.split_whitespace().count();
+            if words == 0
+                || words > 3
+                || src.contains(['%', '{', '<', '$'])
+                || src.chars().filter(|c| c.is_alphabetic()).count() < 3
+            {
+                continue;
+            }
+            // An untranslated copy is the `identical` warning's business, not a vote.
+            if t.trim() == src {
+                continue;
+            }
+            by_source.entry(src).or_default().push((u, t.trim()));
+        }
+        for (src, group) in by_source {
+            if group.len() < 2 {
+                continue;
+            }
+            let mut counts: BTreeMap<String, usize> = BTreeMap::new();
+            let mut shown: BTreeMap<String, &str> = BTreeMap::new();
+            for (_, t) in &group {
+                let l = t.to_lowercase();
+                *counts.entry(l.clone()).or_default() += 1;
+                shown.entry(l).or_insert(t);
+            }
+            if counts.len() < 2 {
+                continue;
+            }
+            let mut ranked: Vec<(&String, &usize)> = counts.iter().collect();
+            ranked.sort_by_key(|(t, n)| (std::cmp::Reverse(**n), (*t).clone()));
+            let (majority, n) = (ranked[0].0.clone(), *ranked[0].1);
+            // A tie is a choice, not a mistake.
+            if ranked.get(1).is_some_and(|(_, m)| **m == n) {
+                continue;
+            }
+            for (u, t) in &group {
+                let tl = t.to_lowercase();
+                if tl == majority || inflection_of(&tl, &majority) {
+                    continue;
+                }
+                let (idx, local_key) = project::split_key(cfg, &u.key);
+                let (file, line) = locator.locate(&cfg.files[idx], local_key, locale);
+                report.push(Finding {
+                    file,
+                    line,
+                    key: u.key.clone(),
+                    locale: locale.clone(),
+                    code: "inconsistent",
+                    severity: "warning",
+                    message: format!(
+                        "`{src}` is `{}` in {n} other key(s), here `{t}`",
+                        shown.get(&majority).copied().unwrap_or(majority.as_str())
+                    ),
                 });
             }
         }
@@ -637,6 +707,43 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
             }
         }
     }
+    // `polygo:ignore=code` in a comment and `[keys] ignore` in polygo.toml: quiet, per key
+    // and code, without hiding the key from everything the way `skip` does.
+    let ignore_globs: Vec<(globset::GlobSet, Vec<String>)> = cfg
+        .keys
+        .ignore
+        .iter()
+        .map(|(g, codes)| {
+            let mut b = globset::GlobSetBuilder::new();
+            b.add(
+                globset::Glob::new(g)
+                    .with_context(|| format!("[keys] ignore: bad glob {g:?} in polygo.toml"))?,
+            );
+            Ok((b.build()?, codes.clone()))
+        })
+        .collect::<Result<_>>()?;
+    if !ignore_globs.is_empty() || !directive_ignores.is_empty() {
+        report.findings.retain(|f| {
+            let (idx, local) = project::split_key(cfg, &f.key);
+            let base = local.split('#').next().unwrap_or(local);
+            let code = f.code.to_string();
+            let by_comment = directive_ignores
+                .get(&(idx, base.to_string()))
+                .is_some_and(|codes| codes.contains(&code));
+            let path = cfg.files[idx].path.display().to_string().replace('\\', "/");
+            let by_glob = ignore_globs.iter().any(|(set, codes)| {
+                codes.contains(&code)
+                    && (set.is_match(base) || set.is_match(format!("{path}:{base}")))
+            });
+            !(by_comment || by_glob)
+        });
+        report.errors = report
+            .findings
+            .iter()
+            .filter(|f| f.severity == "error")
+            .count();
+        report.warnings = report.findings.len() - report.errors;
+    }
     report.findings.sort_by(|a, b| {
         (&a.file, &a.locale, &a.key, a.code).cmp(&(&b.file, &b.locale, &b.key, b.code))
     });
@@ -836,4 +943,12 @@ fn duplicate_keys(format: Format, text: &str) -> Result<Vec<String>> {
         .into_iter()
         .map(|k| k.rsplit('\u{0}').next().unwrap_or(&k).to_string())
         .collect())
+}
+
+/// `aucune` vs `aucun`, `attiva` vs `attivo`, `essayer` vs `essayez`: the same word
+/// agreeing with a different noun or mood, not a different translation.
+fn inflection_of(a: &str, b: &str) -> bool {
+    let common = a.chars().zip(b.chars()).take_while(|(x, y)| x == y).count();
+    let shorter = a.chars().count().min(b.chars().count());
+    common >= 3 && common + 2 >= shorter && a.chars().count().abs_diff(b.chars().count()) <= 2
 }

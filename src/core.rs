@@ -217,6 +217,8 @@ pub fn plural_units(
 pub struct Directives {
     pub skip: bool,
     pub max_chars: Option<usize>,
+    /// `polygo:ignore=identical,length`: check codes to stay quiet about for this key.
+    pub ignore: Vec<String>,
 }
 
 pub fn directives(comment: Option<&str>) -> Directives {
@@ -224,6 +226,21 @@ pub fn directives(comment: Option<&str>) -> Directives {
     let Some(c) = comment else {
         return d;
     };
+    // `ignore=a,b` carries commas, so it is read before the comma split below.
+    let mut rest_of = c;
+    while let Some(i) = rest_of.find("polygo:ignore=") {
+        let list = &rest_of[i + "polygo:ignore=".len()..];
+        let end = list
+            .find(|ch: char| !(ch.is_ascii_alphanumeric() || ch == ',' || ch == '-' || ch == '_'))
+            .unwrap_or(list.len());
+        d.ignore.extend(
+            list[..end]
+                .split(',')
+                .filter(|s| !s.is_empty())
+                .map(str::to_string),
+        );
+        rest_of = &list[end..];
+    }
     for tok in c.split(|ch: char| ch.is_whitespace() || ch == ',' || ch == ';') {
         let Some(rest) = tok.strip_prefix("polygo:") else {
             continue;
