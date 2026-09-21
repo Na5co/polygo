@@ -135,6 +135,8 @@ pub enum Format {
     Arb,
     Po,
     Resx,
+    /// Apple `.strings` (legacy iOS/macOS, `en.lproj/Localizable.strings`).
+    Strings,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -206,7 +208,11 @@ impl Config {
     }
 
     pub fn to_toml(&self) -> String {
-        toml::to_string_pretty(self).expect("config is serializable")
+        let pretty = toml::to_string_pretty(self).expect("config is serializable");
+        // `target_locales = ["de", "fr"]` on one line, not one line per locale.
+        let mut doc: toml_edit::DocumentMut = pretty.parse().expect("own output parses");
+        Self::set_target_locales(&mut doc, &self.target_locales);
+        doc.to_string()
     }
 
     /// Edit `polygo.toml` in place: comments, key order and formatting the user put in

@@ -73,6 +73,16 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         .unwrap_or_else(|| cfg.target_locales.clone());
     let units = project::load_units(root, cfg)?;
     let skip = cfg.key_skip()?;
+    // `polygo:skip` in a developer comment, for the format-level checks below that read
+    // files directly (units already exclude these keys).
+    let directive_skip: std::collections::BTreeSet<(usize, String)> =
+        project::directive_skipped_keys(root, cfg)?
+            .into_iter()
+            .collect();
+    let skipped = |idx: usize, spec: &crate::config::FileSpec, key: &str| {
+        skip.matches(&spec.path, key)
+            || directive_skip.contains(&(idx, key.split('#').next().unwrap_or(key).to_string()))
+    };
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
 
     let mut locator = crate::check::locate::Locator::new(root);
@@ -158,15 +168,15 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     }
 
     // Format-level plural structures.
-    for spec in &cfg.files {
+    for (idx, spec) in cfg.files.iter().enumerate() {
         let path = root.join(&spec.path);
         match spec.format {
             Format::Xcstrings => {
-                let doc = formats::xcstrings::parse(&std::fs::read_to_string(&path)?)?;
+                let doc = formats::xcstrings::parse(&crate::formats::read_text(&path)?)?;
                 // Xcode's own bookkeeping: a unit marked needs_review / stale, or a key
                 // whose extractionState is stale (no longer found in the code).
                 for (key, locale, state) in xcstrings_states(&doc, &cfg.source_locale) {
-                    if skip.matches(&spec.path, &key)
+                    if skipped(idx, spec, &key)
                         || (!locale.is_empty() && !locales.contains(&locale))
                     {
                         continue;
@@ -192,7 +202,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     });
                 }
                 for (key, locale, cats) in plurals::xcstrings_plurals(&doc) {
-                    if !locales.contains(&locale) || skip.matches(&spec.path, &key) {
+                    if !locales.contains(&locale) || skipped(idx, spec, &key) {
                         continue;
                     }
                     let missing = plurals::missing(&locale, &cats);
@@ -218,7 +228,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     |doc: &formats::android::Document| -> Vec<(String, &'static str, String)> {
                         let mut out = Vec::new();
                         for e in &doc.entries {
-                            if !e.translatable || skip.matches(&spec.path, &e.name) {
+                            if !e.translatable || skipped(idx, spec, &e.name) {
                                 continue;
                             }
                             for v in &e.values {
@@ -229,7 +239,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         }
                         out
                     };
-                let source = formats::android::parse(&std::fs::read_to_string(&path)?)
+                let source = formats::android::parse(&crate::formats::read_text(&path)?)
                     .with_context(|| format!("parsing {}", path.display()))?;
                 for (name, severity, m) in escapes(&source) {
                     let (file, line) = locator.locate(spec, &name, &cfg.source_locale);
@@ -251,7 +261,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     if !lp.exists() {
                         continue;
                     }
-                    let doc = formats::android::parse(&std::fs::read_to_string(&lp)?)
+                    let doc = formats::android::parse(&crate::formats::read_text(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
                     for (name, severity, m) in escapes(&doc) {
                         let (file, line) = locator.locate(spec, &name, locale);
@@ -266,7 +276,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         });
                     }
                     for (name, cats) in plurals::android_plurals(&doc) {
-                        if skip.matches(&spec.path, &name) {
+                        if skipped(idx, spec, &name) {
                             continue;
                         }
                         let missing = plurals::missing(locale, &cats);
@@ -289,7 +299,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                 let Some(template) = &spec.locale_path else {
                     continue;
                 };
-                let source = formats::json::parse(&std::fs::read_to_string(&path)?)?;
+                let source = formats::json::parse(&crate::formats::read_text(&path)?)?;
                 let source_groups = plurals::i18next_plural_groups(
                     &source.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                 );
@@ -298,13 +308,13 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     if !lp.exists() {
                         continue;
                     }
-                    let doc = formats::json::parse(&std::fs::read_to_string(&lp)?)
+                    let doc = formats::json::parse(&crate::formats::read_text(&lp)?)
                         .with_context(|| format!("parsing {}", lp.display()))?;
                     let groups = plurals::i18next_groups(
                         &doc.entries.iter().map(|e| e.key()).collect::<Vec<_>>(),
                     );
                     for base in source_groups.keys() {
-                        if skip.matches(&spec.path, base) {
+                        if skipped(idx, spec, base) {
                             continue;
                         }
                         let cats = groups.get(base).cloned().unwrap_or_default();
@@ -332,21 +342,21 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                 }
             }
-            Format::Arb | Format::Po | Format::Resx => {}
+            Format::Arb | Format::Po | Format::Resx | Format::Strings => {}
         }
         // Keys a locale file has and the source does not: dead translations that
         // accumulate forever. And gettext's fuzzy flag, which ships as untranslated.
         if let Some(template) = &spec.locale_path {
-            let text = std::fs::read_to_string(&path)?;
+            let text = crate::formats::read_text(&path)?;
             let source_keys = keys_of(spec.format, &text)?;
             for locale in &locales {
                 let lp = root.join(project::locale_file(template, locale));
                 if !lp.exists() {
                     continue;
                 }
-                let ltext = std::fs::read_to_string(&lp)?;
+                let ltext = crate::formats::read_text(&lp)?;
                 for key in keys_of(spec.format, &ltext)? {
-                    if source_keys.contains(&key) || skip.matches(&spec.path, &key) {
+                    if source_keys.contains(&key) || skipped(idx, spec, &key) {
                         continue;
                     }
                     // `photos_few` next to a source `photos_one`/`photos_other` is a
@@ -377,7 +387,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                         .filter(|e| e.fuzzy && !e.msgid.is_empty())
                     {
                         let key = e.key();
-                        if skip.matches(&spec.path, &key) {
+                        if skipped(idx, spec, &key) {
                             continue;
                         }
                         let (file, line) = locator.locate(spec, &key, locale);
@@ -497,6 +507,11 @@ fn keys_of(format: Format, text: &str) -> Result<std::collections::BTreeSet<Stri
             .collect(),
         Format::Resx => formats::resx::values(&formats::resx::parse(text)?)
             .into_keys()
+            .collect(),
+        Format::Strings => formats::strings::parse(text)?
+            .entries
+            .iter()
+            .map(|e| e.key.clone())
             .collect(),
         Format::Xcstrings => Default::default(),
     })

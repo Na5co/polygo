@@ -42,6 +42,30 @@ impl Index {
                         keys.push((k, indent, n));
                     }
                 }
+                Format::Strings => {
+                    // `"key" = "…";` or `key = "…";`, possibly after a comment.
+                    let t = line.trim_start();
+                    let key = if let Some(rest) = t.strip_prefix('"') {
+                        json_string_end(rest).and_then(|end| {
+                            let raw = &rest[..end];
+                            rest[end + 1..]
+                                .trim_start()
+                                .starts_with('=')
+                                .then(|| raw.replace("\\\"", "\"").replace("\\\\", "\\"))
+                        })
+                    } else {
+                        t.split_once('=').and_then(|(k, _)| {
+                            let k = k.trim();
+                            (!k.is_empty()
+                                && k.chars()
+                                    .all(|c| c.is_ascii_alphanumeric() || "_.-".contains(c)))
+                            .then(|| k.to_string())
+                        })
+                    };
+                    if let Some(k) = key {
+                        named.entry(k).or_insert(n);
+                    }
+                }
                 Format::Android | Format::Resx => {
                     let mut rest = line;
                     while let Some(i) = rest.find("name=\"") {
@@ -95,7 +119,7 @@ impl<'a> Locator<'a> {
         self.cache
             .entry(path.clone())
             .or_insert_with(|| {
-                std::fs::read_to_string(&path)
+                crate::formats::read_text(&path)
                     .ok()
                     .map(|t| Index::build(format, &t))
             })
@@ -161,7 +185,7 @@ fn line_of(format: Format, ix: &Index, key: &str, locale: &str) -> Option<usize>
                 .or_else(|| ix.keys.iter().find(|(k, _, _)| k == last))
                 .map(|k| k.2)
         }
-        Format::Android | Format::Resx => ix.named.get(key).copied(),
+        Format::Android | Format::Resx | Format::Strings => ix.named.get(key).copied(),
         Format::Po => {
             let msgid = key.rsplit('\u{4}').next().unwrap_or(key);
             ix.named.get(msgid).copied()

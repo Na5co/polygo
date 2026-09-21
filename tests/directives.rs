@@ -39,10 +39,17 @@ fn skip_and_max_are_enforced_end_to_end() {
   "strings" : {
     "ACME Cloud" : {
       "comment" : "Product name. polygo:skip",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "ACME Cloud"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "ACME Cloud"
           }
         }
@@ -99,6 +106,11 @@ fn skip_and_max_are_enforced_end_to_end() {
     let out = run(root, &["check"]);
     assert_eq!(out.status.code(), Some(1));
     let text = String::from_utf8_lossy(&out.stdout);
+    // skip also silences the file-level checks (state, plural) for that key.
+    assert!(
+        !text.contains("ACME"),
+        "polygo:skip ignored by a file-level check:\n{text}"
+    );
     assert!(
         text.contains("Save") && text.contains("at most 6 (polygo:max)"),
         "{text}"

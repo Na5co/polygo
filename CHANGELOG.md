@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- Apple `.strings` (legacy iOS/macOS, `en.lproj/Localizable.strings`) is a supported format: `init` detects `*.lproj` layouts (one spec per file name, `en` or `Base` as source, a same-name `.xcstrings` wins), `check` runs every validator with lines, `translate` writes new keys in source order with the source comment. UTF-16 files (with BOM) are read and written back as UTF-16. Signal iOS: 14,652 translations checked in 0.08 s; two French strings carry `<strong>` tags the English does not. `.stringsdict` is not read yet.
+- `init` writes `target_locales` on one line, like `add` does.
 - `check` text output shows the first 20 findings of each code and then `… 3368 more state`, so a catalog with thousands of `needs_review` strings stays readable; `--all` lists every one, `--json` always has them all.
 - New `check` warnings: `orphan` (a key the locale file has and the source does not, in every per-locale format; i18next plural forms the locale needs are not orphans), `fuzzy` (gettext `#, fuzzy`: shipped as untranslated at runtime), `state` (`.xcstrings` units marked `needs_review`/`stale`/`new` in Xcode, and keys whose `extractionState` is stale). Penpot's German `.po` has exactly its 4 fuzzy entries flagged; boringnotch ships 3,374 strings Xcode says need review.
 - `check` ends with a coverage line when a locale is not fully translated (`coverage: pl 83% (1 of 6 missing)`; worst six locales, then a count), and `--json` gains `coverage: {locale: [translated, total]}`. The job summary from `--github` shows it too.

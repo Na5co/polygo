@@ -417,6 +417,7 @@ enum Loaded {
     /// .po and .resx: one document per locale, spliced or appended.
     PerLocale {
         format: Format,
+        source_path: PathBuf,
         source_text: String,
         source_units: Vec<crate::core::Unit>,
         template: String,
@@ -427,6 +428,7 @@ enum Loaded {
 enum PerLocaleDoc {
     Po(formats::po::Document),
     Resx(formats::resx::Document),
+    Strings(formats::strings::Document),
 }
 
 struct ArbLocale {
@@ -465,7 +467,7 @@ impl Workspace {
 
     fn load(root: &Path, spec: &FileSpec) -> Result<Loaded> {
         let path = root.join(&spec.path);
-        let text = std::fs::read_to_string(&path)
+        let text = crate::formats::read_text(&path)
             .with_context(|| format!("reading {}", path.display()))?;
         Ok(match spec.format {
             Format::Xcstrings => Loaded::Xcstrings {
@@ -489,10 +491,12 @@ impl Workspace {
                     .context("json files need locale_path (e.g. locales/{locale}.json)")?,
                 locales: BTreeMap::new(),
             },
-            Format::Po | Format::Resx => Loaded::PerLocale {
+            Format::Po | Format::Resx | Format::Strings => Loaded::PerLocale {
                 format: spec.format,
+                source_path: path.clone(),
                 source_units: match spec.format {
                     Format::Po => formats::po::units(&formats::po::parse(&text)?),
+                    Format::Strings => formats::strings::units(&formats::strings::parse(&text)?),
                     _ => formats::resx::units(&formats::resx::parse(&text)?),
                 },
                 source_text: text,
@@ -523,6 +527,7 @@ impl Workspace {
                 Format::Arb => "ICU placeholders like {name}",
                 Format::Po => "printf placeholders like %s, %(name)s, {0}",
                 Format::Resx => ".NET placeholders like {0}, {name}",
+                Format::Strings => "Apple format specifiers like %@, %d, %lld, %1$@",
             };
             if !hints.contains(&h) {
                 hints.push(h);
@@ -564,7 +569,7 @@ impl Workspace {
                     None => {
                         let path = root.join(project::locale_file(template, locale));
                         let doc = if path.exists() {
-                            formats::android::parse(&std::fs::read_to_string(&path)?)?
+                            formats::android::parse(&crate::formats::read_text(&path)?)?
                         } else {
                             formats::android::parse(&formats::android::empty_file())?
                         };
@@ -595,7 +600,7 @@ impl Workspace {
                         let path = root.join(project::locale_file(template, locale));
                         let existing = if path.exists() {
                             Some(
-                                serde_json::from_str(&std::fs::read_to_string(&path)?)
+                                serde_json::from_str(&crate::formats::read_text(&path)?)
                                     .context("existing locale JSON")?,
                             )
                         } else {
@@ -625,7 +630,7 @@ impl Workspace {
                     None => {
                         let path = root.join(project::locale_file(template, locale));
                         let existing = if path.exists() {
-                            Some(std::fs::read_to_string(&path)?)
+                            Some(crate::formats::read_text(&path)?)
                         } else {
                             None
                         };
@@ -643,6 +648,7 @@ impl Workspace {
             }
             Loaded::PerLocale {
                 format,
+                source_path,
                 source_text,
                 source_units,
                 template,
@@ -653,7 +659,7 @@ impl Workspace {
                     None => {
                         let path = root.join(project::locale_file(template, locale));
                         let existing = if path.exists() {
-                            Some(std::fs::read_to_string(&path)?)
+                            Some(crate::formats::read_text(&path)?)
                         } else {
                             None
                         };
@@ -663,6 +669,22 @@ impl Workspace {
                                 PerLocaleDoc::Po(formats::po::parse(&existing.unwrap_or_else(
                                     || formats::po::new_locale_file(&src, locale),
                                 ))?)
+                            }
+                            Format::Strings => {
+                                // A new locale file takes the source file's encoding.
+                                let (text, encoding) = match &existing {
+                                    Some(t) => {
+                                        let bytes = std::fs::read(&path)?;
+                                        (t.clone(), formats::strings::decode_file(&bytes)?.1)
+                                    }
+                                    None => {
+                                        let bytes = std::fs::read(&*source_path)?;
+                                        (String::new(), formats::strings::decode_file(&bytes)?.1)
+                                    }
+                                };
+                                PerLocaleDoc::Strings(formats::strings::parse_with(
+                                    &text, encoding,
+                                )?)
                             }
                             _ => PerLocaleDoc::Resx(formats::resx::parse(
                                 &existing
@@ -714,6 +736,30 @@ impl Workspace {
                         Some(i) => doc.set_text(i, text),
                         None => doc.insert(local_key, text),
                     },
+                    PerLocaleDoc::Strings(doc) => match doc.index_of(local_key) {
+                        Some(i) => doc.set_text(i, text),
+                        None => {
+                            // Keep the source file's order: after the nearest preceding
+                            // source key the locale file already has.
+                            use formats::strings::Place;
+                            let pos = source_units.iter().position(|u| u.key == local_key);
+                            let place = pos
+                                .and_then(|p| {
+                                    source_units[..p]
+                                        .iter()
+                                        .rev()
+                                        .find_map(|u| doc.index_of(&u.key).map(Place::After))
+                                        .or_else(|| {
+                                            source_units[p + 1..].iter().find_map(|u| {
+                                                doc.index_of(&u.key).map(Place::Before)
+                                            })
+                                        })
+                                })
+                                .unwrap_or(Place::End);
+                            let comment = pos.and_then(|p| source_units[p].comment.clone());
+                            doc.insert(local_key, text, comment.as_deref(), place);
+                        }
+                    },
                 }
                 entry.2 = true;
             }
@@ -758,11 +804,21 @@ impl Workspace {
                 Loaded::PerLocale { locales, .. } => {
                     for (path, doc, dirty) in locales.values_mut() {
                         if *dirty {
-                            let out = match doc {
-                                PerLocaleDoc::Po(d) => formats::po::serialize(d),
-                                PerLocaleDoc::Resx(d) => formats::resx::serialize(d),
-                            };
-                            write_atomic(path, &out)?;
+                            match doc {
+                                PerLocaleDoc::Po(d) => {
+                                    write_atomic(path, &formats::po::serialize(d))?
+                                }
+                                PerLocaleDoc::Resx(d) => {
+                                    write_atomic(path, &formats::resx::serialize(d))?
+                                }
+                                PerLocaleDoc::Strings(d) => write_atomic_bytes(
+                                    path,
+                                    &formats::strings::encode_file(
+                                        &formats::strings::serialize(d),
+                                        d.encoding,
+                                    ),
+                                )?,
+                            }
                             *dirty = false;
                         }
                     }
@@ -801,6 +857,10 @@ fn existing_style(path: &Path) -> Option<formats::json::Style> {
 
 /// Write via a temp file + rename so a crash never leaves a half-written locale file.
 fn write_atomic(path: &Path, content: &str) -> Result<()> {
+    write_atomic_bytes(path, content.as_bytes())
+}
+
+fn write_atomic_bytes(path: &Path, content: &[u8]) -> Result<()> {
     if let Some(dir) = path.parent() {
         std::fs::create_dir_all(dir)?;
     }
