@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `polygo.toml` typos are pointed out: `batch_szie = 5` prints `unknown key \`batch_szie\` (did you mean \`batch_size\`?)` instead of silently doing nothing, and a misspelled required key (`target_locale`) is named in the parse error. Warnings, not errors, so an older polygo still reads a newer file.
+- First `polygo translate` with an Ollama model that is not pulled offers to pull it right there (`[Y/n]`); `--yes` for scripts. Without a terminal it says the two ways to pull.
 - GitHub Action `mode: check`: validates the repository's translations on every pull request with no model and no secrets, one annotation per finding on the file, a table in the job summary, job fails on errors (`strict: "true"` for warnings too), `path:` for repos without `polygo.toml`. Outputs `errors` / `warnings`.
 - `polygo check --github` prints GitHub workflow-command annotations and writes the job summary when `GITHUB_STEP_SUMMARY` is set, for any CI on GitHub.
 - The `v0` tag the Action docs pointed at (`Na5co/polygo/action@v0`) did not exist; it does now and moves with every 0.x release.

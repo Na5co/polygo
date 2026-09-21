@@ -101,7 +101,8 @@ fn ollama_unknown_model_says_polygo_use() {
         "{err}"
     );
     assert!(err.contains("fix: `polygo use nope:1b` pulls it"), "{err}");
-    assert_eq!(hits.load(Ordering::SeqCst), 1, "no retries");
+    // One /api/tags probe (404 here, so the preflight steps aside) and one chat call.
+    assert_eq!(hits.load(Ordering::SeqCst), 2, "no retries");
 }
 
 #[test]
@@ -194,4 +195,28 @@ fn check_says_when_there_is_nothing_to_check_yet() {
         String::from_utf8_lossy(&out.stdout)
             .contains("check: ok (1 translation(s) in 1 locale(s))")
     );
+}
+
+#[test]
+fn missing_ollama_model_without_a_terminal_names_the_pull_options() {
+    // Ollama "up" with no models: the preflight cannot ask (no tty) and says how to pull.
+    let (url, hits) = serve(200, r#"{"models":[]}"#);
+    let dir = tempfile::tempdir().unwrap();
+    project(
+        dir.path(),
+        &format!("kind = \"ollama\"\nmodel = \"qwen3:8b\"\nbase_url = \"{url}\""),
+    );
+    let out = translate(dir.path());
+    assert_eq!(out.status.code(), Some(1));
+    let err = String::from_utf8_lossy(&out.stderr);
+    assert!(
+        err.contains("ollama has no model `qwen3:8b` (~5.2 GB)"),
+        "{err}"
+    );
+    assert!(
+        err.contains("`polygo use qwen3:8b` pulls it (or `polygo translate --yes`)"),
+        "{err}"
+    );
+    // Only /api/tags was asked (reachability, then the model list); no translation call.
+    assert_eq!(hits.load(Ordering::SeqCst), 2);
 }

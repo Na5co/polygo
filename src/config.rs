@@ -182,7 +182,27 @@ impl Config {
         let text = std::fs::read_to_string(&path).with_context(|| {
             format!("no {} in {} (run `polygo init`)", FILE_NAME, root.display())
         })?;
-        toml::from_str(&text).context("invalid polygo.toml")
+        let cfg: Config = match toml::from_str(&text) {
+            Ok(c) => c,
+            Err(e) => {
+                // `target_locale = [...]` fails as "missing field target_locales"; say why.
+                let mut msg = e.to_string();
+                if let Some(missing) = msg
+                    .split("missing field `")
+                    .nth(1)
+                    .and_then(|r| r.split('`').next())
+                    && let Ok(table) = text.parse::<toml::Table>()
+                    && let Some(near) = table.keys().find(|k| close(k, missing))
+                {
+                    msg = format!("{msg}\n  (found `{near}`: did you mean `{missing}`?)");
+                }
+                return Err(anyhow::anyhow!("{msg}").context("invalid polygo.toml"));
+            }
+        };
+        for w in unknown_keys(&text) {
+            eprintln!("polygo.toml: {w}");
+        }
+        Ok(cfg)
     }
 
     pub fn to_toml(&self) -> String {
@@ -240,4 +260,97 @@ impl Config {
             .clone()
             .unwrap_or_else(|| "default".into())
     }
+}
+
+// ---- unknown keys ------------------------------------------------------------------------
+//
+// serde ignores keys it does not know, which is right for forward compatibility and wrong
+// for `batch_szie = 5`: the setting silently does nothing. So: warn, with a suggestion.
+
+const ROOT_KEYS: &[&str] = &[
+    "source_locale",
+    "target_locales",
+    "files",
+    "provider",
+    "glossary",
+    "batch_size",
+    "jobs",
+    "length_ratio",
+    "context",
+    "context_tokens",
+    "memory",
+    "extract",
+    "keys",
+];
+const FILE_KEYS: &[&str] = &["format", "path", "locale_path"];
+const PROVIDER_KEYS: &[&str] = &["kind", "model", "base_url", "timeout_secs"];
+const EXTRACT_KEYS: &[&str] = &["ignore_paths", "ignore", "ignore_exact"];
+const KEYS_KEYS: &[&str] = &["skip"];
+
+/// One warning per key polygo does not understand, e.g.
+/// "unknown key `batch_szie` (did you mean `batch_size`?)".
+pub fn unknown_keys(text: &str) -> Vec<String> {
+    let Ok(table) = text.parse::<toml::Table>() else {
+        return vec![];
+    };
+    let mut out = Vec::new();
+    let mut check = |prefix: &str, t: &toml::Table, known: &[&str]| {
+        for k in t.keys() {
+            if known.contains(&k.as_str()) {
+                continue;
+            }
+            let hint = known
+                .iter()
+                .find(|c| close(k, c))
+                .map(|c| format!(" (did you mean `{c}`?)"))
+                .unwrap_or_default();
+            out.push(format!("unknown key `{prefix}{k}`{hint}"));
+        }
+    };
+    check("", &table, ROOT_KEYS);
+    if let Some(t) = table.get("provider").and_then(|v| v.as_table()) {
+        check("provider.", t, PROVIDER_KEYS);
+    }
+    if let Some(t) = table.get("extract").and_then(|v| v.as_table()) {
+        check("extract.", t, EXTRACT_KEYS);
+    }
+    if let Some(t) = table.get("keys").and_then(|v| v.as_table()) {
+        check("keys.", t, KEYS_KEYS);
+    }
+    if let Some(files) = table.get("files").and_then(|v| v.as_array()) {
+        for (i, f) in files.iter().enumerate() {
+            if let Some(t) = f.as_table() {
+                check(&format!("files[{i}]."), t, FILE_KEYS);
+            }
+        }
+    }
+    out
+}
+
+/// Typo distance: a couple of edits, or one being the other plus/minus a short suffix
+/// (`target_locale` / `target_locales`, `context_token` / `context_tokens`).
+fn close(a: &str, b: &str) -> bool {
+    if a == b {
+        return false;
+    }
+    let (a, b) = (a.to_ascii_lowercase(), b.to_ascii_lowercase());
+    if (a.starts_with(&b) || b.starts_with(&a)) && a.len().abs_diff(b.len()) <= 2 {
+        return true;
+    }
+    levenshtein(&a, &b) <= 2
+}
+
+fn levenshtein(a: &str, b: &str) -> usize {
+    let a: Vec<char> = a.chars().collect();
+    let b: Vec<char> = b.chars().collect();
+    let mut prev: Vec<usize> = (0..=b.len()).collect();
+    for (i, ca) in a.iter().enumerate() {
+        let mut cur = vec![i + 1];
+        for (j, cb) in b.iter().enumerate() {
+            let cost = usize::from(ca != cb);
+            cur.push((prev[j] + cost).min(prev[j + 1] + 1).min(cur[j] + 1));
+        }
+        prev = cur;
+    }
+    prev[b.len()]
 }

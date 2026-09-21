@@ -210,6 +210,9 @@ struct TranslateArgs {
     /// Do not attach code-usage context or similar translations to prompts.
     #[arg(long)]
     no_context: bool,
+    /// Pull a missing Ollama model without asking.
+    #[arg(short = 'y', long)]
+    yes: bool,
 }
 
 const EXAMPLES: &str = "\
@@ -235,6 +238,7 @@ Examples:
   polygo translate --retry-review      retry strings quarantined as needs-review
   polygo translate --jobs 4            four provider calls in parallel (API providers)
   polygo translate --no-context        plain prompts without code usage / similar strings
+  polygo translate --yes               pull a missing Ollama model without asking (CI, scripts)
 
 Human-edited translations are never overwritten (state `edited` in polygo.lock).
 Exit code 3 means some strings were quarantined; run `polygo review` to decide.";
@@ -458,6 +462,9 @@ fn translate(root: &Path, args: TranslateArgs) -> Result<()> {
     if std::env::var("POLYGO_HTTP_TIMEOUT").is_err() {
         // SAFETY: single-threaded at this point; workers are spawned later.
         unsafe { std::env::set_var("POLYGO_HTTP_TIMEOUT", cfg.provider.timeout_secs.to_string()) };
+    }
+    if !args.dry_run {
+        polygo::models::offer_pull(&cfg.provider, args.yes, &mut std::io::stderr())?;
     }
     let provider = polygo::provider::from_config(&cfg.provider)?;
     let opts = polygo::engine::Options {
