@@ -173,6 +173,52 @@ pub fn parse_spec(spec: &str, base_url: Option<String>) -> Result<Provider> {
 
 /// Apply `polygo use`: pull if needed, store the key, write polygo.toml (when present)
 /// and/or the global default. Returns human-readable lines describing what happened.
+/// Before a run with an Ollama provider: nothing to do if the model is pulled or Ollama is
+/// down (the provider's own error explains that). Otherwise offer to pull it here and now,
+/// so the first `polygo translate` does not bounce the user to `polygo use`. `assume_yes`
+/// skips the question; without a terminal the answer is no and the caller's error stands.
+pub fn offer_pull(cfg: &Provider, assume_yes: bool, out: &mut dyn Write) -> Result<()> {
+    if cfg.kind != "ollama" {
+        return Ok(());
+    }
+    let model = cfg.model.clone().unwrap_or_else(|| "qwen3:8b".into());
+    let base = crate::provider::ollama::Ollama::new(cfg.base_url.clone(), &model).base_url();
+    if !ollama_reachable(&base) || ollama_has(&base, &model) {
+        return Ok(());
+    }
+    let size = CATALOG
+        .iter()
+        .find(|c| c.name == model)
+        .map(|c| format!(" (~{})", c.size))
+        .unwrap_or_default();
+    let yes = assume_yes || {
+        use std::io::IsTerminal;
+        if std::io::stdin().is_terminal() && std::io::stderr().is_terminal() {
+            eprint!("{model} is not pulled{size}. Pull it now? [Y/n] ");
+            let mut line = String::new();
+            std::io::stdin().read_line(&mut line).ok();
+            matches!(line.trim().to_ascii_lowercase().as_str(), "" | "y" | "yes")
+        } else {
+            false
+        }
+    };
+    if !yes {
+        return Err(crate::provider::fatal(
+            format!("ollama has no model `{model}`{size}"),
+            format!(
+                "`polygo use {model}` pulls it (or `polygo translate --yes`) · `polygo models` lists the options"
+            ),
+        ));
+    }
+    writeln!(out, "pulling {model}{size} …")?;
+    pull(&base, &model, out)?;
+    if !ollama_has(&base, &model) {
+        bail!("pull finished but {model} is still not listed by Ollama");
+    }
+    writeln!(out, "pulled {model}")?;
+    Ok(())
+}
+
 pub fn use_model(root: &Path, args: &UseArgs, out: &mut dyn Write) -> Result<Provider> {
     let provider = parse_spec(&args.spec, args.base_url.clone())?;
     let model = provider.model.clone().unwrap_or_default();

@@ -54,6 +54,8 @@ timeout_secs = 300
 
 When several `[[files]]` are configured, lockfile keys are prefixed with the file path (`app/src/main/res/values/strings.xml:welcome`).
 
+Unknown keys are reported with a suggestion (`unknown key \`batch_szie\` (did you mean \`batch_size\`?)`) and otherwise ignored.
+
 `[keys] skip` takes globs over the key (`*` also crosses dots, so `debug.*` covers `debug.net.trace`); with several `[[files]]`, `locales/en/admin.json:*` targets one file. A skipped plural group takes all its forms with it. `polygo status` says how many keys the patterns removed. For formats with a comment field there is also the per-key directive below.
 
 Developer comments can carry per-key directives: `polygo:skip` (never translate, not counted), `polygo:max=20` (translations longer than 20 characters are a `check` error and are bounced back to the model), `polygo:context=...` (plain text for the model: the whole comment is sent anyway). They work in every format that has a comment field (`.xcstrings` comment, `<!-- -->` before an Android element, `@key.description` in ARB, `#.` in .po, `<comment>` in .resx).

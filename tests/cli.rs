@@ -180,3 +180,63 @@ fn completions_print_a_script_for_each_shell() {
         .unwrap();
     assert!(!out.status.success());
 }
+
+#[test]
+fn polygo_toml_typos_are_pointed_out() {
+    use polygo::config::unknown_keys;
+    let w = unknown_keys(
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\nbatch_szie = 5\ncontext_token = 1\n\n[[files]]\nformat = \"json\"\npath = \"a.json\"\nlocale_paths = \"x\"\n\n[provider]\nkind = \"mock\"\nmodle = \"x\"\n\n[key]\nskip = [\"a\"]\n",
+    );
+    assert_eq!(
+        w,
+        [
+            "unknown key `batch_szie` (did you mean `batch_size`?)",
+            "unknown key `context_token` (did you mean `context_tokens`?)",
+            "unknown key `key` (did you mean `keys`?)",
+            "unknown key `provider.modle` (did you mean `model`?)",
+            "unknown key `files[0].locale_paths` (did you mean `locale_path`?)",
+        ]
+    );
+    // Something unrelated gets no suggestion; a valid file gets nothing.
+    let w = unknown_keys("source_locale = \"en\"\ntarget_locales = []\nfoo = 1\n");
+    assert_eq!(w, ["unknown key `foo`"]);
+    assert!(
+        unknown_keys(
+            "source_locale = \"en\"\ntarget_locales = []\nbatch_size = 5\n\n[keys]\nskip = []\n"
+        )
+        .is_empty()
+    );
+
+    // End to end: warnings on stderr, the command still runs; a misspelled required
+    // field names the near miss.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    std::fs::create_dir_all(root.join("locales")).unwrap();
+    std::fs::write(root.join("locales/en.json"), "{\n  \"a\": \"A\"\n}\n").unwrap();
+    let run = |toml: &str| {
+        std::fs::write(root.join("polygo.toml"), toml).unwrap();
+        std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+            .current_dir(root)
+            .arg("status")
+            .output()
+            .unwrap()
+    };
+    let out = run(
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\nbatch_szie = 5\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n",
+    );
+    assert!(out.status.success());
+    assert!(
+        String::from_utf8_lossy(&out.stderr)
+            .contains("polygo.toml: unknown key `batch_szie` (did you mean `batch_size`?)")
+    );
+    let out = run(
+        "source_locale = \"en\"\ntarget_locale = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\n",
+    );
+    assert!(!out.status.success());
+    let err = String::from_utf8_lossy(&out.stderr);
+    assert!(err.contains("missing field `target_locales`"), "{err}");
+    assert!(
+        err.contains("found `target_locale`: did you mean `target_locales`?"),
+        "{err}"
+    );
+}
