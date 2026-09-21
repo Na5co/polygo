@@ -21,15 +21,31 @@ pub fn skipped_keys(root: &Path, cfg: &Config) -> Result<Vec<String>> {
 /// Keys (within their file, unprefixed) whose developer comment says `polygo:skip`, so
 /// checks that read files directly rather than units can leave them alone too.
 pub fn directive_skipped_keys(root: &Path, cfg: &Config) -> Result<Vec<(usize, String)>> {
-    let mut out = Vec::new();
+    Ok(directive_rules(root, cfg)?.0)
+}
+
+/// Per-key directives from developer comments: keys with `polygo:skip`, and
+/// `polygo:ignore=…` codes per (file index, key).
+#[allow(clippy::type_complexity)]
+pub fn directive_rules(
+    root: &Path,
+    cfg: &Config,
+) -> Result<(Vec<(usize, String)>, BTreeMap<(usize, String), Vec<String>>)> {
+    let mut skipped = Vec::new();
+    let mut ignores: BTreeMap<(usize, String), Vec<String>> = BTreeMap::new();
     for (i, spec) in cfg.files.iter().enumerate() {
         for u in load_file_units(root, cfg, spec)? {
-            if crate::core::directives(u.comment.as_deref()).skip {
-                out.push((i, crate::core::base_key(&u.key).to_string()));
+            let d = crate::core::directives(u.comment.as_deref());
+            let base = crate::core::base_key(&u.key).to_string();
+            if d.skip {
+                skipped.push((i, base.clone()));
+            }
+            if !d.ignore.is_empty() {
+                ignores.entry((i, base)).or_default().extend(d.ignore);
             }
         }
     }
-    Ok(out)
+    Ok((skipped, ignores))
 }
 
 /// `(units kept, keys removed by [keys] skip)`.

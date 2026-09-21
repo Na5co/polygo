@@ -598,3 +598,128 @@ fn baseline_hides_known_findings_and_fails_only_on_new_ones() {
         "{out}"
     );
 }
+
+#[test]
+fn inconsistent_terms_and_per_code_ignores() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("locales")).unwrap();
+    fs::write(
+        root.join("locales/en.json"),
+        "{\n  \"a\": \"Cancel\",\n  \"b\": \"Cancel\",\n  \"c\": \"Cancel\",\n  \"d\": \"Cancel\",\n  \"e\": \"None\",\n  \"f\": \"None\",\n  \"g\": \"Cancel\",\n  \"long\": \"Settings\",\n  \"brand\": \"Polygo\"\n}\n",
+    )
+    .unwrap();
+    // c is the odd one out; g is untranslated (identical, not a vote); e/f differ only by
+    // gender agreement; long is 2.5x too long; brand is identical.
+    fs::write(
+        root.join("locales/de.json"),
+        "{\n  \"a\": \"Abbrechen\",\n  \"b\": \"abbrechen\",\n  \"c\": \"Abbruch\",\n  \"d\": \"Abbrechen\",\n  \"e\": \"Keine\",\n  \"f\": \"Keiner\",\n  \"g\": \"Cancel\",\n  \"long\": \"Einstellungen und noch viel mehr Text hier\",\n  \"brand\": \"Polygo\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let by_code = |code: &str| -> Vec<String> {
+        v["findings"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|f| f["code"] == code)
+            .map(|f| f["key"].as_str().unwrap().to_string())
+            .collect()
+    };
+    assert_eq!(by_code("inconsistent"), ["c"], "{out}");
+    let m = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["code"] == "inconsistent")
+        .unwrap();
+    assert_eq!(
+        m["message"],
+        "`Cancel` is `Abbrechen` in 3 other key(s), here `Abbruch`"
+    );
+    assert_eq!(by_code("length"), ["long"]);
+    assert_eq!(by_code("identical"), ["brand", "g"]);
+
+    // [keys] ignore silences one code for matching keys, nothing else.
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[keys]\nignore = { \"brand\" = [\"identical\"], \"lo*\" = [\"length\"], \"c\" = [\"inconsistent\"] }\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let (_, out, err) = check(root, &["--json"]);
+    assert!(!err.contains("unknown key"), "{err}");
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let codes: Vec<(String, String)> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|f| {
+            (
+                f["key"].as_str().unwrap().to_string(),
+                f["code"].as_str().unwrap().to_string(),
+            )
+        })
+        .collect();
+    assert_eq!(codes, [("g".to_string(), "identical".to_string())], "{out}");
+    assert_eq!(v["warnings"], 1);
+}
+
+#[test]
+fn polygo_ignore_directive_in_a_comment() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    fs::create_dir_all(root.join("App")).unwrap();
+    fs::write(
+        root.join("App/Localizable.xcstrings"),
+        r#"{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "ACME" : {
+      "comment" : "Brand, polygo:ignore=identical,length stays",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "ACME" } }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "needs_review", "value" : "Save" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
+"#,
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["App/Localizable.xcstrings", "--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let codes: Vec<(String, String)> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|f| {
+            (
+                f["key"].as_str().unwrap().to_string(),
+                f["code"].as_str().unwrap().to_string(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        codes,
+        [
+            ("Save".to_string(), "identical".to_string()),
+            ("Save".to_string(), "state".to_string())
+        ],
+        "{out}"
+    );
+    assert_eq!(
+        polygo::core::directives(Some("polygo:ignore=identical,length stays")).ignore,
+        ["identical", "length"]
+    );
+}

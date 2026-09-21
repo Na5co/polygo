@@ -72,8 +72,9 @@ Ten seconds, no setup. It reads the string files your app already has and report
 | `link` | warning | a URL or email in the source that the translation changed or dropped |
 | `brackets` | warning | `(` opened and never closed, when the source keeps it balanced |
 | `entities` | warning | `&amp;amp;`: an entity escaped twice |
+| `inconsistent` | warning | the same short term translated two ways in one locale (`Réglages` ×3, `Paramètres` ×1) |
 
-It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines.
+It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines. A key that is right the way it is: `polygo:ignore=identical` in its comment, or `[keys] ignore = { "legal.*" = ["length"] }` in `polygo.toml`.
 
 **Adopting it on an old catalog:** `polygo check --write-baseline` accepts everything it finds today into `polygo-baseline.json` (commit it). From then on `check` reports and fails only on *new* findings, and tells you when a known one got fixed so you can prune the file. `--no-baseline` shows the whole picture.
 

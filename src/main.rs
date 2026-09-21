@@ -282,7 +282,8 @@ Examples:
 
 Codes: placeholders · plural · markup · escape · array (Android) · duplicate · glossary · empty · identical ·
        length · fragment · whitespace · punctuation · orphan · fuzzy (.po) · state (.xcstrings) ·
-       encoding · invisible · link · brackets · entities";
+       encoding · invisible · link · brackets · entities · inconsistent
+Quiet a key: polygo:ignore=code,code in its comment, or [keys] ignore in polygo.toml";
 
 const STATUS_EXAMPLES: &str = "\
 Examples:

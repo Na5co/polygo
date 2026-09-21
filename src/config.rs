@@ -2,6 +2,7 @@
 
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 pub const FILE_NAME: &str = "polygo.toml";
@@ -51,6 +52,10 @@ pub struct Keys {
     /// crosses dots; with several `[[files]]`, `path/to/file.json:key` targets one file.
     #[serde(default)]
     pub skip: Vec<String>,
+    /// Check codes to stay quiet about, per key glob:
+    /// `ignore = { "legal.*" = ["length"], "brand" = ["identical"] }`.
+    #[serde(default)]
+    pub ignore: BTreeMap<String, Vec<String>>,
 }
 
 impl Keys {
@@ -291,7 +296,7 @@ const ROOT_KEYS: &[&str] = &[
 const FILE_KEYS: &[&str] = &["format", "path", "locale_path"];
 const PROVIDER_KEYS: &[&str] = &["kind", "model", "base_url", "timeout_secs"];
 const EXTRACT_KEYS: &[&str] = &["ignore_paths", "ignore", "ignore_exact"];
-const KEYS_KEYS: &[&str] = &["skip"];
+const KEYS_KEYS: &[&str] = &["skip", "ignore"];
 
 /// One warning per key polygo does not understand, e.g.
 /// "unknown key `batch_szie` (did you mean `batch_size`?)".
