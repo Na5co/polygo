@@ -18,14 +18,24 @@ fn prop(s: &str) -> String {
 }
 
 pub fn print(report: &Report, strict: bool) -> Result<()> {
+    // Under --strict a warning fails the job, so it is an error everywhere here: the
+    // annotation, the totals line and the summary must agree with the exit code.
+    let report = if strict {
+        let mut r = report.clone();
+        for f in &mut r.findings {
+            f.severity = "error";
+        }
+        r.errors += r.warnings;
+        r.warnings = 0;
+        r
+    } else {
+        report.clone()
+    };
+    let report = &report;
     let out = std::io::stdout();
     let mut out = out.lock();
     for f in &report.findings {
-        let sev = if f.severity == "error" || strict {
-            "error"
-        } else {
-            "warning"
-        };
+        let sev = f.severity;
         let key: String = f.key.chars().take(80).collect();
         writeln!(
             out,

@@ -171,8 +171,6 @@ pub fn parse_spec(spec: &str, base_url: Option<String>) -> Result<Provider> {
     })
 }
 
-/// Apply `polygo use`: pull if needed, store the key, write polygo.toml (when present)
-/// and/or the global default. Returns human-readable lines describing what happened.
 /// Before a run with an Ollama provider: nothing to do if the model is pulled or Ollama is
 /// down (the provider's own error explains that). Otherwise offer to pull it here and now,
 /// so the first `polygo translate` does not bounce the user to `polygo use`. `assume_yes`
@@ -219,6 +217,8 @@ pub fn offer_pull(cfg: &Provider, assume_yes: bool, out: &mut dyn Write) -> Resu
     Ok(())
 }
 
+/// Apply `polygo use`: pull if needed, store the key, write polygo.toml (when present)
+/// and/or the global default. Returns human-readable lines describing what happened.
 pub fn use_model(root: &Path, args: &UseArgs, out: &mut dyn Write) -> Result<Provider> {
     let provider = parse_spec(&args.spec, args.base_url.clone())?;
     let model = provider.model.clone().unwrap_or_default();
