@@ -28,6 +28,14 @@ pub fn extract(text: &str) -> Vec<Placeholder> {
     while i < b.len() {
         match b[i] {
             b'%' => {
+                // `%arg` is Xcode's token for the value a substitution stands for.
+                if text[i..].starts_with("%arg") {
+                    out.push(Placeholder {
+                        canonical: "%arg".into(),
+                    });
+                    i += 4;
+                    continue;
+                }
                 if let Some((spec, len)) = printf_spec(&text[i..], &mut next_arg) {
                     if let Some(s) = spec {
                         out.push(Placeholder { canonical: s });

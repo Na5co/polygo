@@ -118,9 +118,13 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     ),
                 ));
             }
-            if !crate::core::plural_form_may_omit_count(&u.key)
-                && let Some(m) = placeholders::compare(&u.source, t)
-            {
+            // Plural forms: an exact-count form may leave the number out, a Russian `one`
+            // (also 21, 31…) may not.
+            let mismatch = match crate::core::split_plural(&u.key) {
+                Some((_, cat)) => plurals::compare_forms(locale, cat, &u.source, t),
+                None => placeholders::compare(&u.source, t),
+            };
+            if let Some(m) = mismatch {
                 found.push(("placeholders", "error", m.to_string()));
             }
             // A translation polygo wrote and confirmed (recorded in the lockfile) is not
@@ -187,6 +191,7 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
     }
 
     // Format-level plural structures.
+    let mut seen_dicts: std::collections::BTreeSet<std::path::PathBuf> = Default::default();
     for (idx, spec) in cfg.files.iter().enumerate() {
         let path = root.join(&spec.path);
         match spec.format {
@@ -400,7 +405,144 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
                     }
                 }
             }
-            Format::Arb | Format::Po | Format::Resx | Format::Strings => {}
+            Format::Strings => {
+                // Every .stringsdict in the source .lproj (any name: Signal ships
+                // PluralAware.stringsdict): each plural variable needs the locale's CLDR
+                // categories, every form must keep the placeholders of the source's form,
+                // and a key the locale's dict lacks falls back to English. One .lproj may
+                // hold several .strings specs; its dicts are checked once.
+                let Some(src_dir) = path.parent() else {
+                    continue;
+                };
+                let Some(template) = &spec.locale_path else {
+                    continue;
+                };
+                let mut dicts: Vec<std::path::PathBuf> = std::fs::read_dir(src_dir)
+                    .map(|rd| {
+                        rd.flatten()
+                            .map(|e| e.path())
+                            .filter(|p| p.extension().is_some_and(|e| e == "stringsdict"))
+                            .collect()
+                    })
+                    .unwrap_or_default();
+                dicts.sort();
+                for src_dict in dicts {
+                    if !seen_dicts.insert(src_dict.clone()) {
+                        continue;
+                    }
+                    let source =
+                        formats::stringsdict::parse(&crate::formats::read_text(&src_dict)?)
+                            .with_context(|| format!("parsing {}", src_dict.display()))?;
+                    let name = src_dict.file_name().unwrap().to_owned();
+                    for locale in &locales {
+                        let lp = root
+                            .join(project::locale_file(template, locale))
+                            .with_file_name(&name);
+                        let rel = lp
+                            .strip_prefix(root)
+                            .unwrap_or(&lp)
+                            .display()
+                            .to_string()
+                            .replace('\\', "/");
+                        if !lp.exists() {
+                            continue;
+                        }
+                        let doc = formats::stringsdict::parse(&crate::formats::read_text(&lp)?)
+                            .with_context(|| format!("parsing {}", lp.display()))?;
+                        for (key, se) in &source.entries {
+                            if skipped(idx, spec, key) {
+                                continue;
+                            }
+                            let Some(te) = doc.entries.get(key) else {
+                                report.push(Finding {
+                                file: rel.clone(),
+                                line: None,
+                                key: key.clone(),
+                                locale: locale.clone(),
+                                code: "plural",
+                                severity: "warning",
+                                message: "not in this locale's .stringsdict: iOS falls back to the source language".into(),
+                            });
+                                continue;
+                            };
+                            for (var, sv) in &se.variables {
+                                let Some(tv) = te.variables.get(var) else {
+                                    report.push(Finding {
+                                        file: rel.clone(),
+                                        line: Some(te.line),
+                                        key: format!("{key}#{var}"),
+                                        locale: locale.clone(),
+                                        code: "plural",
+                                        severity: "error",
+                                        message: format!("variable `{var}` is missing"),
+                                    });
+                                    continue;
+                                };
+                                let cats: Vec<String> =
+                                    tv.forms.iter().map(|(c, _)| c.clone()).collect();
+                                let missing = plurals::missing(locale, &cats);
+                                if !missing.is_empty() {
+                                    report.push(Finding {
+                                        file: rel.clone(),
+                                        line: Some(te.line),
+                                        key: format!("{key}#{var}"),
+                                        locale: locale.clone(),
+                                        code: "plural",
+                                        severity: "error",
+                                        message: format!(
+                                            "missing plural form(s) {}",
+                                            missing.join(", ")
+                                        ),
+                                    });
+                                }
+                                let src_other = sv
+                                    .forms
+                                    .iter()
+                                    .find(|(c, _)| c == "other")
+                                    .or(sv.forms.last())
+                                    .map(|(_, t)| t.as_str())
+                                    .unwrap_or("");
+                                // A variable is referenced from the format key or from
+                                // another variable's forms (`%d %2$#@total@`).
+                                let refs: String = std::iter::once(se.format.as_str())
+                                    .chain(
+                                        se.variables
+                                            .values()
+                                            .flat_map(|v| v.forms.iter().map(|(_, f)| f.as_str())),
+                                    )
+                                    .collect::<Vec<_>>()
+                                    .join(" ");
+                                let pos = plurals::stringsdict_position(&refs, var);
+                                for (cat, form) in &tv.forms {
+                                    let src_form = sv
+                                        .forms
+                                        .iter()
+                                        .find(|(c, _)| c == cat)
+                                        .map_or(src_other, |(_, t)| t.as_str());
+                                    // Inside a variable `%d` is that variable's argument;
+                                    // in an exact-count form the number may be left out.
+                                    let (s, t) = (
+                                        plurals::renumber(src_form, pos),
+                                        plurals::renumber(form, pos),
+                                    );
+                                    if let Some(m) = plurals::compare_forms(locale, cat, &s, &t) {
+                                        report.push(Finding {
+                                            file: rel.clone(),
+                                            line: Some(te.line),
+                                            key: format!("{key}#{var}.{cat}"),
+                                            locale: locale.clone(),
+                                            code: "placeholders",
+                                            severity: "error",
+                                            message: m.to_string(),
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Format::Arb | Format::Po | Format::Resx => {}
         }
         // The same key twice in one file: the last one wins silently, whichever the
         // translator meant.

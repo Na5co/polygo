@@ -53,7 +53,7 @@ Ten seconds, no setup. It reads the string files your app already has and report
 | code | severity | what it catches |
 |---|:-:|---|
 | `placeholders` | error | `%1$@`, `{{name}}`, `%(count)s`, `{0}`, `{n, plural, …}` missing, added, retyped or reordered |
-| `plural` | error | a CLDR form the locale needs and doesn't have: `few`/`many` for Polish, six for Arabic; ICU, `.xcstrings`, `<plurals>`, `msgstr[n]`, i18next `_few` |
+| `plural` | error | a CLDR form the locale needs and doesn't have: `few`/`many` for Polish, six for Arabic; ICU, `.xcstrings`, `.stringsdict`, `<plurals>`, `msgstr[n]`, i18next `_few` |
 | `markup` | error | `<b>`, `</a>`, `<br>` the source has and the translation lacks, or the reverse |
 | `escape` | error | Android: unescaped `'`, or a leading `@`/`?` that `aapt` reads as a resource reference |
 | `empty` | error | a translation that is blank |
@@ -100,7 +100,7 @@ Any other CI: `polygo check --github`. Pre-commit: `entry: polygo check` ([snipp
 | boringnotch | 3,374 strings Xcode marks `needs_review`, shipped |
 | NewPipe, DuckDuckGo Android | stray `"` that Android silently drops from the UI |
 | Penpot | 4 `#, fuzzy` entries gettext shows in English |
-| Signal iOS | French strings with literal `<strong>` tags the English source doesn't have |
+| Signal iOS | French strings with literal `<strong>` tags the English source doesn't have; Russian `one` forms without the number, shown for 21, 31, 101 items |
 
 Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
 

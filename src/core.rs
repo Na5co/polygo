@@ -109,12 +109,6 @@ pub fn array_units(
 }
 
 /// The key without a plural or array suffix (for code-usage lookup and display).
-/// `zero`, `one` and `two` forms may leave the count out ("one day", Arabic dual
-/// "يومان"); Xcode and Android both allow it. Placeholder checks skip those forms.
-pub fn plural_form_may_omit_count(key: &str) -> bool {
-    matches!(split_plural(key), Some((_, "zero" | "one" | "two")))
-}
-
 pub fn base_key(key: &str) -> &str {
     split_plural(key)
         .map(|(b, _)| b)
