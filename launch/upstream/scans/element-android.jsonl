@@ -1,0 +1,348 @@
+{"repo": "element-hq/element-android", "path": "library/ui-strings/src/main/res", "errors": 347, "warnings": 2277}
+{"file": "res/values-ar/strings.xml", "line": 505, "key": "e2e_re_request_encryption_key", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-ar/strings.xml", "line": 506, "key": "e2e_re_request_encryption_key_dialog_content", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ar/strings.xml", "line": 472, "key": "encryption_information_not_verified", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected <b>"}
+{"file": "res/values-ar/strings.xml", "line": 1169, "key": "notice_room_canonical_alias_alternative_removed#plural.few", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$s %2$s"}
+{"file": "res/values-ar/strings.xml", "line": 1169, "key": "notice_room_canonical_alias_alternative_removed#plural.many", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$s %2$s"}
+{"file": "res/values-ar/strings.xml", "line": 1169, "key": "notice_room_canonical_alias_alternative_removed#plural.other", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$s %2$s"}
+{"file": "res/values-ar/strings.xml", "line": 1187, "key": "notice_room_server_acl_changes#plural.few", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-ar/strings.xml", "line": 1187, "key": "notice_room_server_acl_changes#plural.many", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-ar/strings.xml", "line": 1187, "key": "notice_room_server_acl_changes#plural.other", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-ar/strings.xml", "line": 391, "key": "permissions_rationale_msg_record_audio", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ar/strings.xml", "line": 512, "key": "settings_opt_in_of_analytics_summary", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ar/strings.xml", "line": 408, "key": "ssl_only_accept", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 407, "key": "ssl_unexpected_existing_expl", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected <b>"}
+{"file": "res/values-bg/strings.xml", "line": 1187, "key": "call_failed_no_connection", "locale": "bg", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bg/strings.xml", "line": 514, "key": "e2e_re_request_encryption_key", "locale": "bg", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 393, "key": "call_failed_no_connection", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 351, "key": "e2e_re_request_encryption_key", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 50, "key": "keys_backup_passphrase_not_empty_error_message", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 643, "key": "notice_room_aliases_removed#plural.other", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing %2$s; unexpected %3$s"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 577, "key": "settings_background_fdroid_sync_mode_battery_description", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 574, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 225, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "bn-BD", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 938, "key": "call_failed_no_connection", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 299, "key": "e2e_re_request_encryption_key", "locale": "bn-IN", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 1023, "key": "keys_backup_passphrase_not_empty_error_message", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 135, "key": "notice_room_aliases_removed#plural.other", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing %2$s; unexpected %3$s"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 822, "key": "settings_background_fdroid_sync_mode_battery_description", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 825, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 491, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "bn-IN", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bs/strings.xml", "line": 103, "key": "permissions_rationale_msg_camera_and_audio", "locale": "bs", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-bs/strings.xml", "line": 101, "key": "permissions_rationale_msg_record_audio", "locale": "bs", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-cs/strings.xml", "line": 723, "key": "active_widgets", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2186, "key": "call_active_status", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2282, "key": "create_poll_not_enough_options_error", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2735, "key": "device_manager_filter_option_inactive_description", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2693, "key": "device_manager_inactive_sessions_description", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2703, "key": "device_manager_other_sessions_description_inactive", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2895, "key": "device_manager_other_sessions_multi_signout_all", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2724, "key": "device_manager_other_sessions_recommendation_description_inactive", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1587, "key": "encryption_import_room_keys_success", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1946, "key": "entries", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1036, "key": "fallback_users_read", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1486, "key": "invitations_sent_to_one_and_more_users", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 683, "key": "keys_backup_info_keys_backing_up", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 671, "key": "keys_backup_restore_success_description_part1", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 676, "key": "keys_backup_restore_success_description_part2", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1170, "key": "login_error_limit_exceeded_retry_after", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 331, "key": "membership_changes", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2434, "key": "message_reaction_show_more", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2130, "key": "missed_audio_call", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2125, "key": "missed_video_call", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 127, "key": "notice_room_aliases_added", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 132, "key": "notice_room_aliases_added_by_you", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 137, "key": "notice_room_aliases_removed", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 142, "key": "notice_room_aliases_removed_by_you", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 228, "key": "notice_room_canonical_alias_alternative_added", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 223, "key": "notice_room_canonical_alias_alternative_added_by_you", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 218, "key": "notice_room_canonical_alias_alternative_removed", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 213, "key": "notice_room_canonical_alias_alternative_removed_by_you", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2426, "key": "notice_room_server_acl_changes", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 705, "key": "notification_compat_summary_line_for_room", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 710, "key": "notification_compat_summary_title", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1754, "key": "notification_invitations", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 695, "key": "notification_unread_notified_messages", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 700, "key": "notification_unread_notified_messages_in_room_rooms", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2326, "key": "poll_option_vote_count", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2311, "key": "poll_total_vote_count_after_ended", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2316, "key": "poll_total_vote_count_before_ended_and_not_voted", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2321, "key": "poll_total_vote_count_before_ended_and_voted", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 393, "key": "room_details_selected", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 184, "key": "room_displayname_four_and_more_members", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 382, "key": "room_new_messages_notification", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2967, "key": "room_polls_active_no_item_for_loaded_period", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2959, "key": "room_polls_ended_no_item_for_loaded_period", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1260, "key": "room_profile_section_more_member_list", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2572, "key": "room_removed_messages", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1581, "key": "room_settings_banned_users_count", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 362, "key": "room_title_members", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2635, "key": "search_space_multiple_parents", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1693, "key": "seconds", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1721, "key": "secure_backup_reset_devices_you_can_verify", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1341, "key": "send_images_with_original_size", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2055, "key": "send_videos_with_original_size", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1310, "key": "settings_active_sessions_count", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2544, "key": "settings_troubleshoot_test_distributors_many", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1987, "key": "space_people_you_know", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1605, "key": "two_and_some_others_read", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 1674, "key": "wrong_pin_message_remaining_attempts", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 2879, "key": "x_selected", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-el/strings.xml", "line": 502, "key": "notice_room_canonical_alias_alternative_added_by_you#plural.other", "locale": "el", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/values-et/strings.xml", "line": 347, "key": "call_failed_no_connection", "locale": "et", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-et/strings.xml", "line": 348, "key": "call_failed_no_connection_description", "locale": "et", "code": "placeholders", "severity": "error", "message": "unexpected %1$@"}
+{"file": "res/values-et/strings.xml", "line": 847, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "et", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-et/strings.xml", "line": 845, "key": "settings_troubleshoot_test_bg_restricted_success", "locale": "et", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-eu/strings.xml", "line": 1307, "key": "invitations_sent_to_one_and_more_users#plural.other", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %2$d; unexpected %2$s"}
+{"file": "res/values-eu/strings.xml", "line": 1009, "key": "login_error_limit_exceeded_retry_after#plural.other", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %1$d; unexpected $d"}
+{"file": "res/values-eu/strings.xml", "line": 74, "key": "notice_room_aliases_removed#plural.other", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %2$s; unexpected %3$s"}
+{"file": "res/values-eu/strings.xml", "line": 81, "key": "notice_room_guest_access_can_join", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %1$s; unexpected $k"}
+{"file": "res/values-eu/strings.xml", "line": 82, "key": "notice_room_guest_access_forbidden", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/values-eu/strings.xml", "line": 168, "key": "permissions_rationale_msg_camera_and_audio", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-eu/strings.xml", "line": 167, "key": "permissions_rationale_msg_record_audio", "locale": "eu", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 2262, "key": "analytics_opt_in_content", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 2304, "key": "analytics_opt_in_title", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1026, "key": "app_desktop_web", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1028, "key": "app_ios_android", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 553, "key": "call_failed_no_connection", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 2928, "key": "direct_room_encryption_enabled_waiting_users_tile_description", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 319, "key": "e2e_re_request_encryption_key", "locale": "fa", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-fa/strings.xml", "line": 320, "key": "e2e_re_request_encryption_key_dialog_content", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1700, "key": "identity_server_error_outdated_identity_server", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1706, "key": "invite_friends_rich_title", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1707, "key": "invite_friends_text", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1576, "key": "keys_backup_passphrase_not_empty_error_message", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 2137, "key": "link_this_email_with_your_account", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1255, "key": "permissions_rationale_msg_camera_and_audio", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1258, "key": "permissions_rationale_msg_record_audio", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 2291, "key": "preference_help_summary", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1342, "key": "rendering_event_error_exception", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1343, "key": "rendering_event_error_type_of_event_not_handled", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1190, "key": "settings_background_fdroid_sync_mode_battery_description", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1188, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 510, "key": "settings_call_ringtone_use_app_ringtone", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 908, "key": "settings_developer_mode_fail_fast_summary", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1664, "key": "settings_opt_in_of_analytics_summary", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1144, "key": "settings_security_pin_code_grace_period_summary_off", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1145, "key": "settings_security_pin_code_grace_period_summary_on", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1150, "key": "settings_security_pin_code_use_biometrics_summary_off", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 622, "key": "settings_troubleshoot_test_battery_success", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 617, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 615, "key": "settings_troubleshoot_test_bg_restricted_success", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 340, "key": "settings_troubleshoot_test_device_settings_failed", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1219, "key": "settings_troubleshoot_test_play_services_failed", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1193, "key": "settings_troubleshoot_test_service_boot_failed", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1353, "key": "soft_logout_sso_not_same_user_error", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1101, "key": "use_latest_app", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fa/strings.xml", "line": 1270, "key": "use_other_session_content_description", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name} {app_name} {app_name} {app_name}"}
+{"file": "res/values-fi/strings.xml", "line": 503, "key": "e2e_re_request_encryption_key", "locale": "fi", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-fi/strings.xml", "line": 579, "key": "settings_troubleshoot_test_bg_restricted_success", "locale": "fi", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fi/strings.xml", "line": 1118, "key": "soft_logout_sso_not_same_user_error", "locale": "fi", "code": "placeholders", "severity": "error", "message": "unexpected {app_name}"}
+{"file": "res/values-fr-rCA/strings.xml", "line": 1441, "key": "call_failed_no_connection", "locale": "fr-CA", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fr/strings.xml", "line": 1565, "key": "call_failed_no_connection", "locale": "fr", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fr/strings.xml", "line": 2635, "key": "onboarding_new_app_layout_welcome_message", "locale": "fr", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-fy/strings.xml", "line": 765, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "fy", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-gl/strings.xml", "line": 455, "key": "e2e_re_request_encryption_key", "locale": "gl", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-hu/strings.xml", "line": 1663, "key": "notice_room_aliases_added_by_you#plural.other", "locale": "hu", "code": "placeholders", "severity": "error", "message": "missing %1$s; unexpected %2$s"}
+{"file": "res/values-hu/strings.xml", "line": 603, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "hu", "code": "placeholders", "severity": "error", "message": "unexpected {app_name}"}
+{"file": "res/values-hu/strings.xml", "line": 1365, "key": "use_other_session_content_description", "locale": "hu", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-in/strings.xml", "line": 129, "key": "e2e_re_request_encryption_key", "locale": "in", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-in/strings.xml", "line": 2360, "key": "threads_notice_migration_message", "locale": "in", "code": "markup", "severity": "error", "message": "unexpected </strong>, <strong>"}
+{"file": "res/values-it/strings.xml", "line": 2055, "key": "room_using_unstable_room_version", "locale": "it", "code": "markup", "severity": "error", "message": "unexpected </i>, <i>"}
+{"file": "res/values-it/strings.xml", "line": 267, "key": "send_bug_report_logs_description", "locale": "it", "code": "placeholders", "severity": "error", "message": "unexpected {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1469, "key": "app_desktop_web", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1467, "key": "app_ios_android", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 157, "key": "call_failed_no_connection", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 199, "key": "e2e_re_request_encryption_key_dialog_content", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1625, "key": "identity_server_error_bulk_sha256_not_supported", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1629, "key": "identity_server_error_outdated_identity_server", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1639, "key": "invitations_sent_to_one_and_more_users#plural.many", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing %2$d"}
+{"file": "res/values-iw/strings.xml", "line": 1639, "key": "invitations_sent_to_one_and_more_users#plural.other", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing %2$d"}
+{"file": "res/values-iw/strings.xml", "line": 1648, "key": "invite_friends_rich_title", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1649, "key": "invite_friends_text", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 628, "key": "keys_backup_passphrase_not_empty_error_message", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1356, "key": "login_default_session_public_name", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 170, "key": "permissions_rationale_msg_camera_and_audio", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 173, "key": "permissions_rationale_msg_record_audio", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1451, "key": "rendering_event_error_exception", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1665, "key": "secure_backup_reset_devices_you_can_verify#plural.many", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-iw/strings.xml", "line": 1665, "key": "secure_backup_reset_devices_you_can_verify#plural.other", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-iw/strings.xml", "line": 235, "key": "settings_background_fdroid_sync_mode_battery_description", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 232, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 185, "key": "settings_call_ringtone_use_app_ringtone", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 803, "key": "settings_developer_mode_fail_fast_summary", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1333, "key": "settings_opt_in_of_analytics_summary", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1209, "key": "settings_security_pin_code_grace_period_summary_off", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1210, "key": "settings_security_pin_code_grace_period_summary_on", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1215, "key": "settings_security_pin_code_use_biometrics_summary_off", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 256, "key": "settings_troubleshoot_test_battery_success", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 259, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 262, "key": "settings_troubleshoot_test_bg_restricted_success", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 365, "key": "settings_troubleshoot_test_device_settings_failed", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 282, "key": "settings_troubleshoot_test_fcm_failed_account_missing", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 284, "key": "settings_troubleshoot_test_fcm_failed_service_not_available", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 286, "key": "settings_troubleshoot_test_fcm_failed_too_many_registration", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 294, "key": "settings_troubleshoot_test_play_services_failed", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 266, "key": "settings_troubleshoot_test_service_boot_failed", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 819, "key": "soft_logout_sso_not_same_user_error", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1465, "key": "use_latest_app", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-iw/strings.xml", "line": 1471, "key": "use_other_session_content_description", "locale": "iw", "code": "placeholders", "severity": "error", "message": "missing {app_name} {app_name} {app_name} {app_name} {app_name}"}
+{"file": "res/values-kab/strings.xml", "line": 902, "key": "bootstrap_crosssigning_print_it", "locale": "kab", "code": "markup", "severity": "error", "message": "unexpected <b>"}
+{"file": "res/values-kab/strings.xml", "line": 136, "key": "notice_room_aliases_removed#plural.other", "locale": "kab", "code": "placeholders", "severity": "error", "message": "missing %2$s; unexpected %3$s"}
+{"file": "res/values-kab/strings.xml", "line": 1453, "key": "room_settings_enable_encryption_dialog_content", "locale": "kab", "code": "markup", "severity": "error", "message": "unexpected </a>, <a>"}
+{"file": "res/values-kab/strings.xml", "line": 828, "key": "use_latest_app", "locale": "kab", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ko/strings.xml", "line": 172, "key": "e2e_re_request_encryption_key", "locale": "ko", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-lt/strings.xml", "line": 1667, "key": "active_widgets", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 403, "key": "create_poll_not_enough_options_error", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 753, "key": "device_manager_inactive_sessions_description", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 763, "key": "device_manager_other_sessions_description_inactive", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1735, "key": "encryption_import_room_keys_success", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1838, "key": "fallback_users_read", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1618, "key": "keys_backup_info_keys_backing_up", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 944, "key": "keys_backup_restore_success_description_part1", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 939, "key": "keys_backup_restore_success_description_part2", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 482, "key": "membership_changes", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 811, "key": "message_reaction_show_more", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 444, "key": "missed_audio_call", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 466, "key": "missed_video_call", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 631, "key": "notice_room_aliases_added", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 626, "key": "notice_room_aliases_added_by_you", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 621, "key": "notice_room_aliases_removed", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 616, "key": "notice_room_aliases_removed_by_you", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 605, "key": "notice_room_canonical_alias_alternative_added", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 600, "key": "notice_room_canonical_alias_alternative_added_by_you", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 595, "key": "notice_room_canonical_alias_alternative_removed", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 590, "key": "notice_room_canonical_alias_alternative_removed_by_you", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 727, "key": "notice_room_server_acl_changes", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1701, "key": "notification_compat_summary_line_for_room", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1696, "key": "notification_compat_summary_title", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1706, "key": "notification_invitations", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1716, "key": "notification_unread_notified_messages", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1711, "key": "notification_unread_notified_messages_in_room_rooms", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 408, "key": "poll_option_vote_count", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 427, "key": "poll_total_vote_count_after_ended", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 432, "key": "poll_total_vote_count_before_ended_and_not_voted", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 413, "key": "poll_total_vote_count_before_ended_and_voted", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1096, "key": "room_details_selected", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 535, "key": "room_displayname_four_and_more_members", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1119, "key": "room_new_messages_notification", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 779, "key": "room_removed_messages", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 2143, "key": "room_settings_banned_users_count", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 710, "key": "room_title_members", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 904, "key": "search_space_multiple_parents", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1147, "key": "seconds", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 794, "key": "settings_troubleshoot_test_distributors_many", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 378, "key": "space_people_you_know", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 1824, "key": "two_and_some_others_read", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-lt/strings.xml", "line": 2191, "key": "x_selected", "locale": "lt", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-nl/strings.xml", "line": 416, "key": "deactivate_account_delete_checkbox", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nl/strings.xml", "line": 419, "key": "e2e_re_request_encryption_key", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-nl/strings.xml", "line": 717, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "nl", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-nn/strings.xml", "line": 134, "key": "e2e_re_request_encryption_key", "locale": "nn", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-pl/strings.xml", "line": 401, "key": "deactivate_account_delete_checkbox", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 335, "key": "e2e_re_request_encryption_key", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-pl/strings.xml", "line": 613, "key": "keys_backup_restore_success_description_part2", "locale": "pl", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-pl/strings.xml", "line": 723, "key": "settings_background_fdroid_sync_mode_real_time_description", "locale": "pl", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-pt/strings.xml", "line": 330, "key": "e2e_re_request_encryption_key", "locale": "pt", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-pt/strings.xml", "line": 462, "key": "keys_backup_info_keys_backing_up#plural.other", "locale": "pt", "code": "placeholders", "severity": "error", "message": "missing %1$d"}
+{"file": "res/values-pt/strings.xml", "line": 476, "key": "settings_call_ringtone_use_app_ringtone", "locale": "pt", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-pt/strings.xml", "line": 498, "key": "settings_troubleshoot_test_device_settings_failed", "locale": "pt", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ru/strings.xml", "line": 2407, "key": "analytics_opt_in_list_item_1", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 1273, "key": "call_failed_no_connection", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-ru/strings.xml", "line": 1588, "key": "invitations_sent_to_one_and_more_users", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 776, "key": "keys_backup_restore_success_description_part1", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1149, "key": "login_error_limit_exceeded_retry_after", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 72, "key": "notice_room_aliases_added", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 138, "key": "notice_room_aliases_added_by_you", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 77, "key": "notice_room_aliases_removed", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 143, "key": "notice_room_aliases_removed_by_you", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 852, "key": "notification_compat_summary_title", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1199, "key": "room_profile_section_more_member_list", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1319, "key": "room_settings_banned_users_count", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1710, "key": "seconds", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1490, "key": "send_images_with_original_size", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1444, "key": "settings_active_sessions_count", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1684, "key": "two_and_some_others_read", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-ru/strings.xml", "line": 1689, "key": "wrong_pin_message_remaining_attempts", "locale": "ru", "code": "plural", "severity": "error", "message": "missing plural form(s) other"}
+{"file": "res/values-sk/strings.xml", "line": 488, "key": "active_widgets", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1931, "key": "call_active_status", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2228, "key": "create_poll_not_enough_options_error", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1891, "key": "decide_which_spaces_can_access", "locale": "sk", "code": "markup", "severity": "error", "message": "unexpected <roomname>"}
+{"file": "res/values-sk/strings.xml", "line": 2735, "key": "device_manager_filter_option_inactive_description", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2693, "key": "device_manager_inactive_sessions_description", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2703, "key": "device_manager_other_sessions_description_inactive", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2895, "key": "device_manager_other_sessions_multi_signout_all", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2724, "key": "device_manager_other_sessions_recommendation_description_inactive", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 516, "key": "e2e_re_request_encryption_key_dialog_content", "locale": "sk", "code": "placeholders", "severity": "error", "message": "missing {app_name}; unexpected {n}"}
+{"file": "res/values-sk/strings.xml", "line": 788, "key": "encryption_import_room_keys_success", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1330, "key": "entries", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2331, "key": "fallback_users_read", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1982, "key": "invitations_sent_to_one_and_more_users", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 927, "key": "keys_backup_info_keys_backing_up", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 891, "key": "keys_backup_restore_success_description_part1", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 896, "key": "keys_backup_restore_success_description_part2", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1678, "key": "login_error_limit_exceeded_retry_after", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 461, "key": "membership_changes", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2423, "key": "message_reaction_show_more", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1447, "key": "missed_audio_call", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1442, "key": "missed_video_call", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 71, "key": "notice_room_aliases_added", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 141, "key": "notice_room_aliases_added_by_you", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 76, "key": "notice_room_aliases_removed", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 146, "key": "notice_room_aliases_removed_by_you", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1492, "key": "notice_room_canonical_alias_alternative_added", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1487, "key": "notice_room_canonical_alias_alternative_added_by_you", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1482, "key": "notice_room_canonical_alias_alternative_removed", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1477, "key": "notice_room_canonical_alias_alternative_removed_by_you", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2408, "key": "notice_room_server_acl_changes", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 681, "key": "notification_compat_summary_line_for_room", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 686, "key": "notification_compat_summary_title", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1376, "key": "notification_invitations", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 477, "key": "notification_unread_notified_messages", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 482, "key": "notification_unread_notified_messages_in_room_rooms", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1270, "key": "poll_option_vote_count", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2243, "key": "poll_total_vote_count_after_ended", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2238, "key": "poll_total_vote_count_before_ended_and_not_voted", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2233, "key": "poll_total_vote_count_before_ended_and_voted", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 521, "key": "room_details_selected", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1200, "key": "room_displayname_four_and_more_members", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 472, "key": "room_new_messages_notification", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2967, "key": "room_polls_active_no_item_for_loaded_period", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2959, "key": "room_polls_ended_no_item_for_loaded_period", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1424, "key": "room_profile_section_more_member_list", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2573, "key": "room_removed_messages", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 782, "key": "room_settings_banned_users_count", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 467, "key": "room_title_members", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2635, "key": "search_space_multiple_parents", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1381, "key": "seconds", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2005, "key": "secure_backup_reset_devices_you_can_verify", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2066, "key": "send_images_with_original_size", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2061, "key": "send_videos_with_original_size", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1235, "key": "settings_active_sessions_count", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2545, "key": "settings_troubleshoot_test_distributors_many", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 1745, "key": "space_people_you_know", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2338, "key": "two_and_some_others_read", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2162, "key": "wrong_pin_message_remaining_attempts", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 2879, "key": "x_selected", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sq/strings.xml", "line": 1171, "key": "command_description_spoiler", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1239, "key": "encryption_information_cross_signing_state", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1240, "key": "encryption_information_dg_xsigning_complete", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1244, "key": "encryption_information_dg_xsigning_disabled", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1242, "key": "encryption_information_dg_xsigning_not_trusted", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1286, "key": "encryption_information_dg_xsigning_trusted", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1293, "key": "initialize_cross_signing", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1403, "key": "or_other_mx_capable_client", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1010, "key": "room_widget_permission_added_by", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1011, "key": "room_widget_permission_webview_shared_info_title", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 2439, "key": "settings_presence_user_always_appears_offline", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected </em>, <em>"}
+{"file": "res/values-sq/strings.xml", "line": 1398, "key": "use_other_session_content_description", "locale": "sq", "code": "markup", "severity": "error", "message": "unexpected <em>"}
+{"file": "res/values-sv/strings.xml", "line": 1071, "key": "use_other_session_content_description", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-te/strings.xml", "line": 303, "key": "permissions_rationale_msg_camera_and_audio", "locale": "te", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-tr/strings.xml", "line": 1453, "key": "analytics_opt_in_title", "locale": "tr", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-tr/strings.xml", "line": 123, "key": "e2e_re_request_encryption_key", "locale": "tr", "code": "markup", "severity": "error", "message": "unexpected </u>, <u>"}
+{"file": "res/values-uk/strings.xml", "line": 2389, "key": "analytics_opt_in_list_item_1", "locale": "uk", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-uk/strings.xml", "line": 229, "key": "permissions_rationale_msg_camera_and_audio", "locale": "uk", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-uk/strings.xml", "line": 228, "key": "permissions_rationale_msg_record_audio", "locale": "uk", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-vi/strings.xml", "line": 146, "key": "settings_call_ringtone_use_app_ringtone", "locale": "vi", "code": "placeholders", "severity": "error", "message": "missing {app_name}"}
+{"file": "res/values-zh-rCN/strings.xml", "line": 613, "key": "settings_troubleshoot_test_bg_restricted_failed", "locale": "zh-CN", "code": "placeholders", "severity": "error", "message": "unexpected {app_name}"}
+{"file": "res/values-zh-rTW/strings.xml", "line": 547, "key": "deactivate_account_delete_checkbox", "locale": "zh-TW", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}

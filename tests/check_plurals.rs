@@ -196,3 +196,65 @@ fn check_plurals() {
     }
     assert!(icu_count >= 50, "{icu_count}");
 }
+
+#[test]
+fn zero_one_two_forms_may_omit_the_count() {
+    // Arabic dual "يومان" has no number in it; Apple and Android both allow that.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    std::fs::create_dir_all(root.join("App")).unwrap();
+    std::fs::write(
+        root.join("App/Localizable.xcstrings"),
+        r#"{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld days" : {
+      "localizations" : {
+        "ar" : {
+          "variations" : {
+            "plural" : {
+              "one" : { "stringUnit" : { "state" : "translated", "value" : "يوم واحد" } },
+              "two" : { "stringUnit" : { "state" : "translated", "value" : "يومان" } },
+              "few" : { "stringUnit" : { "state" : "translated", "value" : "%lld أيام" } },
+              "many" : { "stringUnit" : { "state" : "translated", "value" : "%lld يومًا" } },
+              "other" : { "stringUnit" : { "state" : "translated", "value" : "يوم" } },
+              "zero" : { "stringUnit" : { "state" : "translated", "value" : "لا أيام" } }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : { "stringUnit" : { "state" : "translated", "value" : "%lld day" } },
+              "other" : { "stringUnit" : { "state" : "translated", "value" : "%lld days" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}"#,
+    )
+    .unwrap();
+    std::fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"ar\"]\n\n[[files]]\nformat = \"xcstrings\"\npath = \"App/Localizable.xcstrings\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = std::process::Command::new(env!("CARGO_BIN_EXE_polygo"))
+        .current_dir(root)
+        .args(["check", "--json"])
+        .output()
+        .unwrap();
+    let r: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
+    let errs: Vec<String> = r["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|f| f["severity"] == "error")
+        .map(|f| f["key"].as_str().unwrap().to_string())
+        .collect();
+    // Only `other` (which really did drop the count) is an error.
+    assert_eq!(errs, vec!["%lld days#plural.other".to_string()], "{errs:?}");
+}

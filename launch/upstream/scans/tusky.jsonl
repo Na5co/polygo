@@ -1,0 +1,295 @@
+{"repo": "tuskyapp/Tusky", "path": "app/src/main/res", "errors": 294, "warnings": 1342}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.few", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.many", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.one", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.other", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.two", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 371, "key": "favs#plural.zero", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 379, "key": "reblogs#plural.few", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 379, "key": "reblogs#plural.many", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ar/strings.xml", "line": 379, "key": "reblogs#plural.other", "locale": "ar", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 377, "key": "favs#plural.few", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 377, "key": "favs#plural.many", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 377, "key": "favs#plural.one", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 377, "key": "favs#plural.other", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 598, "key": "pref_summary_http_proxy_invalid", "locale": "be", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-be/strings.xml", "line": 599, "key": "pref_summary_http_proxy_missing", "locale": "be", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-be/strings.xml", "line": 416, "key": "reblogs#plural.few", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 416, "key": "reblogs#plural.many", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 416, "key": "reblogs#plural.one", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-be/strings.xml", "line": 416, "key": "reblogs#plural.other", "locale": "be", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bg/strings.xml", "line": 86, "key": "favs#plural.one", "locale": "bg", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bg/strings.xml", "line": 86, "key": "favs#plural.other", "locale": "bg", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bg/strings.xml", "line": 508, "key": "pref_summary_http_proxy_invalid", "locale": "bg", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-bg/strings.xml", "line": 516, "key": "pref_summary_http_proxy_missing", "locale": "bg", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-bg/strings.xml", "line": 82, "key": "reblogs#plural.one", "locale": "bg", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bg/strings.xml", "line": 82, "key": "reblogs#plural.other", "locale": "bg", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 173, "key": "dialog_whats_an_instance", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </a>, <a>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 413, "key": "favs#plural.one", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 413, "key": "favs#plural.other", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 483, "key": "reblogs#plural.one", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rBD/strings.xml", "line": 483, "key": "reblogs#plural.other", "locale": "bn-BD", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 327, "key": "favs#plural.one", "locale": "bn-IN", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 327, "key": "favs#plural.other", "locale": "bn-IN", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 331, "key": "reblogs#plural.one", "locale": "bn-IN", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-bn-rIN/strings.xml", "line": 331, "key": "reblogs#plural.other", "locale": "bn-IN", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ca/strings.xml", "line": 320, "key": "favs#plural.one", "locale": "ca", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ca/strings.xml", "line": 320, "key": "favs#plural.other", "locale": "ca", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ca/strings.xml", "line": 506, "key": "pref_summary_http_proxy_invalid", "locale": "ca", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <no>"}
+{"file": "res/values-ca/strings.xml", "line": 505, "key": "pref_summary_http_proxy_missing", "locale": "ca", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <no>"}
+{"file": "res/values-ca/strings.xml", "line": 325, "key": "reblogs#plural.one", "locale": "ca", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ca/strings.xml", "line": 325, "key": "reblogs#plural.other", "locale": "ca", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ckb/strings.xml", "line": 326, "key": "favs#plural.one", "locale": "ckb", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ckb/strings.xml", "line": 326, "key": "favs#plural.other", "locale": "ckb", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ckb/strings.xml", "line": 322, "key": "reblogs#plural.one", "locale": "ckb", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ckb/strings.xml", "line": 322, "key": "reblogs#plural.other", "locale": "ckb", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 670, "key": "action_post_failed_detail", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 478, "key": "error_upload_max_media_reached", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 323, "key": "favs", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 323, "key": "favs#plural.few", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 323, "key": "favs#plural.one", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 323, "key": "favs#plural.other", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 742, "key": "help_empty_conversations", "locale": "cs", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-cs/strings.xml", "line": 616, "key": "help_empty_home", "locale": "cs", "code": "placeholders", "severity": "error", "message": "missing {{search}}"}
+{"file": "res/values-cs/strings.xml", "line": 706, "key": "help_empty_lists", "locale": "cs", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-cs/strings.xml", "line": 273, "key": "hint_describe_for_visually_impaired", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 212, "key": "notification_title_summary", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 468, "key": "poll_info_people", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 359, "key": "poll_info_votes", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 372, "key": "poll_timespan_days", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 473, "key": "poll_timespan_hours", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 377, "key": "poll_timespan_minutes", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 382, "key": "poll_timespan_seconds", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 568, "key": "pref_summary_http_proxy_invalid", "locale": "cs", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <neplatn>"}
+{"file": "res/values-cs/strings.xml", "line": 567, "key": "pref_summary_http_proxy_missing", "locale": "cs", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nenastaveno>"}
+{"file": "res/values-cs/strings.xml", "line": 328, "key": "reblogs", "locale": "cs", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-cs/strings.xml", "line": 328, "key": "reblogs#plural.few", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 328, "key": "reblogs#plural.one", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cs/strings.xml", "line": 328, "key": "reblogs#plural.other", "locale": "cs", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.few", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.many", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.one", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.other", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.two", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 445, "key": "favs#plural.zero", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 723, "key": "help_empty_conversations", "locale": "cy", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-cy/strings.xml", "line": 736, "key": "help_empty_lists", "locale": "cy", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-cy/strings.xml", "line": 628, "key": "pref_summary_http_proxy_invalid", "locale": "cy", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <annilys>"}
+{"file": "res/values-cy/strings.xml", "line": 627, "key": "pref_summary_http_proxy_missing", "locale": "cy", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <heb>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.few", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.many", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.one", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.other", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.two", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-cy/strings.xml", "line": 494, "key": "reblogs#plural.zero", "locale": "cy", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-de/strings.xml", "line": 567, "key": "pref_summary_http_proxy_invalid", "locale": "de", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <ung>"}
+{"file": "res/values-de/strings.xml", "line": 566, "key": "pref_summary_http_proxy_missing", "locale": "de", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nicht>"}
+{"file": "res/values-en-rGB/strings.xml", "line": 6, "key": "favs#plural.one", "locale": "en-GB", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-en-rGB/strings.xml", "line": 6, "key": "favs#plural.other", "locale": "en-GB", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eo/strings.xml", "line": 320, "key": "favs#plural.one", "locale": "eo", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eo/strings.xml", "line": 320, "key": "favs#plural.other", "locale": "eo", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eo/strings.xml", "line": 324, "key": "reblogs#plural.one", "locale": "eo", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eo/strings.xml", "line": 324, "key": "reblogs#plural.other", "locale": "eo", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 288, "key": "favs#plural.many", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 288, "key": "favs#plural.one", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 288, "key": "favs#plural.other", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 707, "key": "help_empty_conversations", "locale": "es", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-es/strings.xml", "line": 593, "key": "pref_summary_http_proxy_invalid", "locale": "es", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <inv>"}
+{"file": "res/values-es/strings.xml", "line": 592, "key": "pref_summary_http_proxy_missing", "locale": "es", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <sin>"}
+{"file": "res/values-es/strings.xml", "line": 293, "key": "reblogs#plural.many", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 293, "key": "reblogs#plural.one", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-es/strings.xml", "line": 293, "key": "reblogs#plural.other", "locale": "es", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eu/strings.xml", "line": 341, "key": "favs#plural.one", "locale": "eu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eu/strings.xml", "line": 341, "key": "favs#plural.other", "locale": "eu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eu/strings.xml", "line": 345, "key": "reblogs#plural.one", "locale": "eu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-eu/strings.xml", "line": 345, "key": "reblogs#plural.other", "locale": "eu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fa/strings.xml", "line": 677, "key": "help_empty_lists", "locale": "fa", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-fa/strings.xml", "line": 570, "key": "pref_summary_http_proxy_invalid", "locale": "fa", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-fa/strings.xml", "line": 568, "key": "pref_summary_http_proxy_missing", "locale": "fa", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-fi/strings.xml", "line": 335, "key": "pref_summary_http_proxy_invalid", "locale": "fi", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <virheellinen>"}
+{"file": "res/values-fi/strings.xml", "line": 334, "key": "pref_summary_http_proxy_missing", "locale": "fi", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <ei>"}
+{"file": "res/values-fr/strings.xml", "line": 320, "key": "favs#plural.many", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fr/strings.xml", "line": 320, "key": "favs#plural.one", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fr/strings.xml", "line": 320, "key": "favs#plural.other", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fr/strings.xml", "line": 549, "key": "pref_summary_http_proxy_invalid", "locale": "fr", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <invalide>"}
+{"file": "res/values-fr/strings.xml", "line": 551, "key": "pref_summary_http_proxy_missing", "locale": "fr", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <non>"}
+{"file": "res/values-fr/strings.xml", "line": 325, "key": "reblogs#plural.many", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fr/strings.xml", "line": 325, "key": "reblogs#plural.one", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-fr/strings.xml", "line": 325, "key": "reblogs#plural.other", "locale": "fr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 352, "key": "favs#plural.few", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 352, "key": "favs#plural.many", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 352, "key": "favs#plural.one", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 352, "key": "favs#plural.other", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 352, "key": "favs#plural.two", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 359, "key": "reblogs#plural.few", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 359, "key": "reblogs#plural.many", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 359, "key": "reblogs#plural.one", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 359, "key": "reblogs#plural.other", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ga/strings.xml", "line": 359, "key": "reblogs#plural.two", "locale": "ga", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 194, "key": "favs#plural.few", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 194, "key": "favs#plural.one", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 194, "key": "favs#plural.other", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 194, "key": "favs#plural.two", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 696, "key": "help_empty_conversations", "locale": "gd", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-gd/strings.xml", "line": 701, "key": "help_empty_lists", "locale": "gd", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-gd/strings.xml", "line": 566, "key": "pref_summary_http_proxy_invalid", "locale": "gd", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <m>"}
+{"file": "res/values-gd/strings.xml", "line": 565, "key": "pref_summary_http_proxy_missing", "locale": "gd", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <cha>"}
+{"file": "res/values-gd/strings.xml", "line": 188, "key": "reblogs#plural.few", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 188, "key": "reblogs#plural.one", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 188, "key": "reblogs#plural.other", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gd/strings.xml", "line": 188, "key": "reblogs#plural.two", "locale": "gd", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-gl/strings.xml", "line": 577, "key": "pref_summary_http_proxy_invalid", "locale": "gl", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <non>"}
+{"file": "res/values-gl/strings.xml", "line": 575, "key": "pref_summary_http_proxy_missing", "locale": "gl", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <sen>"}
+{"file": "res/values-hi/strings.xml", "line": 382, "key": "favs#plural.one", "locale": "hi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hi/strings.xml", "line": 382, "key": "favs#plural.other", "locale": "hi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hi/strings.xml", "line": 276, "key": "reblogs#plural.one", "locale": "hi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hi/strings.xml", "line": 276, "key": "reblogs#plural.other", "locale": "hi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hu/strings.xml", "line": 339, "key": "favs#plural.one", "locale": "hu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hu/strings.xml", "line": 339, "key": "favs#plural.other", "locale": "hu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hu/strings.xml", "line": 678, "key": "help_empty_conversations", "locale": "hu", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-hu/strings.xml", "line": 684, "key": "help_empty_lists", "locale": "hu", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-hu/strings.xml", "line": 572, "key": "pref_summary_http_proxy_invalid", "locale": "hu", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-hu/strings.xml", "line": 571, "key": "pref_summary_http_proxy_missing", "locale": "hu", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nincs>"}
+{"file": "res/values-hu/strings.xml", "line": 343, "key": "reblogs#plural.one", "locale": "hu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-hu/strings.xml", "line": 343, "key": "reblogs#plural.other", "locale": "hu", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-is/strings.xml", "line": 672, "key": "help_empty_lists", "locale": "is", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}}; unexpected {chevron_right}"}
+{"file": "res/values-is/strings.xml", "line": 565, "key": "pref_summary_http_proxy_invalid", "locale": "is", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-is/strings.xml", "line": 564, "key": "pref_summary_http_proxy_missing", "locale": "is", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <ekki>"}
+{"file": "res/values-it/strings.xml", "line": 589, "key": "pref_summary_http_proxy_invalid", "locale": "it", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <non>"}
+{"file": "res/values-it/strings.xml", "line": 588, "key": "pref_summary_http_proxy_missing", "locale": "it", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <non>"}
+{"file": "res/values-ja/strings.xml", "line": 294, "key": "favs#plural.other", "locale": "ja", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ja/strings.xml", "line": 570, "key": "pref_summary_http_proxy_invalid", "locale": "ja", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-ja/strings.xml", "line": 569, "key": "pref_summary_http_proxy_missing", "locale": "ja", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-ja/strings.xml", "line": 297, "key": "reblogs#plural.other", "locale": "ja", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-kab/strings.xml", "line": 390, "key": "pref_summary_http_proxy_invalid", "locale": "kab", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <arame>"}
+{"file": "res/values-ko/strings.xml", "line": 332, "key": "favs#plural.other", "locale": "ko", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ko/strings.xml", "line": 335, "key": "reblogs#plural.other", "locale": "ko", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-lv/strings.xml", "line": 464, "key": "pref_summary_http_proxy_invalid", "locale": "lv", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <neder>"}
+{"file": "res/values-lv/strings.xml", "line": 463, "key": "pref_summary_http_proxy_missing", "locale": "lv", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nav>"}
+{"file": "res/values-lv/strings.xml", "line": 476, "key": "reblogs#plural.one", "locale": "lv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-lv/strings.xml", "line": 476, "key": "reblogs#plural.other", "locale": "lv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-lv/strings.xml", "line": 476, "key": "reblogs#plural.zero", "locale": "lv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 301, "key": "favs#plural.one", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 301, "key": "favs#plural.other", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 570, "key": "pref_summary_http_proxy_invalid", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <ugyldig>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 568, "key": "pref_summary_http_proxy_missing", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <ikke>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 305, "key": "reblogs#plural.one", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nb-rNO/strings.xml", "line": 305, "key": "reblogs#plural.other", "locale": "nb-NO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nl/strings.xml", "line": 299, "key": "favs#plural.one", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nl/strings.xml", "line": 299, "key": "favs#plural.other", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nl/strings.xml", "line": 657, "key": "help_empty_conversations", "locale": "nl", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-nl/strings.xml", "line": 647, "key": "help_empty_lists", "locale": "nl", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-nl/strings.xml", "line": 594, "key": "pref_summary_http_proxy_invalid", "locale": "nl", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <ongeldig>"}
+{"file": "res/values-nl/strings.xml", "line": 593, "key": "pref_summary_http_proxy_missing", "locale": "nl", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <niet>"}
+{"file": "res/values-nl/strings.xml", "line": 303, "key": "reblogs#plural.one", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-nl/strings.xml", "line": 303, "key": "reblogs#plural.other", "locale": "nl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-oc/strings.xml", "line": 318, "key": "favs#plural.one", "locale": "oc", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-oc/strings.xml", "line": 318, "key": "favs#plural.other", "locale": "oc", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-oc/strings.xml", "line": 579, "key": "pref_summary_http_proxy_missing", "locale": "oc", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <pas>"}
+{"file": "res/values-oc/strings.xml", "line": 322, "key": "reblogs#plural.one", "locale": "oc", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-oc/strings.xml", "line": 322, "key": "reblogs#plural.other", "locale": "oc", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 185, "key": "about_tusky_license", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </a>, <a>"}
+{"file": "res/values-pl/strings.xml", "line": 344, "key": "favs#plural.few", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 344, "key": "favs#plural.many", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 344, "key": "favs#plural.one", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 344, "key": "favs#plural.other", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 599, "key": "pref_summary_http_proxy_invalid", "locale": "pl", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <niepoprawny>"}
+{"file": "res/values-pl/strings.xml", "line": 598, "key": "pref_summary_http_proxy_missing", "locale": "pl", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nieustawiony>"}
+{"file": "res/values-pl/strings.xml", "line": 350, "key": "reblogs#plural.few", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 350, "key": "reblogs#plural.many", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 350, "key": "reblogs#plural.one", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pl/strings.xml", "line": 350, "key": "reblogs#plural.other", "locale": "pl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 328, "key": "favs#plural.many", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 328, "key": "favs#plural.one", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 328, "key": "favs#plural.other", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 516, "key": "pref_summary_http_proxy_invalid", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <inv>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 515, "key": "pref_summary_http_proxy_missing", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <n>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 333, "key": "reblogs#plural.many", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 333, "key": "reblogs#plural.one", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rBR/strings.xml", "line": 333, "key": "reblogs#plural.other", "locale": "pt-BR", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 363, "key": "favs#plural.many", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 363, "key": "favs#plural.one", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 363, "key": "favs#plural.other", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 682, "key": "help_empty_conversations", "locale": "pt-PT", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 687, "key": "help_empty_lists", "locale": "pt-PT", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 581, "key": "pref_summary_http_proxy_invalid", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <inv>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 540, "key": "pref_summary_http_proxy_missing", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <indefinido>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 368, "key": "reblogs#plural.many", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 368, "key": "reblogs#plural.one", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-pt-rPT/strings.xml", "line": 368, "key": "reblogs#plural.other", "locale": "pt-PT", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 346, "key": "favs#plural.few", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 346, "key": "favs#plural.many", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 346, "key": "favs#plural.one", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 346, "key": "favs#plural.other", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 670, "key": "help_empty_conversations", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-ru/strings.xml", "line": 553, "key": "pref_summary_http_proxy_invalid", "locale": "ru", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-ru/strings.xml", "line": 552, "key": "pref_summary_http_proxy_missing", "locale": "ru", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-ru/strings.xml", "line": 352, "key": "reblogs#plural.few", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 352, "key": "reblogs#plural.many", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 352, "key": "reblogs#plural.one", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-ru/strings.xml", "line": 352, "key": "reblogs#plural.other", "locale": "ru", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sa/strings.xml", "line": 447, "key": "favs#plural.one", "locale": "sa", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sa/strings.xml", "line": 447, "key": "favs#plural.other", "locale": "sa", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sa/strings.xml", "line": 464, "key": "pref_summary_http_proxy_invalid", "locale": "sa", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-sa/strings.xml", "line": 466, "key": "pref_summary_http_proxy_missing", "locale": "sa", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-sa/strings.xml", "line": 443, "key": "reblogs#plural.one", "locale": "sa", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sa/strings.xml", "line": 443, "key": "reblogs#plural.other", "locale": "sa", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-si/strings.xml", "line": 230, "key": "favs#plural.one", "locale": "si", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-si/strings.xml", "line": 230, "key": "favs#plural.other", "locale": "si", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sk/strings.xml", "line": 155, "key": "action_post_failed_detail", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 356, "key": "hint_describe_for_visually_impaired", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 327, "key": "notification_title_summary", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 558, "key": "poll_info_people", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 553, "key": "poll_info_votes", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 538, "key": "poll_timespan_days", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 569, "key": "poll_timespan_hours", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 564, "key": "poll_timespan_minutes", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 574, "key": "poll_timespan_seconds", "locale": "sk", "code": "plural", "severity": "error", "message": "missing plural form(s) many"}
+{"file": "res/values-sk/strings.xml", "line": 306, "key": "pref_summary_http_proxy_invalid", "locale": "sk", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <neplatn>"}
+{"file": "res/values-sk/strings.xml", "line": 307, "key": "pref_summary_http_proxy_missing", "locale": "sk", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <nenastaven>"}
+{"file": "res/values-sl/strings.xml", "line": 433, "key": "favs#plural.few", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 433, "key": "favs#plural.one", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 433, "key": "favs#plural.other", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 433, "key": "favs#plural.two", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 303, "key": "reblogs#plural.few", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 303, "key": "reblogs#plural.one", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 303, "key": "reblogs#plural.other", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sl/strings.xml", "line": 303, "key": "reblogs#plural.two", "locale": "sl", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sv/strings.xml", "line": 316, "key": "favs#plural.one", "locale": "sv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sv/strings.xml", "line": 316, "key": "favs#plural.other", "locale": "sv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sv/strings.xml", "line": 673, "key": "help_empty_conversations", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-sv/strings.xml", "line": 626, "key": "help_empty_home", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {{search}}"}
+{"file": "res/values-sv/strings.xml", "line": 662, "key": "help_empty_lists", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-sv/strings.xml", "line": 592, "key": "pref_summary_http_proxy_invalid", "locale": "sv", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <felaktig>"}
+{"file": "res/values-sv/strings.xml", "line": 591, "key": "pref_summary_http_proxy_missing", "locale": "sv", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <ej>"}
+{"file": "res/values-sv/strings.xml", "line": 320, "key": "reblogs#plural.one", "locale": "sv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-sv/strings.xml", "line": 320, "key": "reblogs#plural.other", "locale": "sv", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-th/strings.xml", "line": 81, "key": "favs#plural.other", "locale": "th", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-th/strings.xml", "line": 78, "key": "reblogs#plural.other", "locale": "th", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-tr/strings.xml", "line": 282, "key": "favs#plural.one", "locale": "tr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-tr/strings.xml", "line": 282, "key": "favs#plural.other", "locale": "tr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-tr/strings.xml", "line": 666, "key": "help_empty_conversations", "locale": "tr", "code": "placeholders", "severity": "error", "message": "missing {{edit}}"}
+{"file": "res/values-tr/strings.xml", "line": 671, "key": "help_empty_lists", "locale": "tr", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-tr/strings.xml", "line": 574, "key": "pref_summary_http_proxy_invalid", "locale": "tr", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <ge>"}
+{"file": "res/values-tr/strings.xml", "line": 573, "key": "pref_summary_http_proxy_missing", "locale": "tr", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <ayarlanmad>"}
+{"file": "res/values-tr/strings.xml", "line": 286, "key": "reblogs#plural.one", "locale": "tr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-tr/strings.xml", "line": 286, "key": "reblogs#plural.other", "locale": "tr", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-uk/strings.xml", "line": 693, "key": "help_empty_lists", "locale": "uk", "code": "placeholders", "severity": "error", "message": "missing {{chevron_right}} {{manage_accounts}}"}
+{"file": "res/values-uk/strings.xml", "line": 599, "key": "pref_summary_http_proxy_invalid", "locale": "uk", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-uk/strings.xml", "line": 598, "key": "pref_summary_http_proxy_missing", "locale": "uk", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-vi/strings.xml", "line": 381, "key": "favs#plural.other", "locale": "vi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-vi/strings.xml", "line": 567, "key": "pref_summary_http_proxy_invalid", "locale": "vi", "code": "markup", "severity": "error", "message": "missing <invalid>; unexpected <kh>"}
+{"file": "res/values-vi/strings.xml", "line": 566, "key": "pref_summary_http_proxy_missing", "locale": "vi", "code": "markup", "severity": "error", "message": "missing <not>; unexpected <kh>"}
+{"file": "res/values-vi/strings.xml", "line": 378, "key": "reblogs#plural.other", "locale": "vi", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rCN/strings.xml", "line": 665, "key": "help_empty_lists", "locale": "zh-CN", "code": "placeholders", "severity": "error", "message": "missing {{manage_accounts}}"}
+{"file": "res/values-zh-rCN/strings.xml", "line": 573, "key": "pref_summary_http_proxy_invalid", "locale": "zh-CN", "code": "markup", "severity": "error", "message": "missing <invalid>"}
+{"file": "res/values-zh-rCN/strings.xml", "line": 572, "key": "pref_summary_http_proxy_missing", "locale": "zh-CN", "code": "markup", "severity": "error", "message": "missing <not>"}
+{"file": "res/values-zh-rHK/strings.xml", "line": 322, "key": "favs#plural.other", "locale": "zh-HK", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rHK/strings.xml", "line": 325, "key": "reblogs#plural.other", "locale": "zh-HK", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rMO/strings.xml", "line": 142, "key": "dialog_whats_an_instance", "locale": "zh-MO", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/values-zh-rMO/strings.xml", "line": 316, "key": "favs#plural.other", "locale": "zh-MO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rMO/strings.xml", "line": 319, "key": "reblogs#plural.other", "locale": "zh-MO", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rSG/strings.xml", "line": 321, "key": "favs#plural.other", "locale": "zh-SG", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rSG/strings.xml", "line": 324, "key": "reblogs#plural.other", "locale": "zh-SG", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rTW/strings.xml", "line": 322, "key": "favs#plural.other", "locale": "zh-TW", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
+{"file": "res/values-zh-rTW/strings.xml", "line": 325, "key": "reblogs#plural.other", "locale": "zh-TW", "code": "markup", "severity": "error", "message": "unexpected </b>, <b>"}
