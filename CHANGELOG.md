@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `polygo check --write-baseline` records every current finding by (file, key, locale, code) in `polygo-baseline.json`; from then on `check` hides and does not count known findings, fails only on new ones, and says how many baseline entries no longer match so the file can be pruned. `--no-baseline` reports everything; `--json` carries `baseline: {known, stale}`. The GitHub Action and `--github` honour it automatically.
 - Seven more bug classes in `check`. Errors: `duplicate` (the same key twice in one file; the last one wins silently), `array` (an Android `<string-array>` with a different item count than the source: `IndexOutOfBounds` at runtime), unnumbered Android format arguments (`%s of %s` is an `aapt` error unless `formatted="false"`), `glossary` (`glossary.toml` is now enforced by `check`, not only by `translate`). Warnings: `encoding` (mojibake like `Ã©`, `â€™`: a file saved in the wrong encoding), `invisible` (zero-width space, mid-string BOM, U+2028/9, bidi embedding controls, C0 controls; ZWNJ/ZWJ/LRM/RLM are left alone), `link` (a URL or email address in the source that the translation changed or dropped), `brackets` (a pair the source keeps balanced and the translation does not; guillemets excluded, German reverses them), `entities` (`&amp;amp;`). Across 11 String Catalogs, 5 Android apps, Signal iOS and two gettext projects: three genuine bracket findings, nothing else.
 
 ## 0.1.4 — 2026-09-21

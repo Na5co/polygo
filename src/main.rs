@@ -216,6 +216,13 @@ struct CheckArgs {
     /// Print every finding; by default a code with more than 20 shows 20 and a count.
     #[arg(long)]
     all: bool,
+    /// Record every current finding in polygo-baseline.json; from then on only new
+    /// findings are reported (and fail the exit code).
+    #[arg(long, conflicts_with = "fix")]
+    write_baseline: bool,
+    /// Ignore polygo-baseline.json and report everything.
+    #[arg(long)]
+    no_baseline: bool,
     /// Re-translate keys with errors, then check again.
     #[arg(long)]
     fix: bool,
@@ -266,6 +273,8 @@ Examples:
   polygo check app/src/main/res     a directory: format and locales are detected
   polygo check --strict             warnings (length, identical) also fail → exit 1
   polygo check --all                every finding, not the first 20 per code
+  polygo check --write-baseline     accept today's findings; from now on only new ones fail
+  polygo check --no-baseline        report everything, baseline or not
   polygo check --json | jq .findings
   polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --fix                re-translate the failing keys, then check again
@@ -654,6 +663,8 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         github,
         strict,
         all,
+        write_baseline,
+        no_baseline,
         fix,
     } = args;
     // With polygo.toml: the configured project. Without: whatever `path` (or the project
@@ -740,8 +751,31 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         }
     }
 
+    // The baseline lives in the checked root: findings it lists are known and neither
+    // shown nor counted.
+    if write_baseline {
+        let n = polygo::check::baseline::write(root, &report)?;
+        if !json {
+            println!(
+                "wrote {} with {n} finding(s); `polygo check` now reports only new ones (commit it; --no-baseline shows all)",
+                root.join(polygo::check::baseline::FILE_NAME).display()
+            );
+        }
+        return Ok(());
+    }
+    let applied = if no_baseline {
+        None
+    } else {
+        polygo::check::baseline::load(root)?
+            .map(|b| polygo::check::baseline::apply(&mut report, &b))
+    };
+
     if json {
-        println!("{}", serde_json::to_string_pretty(&report)?);
+        let mut v = serde_json::to_value(&report)?;
+        if let Some(a) = &applied {
+            v["baseline"] = serde_json::json!({ "known": a.known, "stale": a.stale });
+        }
+        println!("{}", serde_json::to_string_pretty(&v)?);
     } else if github {
         polygo::check::github::print(&report, strict)?;
     } else if report.findings.is_empty() && report.checked == 0 {
@@ -796,6 +830,24 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     }
     if !json && !github {
         print_coverage(&report);
+    }
+    if let Some(a) = &applied
+        && !json
+        && (a.known > 0 || a.stale > 0)
+    {
+        println!(
+            "baseline: {} known finding(s) not shown{} · --no-baseline shows all, --write-baseline refreshes",
+            a.known,
+            if a.stale > 0 {
+                format!(
+                    ", {} entr{} no longer match (fixed?)",
+                    a.stale,
+                    if a.stale == 1 { "y" } else { "ies" }
+                )
+            } else {
+                String::new()
+            }
+        );
     }
     let failed = report.errors > 0 || (strict && report.warnings > 0);
     if failed {
