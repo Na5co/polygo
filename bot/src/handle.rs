@@ -3,6 +3,7 @@
 //! pull request is what `polygo check` says on a laptop.
 
 use crate::github::{self, App};
+use crate::limits::{Limits, Rate};
 use crate::webhook::Event;
 use anyhow::{Context, Result};
 use polygo::config::Config;
@@ -10,13 +11,30 @@ use serde_json::Value;
 use std::path::Path;
 
 /// What happened, for the log.
-pub fn review(app: &App, ev: &Event) -> Result<String> {
+pub fn review(app: &App, ev: &Event, limits: &Limits, rate: &Rate) -> Result<String> {
+    // An installation that asks for more than its share waits; whatever is looping will
+    // stop before it costs anything.
+    if !rate.allow(ev.installation, limits) {
+        return Ok(format!(
+            "{}#{}: installation {} is over its rate limit, skipped",
+            ev.repo, ev.number, ev.installation
+        ));
+    }
     let token = app.installation_token(ev.installation)?;
     let diff = github::diff(&ev.repo, ev.number, &token)?;
     if !touches_strings(&diff) {
         return Ok(format!(
             "{}#{}: no string files in the diff",
             ev.repo, ev.number
+        ));
+    }
+    // Ask how big it is before fetching it: the bot runs on a small box, and a repository
+    // the size of a distribution would take it down for everyone else.
+    let size_mb = github::repo_size_kb(&ev.repo, &token)? / 1024;
+    if size_mb > limits.max_repo_mb {
+        return Ok(format!(
+            "{}#{}: {size_mb} MB is over the {} MB limit, skipped",
+            ev.repo, ev.number, limits.max_repo_mb
         ));
     }
     let dir = Scratch::new(&format!("{}-{}", ev.repo.replace('/', "-"), ev.number))?;
