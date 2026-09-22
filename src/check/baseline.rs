@@ -106,7 +106,7 @@ pub fn apply(report: &mut Report, baseline: &Baseline) -> Applied {
     report.errors = report
         .findings
         .iter()
-        .filter(|f| f.severity == "error")
+        .filter(|f| f.severity == crate::check::code::Severity::Error)
         .count();
     report.warnings = report.findings.len() - report.errors;
     Applied {
