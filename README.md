@@ -105,7 +105,7 @@ It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings 
 
 Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
 
-The same check over 23 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. The fixes are landing upstream:
+The same check over 27 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. The fixes are landing upstream:
 
 | Project | Fix | Status |
 |---|---|---|
@@ -116,6 +116,8 @@ The same check over 23 popular open-source apps found about a thousand broken pl
 | [Umami](https://github.com/umami-software/umami/pull/4556) | `{ব্রাউজার}` for `{browser}`, `[[9000]]]` for `{time}` | open |
 | [DuckDuckGo macOS](https://github.com/duckduckgo/apple-browsers/pull/6852) | 12 broken `%@` specifiers | open |
 | [Ice Cubes](https://github.com/Dimillian/IceCubesApp/pull/2503) | 2 dropped `%@` | open |
+| [Teable](https://github.com/teableio/teable/pull/3654) | `{{rowCount}}` for `{{count}}` in 8 locales | open |
+| [Medusa](https://github.com/medusajs/medusa/pull/16907) | `{{von}}`/`{{bis}}` for `{{from}}`/`{{until}}` | open |
 
 Scan results for all 23 in [launch/upstream/FINDINGS.md](launch/upstream/FINDINGS.md); `scripts/scan_upstream.sh owner/repo path` runs it on any repo.
 

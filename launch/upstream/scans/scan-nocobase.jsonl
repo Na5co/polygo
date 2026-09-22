@@ -1,0 +1,4 @@
+{"repo": "nocobase/nocobase", "path": "packages/core/client/src/locale", "errors": 3, "warnings": 10181}
+{"file": "res/it-IT.json", "line": 1541, "key": "res/en-US.json:{{count}} filter items", "locale": "it-IT", "code": "placeholders", "severity": "error", "message": "missing {{count}}; unexpected {{Count}}"}
+{"file": "res/it-IT.json", "line": 1542, "key": "res/en-US.json:{{count}} more items", "locale": "it-IT", "code": "placeholders", "severity": "error", "message": "missing {{count}}; unexpected {{Count}}"}
+{"file": "res/ko-KR.json", "line": 1067, "key": "res/en-US.json:Randomly generated and can be modified. Support letters, numbers and underscores, must start with a letter.", "locale": "ko-KR", "code": "duplicate", "severity": "error", "message": "key appears more than once in this file"}

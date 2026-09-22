@@ -1,0 +1,19 @@
+{"repo": "tldraw/tldraw", "path": "apps/dotcom/client/public/tla/locales", "errors": 18, "warnings": 532}
+{"file": "res/ar.json", "line": 3, "key": "d0e3556476.translation", "locale": "ar", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing zero, two, few, many"}
+{"file": "res/ar.json", "line": 3, "key": "f476ba8646.translation", "locale": "ar", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing zero, two, few, many"}
+{"file": "res/cs.json", "line": 3, "key": "d0e3556476.translation", "locale": "cs", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/cs.json", "line": 3, "key": "f476ba8646.translation", "locale": "cs", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/he.json", "line": 3, "key": "d0e3556476.translation", "locale": "he", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing two"}
+{"file": "res/he.json", "line": 3, "key": "f476ba8646.translation", "locale": "he", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing two"}
+{"file": "res/hr.json", "line": 3, "key": "d0e3556476.translation", "locale": "hr", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few"}
+{"file": "res/hr.json", "line": 3, "key": "f476ba8646.translation", "locale": "hr", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few"}
+{"file": "res/pl.json", "line": 3, "key": "d0e3556476.translation", "locale": "pl", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/pl.json", "line": 3, "key": "f476ba8646.translation", "locale": "pl", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/ro.json", "line": 3, "key": "d0e3556476.translation", "locale": "ro", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few"}
+{"file": "res/ro.json", "line": 3, "key": "f476ba8646.translation", "locale": "ro", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few"}
+{"file": "res/ru.json", "line": 3, "key": "d0e3556476.translation", "locale": "ru", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/ru.json", "line": 3, "key": "f476ba8646.translation", "locale": "ru", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/sl.json", "line": 3, "key": "d0e3556476.translation", "locale": "sl", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing two, few"}
+{"file": "res/sl.json", "line": 3, "key": "f476ba8646.translation", "locale": "sl", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing two, few"}
+{"file": "res/uk.json", "line": 3, "key": "d0e3556476.translation", "locale": "uk", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}
+{"file": "res/uk.json", "line": 3, "key": "f476ba8646.translation", "locale": "uk", "code": "plural", "severity": "error", "message": "ICU plural `count` is missing few, many"}

@@ -30,8 +30,12 @@ and NewPipe ones below were verified by hand against the source string.
 | homarr-labs/homarr | 36 | 0 | 8 | Crowdin; not reported |
 | Infisical/infisical | 4 | 0 | 2 | not reported |
 | LiveContainer/LiveContainer | 2 | 0 | 1 | Crowdin; not reported |
+| medusajs/medusa | 25 | 0 | 6 | PR medusajs/medusa#16907 (2 fixes) |
+| teableio/teable | 129 | 0 | 12 | PR teableio/teable#3654 (9 renames) |
+| nocobase/nocobase | 2 | 0 | 1 | not reported (2 case typos) |
+| tldraw/tldraw | 0 | 0 | 0 | clean |
 
-Totals across 23 apps: about 1,000 broken placeholders and 580 incomplete plural sets. Two polygo false positives were found and fixed on the way (Arabic dual forms may omit the count; an empty source value with a natural-language key).
+Totals across 27 apps: about 1,000 broken placeholders and 580 incomplete plural sets. Two polygo false positives were found and fixed on the way (Arabic dual forms may omit the count; an empty source value with a natural-language key).
 
 Most Android projects take translations from Weblate, Crowdin or Transifex, not
 from PRs to `strings.xml`. For those, file an issue (or fix on the platform);
