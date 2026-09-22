@@ -45,6 +45,7 @@ Or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows zip](ht
 ```sh
 polygo check Localizable.xcstrings      # a file (.xcstrings, .strings, strings.xml, .json, .arb, .po, .resx)
 polygo check app/src/main/res           # a folder: format and locales are detected
+polygo check Dimillian/IceCubesApp      # a GitHub repo (or any git URL): cloned shallow, checked
 polygo check                            # the project, once polygo.toml exists
 ```
 
@@ -92,7 +93,7 @@ It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings 
 
 ## Found in the wild
 
-`polygo check` on shipped, production catalogs, unmodified:
+`polygo check` on shipped, production catalogs, unmodified (`polygo check <owner/repo>` reproduces any of these):
 
 | App | Found |
 |---|---|

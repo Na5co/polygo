@@ -197,9 +197,12 @@ struct TranslateArgs {
 
 #[derive(clap::Args)]
 struct CheckArgs {
-    /// A string file or a project directory to check without polygo.toml
-    /// (format and locales are detected).
+    /// A string file or a project directory to check without polygo.toml (format and
+    /// locales are detected), or a repository: `https://…`, `git@…`, `owner/repo`.
     path: Option<PathBuf>,
+    /// Branch or tag when PATH is a repository (default: the remote's default branch).
+    #[arg(long, value_name = "REF")]
+    r#ref: Option<String>,
     /// Only these locales (comma-separated).
     #[arg(long, value_delimiter = ',')]
     locale: Option<Vec<String>>,
@@ -277,6 +280,7 @@ Examples:
   polygo check                      placeholders, plural categories, empty/identical/length
   polygo check Localizable.xcstrings   one file, no polygo.toml needed
   polygo check app/src/main/res     a directory: format and locales are detected
+  polygo check signalapp/Signal-iOS   a GitHub repo (or any git URL), cloned shallow into ~/.cache/polygo
   polygo check --strict             warnings (length, identical) also fail → exit 1
   polygo check --all                every finding, not the first 20 per code
   polygo check --write-baseline     accept today's findings; from now on only new ones fail
@@ -676,6 +680,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         no_baseline,
         sarif,
         explain,
+        r#ref,
         fix,
     } = args;
     if let Some(code) = explain {
@@ -699,8 +704,25 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     // With polygo.toml: the configured project. Without: whatever `path` (or the project
     // root) turns out to be, so `polygo check Localizable.xcstrings` just works. A path is
     // relative to the root (`-C`), like every other path polygo takes.
+    // A repository instead of a path: shallow-cloned into the cache, then checked as a
+    // directory.
+    let path = match path {
+        Some(p) => {
+            let arg = p.to_string_lossy().into_owned();
+            let local = if p.is_absolute() {
+                p.clone()
+            } else {
+                root.join(&p)
+            };
+            if polygo::remote::is_remote(&arg, local.exists()) {
+                Some(polygo::remote::fetch(&arg, r#ref.as_deref())?)
+            } else {
+                Some(local)
+            }
+        }
+        None => None,
+    };
     let has_config = root.join(polygo::config::FILE_NAME).exists();
-    let path = path.map(|p| if p.is_absolute() { p } else { root.join(p) });
     let (cfg, root) = match (&path, has_config) {
         (None, true) => (Config::load(root)?, root.to_path_buf()),
         (target, _) => {

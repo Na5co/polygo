@@ -22,5 +22,6 @@ pub mod models;
 pub mod project;
 pub mod provider;
 pub mod pseudo;
+pub mod remote;
 pub mod review;
 pub mod trace;
