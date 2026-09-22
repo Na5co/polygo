@@ -29,6 +29,7 @@ impl std::fmt::Display for Severity {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Code {
+    Syntax,
     Placeholders,
     Plural,
     Markup,
@@ -54,7 +55,8 @@ pub enum Code {
 }
 
 impl Code {
-    pub const ALL: [Code; 22] = [
+    pub const ALL: [Code; 23] = [
+        Code::Syntax,
         Code::Placeholders,
         Code::Plural,
         Code::Markup,
@@ -81,6 +83,7 @@ impl Code {
 
     pub fn as_str(self) -> &'static str {
         match self {
+            Code::Syntax => "syntax",
             Code::Placeholders => "placeholders",
             Code::Plural => "plural",
             Code::Markup => "markup",
@@ -114,7 +117,8 @@ impl Code {
     /// (`escape` and `plural` have a warning-level variant, `length` an error-level one).
     pub fn severity(self) -> Severity {
         match self {
-            Code::Placeholders
+            Code::Syntax
+            | Code::Placeholders
             | Code::Plural
             | Code::Markup
             | Code::Escape
@@ -137,6 +141,7 @@ impl Code {
 
     pub fn title(self) -> &'static str {
         match self {
+            Code::Syntax => "Unparsable file",
             Code::Placeholders => "Placeholder mismatch",
             Code::Plural => "Missing plural form",
             Code::Markup => "Markup mismatch",
@@ -165,6 +170,9 @@ impl Code {
     /// What it means and what to do, for `--explain` and the SARIF rule.
     pub fn explain(self) -> &'static str {
         match self {
+            Code::Syntax => {
+                "A string file cannot be parsed: a comma missing from a JSON catalog, an unclosed <string>, a .po entry without its msgstr. Reported with the line the parser stopped at. It is an error on its own because of what it hides: a file polygo cannot read has no keys, so every other check would find nothing wrong with it and the locale would quietly vanish from the run."
+            }
             Code::Placeholders => {
                 "A format placeholder (%1$@, {{name}}, %(count)s, {0}, {n, plural, …}) is missing, added, retyped or reordered in the translation. At runtime the value lands in the wrong place, shows raw, or crashes (Android: %d where %s was expected). A placeholder whose name was translated ({{ models }} → {{ modelli }}, %(count)s → %(anzahl)s) is the most common placeholder bug of all; it is named as such, and `polygo check --fix` puts the source name back with no model involved. Unnumbered printf arguments are numbered by position, so reordering them needs explicit %2$s %1$s. In zero/one/two plural forms the count may be left out where those are exact counts; not where `one` also covers 21, 31 (ru, uk, be, hr, sr, bs, lt, lv)."
             }

@@ -18,11 +18,22 @@ pub fn run(root: &Path, cfg: &Config, opts: &Options) -> Result<Report> {
         .locales
         .clone()
         .unwrap_or_else(|| cfg.target_locales.clone());
+    // A file that does not parse comes first: reading the project would either fail on it
+    // or, worse, quietly carry on without it.
+    let broken = crate::check::formats::syntax::scan(root, cfg)?;
+    if !broken.is_empty() {
+        let mut cx = Cx::new(root, cfg, locales.clone(), Default::default())?;
+        if crate::check::formats::syntax::check(&mut cx, &broken) {
+            // The rest of the check needs the file polygo cannot read; say so and stop.
+            return Ok(cx.report);
+        }
+    }
     let units = project::load_units(root, cfg)?;
     // `polygo:skip` and `polygo:ignore=…` from developer comments, for the checks that
     // read files directly (units already exclude skipped keys).
     let (directive_skipped, directive_ignores) = project::directive_rules(root, cfg)?;
     let mut cx = Cx::new(root, cfg, locales, directive_skipped.into_iter().collect())?;
+    crate::check::formats::syntax::check(&mut cx, &broken);
     let lock = crate::lockfile::Lock::load(&root.join(crate::lockfile::FILE_NAME))?;
     let glossary = crate::glossary::load(root, cfg)?;
 
