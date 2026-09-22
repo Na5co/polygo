@@ -34,8 +34,14 @@ and NewPipe ones below were verified by hand against the source string.
 | teableio/teable | 129 | 0 | 12 | PR teableio/teable#3654 (9 renames) |
 | nocobase/nocobase | 2 | 0 | 1 | not reported (2 case typos) |
 | tldraw/tldraw | 0 | 0 | 0 | clean |
+| strapi/strapi | 125 | 0 | 12 | PR strapi/strapi#27767 (8 token fixes) |
+| outline/outline | 21 | 0 | 5 | PR outline/outline#13851 (3 fixes) |
+| linkwarden/linkwarden | 4 | 0 | 3 | PR linkwarden/linkwarden#1844 (2 fixes) |
+| mealie-recipes/mealie | 8 | 0 | 4 | 1 rename, not reported |
+| karakeep-app/karakeep | 19 | 0 | 3 | dropped placeholders only |
+| laurent22/joplin | 5 | 0 | 2 | dropped placeholders only |
 
-Totals across 27 apps: about 1,000 broken placeholders and 580 incomplete plural sets. Two polygo false positives were found and fixed on the way (Arabic dual forms may omit the count; an empty source value with a natural-language key).
+Totals across 33 apps: about 1,000 broken placeholders and 580 incomplete plural sets. Two polygo false positives were found and fixed on the way (Arabic dual forms may omit the count; an empty source value with a natural-language key).
 
 Most Android projects take translations from Weblate, Crowdin or Transifex, not
 from PRs to `strings.xml`. For those, file an issue (or fix on the platform);

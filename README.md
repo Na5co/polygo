@@ -117,7 +117,7 @@ The same review as an installable **GitHub App**, for repositories you would rat
 
 Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
 
-The same check over 27 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. That is what `polygo check <owner/repo> --fix` repairs mechanically; the fixes are landing upstream:
+The same check over 33 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. That is what `polygo check <owner/repo> --fix` repairs mechanically; the fixes are landing upstream:
 
 | Project | Fix | Status |
 |---|---|---|
@@ -130,6 +130,9 @@ The same check over 27 popular open-source apps found about a thousand broken pl
 | [Ice Cubes](https://github.com/Dimillian/IceCubesApp/pull/2503) | 2 dropped `%@` | open |
 | [Teable](https://github.com/teableio/teable/pull/3654) | `{{rowCount}}` for `{{count}}` in 8 locales | open |
 | [Medusa](https://github.com/medusajs/medusa/pull/16907) | `{{von}}`/`{{bis}}` for `{{from}}`/`{{until}}` | open |
+| [Strapi](https://github.com/strapi/strapi/pull/27767) | `{tutaj}`/`{qui}`/`{bläddra}` for `{here}`/`{browse}` in 7 locales | open |
+| [Outline](https://github.com/outline/outline/pull/13851) | `{ appName }`, `{{documentTitle}}`, `{{username}}` | open |
+| [Linkwarden](https://github.com/linkwarden/linkwarden/pull/1844) | Spanish billed the annual price per month | open |
 
 Scan results for all 23 in [launch/upstream/FINDINGS.md](launch/upstream/FINDINGS.md); `scripts/scan_upstream.sh owner/repo path` runs it on any repo.
 

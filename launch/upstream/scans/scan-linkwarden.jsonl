@@ -1,0 +1,5 @@
+{"repo": "linkwarden/linkwarden", "path": "apps/web/public/locales", "errors": 4, "warnings": 1209}
+{"file": "res/es/common.json", "line": 91, "key": "total_monthly_desc", "locale": "es", "code": "placeholders", "severity": "error", "message": "missing {{monthlyPrice}}; unexpected {{annualPrice}}"}
+{"file": "res/ru/common.json", "line": 374, "key": "links_deletion_confirmation_message", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {{count}}"}
+{"file": "res/uk/common.json", "line": 374, "key": "links_deletion_confirmation_message", "locale": "uk", "code": "placeholders", "severity": "error", "message": "missing {{count}}"}
+{"file": "res/uk/common.json", "line": 91, "key": "total_monthly_desc", "locale": "uk", "code": "placeholders", "severity": "error", "message": "missing {{monthlyPrice}}; unexpected {{monthly}}"}

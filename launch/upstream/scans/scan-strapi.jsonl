@@ -1,0 +1,150 @@
+{"repo": "strapi/strapi", "path": "packages/core/admin/admin/src/translations", "errors": 149, "warnings": 2015}
+{"file": "res/ar.json", "line": 527, "key": "Roles.RoleRow.user-count", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {number}/plural"}
+{"file": "res/ar.json", "line": 606, "key": "Settings.permissions.auditLogs.entry.create", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {model} {model}/select"}
+{"file": "res/ar.json", "line": 607, "key": "Settings.permissions.auditLogs.entry.delete", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {model} {model}/select"}
+{"file": "res/ar.json", "line": 608, "key": "Settings.permissions.auditLogs.entry.publish", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {model} {model}/select"}
+{"file": "res/ar.json", "line": 609, "key": "Settings.permissions.auditLogs.entry.unpublish", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {model} {model}/select"}
+{"file": "res/ar.json", "line": 610, "key": "Settings.permissions.auditLogs.entry.update", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {model} {model}/select"}
+{"file": "res/ar.json", "line": 675, "key": "Settings.roles.form.button.users-with-role", "locale": "ar", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing zero, two, few, many"}
+{"file": "res/ar.json", "line": 748, "key": "Settings.webhooks.to.delete", "locale": "ar", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing zero, two, few, many"}
+{"file": "res/ar.json", "line": 156, "key": "app.components.GuidedTour.CTB.create.content", "locale": "ar", "code": "markup", "severity": "error", "message": "missing </p>"}
+{"file": "res/ar.json", "line": 217, "key": "app.containers.Users.EditPage.header.label", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/ar.json", "line": 503, "key": "notification.ee.warning.at-seat-limit.title", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing <malformed ICU> {licenseLimitStatus} {licenseLimitStatus}/select {permittedSeats}; unexpected {LicenseLimitStatus} {allowedSeats}"}
+{"file": "res/ar.json", "line": 504, "key": "notification.ee.warning.over-.message", "locale": "ar", "code": "placeholders", "severity": "error", "message": "missing <malformed ICU> {licenseLimitStatus} {licenseLimitStatus}/select; unexpected {LicenseLimitStatus}"}
+{"file": "res/ca.json", "line": 78, "key": "Roles.RoleRow.user-count", "locale": "ca", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural; unexpected <malformed ICU> {nombre} {nombre}/plural"}
+{"file": "res/ca.json", "line": 78, "key": "Roles.RoleRow.user-count", "locale": "ca", "code": "plural", "severity": "error", "message": "ICU plural `nombre` is missing one, other"}
+{"file": "res/ca.json", "line": 135, "key": "Settings.profile.form.section.experience.mode.option-label", "locale": "ca", "code": "placeholders", "severity": "error", "message": "missing {name}; unexpected {nom}"}
+{"file": "res/ca.json", "line": 143, "key": "Settings.roles.form.button.users-with-role", "locale": "ca", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/ca.json", "line": 231, "key": "app.components.GuidedTour.CM.create.content", "locale": "ca", "code": "markup", "severity": "error", "message": "missing <p>"}
+{"file": "res/cs.json", "line": 84, "key": "Roles.RoleRow.user-count", "locale": "cs", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing few, many"}
+{"file": "res/cs.json", "line": 237, "key": "Settings.roles.form.button.users-with-role", "locale": "cs", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing few, many"}
+{"file": "res/cs.json", "line": 321, "key": "Settings.webhooks.to.delete", "locale": "cs", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing few, many"}
+{"file": "res/da.json", "line": 137, "key": "Settings.roles.form.button.users-with-role", "locale": "da", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/de.json", "line": 81, "key": "Roles.RoleRow.user-count", "locale": "de", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/de.json", "line": 234, "key": "Settings.roles.form.button.users-with-role", "locale": "de", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/de.json", "line": 796, "key": "tours.apiTokens.CopyAPIToken.content", "locale": "de", "code": "markup", "severity": "error", "message": "missing </a>, <a>"}
+{"file": "res/de.json", "line": 796, "key": "tours.apiTokens.CopyAPIToken.content", "locale": "de", "code": "placeholders", "severity": "error", "message": "missing {spacer}"}
+{"file": "res/es.json", "line": 238, "key": "Settings.roles.form.button.users-with-role", "locale": "es", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/es.json", "line": 417, "key": "app.components.GuidedTour.CM.create.content", "locale": "es", "code": "markup", "severity": "error", "message": "missing <p>"}
+{"file": "res/fr.json", "line": 181, "key": "Settings.permissions.category.plugins", "locale": "fr", "code": "placeholders", "severity": "error", "message": "missing {category}; unexpected {plugin}"}
+{"file": "res/gu.json", "line": 50, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {here}"}
+{"file": "res/gu.json", "line": 61, "key": "Settings.roles.form.button.users-with-role", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/gu.json", "line": 90, "key": "Settings.webhooks.headers.remove", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/gu.json", "line": 101, "key": "Settings.webhooks.to.delete", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {webhooksToDeleteLength}/plural"}
+{"file": "res/gu.json", "line": 183, "key": "app.components.ImgPreview.hint", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/gu.json", "line": 343, "key": "components.WysiwygBottomControls.uploadFiles", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/gu.json", "line": 348, "key": "components.pagination.remaining-links", "locale": "gu", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/he.json", "line": 95, "key": "Settings.roles.form.button.users-with-role", "locale": "he", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/hi.json", "line": 41, "key": "Auth.form.register.news.label", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {policy} {terms}"}
+{"file": "res/hi.json", "line": 77, "key": "Roles.RoleRow.select-all", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/hi.json", "line": 78, "key": "Roles.RoleRow.user-count", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/hi.json", "line": 79, "key": "Roles.components.List.empty.withSearch", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {search}"}
+{"file": "res/hi.json", "line": 80, "key": "Settings.PageTitle", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/hi.json", "line": 105, "key": "Settings.permissions.category", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {category}"}
+{"file": "res/hi.json", "line": 106, "key": "Settings.permissions.category.plugins", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {category}"}
+{"file": "res/hi.json", "line": 116, "key": "Settings.permissions.select-all-by-permission", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/hi.json", "line": 117, "key": "Settings.permissions.select-by-permission", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/hi.json", "line": 131, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {here}"}
+{"file": "res/hi.json", "line": 134, "key": "Settings.profile.form.section.experience.mode.option-label", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/hi.json", "line": 142, "key": "Settings.roles.form.button.users-with-role", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/hi.json", "line": 145, "key": "Settings.roles.form.permission.property-label", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/hi.json", "line": 171, "key": "Settings.webhooks.headers.remove", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/hi.json", "line": 182, "key": "Settings.webhooks.to.delete", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {webhooksToDeleteLength}/plural"}
+{"file": "res/hi.json", "line": 209, "key": "app.component.search.label", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/hi.json", "line": 210, "key": "app.component.table.duplicate", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/hi.json", "line": 211, "key": "app.component.table.edit", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/hi.json", "line": 212, "key": "app.component.table.select.one-entry", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/hi.json", "line": 230, "key": "app.components.GuidedTour.CM.create.content", "locale": "hi", "code": "markup", "severity": "error", "message": "missing <p>"}
+{"file": "res/hi.json", "line": 243, "key": "app.components.GuidedTour.apiTokens.success.content", "locale": "hi", "code": "markup", "severity": "error", "message": "missing </documentationlink>, <documentationlink>, <li>"}
+{"file": "res/hi.json", "line": 264, "key": "app.components.ImgPreview.hint", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/hi.json", "line": 333, "key": "app.containers.Users.EditPage.header.label", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/hi.json", "line": 387, "key": "components.Input.error.custom-error", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {errorMessage}"}
+{"file": "res/hi.json", "line": 411, "key": "components.TableHeader.sort", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/hi.json", "line": 424, "key": "components.WysiwygBottomControls.uploadFiles", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/hi.json", "line": 426, "key": "components.pagination.go-to", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {page}"}
+{"file": "res/hi.json", "line": 429, "key": "components.pagination.remaining-links", "locale": "hi", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/hu.json", "line": 184, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "hu", "code": "placeholders", "severity": "error", "message": "missing {here}; unexpected {document}"}
+{"file": "res/id.json", "line": 32, "key": "Auth.form.register.news.label", "locale": "id", "code": "placeholders", "severity": "error", "message": "missing {policy} {terms}; unexpected {kebijakan} {syarat}"}
+{"file": "res/id.json", "line": 83, "key": "Settings.roles.form.button.users-with-role", "locale": "id", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/it.json", "line": 223, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "it", "code": "placeholders", "severity": "error", "message": "missing {here}; unexpected {qui}"}
+{"file": "res/it.json", "line": 235, "key": "Settings.roles.form.button.users-with-role", "locale": "it", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/ja.json", "line": 246, "key": "Settings.roles.form.button.users-with-role", "locale": "ja", "code": "placeholders", "severity": "error", "message": "missing {number}/plural"}
+{"file": "res/ko.json", "line": 221, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "ko", "code": "placeholders", "severity": "error", "message": "missing {here}; unexpected {documentation}"}
+{"file": "res/ml.json", "line": 41, "key": "Auth.form.register.news.label", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {policy} {terms}"}
+{"file": "res/ml.json", "line": 78, "key": "Roles.RoleRow.user-count", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/ml.json", "line": 79, "key": "Roles.components.List.empty.withSearch", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {search}"}
+{"file": "res/ml.json", "line": 131, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {here}"}
+{"file": "res/ml.json", "line": 142, "key": "Settings.roles.form.button.users-with-role", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/ml.json", "line": 145, "key": "Settings.roles.form.permission.property-label", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/ml.json", "line": 171, "key": "Settings.webhooks.headers.remove", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/ml.json", "line": 182, "key": "Settings.webhooks.to.delete", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {webhooksToDeleteLength}/plural"}
+{"file": "res/ml.json", "line": 206, "key": "Users.components.List.empty.withSearch", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {search}"}
+{"file": "res/ml.json", "line": 209, "key": "app.component.search.label", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/ml.json", "line": 210, "key": "app.component.table.duplicate", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/ml.json", "line": 211, "key": "app.component.table.edit", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/ml.json", "line": 212, "key": "app.component.table.select.one-entry", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/ml.json", "line": 243, "key": "app.components.GuidedTour.apiTokens.success.content", "locale": "ml", "code": "markup", "severity": "error", "message": "missing </light>; unexpected </p>"}
+{"file": "res/ml.json", "line": 264, "key": "app.components.ImgPreview.hint", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/ml.json", "line": 349, "key": "app.utils.notify.data-loaded", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/ml.json", "line": 387, "key": "components.Input.error.custom-error", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {errorMessage}"}
+{"file": "res/ml.json", "line": 442, "key": "global.delete-target", "locale": "ml", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/nl.json", "line": 412, "key": "app.components.GuidedTour.CM.create.content", "locale": "nl", "code": "markup", "severity": "error", "message": "missing <p>"}
+{"file": "res/no.json", "line": 92, "key": "Settings.roles.form.button.users-with-role", "locale": "no", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/pl.json", "line": 89, "key": "Roles.RoleRow.user-count", "locale": "pl", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing few, many"}
+{"file": "res/pl.json", "line": 271, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "pl", "code": "placeholders", "severity": "error", "message": "missing {here}; unexpected {tutaj}"}
+{"file": "res/pl.json", "line": 283, "key": "Settings.roles.form.button.users-with-role", "locale": "pl", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/pl.json", "line": 339, "key": "Settings.webhooks.to.delete", "locale": "pl", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing few, many"}
+{"file": "res/pl.json", "line": 823, "key": "tours.apiTokens.CopyAPIToken.content", "locale": "pl", "code": "placeholders", "severity": "error", "message": "missing {spacer}"}
+{"file": "res/pt-BR.json", "line": 79, "key": "Roles.RoleRow.user-count", "locale": "pt-BR", "code": "placeholders", "severity": "error", "message": "unexpected <malformed ICU>"}
+{"file": "res/pt-BR.json", "line": 79, "key": "Roles.RoleRow.user-count", "locale": "pt-BR", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing one, other"}
+{"file": "res/pt-BR.json", "line": 170, "key": "Settings.roles.form.button.users-with-role", "locale": "pt-BR", "code": "placeholders", "severity": "error", "message": "unexpected <malformed ICU>"}
+{"file": "res/pt-BR.json", "line": 170, "key": "Settings.roles.form.button.users-with-role", "locale": "pt-BR", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing one, other"}
+{"file": "res/ru.json", "line": 85, "key": "Roles.RoleRow.user-count", "locale": "ru", "code": "placeholders", "severity": "error", "message": "unexpected <malformed ICU>"}
+{"file": "res/ru.json", "line": 85, "key": "Roles.RoleRow.user-count", "locale": "ru", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing other"}
+{"file": "res/ru.json", "line": 236, "key": "Settings.roles.form.button.users-with-role", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/ru.json", "line": 315, "key": "Settings.webhooks.to.delete", "locale": "ru", "code": "placeholders", "severity": "error", "message": "unexpected <malformed ICU>"}
+{"file": "res/ru.json", "line": 315, "key": "Settings.webhooks.to.delete", "locale": "ru", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing other"}
+{"file": "res/ru.json", "line": 567, "key": "components.Input.error.validation.max", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {max}"}
+{"file": "res/ru.json", "line": 569, "key": "components.Input.error.validation.maxLength", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {max}"}
+{"file": "res/ru.json", "line": 571, "key": "components.Input.error.validation.min", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {min}"}
+{"file": "res/ru.json", "line": 573, "key": "components.Input.error.validation.minLength", "locale": "ru", "code": "placeholders", "severity": "error", "message": "missing {min}"}
+{"file": "res/sa.json", "line": 41, "key": "Auth.form.register.news.label", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {policy} {terms}"}
+{"file": "res/sa.json", "line": 78, "key": "Roles.RoleRow.user-count", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/sa.json", "line": 79, "key": "Roles.components.List.empty.withSearch", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {search}"}
+{"file": "res/sa.json", "line": 80, "key": "Settings.PageTitle", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/sa.json", "line": 105, "key": "Settings.permissions.category", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {category}"}
+{"file": "res/sa.json", "line": 106, "key": "Settings.permissions.category.plugins", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {category}"}
+{"file": "res/sa.json", "line": 116, "key": "Settings.permissions.select-all-by-permission", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/sa.json", "line": 117, "key": "Settings.permissions.select-by-permission", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/sa.json", "line": 131, "key": "Settings.profile.form.section.experience.interfaceLanguageHelp", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {here}"}
+{"file": "res/sa.json", "line": 134, "key": "Settings.profile.form.section.experience.mode.option-label", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/sa.json", "line": 142, "key": "Settings.roles.form.button.users-with-role", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/sa.json", "line": 145, "key": "Settings.roles.form.permission.property-label", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/sa.json", "line": 171, "key": "Settings.webhooks.headers.remove", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/sa.json", "line": 182, "key": "Settings.webhooks.to.delete", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {webhooksToDeleteLength} {webhooksToDeleteLength}/plural"}
+{"file": "res/sa.json", "line": 209, "key": "app.component.search.label", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sa.json", "line": 210, "key": "app.component.table.duplicate", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sa.json", "line": 211, "key": "app.component.table.edit", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sa.json", "line": 212, "key": "app.component.table.select.one-entry", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sa.json", "line": 333, "key": "app.containers.Users.EditPage.header.label", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {name}"}
+{"file": "res/sa.json", "line": 349, "key": "app.utils.notify.data-loaded", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sa.json", "line": 387, "key": "components.Input.error.custom-error", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {errorMessage}"}
+{"file": "res/sa.json", "line": 411, "key": "components.TableHeader.sort", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {label}"}
+{"file": "res/sa.json", "line": 424, "key": "components.WysiwygBottomControls.uploadFiles", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {browse}"}
+{"file": "res/sa.json", "line": 426, "key": "components.pagination.go-to", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {page}"}
+{"file": "res/sa.json", "line": 429, "key": "components.pagination.remaining-links", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {number}"}
+{"file": "res/sa.json", "line": 442, "key": "global.delete-target", "locale": "sa", "code": "placeholders", "severity": "error", "message": "missing {target}"}
+{"file": "res/sk.json", "line": 85, "key": "Roles.RoleRow.user-count", "locale": "sk", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing few, many"}
+{"file": "res/sk.json", "line": 238, "key": "Settings.roles.form.button.users-with-role", "locale": "sk", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/sk.json", "line": 322, "key": "Settings.webhooks.to.delete", "locale": "sk", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing many"}
+{"file": "res/sv.json", "line": 79, "key": "Roles.RoleRow.user-count", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/sv.json", "line": 196, "key": "Settings.roles.form.button.users-with-role", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/sv.json", "line": 318, "key": "app.components.ImgPreview.hint", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {browse}; unexpected {bl}"}
+{"file": "res/sv.json", "line": 481, "key": "components.WysiwygBottomControls.uploadFiles", "locale": "sv", "code": "placeholders", "severity": "error", "message": "missing {browse}; unexpected {bl}"}
+{"file": "res/th.json", "line": 83, "key": "Settings.roles.form.button.users-with-role", "locale": "th", "code": "placeholders", "severity": "error", "message": "missing {number} {number}/plural"}
+{"file": "res/tr.json", "line": 184, "key": "Settings.roles.form.button.users-with-role", "locale": "tr", "code": "placeholders", "severity": "error", "message": "missing {number}/plural"}
+{"file": "res/tr.json", "line": 221, "key": "Settings.webhooks.to.delete", "locale": "tr", "code": "placeholders", "severity": "error", "message": "missing {webhooksToDeleteLength}/plural"}
+{"file": "res/uk.json", "line": 231, "key": "Settings.roles.form.button.users-with-role", "locale": "uk", "code": "plural", "severity": "error", "message": "ICU plural `number` is missing few"}
+{"file": "res/uk.json", "line": 311, "key": "Settings.webhooks.to.delete", "locale": "uk", "code": "plural", "severity": "error", "message": "ICU plural `webhooksToDeleteLength` is missing few, many"}
+{"file": "res/zh.json", "line": 173, "key": "Settings.permissions.users.listview.header.subtitle", "locale": "zh", "code": "placeholders", "severity": "error", "message": "unexpected {number} {number}/plural"}
+{"file": "res/zh.json", "line": 318, "key": "app.components.ImgPreview.hint", "locale": "zh", "code": "placeholders", "severity": "error", "message": "missing {browse}"}

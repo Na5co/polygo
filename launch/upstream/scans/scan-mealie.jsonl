@@ -1,0 +1,12 @@
+{"repo": "mealie-recipes/mealie", "path": "frontend/app/lang/messages", "errors": 11, "warnings": 6619}
+{"file": "res/ar-SA.json", "line": 919, "key": "data-pages.units.combine-unit-description", "locale": "ar-SA", "code": "placeholders", "severity": "error", "message": "missing {source-unit-will-be-deleted}"}
+{"file": "res/ar-SA.json", "line": 161, "key": "general.copied-items-to-clipboard", "locale": "ar-SA", "code": "markup", "severity": "error", "message": "unexpected <unk>"}
+{"file": "res/ar-SA.json", "line": 125, "key": "migration.nextcloud.title", "locale": "ar-SA", "code": "markup", "severity": "error", "message": "unexpected <nextcloud>"}
+{"file": "res/ar-SA.json", "line": 778, "key": "shopping-list.items-checked-count", "locale": "ar-SA", "code": "markup", "severity": "error", "message": "unexpected <unk>"}
+{"file": "res/da-DK.json", "line": 748, "key": "settings.auth-provider-disabled-text", "locale": "da-DK", "code": "placeholders", "severity": "error", "message": "missing {envVar}; unexpected {EnvVar}"}
+{"file": "res/fi-FI.json", "line": 518, "key": "recipe.made-for-recipe", "locale": "fi-FI", "code": "placeholders", "severity": "error", "message": "missing {recipe}"}
+{"file": "res/ko-KR.json", "line": 370, "key": "migration.tag-all-recipes", "locale": "ko-KR", "code": "placeholders", "severity": "error", "message": "missing {tag-name}"}
+{"file": "res/pl-PL.json", "line": 1221, "key": "validators.max-length", "locale": "pl-PL", "code": "placeholders", "severity": "error", "message": "unexpected {max}"}
+{"file": "res/pt-BR.json", "line": 325, "key": "meal-plan.applies-on-days", "locale": "pt-BR", "code": "placeholders", "severity": "error", "message": "missing {0}"}
+{"file": "res/zh-CN.json", "line": 1221, "key": "validators.max-length", "locale": "zh-CN", "code": "placeholders", "severity": "error", "message": "missing {max} {max}"}
+{"file": "res/zh-CN.json", "line": 1220, "key": "validators.min-length", "locale": "zh-CN", "code": "placeholders", "severity": "error", "message": "missing {min}"}

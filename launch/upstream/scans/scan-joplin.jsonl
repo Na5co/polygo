@@ -1,0 +1,6 @@
+{"repo": "laurent22/joplin", "path": "packages/app-desktop/locales", "errors": 5, "warnings": 19874}
+{"file": "res/id_ID.json", "key": "Synchronise", "locale": "id_ID", "code": "placeholders", "severity": "error", "message": "unexpected %1$s"}
+{"file": "res/ro.json", "key": "Could not authorise application:\n\n%s\n\nPlease try again.", "locale": "ro", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/ro.json", "key": "Lock file is already being hold. If you know that no synchronisation is taking place, you may delete the lock file at \"%s\" and resume the operation.", "locale": "ro", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/ro.json", "key": "Not authentified with %s. Please provide any missing credentials.", "locale": "ro", "code": "placeholders", "severity": "error", "message": "missing %1$s"}
+{"file": "res/ro.json", "key": "Synchronisation target: %s (%s)", "locale": "ro", "code": "placeholders", "severity": "error", "message": "missing %1$s %2$s"}
