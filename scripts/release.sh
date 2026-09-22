@@ -15,8 +15,8 @@ grep -q '^## Unreleased' CHANGELOG.md || { echo "CHANGELOG.md has no '## Unrelea
 
 echo "checks…"
 cargo fmt --check
-cargo clippy --all-targets -- -D warnings
-cargo test -q 2>&1 | grep -E "^test result: FAILED|panicked" && { echo "tests failed" >&2; exit 1; }
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test -q --workspace 2>&1 | grep -E "^test result: FAILED|panicked" && { echo "tests failed" >&2; exit 1; }
 
 # From here on, a failure puts the files back.
 trap 'git checkout -q -- Cargo.toml Cargo.lock CHANGELOG.md; echo "aborted: files restored" >&2' ERR

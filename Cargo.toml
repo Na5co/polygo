@@ -8,7 +8,7 @@ repository = "https://github.com/Na5co/polygo"
 readme = "README.md"
 keywords = ["i18n", "l10n", "localization", "translation", "llm"]
 categories = ["command-line-utilities", "internationalization", "development-tools"]
-exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*"]
+exclude = ["tests/corpus/*", "bench/*", "killtest/*", "action/*", "bot/*"]
 
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/polygo-v{ version }-{ target-arch }-{ target-family }{ archive-suffix }"
@@ -41,6 +41,12 @@ tiny_http = "0.12"
 toml = "0.8"
 toml_edit = "0.22"
 ureq = { version = "3", features = ["json"] }
+
+[workspace]
+members = ["bot"]
+# `cargo build`/`cargo test` at the root stay about polygo itself; the bot is built with
+# `cargo build -p polygo-bot` and tested by `cargo test --workspace` in CI.
+default-members = ["."]
 
 [features]
 live = []

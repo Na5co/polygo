@@ -98,6 +98,8 @@ It ends with the coverage per locale. A translated placeholder name is the one b
     review: "true"
 ```
 
+The same review as an installable **GitHub App**, for repositories you would rather not add a workflow to: [`bot/`](bot/README.md) is one container, no database, nothing kept between events.
+
 <br>
 
 ## Found in the wild
