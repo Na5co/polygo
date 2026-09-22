@@ -60,6 +60,9 @@ fn release_assets_match_every_consumer() {
         "{ci}"
     );
     assert!(ci.contains("cargo test --workspace"), "{ci}");
+    // A job that actually loads action/action.yml: a manifest GitHub cannot parse fails
+    // every job that uses the Action, and nothing else in CI reads it.
+    assert!(ci.contains("uses: ./action"), "{ci}");
     // The formula is generated, not checked in.
     assert!(!std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/packaging")).exists());
 }

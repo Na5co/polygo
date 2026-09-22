@@ -238,3 +238,45 @@ fn action_yml_has_a_check_mode() {
         assert!(yml.contains(needle), "action.yml lacks {needle}");
     }
 }
+
+/// The Action's manifest is YAML GitHub has to load before anything runs, and a broken one
+/// fails every job that uses it with a parser error rather than a polygo message. polygo's
+/// own CI never loads it, so it is linted here instead: a plain scalar holding `: ` (a
+/// description with a parenthetical, say) is read as a mapping and breaks the file.
+#[test]
+fn action_manifest_is_loadable_yaml() {
+    let text = fs::read_to_string(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("action/action.yml"),
+    )
+    .unwrap();
+    let mut bad = Vec::new();
+    for (n, line) in text.lines().enumerate() {
+        let Some((key, value)) = line.split_once(": ") else {
+            continue;
+        };
+        let key = key.trim();
+        if !matches!(key, "description" | "default" | "value" | "name" | "title") {
+            continue;
+        }
+        let value = value.trim();
+        let quoted = (value.starts_with('"') && value.ends_with('"'))
+            || (value.starts_with('\'') && value.ends_with('\''))
+            || value.starts_with("${{")
+            || value.starts_with('|');
+        if !quoted && (value.contains(": ") || value.ends_with(':')) {
+            bad.push(format!("{}: {line}", n + 1));
+        }
+    }
+    assert!(
+        bad.is_empty(),
+        "action.yml has {} value(s) YAML reads as a mapping; quote them:\n{}",
+        bad.len(),
+        bad.join("\n")
+    );
+    // The inputs the README and the tests rely on are all there.
+    for input in [
+        "mode", "path", "strict", "sarif", "review", "version", "token",
+    ] {
+        assert!(text.contains(&format!("\n  {input}:")), "no {input} input");
+    }
+}

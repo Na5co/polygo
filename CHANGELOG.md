@@ -2,6 +2,10 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- The GitHub Action's manifest could not be parsed at all: one input description held an unquoted `(default: …)`, which YAML reads as a mapping, so every workflow using `Na5co/polygo/action@v0` failed at "Set up job" with a YAML error before polygo ran. Found by using the Action on a real pull request. Quoted, plus two guards: a test that lints every plain scalar in the manifest for the same trap, and a CI job that uses the Action from this checkout on a fixture and asserts it finds the planted error.
+
 ## 0.1.8 — 2026-09-22
 
 - `syntax` (error): a string file that does not parse — a comma dropped from a JSON catalog, an unclosed `<string>`, a file in the wrong encoding — with the line the parser stopped at. It used to be invisible: the detector could not read the file, so the locale disappeared from the run and `check` reported the project as fine. Found while testing the reviewer on a pull request that corrupted a locale file and got a clean review. Every locale file the `locale_path` template matches is scanned, including locales the configuration never lists; when the broken file is one the project must read, the run says so and stops instead of failing with a stack of parser context.

@@ -30,3 +30,27 @@ jobs:
           size=$(wc -c < target/release/polygo); echo "release binary: $size bytes"
           [ "$size" -lt 15728640 ]
           time target/release/polygo --help > /dev/null
+
+  # GitHub loads action/action.yml before a step runs, and a manifest it cannot parse
+  # fails every job that uses the Action with a YAML error instead of a polygo message.
+  # Nothing else here loads it, so this job does: it uses the Action from this checkout.
+  action:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: A project with a broken translation
+        run: |
+          mkdir -p fixture/locales
+          printf '{\n  "greet": "Hi {{name}}"\n}\n' > fixture/locales/en.json
+          printf '{\n  "greet": "Hallo {{nome}}"\n}\n' > fixture/locales/de.json
+      - id: check
+        uses: ./action
+        continue-on-error: true
+        with:
+          mode: check
+          path: fixture/locales
+      - name: The Action ran and found the placeholder
+        run: |
+          [ "${{ steps.check.outcome }}" = failure ] || { echo "the Action should have failed on the error"; exit 1; }
+          [ "${{ steps.check.outputs.errors }}" = 1 ] || { echo "expected 1 error, got '${{ steps.check.outputs.errors }}'"; exit 1; }
