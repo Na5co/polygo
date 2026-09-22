@@ -1,0 +1,9 @@
+# The build context for bot/Dockerfile: sources only. `target/` is gigabytes of a host
+# build the image has no use for, and copying it is what makes an image build fail.
+target
+.git
+.github
+tests/corpus
+docs/img
+*.tar.gz
+*.zip
