@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.6 — 2026-09-22
 
 - `.po`: a `Plural-Forms` header whose `nplurals` does not match the language is a `plural` error (a Russian file saying `nplurals=2` is wrong before any string is; the message gives the rule to paste), and a file with plural entries but no header is a warning (gettext assumes two forms).
 - `polygo check --explain <code>` (or `all`): what a code means and what to do, from the same table the SARIF rules use.
