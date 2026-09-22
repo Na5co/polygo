@@ -4,6 +4,11 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `placeholders`: a translated placeholder *name* (`{{ models }}` → `{{ modelli }}`, `%(count)d` → `%(anzahl)d`, `$name` → `$nombre`, a renamed ICU plural argument) is reported as such — *placeholder name translated: {{models}} → {{modelli}}* — instead of as one missing and one unexpected token. Names in any script count (`{{ модели }}`, `{{ماڈلز}}`), so the bug is seen where it lives. The finding carries the corrected translation (`"fix"` in `--json`, `properties.fix` in SARIF).
+- `polygo check --fix` first applies those mechanical fixes with no model involved, and works without `polygo.toml`: `polygo check locales/ --fix`, `polygo check owner/repo --fix` (then `git diff` in the clone). What still needs a new translation goes to the configured model as before. On Open WebUI: 23 translations in 9 locales, a 24-line diff.
+- Python `%(name)s` arguments are now real placeholders (they were read as prose): compared as a set, like numbered ones.
+- `length`: no warning when the source is a key standing in for missing English (`dashboard.settings.none`: Penpot's msgids; 384 noise findings gone) or a 1–3 character abbreviation (`CVV` → `Cryptogramme visuel`, `AI` → `الذكاء الاصطناعي`).
+
 - `polygo check <repo>`: a git URL, `git@…` remote or GitHub `owner/repo` instead of a path. Cloned shallow and single-branch into `~/.cache/polygo/repos/` (`POLYGO_CACHE_DIR`), refreshed on the next run, then checked like any directory; `--ref` picks a branch or tag. `polygo check Dimillian/IceCubesApp`: 19 s the first time, 1 s after.
 
 ## 0.1.6 — 2026-09-22

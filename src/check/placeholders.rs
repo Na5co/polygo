@@ -17,6 +17,37 @@ use std::collections::BTreeMap;
 pub struct Placeholder {
     /// Canonical token, e.g. `%1$@`, `%2$lld`, `{name}`, `{{count}}`, `$t(key)`, `$name`.
     pub canonical: String,
+    /// The token as written (`{{ name }}`, spaces included); for an ICU plural the whole
+    /// argument. Always a substring of the text it was extracted from.
+    pub raw: String,
+    /// The name a translator can get wrong (`models` in `{{ models }}`, `%(models)s`,
+    /// `$models`), when the token has one. Positional `{0}` and `%1$@` have none.
+    pub name: Option<String>,
+}
+
+impl Placeholder {
+    fn simple(canonical: impl Into<String>, raw: &str) -> Placeholder {
+        Placeholder {
+            canonical: canonical.into(),
+            raw: raw.to_string(),
+            name: None,
+        }
+    }
+
+    /// The token with its name blanked: `{{}}`, `{}`, `{}/plural`, `%()s`, `$`. Two tokens
+    /// of one shape are the same placeholder under different names.
+    fn shape(&self) -> Option<String> {
+        let name = self.name.as_deref()?;
+        Some(self.canonical.replacen(name, "", 1))
+    }
+
+    /// `raw` with the name replaced, keeping spacing and any ICU body.
+    fn renamed(&self, name: &str) -> String {
+        match &self.name {
+            Some(n) => self.raw.replacen(n.as_str(), name, 1),
+            None => self.raw.clone(),
+        }
+    }
 }
 
 /// Extract placeholders in order of appearance.
@@ -30,15 +61,17 @@ pub fn extract(text: &str) -> Vec<Placeholder> {
             b'%' => {
                 // `%arg` is Xcode's token for the value a substitution stands for.
                 if text[i..].starts_with("%arg") {
-                    out.push(Placeholder {
-                        canonical: "%arg".into(),
-                    });
+                    out.push(Placeholder::simple("%arg", "%arg"));
                     i += 4;
                     continue;
                 }
                 if let Some((spec, len)) = printf_spec(&text[i..], &mut next_arg) {
-                    if let Some(s) = spec {
-                        out.push(Placeholder { canonical: s });
+                    if let Some((canonical, name)) = spec {
+                        out.push(Placeholder {
+                            canonical,
+                            raw: text[i..i + len].to_string(),
+                            name,
+                        });
                     }
                     i += len;
                     continue;
@@ -47,13 +80,10 @@ pub fn extract(text: &str) -> Vec<Placeholder> {
             }
             b'{' => {
                 if let Some(br) = brace_token(&text[i..]) {
-                    for tok in br.tokens {
-                        out.push(Placeholder { canonical: tok });
-                    }
+                    let raw = &text[i..i + br.len];
+                    out.extend(br.tokens);
                     if br.malformed {
-                        out.push(Placeholder {
-                            canonical: "<malformed ICU>".into(),
-                        });
+                        out.push(Placeholder::simple("<malformed ICU>", raw));
                     }
                     i += br.len;
                     continue;
@@ -62,7 +92,12 @@ pub fn extract(text: &str) -> Vec<Placeholder> {
             }
             b'$' => {
                 if let Some((tok, len)) = dollar_token(&text[i..]) {
-                    out.push(Placeholder { canonical: tok });
+                    let name = (!tok.starts_with("$t(")).then(|| tok[1..].to_string());
+                    out.push(Placeholder {
+                        raw: tok.clone(),
+                        canonical: tok,
+                        name,
+                    });
                     i += len;
                     continue;
                 }
@@ -75,8 +110,9 @@ pub fn extract(text: &str) -> Vec<Placeholder> {
 }
 
 /// Parse a printf conversion at the start of `s` (which begins with `%`).
-/// Returns `(Some(canonical), len)`, or `(None, 2)` for the literal `%%`.
-fn printf_spec(s: &str, next_arg: &mut usize) -> Option<(Option<String>, usize)> {
+/// Returns `(Some((canonical, name)), len)`, or `(None, 2)` for the literal `%%`.
+type Spec = (String, Option<String>);
+fn printf_spec(s: &str, next_arg: &mut usize) -> Option<(Option<Spec>, usize)> {
     let b = s.as_bytes();
     let mut i = 1;
     if b.get(i) == Some(&b'%') {
@@ -109,7 +145,19 @@ fn printf_spec(s: &str, next_arg: &mut usize) -> Option<(Option<String>, usize)>
         if argnum.is_none() {
             *next_arg += 1;
         }
-        return Some((Some("%#@…@".to_string()), end + 1));
+        return Some((Some(("%#@…@".to_string(), None)), end + 1));
+    }
+    // Python named argument: `%(name)s`, `%(count)d`. Named arguments do not take a
+    // position, and may be repeated or reordered freely.
+    let mut named: Option<String> = None;
+    if b.get(i) == Some(&b'(') {
+        let end = s[i..].find(')')? + i;
+        let name = &s[i + 1..end];
+        if name.is_empty() || name.contains(|c: char| c.is_whitespace() || c == '%') {
+            return None;
+        }
+        named = Some(name.to_string());
+        i = end + 1;
     }
     // Flags. The space flag is deliberately excluded: in UI text `25% off` is prose,
     // not `% o`.
@@ -161,9 +209,10 @@ fn printf_spec(s: &str, next_arg: &mut usize) -> Option<(Option<String>, usize)>
         return None;
     }
     i += 1;
-    let n = match argnum {
-        Some(n) => n,
-        None => {
+    let n = match (argnum, &named) {
+        (_, Some(_)) => 0,
+        (Some(n), None) => n,
+        (None, None) => {
             let n = *next_arg;
             *next_arg += 1;
             n
@@ -179,14 +228,17 @@ fn printf_spec(s: &str, next_arg: &mut usize) -> Option<(Option<String>, usize)>
         other => other.to_string(),
     };
     let _ = length;
-    Some((Some(format!("%{n}${family}")), i))
+    match named {
+        Some(name) => Some((Some((format!("%({name}){family}"), Some(name))), i)),
+        None => Some((Some((format!("%{n}${family}"), None)), i)),
+    }
 }
 
 /// Result of parsing one brace argument.
 struct Brace {
-    /// Canonical token: `{name}` or `{{name}}`; plural/select args get a `{name}` token
-    /// plus a `{name}/plural` marker so a plural turned into a plain arg is detected.
-    tokens: Vec<String>,
+    /// `{name}` or `{{name}}`; plural/select args get a `{name}` token plus a
+    /// `{name}/plural` marker so a plural turned into a plain arg is detected.
+    tokens: Vec<Placeholder>,
     /// Bytes consumed.
     len: usize,
     /// True when an ICU plural/select is structurally broken (case without body, no `other`).
@@ -203,8 +255,14 @@ fn brace_token(s: &str) -> Option<Brace> {
         i += 1;
     }
     let name_start = i;
-    while i < b.len() && (b[i].is_ascii_alphanumeric() || matches!(b[i], b'_' | b'.' | b'-')) {
-        i += 1;
+    // Any script: a translated name (`{{ modèles }}`, `{{ модели }}`) is still a token,
+    // and reported as one rather than as prose.
+    for c in s[i..].chars() {
+        if c.is_alphanumeric() || matches!(c, '_' | '.' | '-') {
+            i += c.len_utf8();
+        } else {
+            break;
+        }
     }
     if i == name_start {
         return None;
@@ -233,11 +291,21 @@ fn brace_token(s: &str) -> Option<Brace> {
     }
     let inner_end = if double { close - 2 } else { close - 1 };
     let rest = s[i..inner_end].trim();
-    let mut tokens = vec![if double {
+    let raw = &s[..close];
+    // A name a translator could have translated: a word, not `{0}`, and the token is
+    // just that name (or an ICU argument), not `{see below}` prose.
+    let named =
+        (rest.is_empty() || rest.starts_with(',')) && !name.bytes().all(|c| c.is_ascii_digit());
+    let token = |canonical: String| Placeholder {
+        canonical,
+        raw: raw.to_string(),
+        name: named.then(|| name.clone()),
+    };
+    let mut tokens = vec![token(if double {
         format!("{{{{{name}}}}}")
     } else {
         format!("{{{name}}}")
-    }];
+    })];
     let mut malformed = false;
     if let Some(after_comma) = rest.strip_prefix(',') {
         let after_comma = after_comma.trim_start();
@@ -246,7 +314,7 @@ fn brace_token(s: &str) -> Option<Brace> {
             .unwrap_or(after_comma.len());
         let kind = &after_comma[..kind_end];
         if matches!(kind, "plural" | "select" | "selectordinal") {
-            tokens.push(format!("{{{name}}}/{kind}"));
+            tokens.push(token(format!("{{{name}}}/{kind}")));
             let cases = after_comma[kind_end..].trim_start().trim_start_matches(',');
             let (case_tokens, ok, has_other) = parse_icu_cases(cases);
             tokens.extend(case_tokens);
@@ -264,7 +332,7 @@ fn brace_token(s: &str) -> Option<Brace> {
 
 /// Parse `key {body} key {body} ...`, returning nested placeholders from the bodies,
 /// whether every case had a body, and whether an `other` case exists.
-fn parse_icu_cases(cases: &str) -> (Vec<String>, bool, bool) {
+fn parse_icu_cases(cases: &str) -> (Vec<Placeholder>, bool, bool) {
     let b = cases.as_bytes();
     let mut i = 0;
     let mut tokens = Vec::new();
@@ -320,9 +388,7 @@ fn parse_icu_cases(cases: &str) -> (Vec<String>, bool, bool) {
             ok = false;
             break;
         }
-        for p in extract(&cases[body_start..j]) {
-            tokens.push(p.canonical);
-        }
+        tokens.extend(extract(&cases[body_start..j]));
         i = j + 1;
     }
     (tokens, ok, has_other)
@@ -336,12 +402,18 @@ fn dollar_token(s: &str) -> Option<(String, usize)> {
         return Some((s[..=end].to_string(), end + 1));
     }
     let mut i = 1;
-    if !(i < b.len() && (b[i].is_ascii_alphabetic() || b[i] == b'_')) {
+    let first = s[1..].chars().next()?;
+    if !(first.is_alphabetic() || first == '_') {
         return None;
     }
-    while i < b.len() && (b[i].is_ascii_alphanumeric() || b[i] == b'_') {
-        i += 1;
+    for c in s[1..].chars() {
+        if c.is_alphanumeric() || c == '_' {
+            i += c.len_utf8();
+        } else {
+            break;
+        }
     }
+    let _ = b;
     Some((s[..i].to_string(), i))
 }
 
@@ -349,11 +421,45 @@ fn dollar_token(s: &str) -> Option<(String, usize)> {
 pub struct Mismatch {
     pub missing: Vec<String>,
     pub extra: Vec<String>,
+    /// Placeholders whose name the translator translated: (source token, translation
+    /// token), same shape, different name. `{{ models }}` → `{{ modelli }}` is the most
+    /// common placeholder bug there is, and the one bug with a mechanical repair.
+    pub renamed: Vec<(Placeholder, Placeholder)>,
+}
+
+impl Mismatch {
+    /// `translation` with every translated placeholder name put back to the source's.
+    /// Only when that is the whole problem: a rename next to a dropped placeholder is left
+    /// to a person or the model. The caller re-checks the result.
+    pub fn fix(&self, translation: &str) -> Option<String> {
+        if self.renamed.is_empty() || !self.missing.is_empty() || !self.extra.is_empty() {
+            return None;
+        }
+        let mut out = translation.to_string();
+        for (from, to) in &self.renamed {
+            let name = from.name.as_deref()?;
+            out = out.replace(&to.raw, &to.renamed(name));
+        }
+        (out != translation).then_some(out)
+    }
 }
 
 impl std::fmt::Display for Mismatch {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut parts = Vec::new();
+        if !self.renamed.is_empty() {
+            let mut pairs: Vec<String> = self
+                .renamed
+                .iter()
+                .map(|(a, b)| format!("{} → {}", a.canonical, b.canonical))
+                .collect();
+            pairs.dedup();
+            parts.push(format!(
+                "placeholder name{} translated: {} (names must stay as in the source)",
+                if pairs.len() == 1 { "" } else { "s" },
+                pairs.join(", ")
+            ));
+        }
         if !self.missing.is_empty() {
             parts.push(format!("missing {}", self.missing.join(" ")));
         }
@@ -373,7 +479,7 @@ pub fn compare(source: &str, translation: &str) -> Option<Mismatch> {
         let numbered = explicit_numbered(text);
         for p in extract(text) {
             let e = m.entry(p.canonical.clone()).or_default();
-            if numbered && p.canonical.starts_with('%') {
+            if (numbered && p.canonical.starts_with('%')) || p.canonical.starts_with("%(") {
                 *e = 1;
             } else {
                 *e += 1;
@@ -398,10 +504,69 @@ pub fn compare(source: &str, translation: &str) -> Option<Mismatch> {
         }
     }
     if missing.is_empty() && extra.is_empty() {
-        None
-    } else {
-        Some(Mismatch { missing, extra })
+        return None;
     }
+    let renamed = renamed_pairs(source, translation, &mut missing, &mut extra);
+    Some(Mismatch {
+        missing,
+        extra,
+        renamed,
+    })
+}
+
+/// Pair a missing named token with an unexpected one of the same shape: the same
+/// placeholder under a translated name. Pairs go by order of appearance, and only when a
+/// shape has as many missing as unexpected; anything else stays missing/unexpected.
+fn renamed_pairs(
+    source: &str,
+    translation: &str,
+    missing: &mut Vec<String>,
+    extra: &mut Vec<String>,
+) -> Vec<(Placeholder, Placeholder)> {
+    // The tokens behind the canonical names, in text order, one per reported occurrence.
+    let occurrences = |text: &str, names: &[String]| -> Vec<Placeholder> {
+        let mut left = names.to_vec();
+        let mut out = Vec::new();
+        for p in extract(text) {
+            if let Some(pos) = left.iter().position(|n| *n == p.canonical) {
+                left.remove(pos);
+                if p.name.is_some() {
+                    out.push(p);
+                }
+            }
+        }
+        out
+    };
+    let from = occurrences(source, missing);
+    let to = occurrences(translation, extra);
+    let mut pairs = Vec::new();
+    let mut shapes: Vec<String> = from.iter().filter_map(Placeholder::shape).collect();
+    shapes.dedup();
+    for shape in shapes {
+        let a: Vec<&Placeholder> = from
+            .iter()
+            .filter(|p| p.shape().as_ref() == Some(&shape))
+            .collect();
+        let b: Vec<&Placeholder> = to
+            .iter()
+            .filter(|p| p.shape().as_ref() == Some(&shape))
+            .collect();
+        if a.is_empty() || a.len() != b.len() {
+            continue;
+        }
+        for (x, y) in a.into_iter().zip(b) {
+            pairs.push((x.clone(), y.clone()));
+        }
+    }
+    for (x, y) in &pairs {
+        if let Some(i) = missing.iter().position(|m| *m == x.canonical) {
+            missing.remove(i);
+        }
+        if let Some(i) = extra.iter().position(|e| *e == y.canonical) {
+            extra.remove(i);
+        }
+    }
+    pairs
 }
 
 /// True when the text uses explicit `%n$` argument numbering anywhere.

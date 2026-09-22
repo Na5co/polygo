@@ -53,7 +53,7 @@ Ten seconds, no setup. It reads the string files your app already has and report
 
 | code | severity | what it catches |
 |---|:-:|---|
-| `placeholders` | error | `%1$@`, `{{name}}`, `%(count)s`, `{0}`, `{n, plural, …}` missing, added, retyped or reordered |
+| `placeholders` | error | `%1$@`, `{{name}}`, `%(count)s`, `{0}`, `{n, plural, …}` missing, added, retyped or reordered — and a translated *name* (`{{ modelli }}` for `{{ models }}`) named as such |
 | `plural` | error | a CLDR form the locale needs and doesn't have: `few`/`many` for Polish, six for Arabic; ICU, `.xcstrings`, `.stringsdict`, `<plurals>`, `msgstr[n]`, i18next `_few` |
 | `markup` | error | `<b>`, `</a>`, `<br>` the source has and the translation lacks, or the reverse |
 | `escape` | error | Android: unescaped `'`, or a leading `@`/`?` that `aapt` reads as a resource reference |
@@ -75,7 +75,7 @@ Ten seconds, no setup. It reads the string files your app already has and report
 | `entities` | warning | `&amp;amp;`: an entity escaped twice |
 | `inconsistent` | warning | the same short term translated two ways in one locale (`Réglages` ×3, `Paramètres` ×1) |
 
-It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings too); `--json` for machines; `polygo check --explain punctuation` says what a code means and what to do. A key that is right the way it is: `polygo:ignore=identical` in its comment, or `[keys] ignore = { "legal.*" = ["length"] }` in `polygo.toml`.
+It ends with the coverage per locale. A translated placeholder name is the one bug with a mechanical repair, so `polygo check --fix` puts the source name back with no model involved — on a file, a folder or a repo (`polygo check owner/repo --fix`, then `git diff` in the clone); everything else `--fix` re-translates with the configured model. Exit 1 on errors (`--strict` for warnings too); `--json` for machines (`"fix"` carries the corrected text); `polygo check --explain punctuation` says what a code means and what to do. A key that is right the way it is: `polygo:ignore=identical` in its comment, or `[keys] ignore = { "legal.*" = ["length"] }` in `polygo.toml`.
 
 **Adopting it on an old catalog:** `polygo check --write-baseline` accepts everything it finds today into `polygo-baseline.json` (commit it). From then on `check` reports and fails only on *new* findings, and tells you when a known one got fixed so you can prune the file. `--no-baseline` shows the whole picture.
 
@@ -106,7 +106,7 @@ It ends with the coverage per locale. Exit 1 on errors (`--strict` for warnings 
 
 Details in [KNOWN_BUGS.md](tests/corpus/xcstrings/KNOWN_BUGS.md). Zero false positives on 3,756 strings from five Android apps.
 
-The same check over 27 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. The fixes are landing upstream:
+The same check over 27 popular open-source apps found about a thousand broken placeholders in production, almost all a translator translating the placeholder name in a language the maintainers don't read. That is what `polygo check <owner/repo> --fix` repairs mechanically; the fixes are landing upstream:
 
 | Project | Fix | Status |
 |---|---|---|

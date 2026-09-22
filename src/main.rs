@@ -232,7 +232,8 @@ struct CheckArgs {
     /// Ignore polygo-baseline.json and report everything.
     #[arg(long)]
     no_baseline: bool,
-    /// Re-translate keys with errors, then check again.
+    /// Repair what has a mechanical fix (a translated placeholder name put back), then
+    /// re-translate the other keys with errors, then check again.
     #[arg(long)]
     fix: bool,
 }
@@ -289,7 +290,8 @@ Examples:
   polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --sarif > polygo.sarif   for GitHub code scanning (upload-sarif) or any SARIF viewer
   polygo check --explain punctuation    what a code means and what to do; --explain all
-  polygo check --fix                re-translate the failing keys, then check again
+  polygo check --fix                put translated placeholder names back, re-translate the rest, check again
+  polygo check owner/repo --fix     the mechanical fixes on a clone in the cache; `git diff` there
   polygo check --locale pl,ru       only these locales
 
 Codes: placeholders · plural · markup · escape · array (Android) · duplicate · glossary · empty · identical ·
@@ -706,6 +708,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     // relative to the root (`-C`), like every other path polygo takes.
     // A repository instead of a path: shallow-cloned into the cache, then checked as a
     // directory.
+    let path_arg = path.as_ref().map(|p| p.to_string_lossy().into_owned());
     let path = match path {
         Some(p) => {
             let arg = p.to_string_lossy().into_owned();
@@ -726,13 +729,6 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     let (cfg, root) = match (&path, has_config) {
         (None, true) => (Config::load(root)?, root.to_path_buf()),
         (target, _) => {
-            if fix {
-                anyhow::bail!(if has_config {
-                    "--fix works on the configured project: run `polygo check --fix` without a path"
-                } else {
-                    "--fix re-translates with the model from polygo.toml; run `polygo init` in the project first"
-                });
-            }
             if has_config && !json && !github && !sarif {
                 eprintln!(
                     "note: checking {} on its own; polygo.toml settings ([keys] skip, length_ratio) do not apply",
@@ -781,9 +777,38 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         }
     }
 
+    // --fix in two steps: what has a mechanical repair (a translated placeholder name
+    // put back) is written as is, no model involved, so it works on any tree; the rest
+    // goes back to the model, which needs the configured project.
+    let configured = path.is_none() && has_config;
     if fix && report.errors > 0 {
+        let fixes = report.fixes(&cfg.source_locale);
+        if !fixes.is_empty() {
+            let n = fixes.len();
+            polygo::engine::write_translations(root, &cfg, &fixes)?;
+            if !json && !github && !sarif {
+                eprintln!("fixed {n} translation(s): placeholder names put back as in the source");
+            }
+            report = polygo::check::run::run(root, &cfg, &opts)?;
+            if let Some(prefix) = &prefix {
+                for f in &mut report.findings {
+                    f.file = format!("{prefix}/{}", f.file);
+                }
+            }
+        }
         let keys = report.fixable_keys(&cfg.source_locale);
-        if !keys.is_empty() {
+        if !keys.is_empty() && !configured {
+            let n: usize = keys.values().map(Vec::len).sum();
+            if has_config {
+                eprintln!(
+                    "{n} key(s) need a new translation: `polygo check --fix` without a path re-translates them with the model from polygo.toml"
+                );
+            } else {
+                eprintln!(
+                    "{n} key(s) need a new translation; that takes the model from polygo.toml: `polygo init` in the project, then `polygo check --fix`"
+                );
+            }
+        } else if !keys.is_empty() {
             let provider = polygo::provider::from_config(&cfg.provider)?;
             let n: usize = keys.values().map(Vec::len).sum();
             eprintln!("re-translating {n} key(s) with errors…");
@@ -883,6 +908,14 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
             );
         }
         println!("{} error(s), {} warning(s)", report.errors, report.warnings);
+        let mechanical = report.fixes(&cfg.source_locale).len();
+        if mechanical > 0 && !fix {
+            println!(
+                "{mechanical} of them {} a mechanical fix: `polygo check{} --fix` puts the placeholder names back, no model needed",
+                if mechanical == 1 { "has" } else { "have" },
+                path_arg.as_ref().map_or(String::new(), |a| format!(" {a}"))
+            );
+        }
     }
     if !json && !github && !sarif {
         print_coverage(&report);

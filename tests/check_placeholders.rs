@@ -35,6 +35,86 @@ fn check_placeholders_extraction() {
         canon("{sel, select, a {{x}} other {{y}}}"),
         ["{sel}", "{sel}/select", "{x}", "{y}"]
     );
+    // Python named arguments; a translated name in any script is still a token.
+    assert_eq!(canon("%(count)d of %(total)s"), ["%(count)d", "%(total)s"]);
+    assert_eq!(canon("50%(approx.) done"), Vec::<String>::new());
+    assert_eq!(
+        canon("{{ модели }} и {имя} у $nombre"),
+        ["{{модели}}", "{имя}", "$nombre"]
+    );
+    let p = extract("Hi {{ name }}!");
+    assert_eq!(
+        (p[0].raw.as_str(), p[0].name.as_deref()),
+        ("{{ name }}", Some("name"))
+    );
+    let p = extract("{0} and {see below} and %1$@ and {n, plural, one {#} other {#}}");
+    assert_eq!(
+        p.iter().map(|p| p.name.as_deref()).collect::<Vec<_>>(),
+        [None, None, None, Some("n"), Some("n")]
+    );
+}
+
+#[test]
+fn check_placeholders_renamed() {
+    // The most common placeholder bug of all: the translator translated the name. It is
+    // named as such and comes with the repair.
+    let m = compare("{{ models }}", "{{ modelli }}").unwrap();
+    assert_eq!(
+        m.to_string(),
+        "placeholder name translated: {{models}} → {{modelli}} (names must stay as in the source)"
+    );
+    assert!(m.missing.is_empty() && m.extra.is_empty());
+    assert_eq!(m.fix("{{ modelli }}").as_deref(), Some("{{ models }}"));
+    // Spacing is the translation's; the name is the source's. Every occurrence.
+    let m = compare("{{user}} and {{user}}", "{{ utente }} e {{ utente }}").unwrap();
+    assert_eq!(
+        m.fix("{{ utente }} e {{ utente }}").as_deref(),
+        Some("{{ user }} e {{ user }}")
+    );
+    // Two names, paired in order of appearance.
+    let m = compare(
+        "Model {{name}} is now {{status}}",
+        "Модел {{наме}} је сада {{статус}}",
+    )
+    .unwrap();
+    assert_eq!(
+        m.to_string(),
+        "placeholder names translated: {{name}} → {{наме}}, {{status}} → {{статус}} (names must stay as in the source)"
+    );
+    assert_eq!(
+        m.fix("Модел {{наме}} је сада {{статус}}").as_deref(),
+        Some("Модел {{name}} је сада {{status}}")
+    );
+    // Python, Dart, ICU: the name is put back and the plural body is kept.
+    let m = compare("%(count)d files", "%(anzahl)d Dateien").unwrap();
+    assert_eq!(
+        m.fix("%(anzahl)d Dateien").as_deref(),
+        Some("%(count)d Dateien")
+    );
+    let m = compare("Hello $name", "Hola $nombre").unwrap();
+    assert_eq!(m.fix("Hola $nombre").as_deref(), Some("Hola $name"));
+    let m = compare(
+        "{count, plural, one {# item} other {# items}}",
+        "{nombre, plural, one {# élément} other {# éléments}}",
+    )
+    .unwrap();
+    assert_eq!(
+        m.fix("{nombre, plural, one {# élément} other {# éléments}}")
+            .as_deref(),
+        Some("{count, plural, one {# élément} other {# éléments}}")
+    );
+    // Not a rename: a different shape, a dropped placeholder next to a renamed one, a
+    // positional argument. Those stay missing/unexpected, and there is no fix.
+    let m = compare("Hi {{name}}", "Hallo {name}").unwrap();
+    assert!(m.renamed.is_empty());
+    assert_eq!(m.to_string(), "missing {{name}}; unexpected {name}");
+    let m = compare("{{a}} and {{b}}", "{{x}}").unwrap();
+    assert!(m.renamed.is_empty() && m.fix("{{x}}").is_none());
+    let m = compare("{{a}} and {{b}}", "{{x}} y {{b}} y {{c}}").unwrap();
+    assert_eq!(m.to_string(), "missing {{a}}; unexpected {{c}} {{x}}");
+    assert!(compare("{0} of {1}", "{1} von {0}").is_none());
+    // Python named arguments may repeat or drop a repetition, like numbered ones.
+    assert!(compare("%(n)s, %(n)s", "%(n)s").is_none());
 }
 
 #[test]
