@@ -2,6 +2,10 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- `polygo check <repo>`: a git URL, `git@…` remote or GitHub `owner/repo` instead of a path. Cloned shallow and single-branch into `~/.cache/polygo/repos/` (`POLYGO_CACHE_DIR`), refreshed on the next run, then checked like any directory; `--ref` picks a branch or tag. `polygo check Dimillian/IceCubesApp`: 19 s the first time, 1 s after.
+
 ## 0.1.6 — 2026-09-22
 
 - `.po`: a `Plural-Forms` header whose `nplurals` does not match the language is a `plural` error (a Russian file saying `nplurals=2` is wrong before any string is; the message gives the rule to paste), and a file with plural entries but no header is a warning (gettext assumes two forms).

@@ -954,3 +954,84 @@ fn po_plural_forms_header_must_match_the_language() {
     assert_eq!(ru["file"], "locale/ru.po");
     assert_eq!(ru["line"], 4);
 }
+
+#[test]
+fn check_a_repository_by_url_clones_shallow_and_refreshes() {
+    // A local git repository reached through file://, so no network is needed.
+    let dir = tempfile::tempdir().unwrap();
+    let repo = dir.path().join("upstream");
+    fs::create_dir_all(repo.join("locales")).unwrap();
+    fs::write(
+        repo.join("locales/en.json"),
+        "{\n  \"a\": \"Hi {{name}}\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        repo.join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{nome}}\"\n}\n",
+    )
+    .unwrap();
+    let git = |args: &[&str]| {
+        let out = Command::new("git")
+            .current_dir(&repo)
+            .args([
+                "-c",
+                "user.name=t",
+                "-c",
+                "user.email=t@t",
+                "-c",
+                "init.defaultBranch=main",
+            ])
+            .args(args)
+            .output()
+            .unwrap();
+        assert!(
+            out.status.success(),
+            "git {args:?}: {}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+    };
+    git(&["init", "-q"]);
+    git(&["add", "-A"]);
+    git(&["commit", "-q", "-m", "one"]);
+    let url = format!("file://{}", repo.display());
+    let cache = dir.path().join("cache");
+    let run = |args: &[&str]| {
+        let out = Command::new(env!("CARGO_BIN_EXE_polygo"))
+            .current_dir(dir.path())
+            .arg("check")
+            .args(args)
+            .env("POLYGO_CACHE_DIR", &cache)
+            .output()
+            .unwrap();
+        (
+            out.status.code().unwrap_or(-1),
+            String::from_utf8_lossy(&out.stdout).into_owned(),
+            String::from_utf8_lossy(&out.stderr).into_owned(),
+        )
+    };
+    let (code, out, err) = run(&[&url]);
+    assert_eq!(code, 1, "{out}{err}");
+    assert!(err.contains(&format!("{url} → ")), "{err}");
+    assert!(
+        out.contains("locales/de.json:2  a  [de]  placeholders: missing {{name}}"),
+        "{out}"
+    );
+    // Shallow: one commit in the clone.
+    let clone = cache.join(repo.strip_prefix("/").unwrap_or(&repo));
+    assert!(clone.join(".git").exists(), "clone at {}", clone.display());
+    // Upstream fixes it; the next run refreshes the cached clone and comes back clean.
+    fs::write(
+        repo.join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{name}}\"\n}\n",
+    )
+    .unwrap();
+    git(&["commit", "-q", "-am", "two"]);
+    let (code, out, _) = run(&[&url]);
+    assert_eq!(code, 0, "{out}");
+    assert!(out.contains("check: ok"), "{out}");
+    // A path that does not exist is still a path, not a repository.
+    let (code, _, err) = run(&["locales/nope.json"]);
+    assert_eq!(code, 1);
+    assert!(err.contains("does not exist"), "{err}");
+}
