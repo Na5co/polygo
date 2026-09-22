@@ -57,6 +57,11 @@ fn check_length_identity() {
     );
     // Empty source with empty translation is fine.
     assert!(kinds("", "", "de", 2.5).is_empty());
+    // A key standing in for the source (Penpot keeps English in en.po) has no length to
+    // compare with; an abbreviation is as long as the language's word for it.
+    assert!(kinds("dashboard.settings.notifications.none", "Keine", "de", 2.5).is_empty());
+    assert!(kinds("CVV", "Cryptogramme visuel", "fr", 2.5).is_empty());
+    assert!(kinds("AI", "الذكاء الاصطناعي", "ar", 2.5).is_empty());
 
     // Identical to source: warning when languages differ and the text has letters.
     assert_eq!(

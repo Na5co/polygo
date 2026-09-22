@@ -38,7 +38,7 @@ pub fn render(report: &Report, strict: bool) -> Value {
             if let Some(l) = f.line {
                 location["physicalLocation"]["region"] = json!({ "startLine": l });
             }
-            json!({
+            let mut result = json!({
                 "ruleId": format!("polygo/{}", f.code),
                 "level": level,
                 "message": { "text": format!("{} [{}]: {}", f.key, f.locale, f.message) },
@@ -46,7 +46,11 @@ pub fn render(report: &Report, strict: bool) -> Value {
                 "partialFingerprints": {
                     "polygo/v1": format!("{}:{}:{}:{}", f.file, f.key, f.locale, f.code)
                 }
-            })
+            });
+            if let Some(fix) = &f.fix {
+                result["properties"] = json!({ "fix": fix });
+            }
+            result
         })
         .collect();
     json!({

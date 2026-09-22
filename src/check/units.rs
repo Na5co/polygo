@@ -18,12 +18,15 @@ pub fn check(cx: &mut Cx, units: &[Unit], lock: &Lock, glossary: &Glossary, leng
                 continue;
             };
             cx.report.checked += 1;
-            for (code, severity, message) in one(cx, u, lock, glossary, length_ratio, locale, t) {
-                cx.emit(idx, local_key, locale, code, severity, message);
+            for f in one(cx, u, lock, glossary, length_ratio, locale, t) {
+                cx.emit_fix(idx, local_key, locale, f.0, f.1, f.2, f.3);
             }
         }
     }
 }
+
+/// A finding before it is located: code, severity, message, corrected text if mechanical.
+type Found = (Code, Severity, String, Option<String>);
 
 /// Every finding for one translation, in a fixed order.
 fn one(
@@ -34,8 +37,8 @@ fn one(
     length_ratio: f64,
     locale: &str,
     t: &str,
-) -> Vec<(Code, Severity, String)> {
-    let mut found = Vec::new();
+) -> Vec<Found> {
+    let mut found: Vec<Found> = Vec::new();
     if let Some(max) = crate::core::directives(u.comment.as_deref()).max_chars
         && t.chars().count() > max
     {
@@ -46,16 +49,20 @@ fn one(
                 "{} chars, but the key allows at most {max} (polygo:max)",
                 t.chars().count()
             ),
+            None,
         ));
     }
     // Plural forms: an exact-count form may leave the number out, a Russian `one`
     // (also 21, 31…) may not.
-    let mismatch = match crate::core::split_plural(&u.key) {
+    let compare = |t: &str| match crate::core::split_plural(&u.key) {
         Some((_, cat)) => plurals::compare_forms(locale, cat, &u.source, t),
         None => placeholders::compare(&u.source, t),
     };
-    if let Some(m) = mismatch {
-        found.push((Code::Placeholders, Severity::Error, m.to_string()));
+    if let Some(m) = compare(t) {
+        // A translated placeholder name has a mechanical repair; offered only when
+        // putting the names back is proven to settle it.
+        let fix = m.fix(t).filter(|fixed| compare(fixed).is_none());
+        found.push((Code::Placeholders, Severity::Error, m.to_string(), fix));
     }
     // A translation polygo wrote and confirmed (recorded in the lockfile) is not
     // re-flagged as identical: the model was asked twice and kept it.
@@ -68,7 +75,7 @@ fn one(
         if f.code == Code::Identical && confirmed {
             continue;
         }
-        found.push((f.code, f.severity, f.message));
+        found.push((f.code, f.severity, f.message, None));
     }
     for (arg, cats) in plurals::icu_cases(t) {
         let missing = plurals::missing(locale, &cats);
@@ -77,13 +84,14 @@ fn one(
                 Code::Plural,
                 Severity::Error,
                 format!("ICU plural `{arg}` is missing {}", missing.join(", ")),
+                None,
             ));
         }
     }
     for v in glossary.violations(locale, &u.source, t) {
-        found.push((Code::Glossary, Severity::Error, v));
+        found.push((Code::Glossary, Severity::Error, v, None));
     }
-    let warn = |code: Code, m: Option<String>| m.map(|m| (code, Severity::Warning, m));
+    let warn = |code: Code, m: Option<String>| m.map(|m| (code, Severity::Warning, m, None));
     found.extend(warn(Code::Encoding, content::mojibake(t)));
     found.extend(warn(Code::Invisible, content::invisible(t)));
     found.extend(warn(Code::Link, content::link_mismatch(&u.source, t)));

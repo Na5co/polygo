@@ -102,7 +102,7 @@ fn links(text: &str) -> Vec<String> {
 
 /// A source that is an identifier rather than text (`modals.create-webhook.url`: Penpot
 /// keeps English in `en.po`, the msgid is a key) has nothing to compare links against.
-fn source_is_key(source: &str) -> bool {
+pub(crate) fn source_is_key(source: &str) -> bool {
     !source.contains(char::is_whitespace) && source.contains('.') && !source.contains("://")
 }
 

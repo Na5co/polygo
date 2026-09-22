@@ -138,13 +138,10 @@ fn check_i18next_locales_dir_and_the_unhelpful_cases() {
         err.contains("no polygo.toml") && err.contains("polygo init"),
         "{err}"
     );
-    // --fix needs a real project (it calls a model).
-    let (code, _, err) = check(dir.path(), &["locales", "--fix"]);
-    assert_eq!(code, 1);
-    assert!(
-        err.contains("--fix") && err.contains("polygo init"),
-        "{err}"
-    );
+    // --fix without a project does what needs no model; here, nothing.
+    let (code, out, err) = check(dir.path(), &["locales", "--fix"]);
+    assert_eq!(code, 0, "{err}");
+    assert!(out.contains("check: ok"), "{out}");
 }
 
 #[test]
@@ -229,10 +226,15 @@ fn check_path_is_relative_to_the_root_and_annotations_stay_attachable() {
         err.contains("polygo.toml settings ([keys] skip, length_ratio) do not apply"),
         "{err}"
     );
+    fs::write(
+        app.join("locales/de.json"),
+        "{\n  \"greet\": \"Willkommen zurück\"\n}\n",
+    )
+    .unwrap();
     let (code, _, err) = check(&app, &["locales", "--fix"]);
     assert_eq!(code, 1);
     assert!(
-        err.contains("run `polygo check --fix` without a path"),
+        err.contains("1 key(s) need a new translation: `polygo check --fix` without a path"),
         "{err}"
     );
 }
@@ -768,7 +770,7 @@ fn sarif_output_is_well_formed() {
         r["message"]["text"]
             .as_str()
             .unwrap()
-            .starts_with("a [de]: missing {{name}}")
+            .starts_with("a [de]: placeholder name translated: {{name}} → {{nome}}")
     );
     // The Action's check.sh writes it next to the annotations when asked.
     let sarif = dir.path().join("out.sarif");
@@ -1014,7 +1016,7 @@ fn check_a_repository_by_url_clones_shallow_and_refreshes() {
     assert_eq!(code, 1, "{out}{err}");
     assert!(err.contains(&format!("{url} → ")), "{err}");
     assert!(
-        out.contains("locales/de.json:2  a  [de]  placeholders: missing {{name}}"),
+        out.contains("locales/de.json:2  a  [de]  placeholders: placeholder name translated: {{name}} → {{nome}}"),
         "{out}"
     );
     // Shallow: one commit in the clone.
@@ -1034,4 +1036,53 @@ fn check_a_repository_by_url_clones_shallow_and_refreshes() {
     let (code, _, err) = run(&["locales/nope.json"]);
     assert_eq!(code, 1);
     assert!(err.contains("does not exist"), "{err}");
+}
+
+#[test]
+fn fix_puts_translated_placeholder_names_back_without_a_model() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    fs::write(
+        dir.path().join("locales/en.json"),
+        "{\n  \"a\": \"Hi {{ name }}\",\n  \"b\": \"<b>Bye</b>\",\n  \"c\": \"{{count}} left\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        dir.path().join("locales/de.json"),
+        "{\n  \"a\": \"Hallo {{ nome }}\",\n  \"b\": \"Tschüss\",\n  \"c\": \"{{anzahl}} übrig\"\n}\n",
+    )
+    .unwrap();
+    // The finding carries the corrected text, and the text output says so.
+    let (code, out, _) = check(dir.path(), &["locales", "--json"]);
+    assert_eq!(code, 1);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let a = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["key"] == "a")
+        .unwrap();
+    assert_eq!(a["fix"], "Hallo {{ name }}");
+    let (_, out, _) = check(dir.path(), &["locales"]);
+    assert!(
+        out.contains("2 of them have a mechanical fix: `polygo check locales --fix` puts the placeholder names back, no model needed"),
+        "{out}"
+    );
+    // --fix without polygo.toml: the mechanical fixes are written, the rest is named.
+    let (code, out, err) = check(dir.path(), &["locales", "--fix"]);
+    assert_eq!(code, 1, "{out}{err}");
+    assert!(
+        err.contains("fixed 2 translation(s): placeholder names put back as in the source"),
+        "{err}"
+    );
+    assert!(
+        err.contains("1 key(s) need a new translation; that takes the model from polygo.toml"),
+        "{err}"
+    );
+    assert_eq!(
+        fs::read_to_string(dir.path().join("locales/de.json")).unwrap(),
+        "{\n  \"a\": \"Hallo {{ name }}\",\n  \"b\": \"Tschüss\",\n  \"c\": \"{{count}} übrig\"\n}\n"
+    );
+    assert!(!out.contains("placeholders:"), "{out}");
+    assert!(out.contains("b  [de]  markup:"), "{out}");
 }

@@ -24,6 +24,10 @@ pub struct Finding {
     pub code: Code,
     pub severity: Severity,
     pub message: String,
+    /// The corrected translation, when the repair is mechanical (a translated placeholder
+    /// name put back). `check --fix` writes it without asking a model.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub fix: Option<String>,
 }
 
 #[derive(Debug, Default, Clone, Serialize)]
@@ -57,12 +61,31 @@ impl Report {
         self.warnings = self.findings.len() - self.errors;
     }
 
+    /// Findings that carry a corrected translation: `(key, locale, text)`, one per
+    /// key and locale, in target locales only.
+    pub fn fixes(&self, source_locale: &str) -> Vec<(&str, &str, &str)> {
+        let mut out: Vec<(&str, &str, &str)> = Vec::new();
+        for f in &self.findings {
+            if let Some(fix) = &f.fix
+                && f.locale != source_locale
+                && !out.iter().any(|(k, l, _)| *k == f.key && *l == f.locale)
+            {
+                out.push((&f.key, &f.locale, fix));
+            }
+        }
+        out
+    }
+
     /// Keys per locale that `--fix` re-translates: errors a new translation can cure,
-    /// in target locales only.
+    /// in target locales only. Findings with a mechanical fix are not among them.
     pub fn fixable_keys(&self, source_locale: &str) -> BTreeMap<String, Vec<String>> {
         let mut m: BTreeMap<String, Vec<String>> = BTreeMap::new();
         for f in &self.findings {
-            if f.severity == Severity::Error && f.code.fixable() && f.locale != source_locale {
+            if f.severity == Severity::Error
+                && f.code.fixable()
+                && f.fix.is_none()
+                && f.locale != source_locale
+            {
                 let v = m.entry(f.locale.clone()).or_default();
                 if !v.contains(&f.key) {
                     v.push(f.key.clone());
@@ -153,6 +176,21 @@ impl<'a> Cx<'a> {
         severity: Severity,
         message: impl Into<String>,
     ) {
+        self.emit_fix(idx, key, locale, code, severity, message, None);
+    }
+
+    /// `emit` with the corrected translation, when the check knows it.
+    #[allow(clippy::too_many_arguments)]
+    pub fn emit_fix(
+        &mut self,
+        idx: usize,
+        key: &str,
+        locale: &str,
+        code: Code,
+        severity: Severity,
+        message: impl Into<String>,
+        fix: Option<String>,
+    ) {
         if self.skipped(idx, key) {
             return;
         }
@@ -166,6 +204,7 @@ impl<'a> Cx<'a> {
             code,
             severity,
             message: message.into(),
+            fix,
         });
     }
 
@@ -194,6 +233,7 @@ impl<'a> Cx<'a> {
             code,
             severity,
             message: message.into(),
+            fix: None,
         });
     }
 

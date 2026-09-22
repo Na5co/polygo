@@ -85,7 +85,11 @@ pub fn check_text(
     let s = src.chars().count() as f64;
     let t = tr.chars().count() as f64;
     let slack = SLACK as f64;
-    if t > s * ratio + slack {
+    // A source that is a key (`settings.usage.title` standing in for missing English)
+    // has no length to compare with; an abbreviation (`AI`, `H1`) is as long as the
+    // language's word for it.
+    if crate::check::content::source_is_key(src) {
+    } else if t > s * ratio + slack && s >= 4.0 {
         out.push(Finding {
             code: Code::Length,
             severity: Severity::Warning,
