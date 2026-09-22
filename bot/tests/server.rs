@@ -117,6 +117,51 @@ fn the_app_answers_health_and_refuses_an_unsigned_delivery() {
     drop(bot);
 }
 
+/// The mode serverless platforms need: the review happens before the answer, so nothing is
+/// left running on a CPU the platform has already stopped.
+#[test]
+fn sync_mode_answers_after_doing_the_work() {
+    let dir = tempfile::tempdir().unwrap();
+    let key = dir.path().join("app.pem");
+    if !test_key(&key) {
+        eprintln!("openssl not available; skipping");
+        return;
+    }
+    let port = free_port();
+    let bot = Bot(Command::new(env!("CARGO_BIN_EXE_polygo-bot"))
+        .env("POLYGO_BOT_APP_ID", "12345")
+        .env("POLYGO_BOT_PRIVATE_KEY_FILE", &key)
+        .env("POLYGO_BOT_WEBHOOK_SECRET", SECRET)
+        .env("POLYGO_BOT_SYNC", "1")
+        .env("PORT", port.to_string())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap());
+    assert!(wait_for(port), "polygo-bot did not start");
+    let body = r#"{"zen":"hi"}"#;
+    let head = format!(
+        "POST /webhook HTTP/1.1\r\nHost: localhost:{port}\r\nConnection: close\r\nContent-Type: application/json\r\nX-GitHub-Event: ping\r\n"
+    );
+    let signed = format!("{head}X-Hub-Signature-256: {}\r\n", sign(body.as_bytes()));
+    let res = request(port, &signed, body);
+    assert!(res.contains("202"), "{res}");
+    // A pull_request event with an installation nobody can mint a token for: the answer
+    // still comes back, carrying what went wrong rather than a bare "accepted".
+    let pr = r#"{"action":"opened","installation":{"id":1},"repository":{"full_name":"acme/app"},"pull_request":{"number":7,"draft":false,"head":{"sha":"abc"}}}"#;
+    let head = format!(
+        "POST /webhook HTTP/1.1\r\nHost: localhost:{port}\r\nConnection: close\r\nContent-Type: application/json\r\nX-GitHub-Event: pull_request\r\n"
+    );
+    let signed = format!("{head}X-Hub-Signature-256: {}\r\n", sign(pr.as_bytes()));
+    let res = request(port, &signed, pr);
+    assert!(res.contains("202"), "{res}");
+    assert!(
+        res.contains("acme/app#7"),
+        "the body should carry the outcome of the review: {res}"
+    );
+    drop(bot);
+}
+
 #[test]
 fn the_app_refuses_to_start_without_its_secrets() {
     let out = Command::new(env!("CARGO_BIN_EXE_polygo-bot"))

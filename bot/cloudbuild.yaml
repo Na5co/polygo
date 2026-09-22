@@ -1,0 +1,9 @@
+# Cloud Build builds the image, because bot/Dockerfile expects the repository root as its
+# context and because a Mac builds arm64 while Cloud Run runs amd64.
+#   gcloud builds submit --config bot/cloudbuild.yaml --substitutions=_IMAGE=<image> .
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ["build", "-f", "bot/Dockerfile", "-t", "${_IMAGE}", "."]
+images: ["${_IMAGE}"]
+options:
+  logging: CLOUD_LOGGING_ONLY

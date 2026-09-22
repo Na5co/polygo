@@ -30,7 +30,31 @@ rather not add a workflow to, or for offering the review to other people's repos
 It never blocks a pull request: the review is a `COMMENT`, and the repository's own CI
 decides whether anything fails.
 
-## Run it
+## Deploy it to Cloud Run (free at this size)
+
+Cloud Run's always-free tier is 2M requests, 180,000 vCPU-seconds and 360,000 GiB-seconds a
+month — about **18,000 pull requests**, at the ~10 seconds a review takes. From a Google
+Cloud project with billing enabled and `gcloud` installed:
+
+```sh
+PROJECT=your-project ./bot/deploy-cloud-run.sh ~/Downloads/your-app.private-key.pem
+```
+
+It enables the APIs, puts the App's key and webhook secret in Secret Manager, builds the
+image with Cloud Build (your laptop is arm64, Cloud Run is amd64), deploys, and prints the
+webhook URL and secret to paste into the App's settings. Run it again to ship a new build.
+
+The flags that matter, and why:
+
+- `--concurrency 1` — a review peaks around 150 MB; two at once would not fit in 512 MiB,
+  so Cloud Run runs another instance instead of thrashing one.
+- `--max-instances 3` — the ceiling on what a busy day can cost.
+- `POLYGO_BOT_SYNC=1` — Cloud Run stops a container's CPU when the response goes out, so
+  the review happens *before* the answer. A check that takes longer than GitHub's ten
+  seconds then shows in the delivery log as timed out; the review is still posted, because
+  the platform lets the handler finish after GitHub hangs up.
+
+## Run it anywhere else
 
 ```sh
 docker build -f bot/Dockerfile -t polygo-bot .
@@ -47,6 +71,9 @@ docker run -p 8080:8080 \
 | `POLYGO_BOT_PRIVATE_KEY` | the App's private key (PEM), or `POLYGO_BOT_PRIVATE_KEY_FILE` to read it from a file — a mounted secret |
 | `POLYGO_BOT_WEBHOOK_SECRET` | the webhook secret you gave GitHub |
 | `PORT` | default 8080 |
+| `POLYGO_BOT_SYNC` | `1` to review before answering — for platforms that stop the CPU after a response (Cloud Run, and serverless generally). Leave unset on a normal server. |
+| `POLYGO_BOT_MAX_REPO_MB` | skip repositories bigger than this (default 500) |
+| `POLYGO_BOT_MAX_REVIEWS` | reviews one installation may ask for per 10 minutes (default 20) |
 
 `GET /health` answers `polygo-bot ok`; the webhook is `POST /webhook` (or `/`). One
 process, one container, no state: run it anywhere that can run a container, and scale it by
@@ -69,6 +96,13 @@ string file gets a review.
 ## Cost and limits
 
 Each event is one shallow fetch and one check: seconds of CPU and a few MB of disk, freed
-when it finishes. A review holds at most 40 comments; the rest are counted in its summary.
-The App's API calls are per installation, well inside GitHub's rate limits for anything
-short of a very busy organization.
+when it finishes. Measured on the largest real project polygo has been pointed at
+(open-webui: 3,484 keys × 61 locales, 140,961 translations) a review peaks at **146 MB** and
+takes about two seconds of CPU, which is why 512 MiB is the size to run it at.
+
+An App anyone can install is an App anyone can point anywhere, so the bot says no to two
+things: a repository over `POLYGO_BOT_MAX_REPO_MB` (asked of the API before anything is
+fetched) and an installation asking for more than `POLYGO_BOT_MAX_REVIEWS` in ten minutes.
+A review holds at most 40 comments; the rest are counted in its summary. The App's API
+calls are per installation, well inside GitHub's rate limits for anything short of a very
+busy organization.

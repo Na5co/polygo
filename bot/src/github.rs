@@ -148,6 +148,15 @@ pub fn diff(repo: &str, number: u64, token: &str) -> Result<String> {
     Ok(s)
 }
 
+/// The repository's size as GitHub reports it, in kilobytes. Asked before anything is
+/// fetched, so a repository too big to be worth cloning costs one API call.
+pub fn repo_size_kb(repo: &str, token: &str) -> Result<u64> {
+    let v = get(&format!("{API}/repos/{repo}"), token)?;
+    v["size"]
+        .as_u64()
+        .ok_or_else(|| anyhow!("no size in the repository response"))
+}
+
 /// `path:line` of every review comment the bot already left, so it does not say a thing
 /// twice when the branch is pushed again.
 pub fn said_already(repo: &str, number: u64, token: &str) -> Result<Vec<String>> {
