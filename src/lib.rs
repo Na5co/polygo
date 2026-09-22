@@ -4,6 +4,10 @@
 //! hard requirement), the unit model, the config and lockfile, and: later :
 //! providers and validators.
 
+/// The version of polygo this build is: what the CLI prints, and what anything built on
+/// the library (the bot) reports rather than a version of its own.
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub mod audit;
 pub mod check;
 pub mod config;

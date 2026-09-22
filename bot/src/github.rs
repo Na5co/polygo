@@ -8,7 +8,11 @@ use ring::signature::{RSA_PKCS1_SHA256, RsaKeyPair};
 use serde_json::{Value, json};
 
 const API: &str = "https://api.github.com";
-const UA: &str = concat!("polygo-bot/", env!("CARGO_PKG_VERSION"));
+/// What GitHub sees in the logs: the polygo whose check is talking, not the bot's own
+/// version, which is deliberately 0.0.0.
+fn ua() -> String {
+    format!("polygo-bot/{}", polygo::VERSION)
+}
 
 pub struct App {
     app_id: String,
@@ -92,7 +96,7 @@ fn get(url: &str, token: &str) -> Result<Value> {
         .header("authorization", &format!("Bearer {token}"))
         .header("accept", "application/vnd.github+json")
         .header("x-github-api-version", "2022-11-28")
-        .header("user-agent", UA)
+        .header("user-agent", &ua())
         .call()
         .with_context(|| format!("GET {url}"))?;
     Ok(res.body_mut().read_json()?)
@@ -104,7 +108,7 @@ fn post(url: &str, token: &str, body: Option<&Value>) -> Result<Value> {
         .header("authorization", &format!("Bearer {token}"))
         .header("accept", "application/vnd.github+json")
         .header("x-github-api-version", "2022-11-28")
-        .header("user-agent", UA);
+        .header("user-agent", &ua());
     let mut res = match body {
         Some(b) => req.send_json(b),
         None => req.send_empty(),
