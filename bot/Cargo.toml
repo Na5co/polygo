@@ -1,0 +1,28 @@
+[package]
+name = "polygo-bot"
+# Not published and not released: the bot is deployed as a container, so it has no
+# version of its own to keep in step with the CLI's.
+version = "0.0.0"
+edition = "2024"
+description = "A GitHub App that reviews pull requests with polygo check: inline comments and committable fixes for broken translations."
+license = "MIT"
+repository = "https://github.com/Na5co/polygo"
+publish = false
+
+[dependencies]
+polygo = { path = ".." }
+anyhow = "1"
+serde_json = "1"
+tiny_http = "0.12"
+ureq = { version = "3", features = ["json"] }
+# Already in the tree through ureq/rustls: HMAC for the webhook signature, RSA for the
+# App's JWT. No new cryptography arrives with the bot.
+ring = "0.17"
+base64 = "0.22"
+
+[dev-dependencies]
+tempfile = "3"
+
+[[bin]]
+name = "polygo-bot"
+path = "src/main.rs"

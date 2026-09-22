@@ -5,6 +5,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 ## Unreleased
 
 - `polygo check --review`: the findings as a GitHub pull-request review (JSON for `POST /pulls/{n}/reviews`) — one inline comment per file and line, and for a translated placeholder name a ```suggestion block the author commits with one click. The suggested line is produced by the format's own writer (applied to a copy of the tree and diffed), so committing it leaves a valid file. `--base <ref>` restricts the comments to the lines a branch changed; `--diff <file|->` takes the pull request's diff instead, for a reviewer with no checkout.
+- `polygo-bot`: the same review as an installable GitHub App (`bot/`, a workspace member, not published to crates.io). One container, one endpoint, no database: it verifies the webhook signature, answers GitHub at once, skips pull requests whose diff touches no string file, fetches `refs/pull/{n}/head` shallow (so a fork needs no access), checks it, posts one review and deletes the working copy. Deploy with `bot/Dockerfile`; `bot/README.md` has the App's permissions and events. No new dependencies: the HMAC and the RSA signature come from `ring`, already in the tree through ureq.
 - The Action's `mode: check` takes `review: "true"` (needs `pull-requests: write`): it reads the diff from the API, posts the review, and skips what it already said on the same line, so a second push does not repeat itself. No app, no server, nothing leaves the runner.
 
 ## 0.1.7 — 2026-09-22

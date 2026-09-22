@@ -53,7 +53,13 @@ fn release_assets_match_every_consumer() {
     assert!(release.contains("15728640"));
     assert!(read(".github/workflows/ci.yml").contains("15728640"));
     assert!(read("scripts/release.sh").contains("15728640"));
-    assert!(read(".github/workflows/ci.yml").contains("cargo clippy --all-targets -- -D warnings"));
+    // CI lints and tests the workspace, so the bot cannot rot while the CLI is green.
+    let ci = read(".github/workflows/ci.yml");
+    assert!(
+        ci.contains("cargo clippy --workspace --all-targets -- -D warnings"),
+        "{ci}"
+    );
+    assert!(ci.contains("cargo test --workspace"), "{ci}");
     // The formula is generated, not checked in.
     assert!(!std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/packaging")).exists());
 }
