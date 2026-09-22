@@ -24,6 +24,8 @@ New locale files are created with a header copied from the source, `Language:` s
 
 `msgid_plural` entries are translated into every `msgstr[n]` slot the locale file's `Plural-Forms:` header declares. Slots are labelled by their CLDR role (Russian `nplurals=3` → `one`, `few`, `many`; Arabic `nplurals=6` → `zero` ... `other`; Slovenian, Latvian, Romanian and the two-form default are also known), and the model is asked for each form with a concrete count. Slots that already hold a translation are kept. New locale files get the right `Plural-Forms` line and a `msgid_plural` block with empty slots before the forms are filled. A locale whose `nplurals` polygo cannot map is left untouched (`polygo doctor` and `translate -v` will show no plural units for it).
 
+`polygo check` also reads the header: a `Plural-Forms:` line whose `nplurals` does not match the language (`nplurals=2` in a Russian file) is a `plural` error with the correct rule in the message, and a file with `msgid_plural` entries but no header is a warning, since gettext then assumes two forms.
+
 ## Placeholders
 
 Python `%(name)s`, `%s`, `%d`, `{name}` / `{0}` (str.format), `%1$s` (PHP), and `{{name}}`. Named arguments are compared as a set.
