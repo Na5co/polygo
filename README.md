@@ -89,6 +89,15 @@ It ends with the coverage per locale. A translated placeholder name is the one b
 
 `sarif: "true"` also files them in GitHub's Security tab with new/fixed history. Any other CI: `polygo check --github` or `--sarif`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
 
+**As a reviewer** — `review: "true"` (with `pull-requests: write`) makes polygo comment on the pull request like a review bot: one inline comment per finding on the diff, and for a translated placeholder name a **suggested change the author commits with one click**. It says nothing twice, never blocks the PR, and needs no app and no server — it runs in your own CI with the repository's token.
+
+```yaml
+- uses: Na5co/polygo/action@v0
+  with:
+    mode: check
+    review: "true"
+```
+
 <br>
 
 ## Found in the wild

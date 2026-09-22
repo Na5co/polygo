@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use polygo::config::Config;
 use polygo::lockfile::{Lock, State};
@@ -232,6 +232,22 @@ struct CheckArgs {
     /// Ignore polygo-baseline.json and report everything.
     #[arg(long)]
     no_baseline: bool,
+    /// Print a GitHub pull-request review (JSON for POST /pulls/{n}/reviews): one inline
+    /// comment per finding, and a committable suggestion for every mechanical fix.
+    #[arg(long)]
+    review: bool,
+    /// With --review: only comment on lines changed since this ref (a PR's base commit).
+    #[arg(long, value_name = "REF", requires = "review")]
+    base: Option<String>,
+    /// With --review: the pull request's unified diff (`-` for stdin) instead of asking
+    /// git, for a reviewer with no checkout of the branch.
+    #[arg(
+        long,
+        value_name = "FILE",
+        requires = "review",
+        conflicts_with = "base"
+    )]
+    diff: Option<PathBuf>,
     /// Repair what has a mechanical fix (a translated placeholder name put back), then
     /// re-translate the other keys with errors, then check again.
     #[arg(long)]
@@ -289,6 +305,7 @@ Examples:
   polygo check --json | jq .findings
   polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --sarif > polygo.sarif   for GitHub code scanning (upload-sarif) or any SARIF viewer
+  polygo check --review --base origin/main   a PR review: inline comments + committable suggestions
   polygo check --explain punctuation    what a code means and what to do; --explain all
   polygo check --fix                put translated placeholder names back, re-translate the rest, check again
   polygo check owner/repo --fix     the mechanical fixes on a clone in the cache; `git diff` there
@@ -684,6 +701,9 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         explain,
         r#ref,
         fix,
+        review,
+        base,
+        diff,
     } = args;
     if let Some(code) = explain {
         return explain_codes(&code);
@@ -729,7 +749,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     let (cfg, root) = match (&path, has_config) {
         (None, true) => (Config::load(root)?, root.to_path_buf()),
         (target, _) => {
-            if has_config && !json && !github && !sarif {
+            if has_config && !json && !github && !sarif && !review {
                 eprintln!(
                     "note: checking {} on its own; polygo.toml settings ([keys] skip, length_ratio) do not apply",
                     target
@@ -743,7 +763,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
                     None => e.context("no polygo.toml here and nothing to check"),
                     Some(_) => e,
                 })?;
-            if !json && !github && !sarif {
+            if !json && !github && !sarif && !review {
                 let what = if cfg.files.len() == 1 && target.as_ref().is_some_and(|t| t.is_file()) {
                     cfg.files[0].path.display().to_string()
                 } else {
@@ -786,7 +806,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         if !fixes.is_empty() {
             let n = fixes.len();
             polygo::engine::write_translations(root, &cfg, &fixes)?;
-            if !json && !github && !sarif {
+            if !json && !github && !sarif && !review {
                 eprintln!("fixed {n} translation(s): placeholder names put back as in the source");
             }
             report = polygo::check::run::run(root, &cfg, &opts)?;
@@ -846,7 +866,27 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
             .map(|b| polygo::check::baseline::apply(&mut report, &b))
     };
 
-    if sarif {
+    if review {
+        let diff = match diff.as_deref() {
+            Some(p) if p == Path::new("-") => Some(std::io::read_to_string(std::io::stdin())?),
+            Some(p) => Some(
+                std::fs::read_to_string(p).with_context(|| format!("reading {}", p.display()))?,
+            ),
+            None => None,
+        };
+        let opts = polygo::check::review::Options {
+            base: base.as_deref(),
+            diff: diff.as_deref(),
+            prefix: prefix.as_deref(),
+            strict,
+        };
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&polygo::check::review::render(
+                root, &cfg, &report, &opts
+            )?)?
+        );
+    } else if sarif {
         println!(
             "{}",
             serde_json::to_string_pretty(&polygo::check::sarif::render(&report, strict))?
@@ -917,12 +957,13 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
             );
         }
     }
-    if !json && !github && !sarif {
+    if !json && !github && !sarif && !review {
         print_coverage(&report);
     }
     if let Some(a) = &applied
         && !json
         && !sarif
+        && !review
         && (a.known > 0 || a.stale > 0)
     {
         println!(
