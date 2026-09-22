@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.7 — 2026-09-22
 
 - `placeholders`: a translated placeholder *name* (`{{ models }}` → `{{ modelli }}`, `%(count)d` → `%(anzahl)d`, `$name` → `$nombre`, a renamed ICU plural argument) is reported as such — *placeholder name translated: {{models}} → {{modelli}}* — instead of as one missing and one unexpected token. Names in any script count (`{{ модели }}`, `{{ماڈلز}}`), so the bug is seen where it lives. The finding carries the corrected translation (`"fix"` in `--json`, `properties.fix` in SARIF).
 - `polygo check --fix` first applies those mechanical fixes with no model involved, and works without `polygo.toml`: `polygo check locales/ --fix`, `polygo check owner/repo --fix` (then `git diff` in the clone). What still needs a new translation goes to the configured model as before. On Open WebUI: 23 translations in 9 locales, a 24-line diff.
