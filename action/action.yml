@@ -23,7 +23,7 @@ inputs:
     description: polygo release to install (tag), or "latest"
     default: latest
   locales:
-    description: Comma-separated locales to translate (default: all targets in polygo.toml)
+    description: "Comma-separated locales to translate (default: all targets in polygo.toml)"
     default: ""
   args:
     description: Extra arguments for `polygo translate` (e.g. --no-context)
