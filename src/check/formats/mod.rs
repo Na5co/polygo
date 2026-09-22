@@ -6,6 +6,7 @@ pub mod android;
 pub mod files;
 pub mod json;
 pub mod strings;
+pub mod syntax;
 pub mod xcstrings;
 
 use crate::check::report::Cx;
