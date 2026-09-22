@@ -784,3 +784,109 @@ fn sarif_output_is_well_formed() {
     let v: serde_json::Value = serde_json::from_str(&fs::read_to_string(&sarif).unwrap()).unwrap();
     assert_eq!(v["runs"][0]["results"].as_array().unwrap().len(), 1);
 }
+
+#[test]
+fn fix_only_retranslates_what_a_model_can_cure() {
+    // An Android project whose source file has an escape error and a duplicate key, plus
+    // a real placeholder error in German: --fix must touch only the German key, and must
+    // not ask the engine to translate into the source locale.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    let res = root.join("res");
+    fs::create_dir_all(res.join("values")).unwrap();
+    fs::create_dir_all(res.join("values-de")).unwrap();
+    fs::write(
+        res.join("values/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"bad\">Don't</string>\n    <string name=\"dup\">One</string>\n    <string name=\"dup\">Two</string>\n    <string name=\"hello\">Hello %1$s</string>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(
+        res.join("values-de/strings.xml"),
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <string name=\"hello\">Hallo</string>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"android\"\npath = \"res/values/strings.xml\"\nlocale_path = \"res/values-{android_locale}/strings.xml\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    let out = Command::new(env!("CARGO_BIN_EXE_polygo"))
+        .current_dir(root)
+        .args(["check", "--fix"])
+        .env("POLYGO_CONFIG_DIR", root.join("cfg"))
+        .output()
+        .unwrap();
+    let err = String::from_utf8_lossy(&out.stderr);
+    let text = String::from_utf8_lossy(&out.stdout);
+    assert!(err.contains("re-translating 1 key(s)"), "{err}\n{text}");
+    assert!(!err.contains("locale `en`"), "{err}");
+    let de = fs::read_to_string(res.join("values-de/strings.xml")).unwrap();
+    assert!(de.contains("⟦de⟧ Hello %1$s"), "{de}");
+    // The source-file problems remain and still fail the run.
+    assert_eq!(out.status.code(), Some(1));
+    assert!(
+        text.contains("escape:") && text.contains("duplicate:"),
+        "{text}"
+    );
+    assert!(!text.contains("hello  [de]  placeholders"), "{text}");
+}
+
+#[test]
+fn locale_flag_is_validated_and_explain_prints_the_table() {
+    let dir = tempfile::tempdir().unwrap();
+    fs::create_dir_all(dir.path().join("locales")).unwrap();
+    fs::write(dir.path().join("locales/en.json"), "{\n  \"a\": \"A\"\n}\n").unwrap();
+    fs::write(
+        dir.path().join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n",
+    )
+    .unwrap();
+    let (code, _, err) = check(dir.path(), &["--locale", "xx"]);
+    assert_eq!(code, 1);
+    assert!(
+        err.contains("locale `xx` is not in target_locales (de)"),
+        "{err}"
+    );
+    let (code, out, _) = check(dir.path(), &["--explain", "link"]);
+    assert_eq!(code, 0);
+    assert!(
+        out.starts_with("link · Link changed · warning by default\n"),
+        "{out}"
+    );
+    let (_, out, _) = check(dir.path(), &["--explain", "all"]);
+    assert!(out.matches(" by default").count() >= 22, "{out}");
+    let (code, _, err) = check(dir.path(), &["--explain", "nope"]);
+    assert_eq!(code, 1);
+    assert!(err.contains("unknown code `nope`"), "{err}");
+}
+
+#[test]
+fn file_level_findings_carry_the_file_prefix_in_multi_file_projects() {
+    // Two [[files]]: an escape finding in the second one must be keyed
+    // `res2/values/strings.xml:bad`, so polygo:ignore and the baseline resolve to that file.
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    for r in ["res1", "res2"] {
+        fs::create_dir_all(root.join(r).join("values")).unwrap();
+    }
+    fs::write(
+        root.join("res1/values/strings.xml"),
+        "<resources>\n    <string name=\"ok\">Fine</string>\n</resources>\n",
+    )
+    .unwrap();
+    fs::write(root.join("res2/values/strings.xml"), "<resources>\n    <!-- polygo:ignore=escape -->\n    <string name=\"bad\">Don't</string>\n    <string name=\"bad2\">Won't</string>\n</resources>\n").unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"android\"\npath = \"res1/values/strings.xml\"\nlocale_path = \"res1/values-{android_locale}/strings.xml\"\n\n[[files]]\nformat = \"android\"\npath = \"res2/values/strings.xml\"\nlocale_path = \"res2/values-{android_locale}/strings.xml\"\n",
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["--json"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let keys: Vec<String> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|f| f["key"].as_str().unwrap().to_string())
+        .collect();
+    assert_eq!(keys, ["res2/values/strings.xml:bad2"], "{out}");
+}

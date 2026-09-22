@@ -213,6 +213,9 @@ struct CheckArgs {
     /// SARIF 2.1.0 on stdout, for GitHub code scanning (upload-sarif) and other tools.
     #[arg(long, conflicts_with_all = ["json", "github"])]
     sarif: bool,
+    /// What a code means and what to do about it (`--explain link`); `--explain all`.
+    #[arg(long, value_name = "CODE")]
+    explain: Option<String>,
     /// Treat warnings as errors.
     #[arg(long)]
     strict: bool,
@@ -281,6 +284,7 @@ Examples:
   polygo check --json | jq .findings
   polygo check --github             annotations + job summary in a GitHub Actions step
   polygo check --sarif > polygo.sarif   for GitHub code scanning (upload-sarif) or any SARIF viewer
+  polygo check --explain punctuation    what a code means and what to do; --explain all
   polygo check --fix                re-translate the failing keys, then check again
   polygo check --locale pl,ru       only these locales
 
@@ -671,8 +675,27 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         write_baseline,
         no_baseline,
         sarif,
+        explain,
         fix,
     } = args;
+    if let Some(code) = explain {
+        return explain_codes(&code);
+    }
+    if let Some(only) = &locale {
+        let cfg_locales = if root.join(polygo::config::FILE_NAME).exists() && path.is_none() {
+            Config::load(root)?.target_locales
+        } else {
+            Vec::new()
+        };
+        for l in only {
+            if !cfg_locales.is_empty() && !cfg_locales.contains(l) {
+                anyhow::bail!(
+                    "locale `{l}` is not in target_locales ({})",
+                    cfg_locales.join(", ")
+                );
+            }
+        }
+    }
     // With polygo.toml: the configured project. Without: whatever `path` (or the project
     // root) turns out to be, so `polygo check Localizable.xcstrings` just works. A path is
     // relative to the root (`-C`), like every other path polygo takes.
@@ -737,7 +760,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
     }
 
     if fix && report.errors > 0 {
-        let keys = report.error_keys();
+        let keys = report.fixable_keys(&cfg.source_locale);
         if !keys.is_empty() {
             let provider = polygo::provider::from_config(&cfg.provider)?;
             let n: usize = keys.values().map(Vec::len).sum();
@@ -806,7 +829,7 @@ fn check(root: &Path, args: CheckArgs) -> Result<()> {
         const SHOWN: usize = 20;
         let mut seen: std::collections::BTreeMap<&str, usize> = Default::default();
         for f in &report.findings {
-            let n = seen.entry(f.code).or_default();
+            let n = seen.entry(f.code.as_str()).or_default();
             *n += 1;
             if !all && *n > SHOWN {
                 continue;
@@ -1221,4 +1244,54 @@ fn print_coverage(report: &polygo::check::run::Report) {
             String::new()
         }
     );
+}
+
+/// `polygo check --explain <code>`: the words behind a finding, from the same table the
+/// SARIF rules and the README use.
+fn explain_codes(which: &str) -> Result<()> {
+    use polygo::check::code::Code;
+    let codes: Vec<Code> = if which == "all" {
+        Code::ALL.to_vec()
+    } else {
+        match Code::parse(which.trim().trim_start_matches("polygo/")) {
+            Some(c) => vec![c],
+            None => anyhow::bail!(
+                "unknown code `{which}`; one of: {}",
+                Code::ALL
+                    .iter()
+                    .map(|c| c.as_str())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+        }
+    };
+    for (i, c) in codes.iter().enumerate() {
+        if i > 0 {
+            println!();
+        }
+        println!("{} · {} · {} by default", c, c.title(), c.severity());
+        for line in wrap(c.explain(), 88) {
+            println!("  {line}");
+        }
+        if c.fixable() {
+            println!("  `polygo check --fix` re-translates keys with this error.");
+        }
+    }
+    Ok(())
+}
+
+fn wrap(text: &str, width: usize) -> Vec<String> {
+    let mut lines = vec![String::new()];
+    for word in text.split_whitespace() {
+        let cur = lines.last_mut().unwrap();
+        if !cur.is_empty() && cur.chars().count() + 1 + word.chars().count() > width {
+            lines.push(word.to_string());
+        } else {
+            if !cur.is_empty() {
+                cur.push(' ');
+            }
+            cur.push_str(word);
+        }
+    }
+    lines
 }

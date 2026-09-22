@@ -1,14 +1,11 @@
 //! Plain-text sanity checks: empty, identical to source, runaway length.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Severity {
-    Warning,
-    Error,
-}
+use crate::check::code::Code;
+pub use crate::check::code::Severity;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Finding {
-    pub code: &'static str,
+    pub code: Code,
     pub severity: Severity,
     pub message: String,
 }
@@ -29,7 +26,7 @@ pub fn check_text(
     if tr.is_empty() {
         if !src.is_empty() {
             out.push(Finding {
-                code: "empty",
+                code: Code::Empty,
                 severity: Severity::Error,
                 message: "translation is empty".into(),
             });
@@ -45,14 +42,14 @@ pub fn check_text(
     let acronym_like = letters.len() <= 3 || letters.iter().all(|c| c.is_uppercase());
     if !same_language && has_letters && !is_markup_only && !acronym_like && src == tr {
         out.push(Finding {
-            code: "identical",
+            code: Code::Identical,
             severity: Severity::Warning,
             message: "identical to the source text".into(),
         });
     }
     if let Some(words) = untranslated_fragment(src, tr, &[]) {
         out.push(Finding {
-            code: "fragment",
+            code: Code::Fragment,
             severity: Severity::Warning,
             message: format!(
                 "left in the source language: {}",
@@ -66,21 +63,21 @@ pub fn check_text(
     }
     if let Some(m) = markup_mismatch(src, tr) {
         out.push(Finding {
-            code: "markup",
+            code: Code::Markup,
             severity: Severity::Error,
             message: m,
         });
     }
     if let Some(m) = edge_whitespace_mismatch(source, translation) {
         out.push(Finding {
-            code: "whitespace",
+            code: Code::Whitespace,
             severity: Severity::Warning,
             message: m,
         });
     }
     if let Some(m) = punctuation_dropped(src, tr) {
         out.push(Finding {
-            code: "punctuation",
+            code: Code::Punctuation,
             severity: Severity::Warning,
             message: m,
         });
@@ -90,13 +87,13 @@ pub fn check_text(
     let slack = SLACK as f64;
     if t > s * ratio + slack {
         out.push(Finding {
-            code: "length",
+            code: Code::Length,
             severity: Severity::Warning,
             message: format!("{t:.0} chars vs {s:.0} in the source (limit {ratio}× + {SLACK})"),
         });
     } else if s > t * ratio + slack {
         out.push(Finding {
-            code: "length",
+            code: Code::Length,
             severity: Severity::Warning,
             message: format!("only {t:.0} chars vs {s:.0} in the source"),
         });

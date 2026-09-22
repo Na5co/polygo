@@ -2,6 +2,14 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
+## Unreleased
+
+- `polygo check --explain <code>` (or `all`): what a code means and what to do, from the same table the SARIF rules use.
+- `check --fix` re-translates only what a new translation can cure (placeholders, markup, empty, glossary, length) in target locales; it no longer tries to "fix" a duplicate key, a short array, or an Android escape in the source file (which asked the engine to translate into the source locale).
+- `check --locale xx` with a locale that is not a target is an error, as in `translate`, instead of a silent "nothing to check".
+- In projects with several `[[files]]`, file-level findings (Android `escape`/`array`, `.stringsdict`, `orphan`, `duplicate`, `state`) now carry the `path:key` prefix like every other finding, so `polygo:ignore` and the baseline resolve to the right file. A baseline written by 0.1.5 for such a project needs `--write-baseline` again.
+- Internals: every finding goes through one emitter that applies skip rules, prefixes the key and finds the line; codes and severities are an enum that owns the titles and explanations. 10,156 corpus findings verified byte-identical before and after.
+
 ## 0.1.5 — 2026-09-22
 
 - `polygo check --sarif` prints SARIF 2.1.0 with a rule per code and stable fingerprints; the Action's `sarif: "true"` uploads it to GitHub code scanning (Security tab, new/fixed history on PRs). The baseline applies to it like every other output.

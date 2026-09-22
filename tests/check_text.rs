@@ -130,7 +130,7 @@ fn check_text_reports_fragment_as_warning() {
     );
     assert!(
         f.iter()
-            .any(|x| x.code == "fragment" && x.severity == Severity::Warning),
+            .any(|x| x.code.as_str() == "fragment" && x.severity == Severity::Warning),
         "{f:?}"
     );
 }

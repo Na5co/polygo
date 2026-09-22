@@ -23,7 +23,7 @@ pub fn print(report: &Report, strict: bool) -> Result<()> {
     let report = if strict {
         let mut r = report.clone();
         for f in &mut r.findings {
-            f.severity = "error";
+            f.severity = crate::check::code::Severity::Error;
         }
         r.errors += r.warnings;
         r.warnings = 0;
@@ -35,7 +35,7 @@ pub fn print(report: &Report, strict: bool) -> Result<()> {
     let out = std::io::stdout();
     let mut out = out.lock();
     for f in &report.findings {
-        let sev = f.severity;
+        let sev = f.severity.as_str();
         let key: String = f.key.chars().take(80).collect();
         let line = f.line.map(|l| format!(",line={l}")).unwrap_or_default();
         writeln!(
@@ -81,7 +81,7 @@ pub fn summary(report: &Report) -> String {
             let key: String = f.key.chars().take(60).collect();
             s.push_str(&format!(
                 "| {} | `{}` | `{}` | {} | {}: {} |\n",
-                if f.severity == "error" {
+                if f.severity == crate::check::code::Severity::Error {
                     "❌"
                 } else {
                     "⚠️"
