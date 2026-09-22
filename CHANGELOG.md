@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.8 — 2026-09-22
 
 - `syntax` (error): a string file that does not parse — a comma dropped from a JSON catalog, an unclosed `<string>`, a file in the wrong encoding — with the line the parser stopped at. It used to be invisible: the detector could not read the file, so the locale disappeared from the run and `check` reported the project as fine. Found while testing the reviewer on a pull request that corrupted a locale file and got a clean review. Every locale file the `locale_path` template matches is scanned, including locales the configuration never lists; when the broken file is one the project must read, the run says so and stops instead of failing with a stack of parser context.
 - `polygo check --review`: the findings as a GitHub pull-request review (JSON for `POST /pulls/{n}/reviews`) — one inline comment per file and line, and for a translated placeholder name a ```suggestion block the author commits with one click. The suggested line is produced by the format's own writer (applied to a copy of the tree and diffed), so committing it leaves a valid file. `--base <ref>` restricts the comments to the lines a branch changed; `--diff <file|->` takes the pull request's diff instead, for a reviewer with no checkout.
