@@ -34,6 +34,35 @@ Any CI, not just this Action: `polygo check --github` prints the same annotation
 Existing project with hundreds of warnings? Run `polygo check --write-baseline` once and
 commit `polygo-baseline.json`: the Action then fails only on findings that are new.
 
+### `review: "true"` — a reviewer on the pull request
+
+```yaml
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Na5co/polygo/action@v0
+        with:
+          mode: check
+          review: "true"
+```
+
+polygo leaves an **inline comment** on each line of the diff it has something to say about,
+and where the repair is mechanical — a translator translated the placeholder *name*,
+`{{ modelli }}` for `{{ models }}` — a **suggested change** the author commits from the
+review with one click. The suggestion is the whole line as polygo's own writer would write
+it, escaping and indentation included.
+
+It only ever comments on lines this pull request touches (the diff comes from the API, so a
+shallow checkout is fine), it posts `COMMENT` rather than blocking the PR — the job's exit
+code is what fails the build — and it skips anything it has already said on the same line,
+so a second push does not repeat the review. Findings elsewhere in the files are counted in
+the review's summary and listed in the job summary.
+
+No server and no app to install: it runs in your own CI with the repository's token, and
+nothing leaves the runner.
+
 ## `mode: translate` — translate on push and open a PR
 
 ```yaml
