@@ -34,9 +34,10 @@ fn main() -> Result<()> {
 
     let server = tiny_http::Server::http(("0.0.0.0", port))
         .map_err(|e| anyhow::anyhow!("listening on port {port}: {e}"))?;
+    // The bot has no version of its own; the one that matters is the check's.
     log(&format!(
-        "polygo-bot {} listening on :{port} as app {app_id}",
-        env!("CARGO_PKG_VERSION")
+        "polygo-bot (polygo {}) listening on :{port} as app {app_id}",
+        polygo::VERSION
     ));
     for mut req in server.incoming_requests() {
         let path = req.url().split('?').next().unwrap_or("/").to_string();
