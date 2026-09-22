@@ -20,7 +20,7 @@ I ship a small Mac app in five languages. Lokalise starts at $149/month and want
 - `polygo use gemma4` pulls a model through Ollama and it runs with no API key and no network; any OpenAI-compatible or Anthropic endpoint works too
 - a lockfile tracks which source strings changed, so it re-translates only those and never overwrites a human edit
 
-The part I like most: before translating "Open" it greps your code for `Button("Open")` and tells the model it is a menu item, and attaches similar strings you already translated. In a blind A/B judged by a different model, that context won 9 to 5, rest tied.
+The part I like most: before translating "Open" it greps your code for `Button("Open")` and tells the model it is a menu item. In a blind A/B judged by a different model, that context won 9 to 5.
 
 It checks placeholders and CLDR plural categories. I ran that check over 23 popular open source apps and found about a thousand broken placeholders in production, mostly a translator translating the placeholder name ({{ modelli }} for {{ models }}). Fixes are merged in Open WebUI and Dashy, with more open in AppFlowy, Cal.diy, Umami, DuckDuckGo and Ice Cubes. Since a structural check can't see a wrong word, polygo audit has a second model grade every translation with a reason.
 
