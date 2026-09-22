@@ -890,3 +890,67 @@ fn file_level_findings_carry_the_file_prefix_in_multi_file_projects() {
         .collect();
     assert_eq!(keys, ["res2/values/strings.xml:bad2"], "{out}");
 }
+
+#[test]
+fn po_plural_forms_header_must_match_the_language() {
+    let dir = tempfile::tempdir().unwrap();
+    let po = dir.path().join("locale");
+    fs::create_dir_all(&po).unwrap();
+    fs::write(
+        po.join("en.po"),
+        "msgid \"\"\nmsgstr \"\"\n\"Language: en\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\nmsgid \"%d file\"\nmsgid_plural \"%d files\"\nmsgstr[0] \"\"\nmsgstr[1] \"\"\n",
+    )
+    .unwrap();
+    // Russian with a Germanic header: wrong before any string is.
+    fs::write(
+        po.join("ru.po"),
+        "msgid \"\"\nmsgstr \"\"\n\"Language: ru\\n\"\n\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\nmsgid \"%d file\"\nmsgid_plural \"%d files\"\nmsgstr[0] \"%d файл\"\nmsgstr[1] \"%d файлов\"\n",
+    )
+    .unwrap();
+    // German with no header at all but plurals in the file: a warning.
+    fs::write(
+        po.join("de.po"),
+        "msgid \"\"\nmsgstr \"\"\n\"Language: de\\n\"\n\nmsgid \"%d file\"\nmsgid_plural \"%d files\"\nmsgstr[0] \"%d Datei\"\nmsgstr[1] \"%d Dateien\"\n",
+    )
+    .unwrap();
+    let (code, out, _) = check(dir.path(), &["locale", "--json"]);
+    assert_eq!(code, 1, "{out}");
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let hdr: Vec<(String, String, String)> = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|f| f["key"] == "Plural-Forms")
+        .map(|f| {
+            (
+                f["locale"].as_str().unwrap().to_string(),
+                f["severity"].as_str().unwrap().to_string(),
+                f["message"].as_str().unwrap().chars().take(40).collect(),
+            )
+        })
+        .collect();
+    assert_eq!(
+        hdr,
+        [
+            (
+                "de".to_string(),
+                "warning".to_string(),
+                "no Plural-Forms header: gettext assumes ".to_string()
+            ),
+            (
+                "ru".to_string(),
+                "error".to_string(),
+                "header says nplurals=2; ru needs 3 (one,".to_string()
+            ),
+        ],
+        "{out}"
+    );
+    let ru = v["findings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["locale"] == "ru" && f["key"] == "Plural-Forms")
+        .unwrap();
+    assert_eq!(ru["file"], "locale/ru.po");
+    assert_eq!(ru["line"], 4);
+}

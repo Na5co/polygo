@@ -70,6 +70,7 @@ pub fn check(cx: &mut Cx, idx: usize) -> Result<()> {
         }
         if format == Format::Po {
             let doc = formats::po::parse(&ltext)?;
+            plural_forms_header(cx, idx, locale, &lp, &ltext, &doc);
             for e in doc
                 .entries
                 .iter()
@@ -159,4 +160,72 @@ fn duplicate_keys(format: Format, text: &str) -> Result<Vec<String>> {
         .into_iter()
         .map(|k| k.rsplit('\u{0}').next().unwrap_or(&k).to_string())
         .collect())
+}
+
+/// The header decides how many `msgstr[n]` slots exist: a Russian file that says
+/// `nplurals=2` is wrong before any string is, and every plural in it will be.
+fn plural_forms_header(
+    cx: &mut Cx,
+    idx: usize,
+    locale: &str,
+    path: &std::path::Path,
+    text: &str,
+    doc: &formats::po::Document,
+) {
+    let wanted = formats::po::plural_forms(locale);
+    let wanted_n: usize = wanted
+        .split("nplurals=")
+        .nth(1)
+        .and_then(|s| {
+            s.chars()
+                .take_while(char::is_ascii_digit)
+                .collect::<String>()
+                .parse()
+                .ok()
+        })
+        .unwrap_or(2);
+    let line = text
+        .lines()
+        .position(|l| l.contains("Plural-Forms:"))
+        .map(|i| i + 1);
+    let rel = path
+        .strip_prefix(cx.root)
+        .unwrap_or(path)
+        .display()
+        .to_string()
+        .replace('\\', "/");
+    match doc.nplurals() {
+        Some(n) if n != wanted_n => {
+            let labels = formats::po::plural_labels(locale, wanted_n)
+                .map(|l| l.join(", "))
+                .unwrap_or_default();
+            cx.emit_at(
+                idx,
+                rel,
+                line,
+                "Plural-Forms",
+                locale,
+                Code::Plural,
+                Severity::Error,
+                format!(
+                    "header says nplurals={n}; {locale} needs {wanted_n} ({labels}): `{wanted}`"
+                ),
+            );
+        }
+        None if doc.entries.iter().any(|e| e.plural.is_some()) => {
+            cx.emit_at(
+                idx,
+                rel,
+                line,
+                "Plural-Forms",
+                locale,
+                Code::Plural,
+                Severity::Warning,
+                format!(
+                    "no Plural-Forms header: gettext assumes two forms; {locale} needs `{wanted}`"
+                ),
+            );
+        }
+        _ => {}
+    }
 }

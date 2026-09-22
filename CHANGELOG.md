@@ -4,6 +4,7 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `.po`: a `Plural-Forms` header whose `nplurals` does not match the language is a `plural` error (a Russian file saying `nplurals=2` is wrong before any string is; the message gives the rule to paste), and a file with plural entries but no header is a warning (gettext assumes two forms).
 - `polygo check --explain <code>` (or `all`): what a code means and what to do, from the same table the SARIF rules use.
 - `check --fix` re-translates only what a new translation can cure (placeholders, markup, empty, glossary, length) in target locales; it no longer tries to "fix" a duplicate key, a short array, or an Android escape in the source file (which asked the engine to translate into the source locale).
 - `check --locale xx` with a locale that is not a target is an error, as in `translate`, instead of a silent "nothing to check".
