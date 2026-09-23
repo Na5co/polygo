@@ -1,0 +1,73 @@
+# Merging is deploying: a push to main that touches the bot or the checks it runs builds a
+# new image and rolls it out to Cloud Run. Without this the hosted app silently drifts
+# behind the code, which it did three times in one afternoon.
+#
+# Authentication is keyless: GitHub mints an OIDC token, Google trades it for a short-lived
+# credential through Workload Identity Federation, and no service-account key exists to leak.
+# The pool is bound to this repository only.
+name: deploy-bot
+on:
+  push:
+    branches: [main]
+    paths:
+      - "bot/**"
+      - "src/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - ".github/workflows/deploy-bot.yml"
+  workflow_dispatch:
+
+# A second push while the first is rolling out would race it to the same revision.
+concurrency:
+  group: deploy-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write          # required to mint the OIDC token
+
+env:
+  PROJECT: summer-ranger-205420
+  REGION: us-central1
+  SERVICE: polygo-bot
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/987119925117/locations/global/workloadIdentityPools/github/providers/github
+          service_account: gh-deploy-bot@summer-ranger-205420.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build the image
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${PROJECT}/polygo/${SERVICE}:${GITHUB_SHA::7}"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          gcloud builds submit --config bot/cloudbuild.yaml \
+            --substitutions="_IMAGE=${IMAGE}" --project "$PROJECT" --quiet .
+
+      - name: Roll it out
+        run: |
+          gcloud run deploy "$SERVICE" --image "$IMAGE" --region "$REGION" \
+            --project "$PROJECT" --quiet
+
+      - name: Check it came back
+        run: |
+          URL=$(gcloud run services describe "$SERVICE" --region "$REGION" \
+            --project "$PROJECT" --format='value(status.url)')
+          echo "deployed: $URL"
+          # A revision that cannot answer /health is a revision that cannot review a pull
+          # request; fail the job so the notification says so.
+          for i in $(seq 1 10); do
+            body=$(curl -fsS --max-time 20 "$URL/health" || true)
+            [ "$body" = "polygo-bot ok" ] && { echo "health: $body"; exit 0; }
+            sleep 5
+          done
+          echo "the new revision never answered /health" >&2
+          exit 1

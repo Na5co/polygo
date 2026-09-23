@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- Merging is deploying: a push to `main` touching `bot/`, `src/` or the manifests builds the image and rolls out a Cloud Run revision, then fails the job if that revision cannot answer `/health`. Keyless — GitHub's OIDC token is exchanged through Workload Identity Federation for a short-lived credential, bound to this repository, so there is no service-account key to leak. The hosted app had already drifted behind the code three times in an afternoon of hand deploys.
+
 - The GitHub App is [polygolint](https://github.com/apps/polygolint): `polygo` was taken by a dormant account, and app names share the username namespace. The bot comments as `polygolint[bot]`. The crate, binary, container and Cloud Run service keep the name `polygo-bot` — they are internal, and the service URL is wired into the app's webhook.
 
 - The README leads with the bot: what lands on a pull request, then the three ways to run it (install the app, four lines of CI, or the binary), each of them needing no configuration. `docs/img/review-comment-{light,dark}.svg` is the review as it appears on a pull request.
