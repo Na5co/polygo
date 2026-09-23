@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- The README leads with the bot: what lands on a pull request, then the three ways to run it (install the app, four lines of CI, or the binary), each of them needing no configuration. `docs/img/review-comment-{light,dark}.svg` is the review as it appears on a pull request.
+
 - The bot notes Marketplace events (`marketplace_purchase`) in its log rather than treating them as a malformed pull request; a listed app has to receive them. `bot/PRIVACY.md` is the App's privacy policy, which a Marketplace listing requires and anyone installing it deserves; `docs/img/feature-card.svg` is the listing's card.
 
 - A finding about a whole file (`locale`, and a `syntax` error whose parser gave no position) now sits on line 1 instead of nowhere. A review can only comment on a line, so those findings never reached the pull request that introduced them: the bot reported a pull request adding an unlisted locale as clean, which is the failure the `locale` code exists to end.
