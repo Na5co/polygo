@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- The GitHub App is [polygolint](https://github.com/apps/polygolint): `polygo` was taken by a dormant account, and app names share the username namespace. The bot comments as `polygolint[bot]`. The crate, binary, container and Cloud Run service keep the name `polygo-bot` — they are internal, and the service URL is wired into the app's webhook.
+
 - The README leads with the bot: what lands on a pull request, then the three ways to run it (install the app, four lines of CI, or the binary), each of them needing no configuration. `docs/img/review-comment-{light,dark}.svg` is the review as it appears on a pull request.
 
 - The bot notes Marketplace events (`marketplace_purchase`) in its log rather than treating them as a malformed pull request; a listed app has to receive them. `bot/PRIVACY.md` is the App's privacy policy, which a Marketplace listing requires and anyone installing it deserves; `docs/img/feature-card.svg` is the listing's card.

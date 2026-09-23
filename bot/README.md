@@ -1,4 +1,7 @@
-# polygo-bot — a GitHub App that reviews translations
+# polygolint — the GitHub App that reviews translations
+
+*The app is [polygolint](https://github.com/apps/polygolint); the binary that serves it is
+`polygo-bot`, in this directory.*
 
 A pull request touches `de.json`, and a minute later there is a review on it: an inline
 comment on the line that broke, and — where the repair is mechanical, a translator having
