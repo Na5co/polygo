@@ -4,6 +4,8 @@ All notable changes to polygo. Versions follow [SemVer](https://semver.org); dat
 
 ## Unreleased
 
+- `locale` (warning): a locale file sitting next to the ones being checked whose locale is not in `target_locales` — a translator's whole language, silently unchecked. Found the same way as the `syntax` gap: a test fixture added `locales/it.json`, forgot to list `it`, and the reviewer reported a clean pull request. Only real language tags count, so a `README.json` or an Android `values-night` is not mistaken for a locale, and a file that does not parse keeps its `syntax` error instead of being reported twice.
+
 - `polygo-bot` runs on Cloud Run, where its always-free tier covers roughly 18,000 pull requests a month: `bot/deploy-cloud-run.sh` takes a project and the App's key and does the rest (APIs, Secret Manager, Cloud Build, deploy), then prints the webhook URL to paste into the App. `POLYGO_BOT_SYNC=1` reviews before answering GitHub, since Cloud Run stops a container's CPU once the response goes out and a background thread would be frozen mid-review.
 - The bot refuses what an App anyone can install will eventually be pointed at: a repository over `POLYGO_BOT_MAX_REPO_MB` (default 500, asked of the API before anything is fetched) and an installation asking for more than `POLYGO_BOT_MAX_REVIEWS` reviews in ten minutes (default 20).
 

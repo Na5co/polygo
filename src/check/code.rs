@@ -30,6 +30,7 @@ impl std::fmt::Display for Severity {
 #[serde(rename_all = "lowercase")]
 pub enum Code {
     Syntax,
+    Locale,
     Placeholders,
     Plural,
     Markup,
@@ -55,8 +56,9 @@ pub enum Code {
 }
 
 impl Code {
-    pub const ALL: [Code; 23] = [
+    pub const ALL: [Code; 24] = [
         Code::Syntax,
+        Code::Locale,
         Code::Placeholders,
         Code::Plural,
         Code::Markup,
@@ -84,6 +86,7 @@ impl Code {
     pub fn as_str(self) -> &'static str {
         match self {
             Code::Syntax => "syntax",
+            Code::Locale => "locale",
             Code::Placeholders => "placeholders",
             Code::Plural => "plural",
             Code::Markup => "markup",
@@ -142,6 +145,7 @@ impl Code {
     pub fn title(self) -> &'static str {
         match self {
             Code::Syntax => "Unparsable file",
+            Code::Locale => "Locale not checked",
             Code::Placeholders => "Placeholder mismatch",
             Code::Plural => "Missing plural form",
             Code::Markup => "Markup mismatch",
@@ -172,6 +176,9 @@ impl Code {
         match self {
             Code::Syntax => {
                 "A string file cannot be parsed: a comma missing from a JSON catalog, an unclosed <string>, a .po entry without its msgstr. Reported with the line the parser stopped at. It is an error on its own because of what it hides: a file polygo cannot read has no keys, so every other check would find nothing wrong with it and the locale would quietly vanish from the run."
+            }
+            Code::Locale => {
+                "A locale file sits next to the ones being checked, but its locale is not in target_locales, so nothing in it is looked at: a translator's whole language, silently unchecked. Add the locale to polygo.toml (or `polygo locales add`), or delete the file. Only names that are real language tags count, so a README.json or an Android values-night directory is not mistaken for a locale."
             }
             Code::Placeholders => {
                 "A format placeholder (%1$@, {{name}}, %(count)s, {0}, {n, plural, …}) is missing, added, retyped or reordered in the translation. At runtime the value lands in the wrong place, shows raw, or crashes (Android: %d where %s was expected). A placeholder whose name was translated ({{ models }} → {{ modelli }}, %(count)s → %(anzahl)s) is the most common placeholder bug of all; it is named as such, and `polygo check --fix` puts the source name back with no model involved. Unnumbered printf arguments are numbered by position, so reordering them needs explicit %2$s %1$s. In zero/one/two plural forms the count may be left out where those are exact counts; not where `one` also covers 21, 31 (ru, uk, be, hr, sr, bs, lt, lv)."

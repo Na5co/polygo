@@ -1,3 +1,6 @@
+//! Files the project has but does not read: one that cannot be parsed, and one whose locale
+//! nobody listed.
+//!
 //! A string file that does not parse. Without this pass a locale file someone broke — a
 //! comma dropped from a JSON catalog, an unclosed `<string>` — is simply not there: the
 //! detector cannot read it, so the locale disappears from the run and `check` says the
@@ -79,6 +82,46 @@ pub fn check(cx: &mut crate::check::report::Cx, broken: &[Broken]) -> bool {
         );
     }
     fatal
+}
+
+/// A locale file the project is not checking, because its locale is not in
+/// `target_locales`. Someone added the language and forgot to say so, and everything in it
+/// — every placeholder, every plural — goes unlooked at.
+pub fn unlisted(cx: &mut crate::check::report::Cx, idx: usize) {
+    let (root, cfg) = (cx.root.to_path_buf(), cx.cfg);
+    let spec = &cfg.files[idx];
+    let source = cfg.source_locale.clone();
+    let targets = cfg.target_locales.clone();
+    let found: Vec<(String, PathBuf)> = locale_files(&root, spec)
+        .into_iter()
+        .filter(|(locale, path)| {
+            locale != &source
+                && !targets.contains(locale)
+                && crate::init::is_locale(locale)
+                // A file that does not parse is already reported as such, and that is why
+                // the detector left its locale out; saying so twice helps nobody.
+                && parse_error(path, spec.format).is_none()
+        })
+        .collect();
+    for (locale, path) in found {
+        let file = path
+            .strip_prefix(&root)
+            .unwrap_or(&path)
+            .to_string_lossy()
+            .replace('\\', "/");
+        cx.emit_at(
+            idx,
+            file.clone(),
+            None,
+            &file,
+            &locale,
+            Code::Locale,
+            Severity::Warning,
+            format!(
+                "nothing in this file is checked: `{locale}` is not in target_locales (`polygo locales add {locale}`, or delete the file)"
+            ),
+        );
+    }
 }
 
 /// `(line, message)` when the file does not parse, `None` when it does.

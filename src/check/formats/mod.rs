@@ -24,6 +24,7 @@ pub fn check(cx: &mut Cx) -> Result<()> {
             Format::Arb | Format::Po | Format::Resx => {}
         }
         files::check(cx, idx)?;
+        syntax::unlisted(cx, idx);
     }
     Ok(())
 }
