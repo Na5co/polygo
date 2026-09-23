@@ -6,10 +6,12 @@
 </p>
 
 <p align="center">
-  <b>A linter for your app's translations.</b><br>
-  The placeholder that went missing in French, the plural form Polish needs, the <code>&lt;/b&gt;</code> a translator dropped:<br>
-  <code>polygo check</code> finds them in milliseconds, with a file and line, no config, no model.<br>
-  <sub>Strings missing? It translates them too, with a local model. One 4 MB binary. No account, no server, no telemetry.</sub>
+  <b>The translation reviewer for your pull requests.</b><br>
+  The placeholder that went missing in French, the plural form Polish needs,<br>
+  <code>{{ modelli }}</code> where the source says <code>{{ models }}</code>:<br>
+  polygo finds them in milliseconds — <b>zero config</b>, no model, no account.<br>
+  <sub>Install the app and it reviews every pull request. Or four lines of CI. Or one 4 MB binary.<br>
+  Strings missing? It translates them too, with a local model.</sub>
 </p>
 
 <p align="center">
@@ -18,6 +20,39 @@
   <a href="https://github.com/Na5co/polygo/releases"><img src="https://img.shields.io/github/v/release/Na5co/polygo?style=flat-square&label=release" alt="release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT"></a>
 </p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/img/review-comment-dark.svg">
+    <img src="docs/img/review-comment-light.svg" width="860" alt="polygo-bot commenting on a pull request: the placeholder name {{user}} was translated to {{usuario}}, with a suggested change and an Apply suggestion button">
+  </picture>
+</p>
+
+<p align="center"><i>What lands on a pull request. The suggestion is written by the parser, not a model — one click and the name is back.</i></p>
+
+<br>
+
+## Three ways to run it, none of which need configuring
+
+**On every pull request** — [**install polygo-bot**](https://github.com/apps/polygo-bot) on a repository and stop. It reviews the pull requests that touch translation files, comments on the lines that broke, and leaves a committable suggestion where the fix is mechanical. It never blocks a pull request, and it says a thing only once.
+
+**In your own CI**, if you would rather not install an app — the same review, posted by your own workflow with the repository's token, nothing leaving the runner:
+
+```yaml
+- uses: Na5co/polygo/action@v0
+  with:
+    mode: check
+    review: "true"     # needs pull-requests: write
+```
+
+**On your machine**, on any repository, including ones you do not own:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
+polygo check open-webui/open-webui        # a GitHub repo, cloned shallow and checked
+```
+
+Or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows zip](https://github.com/Na5co/polygo/releases). Then `polygo completions zsh` for tab completion.
 
 <p align="center">
   <picture>
@@ -30,16 +65,6 @@
 
 <br>
 
-## Install
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/Na5co/polygo/main/install.sh | sh
-```
-
-Or `brew install na5co/tap/polygo` · `cargo install polygo` · [Windows zip](https://github.com/Na5co/polygo/releases). Then `polygo completions zsh` for tab completion.
-
-<br>
-
 ## `polygo check`
 
 ```sh
@@ -49,7 +74,7 @@ polygo check Dimillian/IceCubesApp      # a GitHub repo (or any git URL): cloned
 polygo check                            # the project, once polygo.toml exists
 ```
 
-Ten seconds, no setup. It reads the string files your app already has and reports what a user would eventually notice — every finding with the **file and line** where the fix goes:
+**Nothing to configure.** It finds the string files your app already has, works out which locales exist and which one is the source, and reports what a user would eventually notice — every finding with the **file and line** where the fix goes. A `polygo.toml` exists for when you want to tune it; the checks below run without one:
 
 | code | severity | what it catches |
 |---|:-:|---|
@@ -91,16 +116,7 @@ It ends with the coverage per locale. A translated placeholder name is the one b
 
 `sarif: "true"` also files them in GitHub's Security tab with new/fixed history. Any other CI: `polygo check --github` or `--sarif`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
 
-**As a reviewer** — `review: "true"` (with `pull-requests: write`) makes polygo comment on the pull request like a review bot: one inline comment per finding on the diff, and for a translated placeholder name a **suggested change the author commits with one click**. It says nothing twice, never blocks the PR, and needs no app and no server — it runs in your own CI with the repository's token.
-
-```yaml
-- uses: Na5co/polygo/action@v0
-  with:
-    mode: check
-    review: "true"
-```
-
-The same review as an installable **GitHub App**, for repositories you would rather not add a workflow to: [`bot/`](bot/README.md) is one container, no database, nothing kept between events.
+**As a reviewer**, `review: "true"` turns those annotations into inline comments with committable suggestions — the same thing [polygo-bot](https://github.com/apps/polygo-bot) does, running in your own CI instead. The app is the same code, deployed: [`bot/`](bot/README.md) is one container, no database, nothing kept between events.
 
 <br>
 
