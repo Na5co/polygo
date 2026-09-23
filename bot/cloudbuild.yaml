@@ -1,5 +1,6 @@
-# Cloud Build builds the image, because bot/Dockerfile expects the repository root as its
-# context and because a Mac builds arm64 while Cloud Run runs amd64.
+# Cloud Build builds the image when you deploy from a Mac, which is arm64 while Cloud Run
+# is amd64. The GitHub Actions deploy does not use this: its runner is already amd64, so it
+# builds and pushes directly (.github/workflows/deploy-bot.yml).
 #   gcloud builds submit --config bot/cloudbuild.yaml --substitutions=_IMAGE=<image> .
 steps:
   - name: gcr.io/cloud-builders/docker
