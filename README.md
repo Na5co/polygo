@@ -24,7 +24,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/img/review-comment-dark.svg">
-    <img src="docs/img/review-comment-light.svg" width="860" alt="polygo-bot commenting on a pull request: the placeholder name {{user}} was translated to {{usuario}}, with a suggested change and an Apply suggestion button">
+    <img src="docs/img/review-comment-light.svg" width="860" alt="polygolint commenting on a pull request: the placeholder name {{user}} was translated to {{usuario}}, with a suggested change and an Apply suggestion button">
   </picture>
 </p>
 
@@ -34,7 +34,7 @@
 
 ## Three ways to run it, none of which need configuring
 
-**On every pull request** — [**install polygo-bot**](https://github.com/apps/polygo-bot) on a repository and stop. It reviews the pull requests that touch translation files, comments on the lines that broke, and leaves a committable suggestion where the fix is mechanical. It never blocks a pull request, and it says a thing only once.
+**On every pull request** — [**install polygolint**](https://github.com/apps/polygolint) on a repository and stop. It reviews the pull requests that touch translation files, comments on the lines that broke, and leaves a committable suggestion where the fix is mechanical. It never blocks a pull request, and it says a thing only once.
 
 **In your own CI**, if you would rather not install an app — the same review, posted by your own workflow with the repository's token, nothing leaving the runner:
 
@@ -116,7 +116,7 @@ It ends with the coverage per locale. A translated placeholder name is the one b
 
 `sarif: "true"` also files them in GitHub's Security tab with new/fixed history. Any other CI: `polygo check --github` or `--sarif`. Pre-commit: `entry: polygo check` ([snippet](action/README.md#pre-commit)).
 
-**As a reviewer**, `review: "true"` turns those annotations into inline comments with committable suggestions — the same thing [polygo-bot](https://github.com/apps/polygo-bot) does, running in your own CI instead. The app is the same code, deployed: [`bot/`](bot/README.md) is one container, no database, nothing kept between events.
+**As a reviewer**, `review: "true"` turns those annotations into inline comments with committable suggestions — the same thing [polygolint](https://github.com/apps/polygolint) does, running in your own CI instead. The app is the same code, deployed: [`bot/`](bot/README.md) is one container, no database, nothing kept between events.
 
 <br>
 

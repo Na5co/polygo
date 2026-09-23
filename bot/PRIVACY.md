@@ -1,6 +1,6 @@
-# polygo-bot — privacy
+# polygolint — privacy
 
-*Last updated: 23 September 2026. The app is [polygo-bot](https://github.com/apps/polygo-bot),
+*Last updated: 24 September 2026. The app is [polygolint](https://github.com/apps/polygolint),
 published by [@Na5co](https://github.com/Na5co) and built on
 [polygo](https://github.com/Na5co/polygo), which is MIT-licensed and readable in full —
 including [the bot itself](https://github.com/Na5co/polygo/tree/main/bot).*
