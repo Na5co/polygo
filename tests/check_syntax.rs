@@ -232,3 +232,39 @@ fn an_android_qualifier_directory_is_not_a_locale() {
         "night and w600dp are qualifiers, not languages: {out}"
     );
 }
+
+/// A finding about a whole file has to sit on a line, or the reviewer cannot say it: a
+/// pull request that adds an unlisted locale would come back clean, which is the very
+/// failure the `locale` code exists to end.
+#[test]
+fn a_file_level_finding_lands_on_line_one_so_a_review_can_carry_it() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    project(root);
+    fs::write(
+        root.join("locales/it.json"),
+        "{\n  \"a\": \"Ciao {{name}}\",\n  \"b\": \"Arrivederci\"\n}\n",
+    )
+    .unwrap();
+    fs::write(
+        root.join("polygo.toml"),
+        "source_locale = \"en\"\ntarget_locales = [\"de\"]\n\n[[files]]\nformat = \"json\"\npath = \"locales/en.json\"\nlocale_path = \"locales/{locale}.json\"\n\n[provider]\nkind = \"mock\"\n",
+    )
+    .unwrap();
+    // The diff that adds the file, as GitHub would give it.
+    fs::write(
+        root.join("pr.diff"),
+        "--- a/locales/it.json\n+++ b/locales/it.json\n@@ -0,0 +1,4 @@\n+{\n+  \"a\": \"Ciao {{name}}\",\n+  \"b\": \"Arrivederci\"\n+}\n",
+    )
+    .unwrap();
+    let (_, out, _) = check(root, &["--review", "--diff", "pr.diff"]);
+    let v: serde_json::Value = serde_json::from_str(&out).unwrap();
+    let c = &v["comments"][0];
+    assert_eq!(c["path"], "locales/it.json", "{out}");
+    assert_eq!(c["line"], 1);
+    assert!(
+        c["body"].as_str().unwrap().contains("Locale not checked"),
+        "{}",
+        c["body"]
+    );
+}

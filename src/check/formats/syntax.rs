@@ -18,6 +18,9 @@ pub struct Broken {
     pub idx: usize,
     /// Path relative to the checked root, as findings name files.
     pub file: String,
+    /// Where to put it. A finding about the file rather than a line in it goes on line 1:
+    /// a reviewer can only comment on a line, so a finding without one never reaches the
+    /// pull request that introduced it.
     pub line: Option<usize>,
     /// The locale the path stands for, or the source locale for a source file.
     pub locale: String,
@@ -112,7 +115,7 @@ pub fn unlisted(cx: &mut crate::check::report::Cx, idx: usize) {
         cx.emit_at(
             idx,
             file.clone(),
-            None,
+            Some(1),
             &file,
             &locale,
             Code::Locale,
@@ -141,7 +144,7 @@ fn parse_error(path: &Path, format: Format) -> Option<(Option<usize>, String)> {
     };
     let e = parsed.err()?;
     let message = one_line(&format!("{e:#}"));
-    Some((line_of(&message, &text), message))
+    Some((Some(line_of(&message, &text).unwrap_or(1)), message))
 }
 
 /// Where the fix goes. Parsers say either "at line 584 column 2" or "at byte 34886"; a
@@ -244,6 +247,6 @@ mod tests {
         assert_eq!(line_of("expected ',' or '}' at byte 5", text), Some(3));
         assert_eq!(line_of("expected ',' at byte 0", text), Some(1));
         assert_eq!(line_of("beyond the end at byte 9999", text), Some(3));
-        assert_eq!(line_of("no numbers here", text), None);
+        assert_eq!(line_of("no numbers here", text), None); // the caller falls back to 1
     }
 }
