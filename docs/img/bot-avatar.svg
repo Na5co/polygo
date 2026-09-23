@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="polygo review bot">
+  <!-- The reviewer's avatar: a speech bubble (language) holding the wordmark's globe (many
+       languages), an antenna (it is a bot) and the wordmark's check (what it comes to give).
+       Shapes only — no fonts, nothing external — so it rasterises anywhere. -->
+  <rect width="512" height="512" rx="112" fill="#0969da"/>
+
+  <!-- Antenna. -->
+  <line x1="256" y1="150" x2="256" y2="96" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="256" cy="80" r="21" fill="#ffffff"/>
+
+  <!-- The bubble, with its tail on the left so the badge has the right corner to itself. -->
+  <path d="M104 150 h304 a46 46 0 0 1 46 46 v168 a46 46 0 0 1 -46 46 h-186 l-76 62 v-62 h-42 a46 46 0 0 1 -46 -46 v-168 a46 46 0 0 1 46 -46 z" fill="#ffffff"/>
+
+  <!-- The globe inside it. -->
+  <g fill="none" stroke="#0969da" stroke-linecap="round">
+    <circle cx="246" cy="280" r="92" stroke-width="15"/>
+    <ellipse cx="246" cy="280" rx="38" ry="92" stroke-width="12"/>
+    <line x1="154" y1="280" x2="338" y2="280" stroke-width="12"/>
+  </g>
+
+  <!-- The check, as a badge on the bubble's corner. -->
+  <rect x="330" y="330" width="134" height="134" rx="36" fill="#8250df" stroke="#0969da" stroke-width="16"/>
+  <path d="M362 396 l22 22 l41 -45" fill="none" stroke="#ffffff" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

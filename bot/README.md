@@ -79,6 +79,17 @@ docker run -p 8080:8080 \
 process, one container, no state: run it anywhere that can run a container, and scale it by
 running more.
 
+## Its face
+
+`docs/img/bot-avatar.svg` is the avatar: the wordmark's globe inside a speech bubble, with
+an antenna and the wordmark's check. Shapes only — no fonts and nothing external — so any
+renderer produces the same image. GitHub wants a PNG of at least 200×200 for an App, which
+on a Mac needs no extra tool:
+
+```sh
+qlmanage -t -s 512 -o . docs/img/bot-avatar.svg   # writes bot-avatar.svg.png
+```
+
 ## Create the App
 
 GitHub → Settings → Developer settings → **GitHub Apps** → New GitHub App.
