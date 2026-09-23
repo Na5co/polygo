@@ -45,12 +45,16 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v2
 
-      - name: Build the image
+      # Built here rather than on Cloud Build: the runner is already amd64, so there is
+      # nothing to cross-compile, and Cloud Build's staging bucket rejects a federated
+      # credential unless a quota project is threaded through it. One less moving part.
+      - name: Build and push the image
         run: |
           IMAGE="${REGION}-docker.pkg.dev/${PROJECT}/polygo/${SERVICE}:${GITHUB_SHA::7}"
           echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
-          gcloud builds submit --config bot/cloudbuild.yaml \
-            --substitutions="_IMAGE=${IMAGE}" --project "$PROJECT" --quiet .
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker build -f bot/Dockerfile -t "$IMAGE" .
+          docker push "$IMAGE"
 
       - name: Roll it out
         run: |
