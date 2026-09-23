@@ -78,6 +78,13 @@ fn main() -> Result<()> {
             let _ = req.respond(text(401, "bad signature"));
             continue;
         }
+        if let Ok(v) = serde_json::from_slice::<serde_json::Value>(&body)
+            && let Some(what) = webhook::marketplace(&kind, &v)
+        {
+            log(&what);
+            let _ = req.respond(text(202, "accepted"));
+            continue;
+        }
         let event = match serde_json::from_slice(&body)
             .map_err(anyhow::Error::from)
             .and_then(|v: serde_json::Value| webhook::pull_request(&kind, &v))

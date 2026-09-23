@@ -27,6 +27,23 @@ fn decode_hex(s: &str) -> Option<Vec<u8>> {
         .collect()
 }
 
+/// What a Marketplace event says, for the log: someone subscribed, changed plan or
+/// cancelled. GitHub requires a listed app to receive these; the bot has one free plan, so
+/// there is nothing to do about them beyond knowing they happened.
+pub fn marketplace(kind: &str, payload: &serde_json::Value) -> Option<String> {
+    if kind != "marketplace_purchase" {
+        return None;
+    }
+    let action = payload["action"].as_str().unwrap_or("?");
+    let account = payload["marketplace_purchase"]["account"]["login"]
+        .as_str()
+        .unwrap_or("?");
+    let plan = payload["marketplace_purchase"]["plan"]["name"]
+        .as_str()
+        .unwrap_or("?");
+    Some(format!("marketplace: {account} {action} the {plan} plan"))
+}
+
 /// A pull request the bot should look at.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Event {
@@ -41,6 +58,9 @@ pub struct Event {
 /// `Ok(None)` is a healthy "nothing to do here".
 pub fn pull_request(kind: &str, payload: &serde_json::Value) -> Result<Option<Event>> {
     if kind == "ping" || kind == "installation" || kind == "installation_repositories" {
+        return Ok(None);
+    }
+    if kind == "marketplace_purchase" {
         return Ok(None);
     }
     if kind != "pull_request" {
@@ -110,6 +130,25 @@ mod tests {
             "repository": { "full_name": "acme/app" },
             "pull_request": { "number": 7, "draft": false, "head": { "sha": "abc123" } },
         })
+    }
+
+    #[test]
+    fn marketplace_events_are_noted_and_nothing_else() {
+        let ev = json!({
+            "action": "purchased",
+            "marketplace_purchase": {
+                "account": { "login": "acme" },
+                "plan": { "name": "Free" }
+            }
+        });
+        assert_eq!(
+            marketplace("marketplace_purchase", &ev).as_deref(),
+            Some("marketplace: acme purchased the Free plan")
+        );
+        assert_eq!(marketplace("pull_request", &ev), None);
+        // A Marketplace event is not a pull request, and must not be mistaken for a
+        // malformed one.
+        assert!(pull_request("marketplace_purchase", &ev).unwrap().is_none());
     }
 
     #[test]
