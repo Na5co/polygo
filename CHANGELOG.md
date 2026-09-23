@@ -2,7 +2,7 @@
 
 All notable changes to polygo. Versions follow [SemVer](https://semver.org); dates are ISO.
 
-## Unreleased
+## 0.1.9 — 2026-09-24
 
 - Merging is deploying: a push to `main` touching `bot/`, `src/` or the manifests builds the image and rolls out a Cloud Run revision, then fails the job if that revision cannot answer `/health`. Keyless — GitHub's OIDC token is exchanged through Workload Identity Federation for a short-lived credential, bound to this repository, so there is no service-account key to leak. The hosted app had already drifted behind the code three times in an afternoon of hand deploys.
 
