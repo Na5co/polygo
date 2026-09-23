@@ -63,6 +63,15 @@ fn release_assets_match_every_consumer() {
     // A job that actually loads action/action.yml: a manifest GitHub cannot parse fails
     // every job that uses the Action, and nothing else in CI reads it.
     assert!(ci.contains("uses: ./action"), "{ci}");
+    // The hosted app is deployed by merging, not by remembering to: keyless, and the
+    // rollout fails if the new revision cannot answer /health.
+    let deploy = read(".github/workflows/deploy-bot.yml");
+    assert!(deploy.contains("workload_identity_provider"), "{deploy}");
+    assert!(
+        !deploy.contains("credentials_json"),
+        "no service-account key belongs here"
+    );
+    assert!(deploy.contains("/health"), "{deploy}");
     // The formula is generated, not checked in.
     assert!(!std::path::Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/packaging")).exists());
 }

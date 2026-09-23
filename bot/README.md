@@ -57,6 +57,22 @@ The flags that matter, and why:
   seconds then shows in the delivery log as timed out; the review is still posted, because
   the platform lets the handler finish after GitHub hangs up.
 
+## Deploying a change
+
+A push to `main` that touches `bot/`, `src/` or the manifests builds and rolls out a new
+revision (`.github/workflows/deploy-bot.yml`), then fails the job if the new revision cannot
+answer `/health`. Authentication is keyless — GitHub's OIDC token is exchanged through
+Workload Identity Federation for a short-lived credential, and the pool is bound to this
+repository — so no service-account key exists to leak.
+
+To deploy by hand anyway (a rollback, or from a branch):
+
+```sh
+IMAGE=us-central1-docker.pkg.dev/summer-ranger-205420/polygo/polygo-bot:$(git rev-parse --short HEAD)
+gcloud builds submit --config bot/cloudbuild.yaml --substitutions=_IMAGE=$IMAGE .
+gcloud run deploy polygo-bot --image $IMAGE --region us-central1
+```
+
 ## Run it anywhere else
 
 ```sh
