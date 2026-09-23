@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="965" height="482" viewBox="0 0 965 482" role="img" aria-label="polygo-bot feature card background">
+  <!-- The Marketplace feature card: GitHub lays the logo and the app's name over this, so
+       it carries texture and nothing else. The middle stays quiet for the overlay. -->
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2a5b"/>
+      <stop offset="0.45" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#1c1033"/>
+    </linearGradient>
+    <radialGradient id="calm" cx="50%" cy="50%" r="46%">
+      <stop offset="0" stop-color="#0d1117" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#0d1117" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Meridians, the wordmark's globe made into a texture. -->
+    <g id="globe">
+      <circle cx="0" cy="0" r="150" fill="none" stroke="#58a6ff" stroke-width="3"/>
+      <ellipse cx="0" cy="0" rx="62" ry="150" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+      <ellipse cx="0" cy="0" rx="112" ry="150" fill="none" stroke="#58a6ff" stroke-width="2"/>
+      <line x1="-150" y1="0" x2="150" y2="0" stroke="#58a6ff" stroke-width="2.5"/>
+      <line x1="-130" y1="-75" x2="130" y2="-75" stroke="#58a6ff" stroke-width="2"/>
+      <line x1="-130" y1="75" x2="130" y2="75" stroke="#58a6ff" stroke-width="2"/>
+    </g>
+  </defs>
+
+  <rect width="965" height="482" fill="url(#field)"/>
+
+  <!-- Two globes, cropped by the edges: brand, not illustration. -->
+  <g opacity="0.22"><use href="#globe" x="70" y="392"/></g>
+  <g opacity="0.16"><use href="#globe" x="900" y="80"/></g>
+
+  <!-- The work itself, at a whisper: a name put back where it belongs. -->
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="19" opacity="0.2">
+    <text x="300" y="70" fill="#58a6ff">{{user}}</text>
+    <text x="404" y="70" fill="#8b949e">→</text>
+    <text x="432" y="70" fill="#f0883e">{{utente}}</text>
+    <text x="620" y="128" fill="#58a6ff">%1$@</text>
+    <text x="252" y="186" fill="#8b949e">msgstr[2]</text>
+    <text x="688" y="240" fill="#58a6ff">{{count}}</text>
+    <text x="180" y="300" fill="#f0883e">{{anzahl}}</text>
+    <text x="596" y="360" fill="#8b949e">plurals · few</text>
+    <text x="300" y="424" fill="#58a6ff">{{name}}</text>
+    <text x="652" y="440" fill="#3fb950">✓</text>
+    <text x="120" y="120" fill="#3fb950">✓</text>
+  </g>
+
+  <!-- Quiet in the middle, where the badge and the name land. -->
+  <rect width="965" height="482" fill="url(#calm)"/>
+  <rect x="0" y="0" width="965" height="5" fill="#0969da"/>
+</svg>
