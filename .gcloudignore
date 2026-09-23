@@ -1,0 +1,11 @@
+# What `gcloud builds submit` must not upload. Without this file gcloud falls back to
+# .gitignore, which is close but leaves the build with things the image never needs.
+.git
+.gitignore
+target
+tests/corpus
+docs/img
+bench
+killtest
+*.tar.gz
+*.zip
