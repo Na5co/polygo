@@ -53,6 +53,7 @@ Ten seconds, no setup. It reads the string files your app already has and report
 
 | code | severity | what it catches |
 |---|:-:|---|
+| `locale` | warning | a locale file sitting next to the others that nothing checks, because its locale is not in `target_locales` |
 | `syntax` | error | a string file that does not parse (a dropped comma, an unclosed `<string>`) — reported instead of the locale silently vanishing from the run |
 | `placeholders` | error | `%1$@`, `{{name}}`, `%(count)s`, `{0}`, `{n, plural, …}` missing, added, retyped or reordered — and a translated *name* (`{{ modelli }}` for `{{ models }}`) named as such |
 | `plural` | error | a CLDR form the locale needs and doesn't have: `few`/`many` for Polish, six for Arabic; ICU, `.xcstrings`, `.stringsdict`, `<plurals>`, `msgstr[n]`, i18next `_few` |
