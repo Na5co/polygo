@@ -79,6 +79,12 @@ docker run -p 8080:8080 \
 process, one container, no state: run it anywhere that can run a container, and scale it by
 running more.
 
+## Privacy and support
+
+[bot/PRIVACY.md](PRIVACY.md) is the App's privacy policy — what it touches, what it keeps
+(nothing), who else sees it (GitHub, and the platform it runs on). Support is
+[the issue tracker](https://github.com/Na5co/polygo/issues).
+
 ## Its face
 
 `docs/img/bot-avatar.svg` is the avatar: the wordmark's globe inside a speech bubble, with
@@ -87,8 +93,13 @@ renderer produces the same image. GitHub wants a PNG of at least 200×200 for an
 on a Mac needs no extra tool:
 
 ```sh
-qlmanage -t -s 512 -o . docs/img/bot-avatar.svg   # writes bot-avatar.svg.png
+rsvg-convert -w 512 -h 512 docs/img/bot-avatar.svg -o avatar.png       # the App's logo
+rsvg-convert -w 1280 -h 640 docs/img/feature-card.svg -o card.png     # the Marketplace card
 ```
+
+(`brew install librsvg`. `qlmanage -t -s 512 -o . docs/img/bot-avatar.svg` works for the
+square avatar without installing anything, but forces a square canvas, which crops the
+card.)
 
 ## Create the App
 
